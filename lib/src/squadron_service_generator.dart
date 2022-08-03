@@ -20,15 +20,16 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
     if (classElt is! ClassElement) return const [];
     // implementation moved to specific methods to facilitate unit tests
     final service = SquadronServiceAnnotation.load(classElt)!;
-    generateEntryPoints(buildStep, classElt, service);
-    return generateOperationsMap(classElt, generatePool: service.pool);
+    generateEntryPoints(buildStep, service);
+    return generateOperationsMap(service);
   }
 
-  void generateEntryPoints(BuildStep buildStep, ClassElement classElt,
-      SquadronServiceAnnotation service) {
+  void generateEntryPoints(
+      BuildStep buildStep, SquadronServiceAnnotation service) {
+    final code = <String>[];
     AssetId? vmOutput;
     AssetId? webOutput;
-    AssetId? xplatOutput;
+    AssetId? stubOutput;
     AssetId? activatorOutput;
 
     for (var output in buildStep.allowedOutputs) {
@@ -37,49 +38,52 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
         vmOutput = output;
       } else if (service.web && path.endsWith('.web.g.dart')) {
         webOutput = output;
-      } else if (path.endsWith('.xplat.g.dart')) {
-        xplatOutput = output;
+      } else if (path.endsWith('.stub.g.dart')) {
+        stubOutput = output;
       } else if (path.endsWith('.activator.g.dart')) {
         activatorOutput = output;
       }
     }
 
+    code.clear();
     if (vmOutput != null) {
-      final code = <String>[];
       code.add('import \'package:squadron/squadron_service.dart\';');
       code.add('import \'${buildStep.inputId.pathSegments.last}\';');
+      code.add('');
       code.add('// VM entry point');
       code.add(
-          'void _start(Map command) => run((startRequest) => ${classElt.name}(), command);');
-      code.add('dynamic get${classElt.name}Activator() => _start;');
+          'void _start(Map command) => run((startRequest) => ${service.name}(), command);');
+      code.add('');
+      code.add('dynamic get${service.name}Activator() => _start;');
       buildStep.writeAsString(vmOutput, code.join('\n'));
     }
 
+    code.clear();
     if (webOutput != null) {
-      final code = <String>[];
       code.add('import \'package:squadron/squadron_service.dart\';');
       code.add('import \'${buildStep.inputId.pathSegments.last}\';');
+      code.add('');
       code.add('// Web entry point');
-      code.add('void main() => run((startRequest) => ${classElt.name}());');
+      code.add('void main() => run((startRequest) => ${service.name}());');
       final workerUrl = service.baseUrl.isEmpty
           ? '${webOutput.path}.js'
           : '${service.baseUrl}/${webOutput.pathSegments.last}.js';
-      code.add('dynamic get${classElt.name}Activator() => \'$workerUrl\';');
+      code.add('');
+      code.add('dynamic get${service.name}Activator() => \'$workerUrl\';');
       buildStep.writeAsString(webOutput, code.join('\n'));
     }
 
-    if (vmOutput != null && webOutput != null && xplatOutput != null) {
-      final code = <String>[];
-      code.add('dynamic get${classElt.name}Activator() {');
-      code.add('throw UnimplementedError();');
-      code.add('}');
-      buildStep.writeAsString(xplatOutput, code.join('\n'));
+    code.clear();
+    if (vmOutput != null && webOutput != null && stubOutput != null) {
+      code.add(
+          'dynamic get${service.name}Activator()  => throw UnimplementedError();');
+      buildStep.writeAsString(stubOutput, code.join('\n'));
     }
 
+    code.clear();
     if (activatorOutput != null) {
-      final code = <String>[];
-      if (xplatOutput != null && webOutput != null && vmOutput != null) {
-        code.add('import \'${xplatOutput.pathSegments.last}\'');
+      if (stubOutput != null && webOutput != null && vmOutput != null) {
+        code.add('import \'${stubOutput.pathSegments.last}\'');
         code.add('if (dart.library.js) \'${webOutput.pathSegments.last}\'');
         code.add('if (dart.library.html) \'${webOutput.pathSegments.last}\'');
         code.add('if (dart.library.io) \'${vmOutput.pathSegments.last}\';');
@@ -88,18 +92,21 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
       } else if (webOutput != null) {
         code.add('import \'${webOutput.pathSegments.last}\';');
       }
+      code.add('');
       code.add(
-          'final \$${classElt.name}Activator = get${classElt.name}Activator();');
+          'final \$${service.name}Activator = get${service.name}Activator();');
       buildStep.writeAsString(activatorOutput, code.join('\n'));
     }
+
+    code.clear();
   }
 
-  Iterable<String> generateOperationsMap(ClassElement classElt,
-      {required bool generatePool}) sync* {
+  Iterable<String> generateOperationsMap(
+      SquadronServiceAnnotation service) sync* {
     final commands = <SquadronMethodAnnotation>[];
     final unimplemented = <SquadronMethodAnnotation>[];
 
-    for (var m in classElt.methods) {
+    for (var m in service.methods) {
       // load command info
       final command = SquadronMethodAnnotation.load(m);
       if (m.name.startsWith('_') || command == null) {
@@ -111,65 +118,65 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
       }
     }
 
-    commands.sort((a, b) => a.method.name.compareTo(b.method.name));
+    commands.sort((a, b) => a.name.compareTo(b.name));
 
     final code = <String>[];
 
     code.clear();
     code.add(
-        'Map<int, CommandHandler> build${classElt.name}Operations(${classElt.name} instance) => {');
+        'Map<int, CommandHandler> build${service.name}Operations(${service.name} instance) => {');
 
     for (var n = 0; n < commands.length; n++) {
       final cmd = commands[n];
       code.add(
-          '    ${n + 1}: (r) => instance.${cmd.method.name}(${cmd.deserializedArguments}),');
+          '    ${n + 1}: (r) => instance.${cmd.name}(${cmd.deserializedArguments}),');
     }
     code.add('};');
     yield code.join('\n');
 
     code.clear();
+    code.add('// Worker for ${service.name}');
     code.add(
-        'class ${classElt.name}Worker extends Worker implements ${classElt.name} {');
-    code.add('${classElt.name}Worker() : super(\$${classElt.name}Activator);');
+        'class ${service.name}Worker extends Worker implements ${service.name} {');
+    code.add('${service.name}Worker() : super(\$${service.name}Activator);');
     for (var n = 0; n < commands.length; n++) {
       final cmd = commands[n];
+      code.add('');
       code.add('@override');
+      code.add('${cmd.returnType} ${cmd.name}(${cmd.parameters})');
       code.add(
-          '${cmd.method.returnType} ${cmd.method.name}(${cmd.parameters})');
-      code.add(
-          '=> ${cmd.workerExecutor}(${n + 1}, args: [ ${cmd.serializedArguments} ]);');
+          '=> ${cmd.workerExecutor}(${n + 1}, args: [ ${cmd.serializedArguments} ], inspectRequest: ${cmd.inspectRequest}, inspectResponse: ${cmd.inspectResponse});');
     }
 
     for (var n = 0; n < unimplemented.length; n++) {
       final cmd = unimplemented[n];
+      code.add('');
       code.add('@override');
-      code.add(
-          '${cmd.method.returnType} ${cmd.method.name}(${cmd.parameters})');
+      code.add('${cmd.returnType} ${cmd.name}(${cmd.parameters})');
       code.add('=> throw UnimplementedError();');
     }
 
     code.add('}');
     yield code.join('\n');
 
-    if (generatePool) {
+    if (service.pool) {
       code.clear();
+      code.add('// Worker pool for ${service.name}');
       code.add(
-          'class ${classElt.name}WorkerPool extends WorkerPool<${classElt.name}Worker> implements ${classElt.name} {');
+          'class ${service.name}WorkerPool extends WorkerPool<${service.name}Worker> implements ${service.name} {');
       code.add(
-          '${classElt.name}WorkerPool({ConcurrencySettings? concurrencySettings}) : super(() => ${classElt.name}Worker(), concurrencySettings: concurrencySettings);');
+          '${service.name}WorkerPool({ConcurrencySettings? concurrencySettings}) : super(() => ${service.name}Worker(), concurrencySettings: concurrencySettings);');
       for (var n = 0; n < commands.length; n++) {
         final cmd = commands[n];
         code.add('@override');
+        code.add('${cmd.returnType} ${cmd.name}(${cmd.parameters})');
         code.add(
-            '${cmd.method.returnType} ${cmd.method.name}(${cmd.parameters})');
-        code.add(
-            '=> ${cmd.poolExecutor}((w) => w.${cmd.method.name}(${cmd.arguments}));');
+            '=> ${cmd.poolExecutor}((w) => w.${cmd.name}(${cmd.arguments}));');
       }
       for (var n = 0; n < unimplemented.length; n++) {
         final cmd = unimplemented[n];
         code.add('@override');
-        code.add(
-            '${cmd.method.returnType} ${cmd.method.name}(${cmd.parameters})');
+        code.add('${cmd.returnType} ${cmd.name}(${cmd.parameters})');
         code.add('=> throw UnimplementedError();');
       }
       code.add('}');

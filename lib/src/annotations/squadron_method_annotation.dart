@@ -4,9 +4,16 @@ import 'package:squadron/squadron_annotations.dart';
 import 'annotations_reader.dart';
 
 class SquadronMethodAnnotation {
-  SquadronMethodAnnotation._(this.method);
+  SquadronMethodAnnotation._(
+      this.name, this.inspectRequest, this.inspectResponse);
 
-  final MethodElement method;
+  final String name;
+
+  final bool inspectRequest;
+  final bool inspectResponse;
+
+  String _returnType = 'Future';
+  String get returnType => _returnType;
 
   String _workerExecutor = 'send';
   String get workerExecutor => _workerExecutor;
@@ -26,11 +33,11 @@ class SquadronMethodAnnotation {
   String _deserializedArguments = '';
   String get deserializedArguments => _deserializedArguments;
 
-  void _load() {
+  void _load(MethodElement methodElement) {
     var p = '', a = '', s = '', d = '';
     var optPositional = false, optNamed = false;
-    for (var n = 0; n < method.parameters.length; n++) {
-      final param = method.parameters[n];
+    for (var n = 0; n < methodElement.parameters.length; n++) {
+      final param = methodElement.parameters[n];
       if (n > 0) {
         p += ', ';
         a += ', ';
@@ -61,30 +68,42 @@ class SquadronMethodAnnotation {
     } else if (optNamed) {
       p += ' }';
     }
-    if (method.returnType.isDartAsyncStream) {
+
+    if (methodElement.returnType.isDartAsyncStream) {
       _workerExecutor = 'stream';
       _poolExecutor = 'stream';
     } else {
       _workerExecutor = 'send';
       _poolExecutor = 'execute';
     }
+
+    _returnType =
+        methodElement.returnType.getDisplayString(withNullability: false);
+    if (methodElement.returnType.isDartAsyncFutureOr) {
+      _returnType = _returnType.replaceAll(RegExp('^FutureOr\\b'), 'Future');
+    }
+
     _parameters = p;
     _arguments = a;
     _serializedArguments = s;
     _deserializedArguments = d;
   }
 
-  static SquadronMethodAnnotation? load(MethodElement method) {
-    final reader = AnnotationReader<SquadronMethod>(method);
+  static SquadronMethodAnnotation? load(MethodElement methodElement) {
+    final reader = AnnotationReader<SquadronMethod>(methodElement);
     if (reader.isEmpty) return null;
-    final annotation = SquadronMethodAnnotation._(method);
-    annotation._load();
+    final inspectRequest = reader.isSet('inspectRequest');
+    final inspectResponse = reader.isSet('inspectResponse');
+    final annotation = SquadronMethodAnnotation._(
+        methodElement.name, inspectRequest, inspectResponse);
+    annotation._load(methodElement);
     return annotation;
   }
 
-  static SquadronMethodAnnotation unimplemented(MethodElement method) {
-    final annotation = SquadronMethodAnnotation._(method);
-    annotation._load();
+  static SquadronMethodAnnotation unimplemented(MethodElement methodElement) {
+    final annotation =
+        SquadronMethodAnnotation._(methodElement.name, false, false);
+    annotation._load(methodElement);
     return annotation;
   }
 }
