@@ -18,6 +18,17 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
     return generateOperationsMap(service);
   }
 
+  void appendComments(List<String> code) {
+    code.add('// GENERATED CODE - DO NOT MODIFY BY HAND');
+    code.add('');
+    code.add(
+        '// **************************************************************************');
+    code.add('// $runtimeType');
+    code.add(
+        '// **************************************************************************');
+    code.add('');
+  }
+
   void generateEntryPoints(
       BuildStep buildStep, SquadronServiceAnnotation service) {
     final code = <String>[];
@@ -41,6 +52,7 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
 
     code.clear();
     if (vmOutput != null) {
+      appendComments(code);
       code.add('import \'package:squadron/squadron_service.dart\';');
       code.add('import \'${buildStep.inputId.pathSegments.last}\';');
       code.add('');
@@ -54,6 +66,7 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
 
     code.clear();
     if (webOutput != null) {
+      appendComments(code);
       code.add('import \'package:squadron/squadron_service.dart\';');
       code.add('import \'${buildStep.inputId.pathSegments.last}\';');
       code.add('');
@@ -69,6 +82,7 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
 
     code.clear();
     if (vmOutput != null && webOutput != null && stubOutput != null) {
+      appendComments(code);
       code.add(
           'dynamic get${service.name}Activator()  => throw UnimplementedError();');
       buildStep.writeAsString(stubOutput, code.join('\n'));
@@ -77,13 +91,16 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
     code.clear();
     if (activatorOutput != null) {
       if (stubOutput != null && webOutput != null && vmOutput != null) {
+        appendComments(code);
         code.add('import \'${stubOutput.pathSegments.last}\'');
         code.add('if (dart.library.js) \'${webOutput.pathSegments.last}\'');
         code.add('if (dart.library.html) \'${webOutput.pathSegments.last}\'');
         code.add('if (dart.library.io) \'${vmOutput.pathSegments.last}\';');
       } else if (vmOutput != null) {
+        appendComments(code);
         code.add('import \'${vmOutput.pathSegments.last}\';');
       } else if (webOutput != null) {
+        appendComments(code);
         code.add('import \'${webOutput.pathSegments.last}\';');
       }
       code.add('');
