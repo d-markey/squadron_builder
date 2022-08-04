@@ -84,7 +84,7 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
     if (vmOutput != null && webOutput != null && stubOutput != null) {
       appendComments(code);
       code.add(
-          'dynamic get${service.name}Activator()  => throw UnimplementedError();');
+          'dynamic get${service.name}Activator() => throw UnimplementedError();');
       buildStep.writeAsString(stubOutput, code.join('\n'));
     }
 
