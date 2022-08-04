@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
@@ -9,10 +7,6 @@ import 'annotations/squadron_method_annotation.dart';
 import 'annotations/squadron_service_annotation.dart';
 
 class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
-  SquadronServiceGenerator() {
-    stdout.write('SquadronServiceGenerator ready');
-  }
-
   @override
   Iterable<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) {
@@ -106,12 +100,12 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
     final commands = <SquadronMethodAnnotation>[];
     final unimplemented = <SquadronMethodAnnotation>[];
 
-    for (var m in service.methods) {
+    for (var method in service.methods.where((m) => !m.isStatic)) {
       // load command info
-      final command = SquadronMethodAnnotation.load(m);
-      if (m.name.startsWith('_') || command == null) {
+      final command = SquadronMethodAnnotation.load(method);
+      if (method.name.startsWith('_') || command == null) {
         // not a Squadron command: override as unimplemented in worker / pool
-        unimplemented.add(SquadronMethodAnnotation.unimplemented(m));
+        unimplemented.add(SquadronMethodAnnotation.unimplemented(method));
       } else {
         // Squadron command: override to use worker / pool
         commands.add(command);
