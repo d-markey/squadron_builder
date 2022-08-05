@@ -156,7 +156,7 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
       code.add('@override');
       code.add('${cmd.returnType} ${cmd.name}(${cmd.parameters})');
       code.add(
-          '=> ${cmd.workerExecutor}(${n + 1}, args: [ ${cmd.serializedArguments} ], inspectRequest: ${cmd.inspectRequest}, inspectResponse: ${cmd.inspectResponse});');
+          '=> ${cmd.workerExecutor}(${n + 1}, args: [ ${cmd.serializedArguments} ], token: ${cmd.cancellationToken ?? 'null'}, inspectRequest: ${cmd.inspectRequest}, inspectResponse: ${cmd.inspectResponse});');
     }
 
     for (var n = 0; n < unimplemented.length; n++) {

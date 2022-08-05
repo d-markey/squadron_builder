@@ -33,16 +33,35 @@ class SquadronMethodAnnotation {
   String _deserializedArguments = '';
   String get deserializedArguments => _deserializedArguments;
 
+  String? _cancellationToken;
+  String? get cancellationToken => _cancellationToken;
+
+  static bool _isCancellationToken(ParameterElement param) {
+    final locationComponents =
+        param.type.element?.location?.components ?? const [];
+    return locationComponents.any((c) => c.startsWith('package:squadron/')) &&
+        (param.type.getDisplayString(withNullability: false) ==
+            'CancellationToken');
+  }
+
   void _load(MethodElement methodElement) {
     var p = '', a = '', s = '', d = '';
     var optPositional = false, optNamed = false;
+    var sidx = 0;
     for (var n = 0; n < methodElement.parameters.length; n++) {
       final param = methodElement.parameters[n];
+      final isToken =
+          (_cancellationToken == null) && _isCancellationToken(param);
+      if (isToken) {
+        _cancellationToken = param.name;
+      }
       if (n > 0) {
         p += ', ';
         a += ', ';
-        s += ', ';
         d += ', ';
+      }
+      if (!isToken && sidx > 0) {
+        s += ', ';
       }
       if (param.isOptionalPositional && !optPositional) {
         optPositional = true;
@@ -52,15 +71,26 @@ class SquadronMethodAnnotation {
         p += '{ ';
       }
       final def = param.hasDefaultValue ? ' = ${param.defaultValueCode}' : '';
-      p += '${param.type} ${param.name}$def';
+      final req = param.isRequiredNamed ? 'required ' : '';
+      p += '$req${param.type} ${param.name}$def';
       if (param.isNamed) {
         a += '${param.name}: ${param.name}';
-        s += param.name;
-        d += '${param.name}: r.args[$n]';
+        if (isToken) {
+          d += '${param.name}: r.cancelToken';
+        } else {
+          s += param.name;
+          d += '${param.name}: r.args[$sidx]';
+          sidx++;
+        }
       } else {
         a += param.name;
-        s += param.name;
-        d += 'r.args[$n]';
+        if (isToken) {
+          d += 'r.cancelToken';
+        } else {
+          s += param.name;
+          d += 'r.args[$sidx]';
+          sidx++;
+        }
       }
     }
     if (optPositional) {
