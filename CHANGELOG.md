@@ -1,7 +1,8 @@
-## 0.7.0
+## 0.7.1
 
 - Annotations `SquadronService` + `SquadronMethod`.
 - Support of cancellation tokens.
+- Package upgrade.
 - Sample code.
 
 ## 0.0.1

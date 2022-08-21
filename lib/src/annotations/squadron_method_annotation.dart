@@ -38,7 +38,7 @@ class SquadronMethodAnnotation {
 
   static bool _isCancellationToken(ParameterElement param) {
     final locationComponents =
-        param.type.element?.location?.components ?? const [];
+        param.type.element2?.location?.components ?? const [];
     return locationComponents.any((c) => c.startsWith('package:squadron/')) &&
         (param.type.getDisplayString(withNullability: false) ==
             'CancellationToken');
