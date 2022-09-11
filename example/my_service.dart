@@ -15,7 +15,34 @@ class MyService extends WorkerService {
   // naive & inefficient implementation of the Fibonacci sequence
   static int _fib(int i) => (i < 2) ? i : (_fib(i - 2) + _fib(i - 1));
 
+  @SquadronMethod()
+  Future<MyResponse> doSomething(MyRequest request) async => MyResponse('ok');
+
+  @SquadronMethod()
+  Future<MyResponse> doSomethingElse(MyRequest? request) async =>
+      MyResponse('ok');
+
   @override
   late final Map<int, CommandHandler> operations =
       buildMyServiceOperations(this);
+}
+
+class MyRequest {
+  MyRequest(this.payload);
+
+  factory MyRequest.fromJson(Map json) => MyRequest(json['p']);
+
+  final String payload;
+
+  Map toJson() => {'p': payload};
+}
+
+class MyResponse {
+  MyResponse(this.result);
+
+  factory MyResponse.fromJson(Map json) => MyResponse(json['r']);
+
+  final String result;
+
+  Map toJson() => {'r': result};
 }

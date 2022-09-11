@@ -18,20 +18,16 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
     return generateOperationsMap(service);
   }
 
-  void appendComments(List<String> code) {
-    code.add('// GENERATED CODE - DO NOT MODIFY BY HAND');
-    code.add('');
-    code.add(
-        '// **************************************************************************');
-    code.add('// $runtimeType');
-    code.add(
-        '// **************************************************************************');
-    code.add('');
-  }
+  String get _generatedCodeHeader => '''
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// $runtimeType
+// **************************************************************************
+''';
 
   void generateEntryPoints(
       BuildStep buildStep, SquadronServiceAnnotation service) {
-    final code = <String>[];
     AssetId? vmOutput;
     AssetId? webOutput;
     AssetId? stubOutput;
@@ -50,74 +46,100 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
       }
     }
 
-    code.clear();
+    final serviceImport = buildStep.inputId.pathSegments.last;
+
     if (vmOutput != null) {
-      appendComments(code);
-      code.add('import \'package:squadron/squadron_service.dart\';');
-      code.add('import \'${buildStep.inputId.pathSegments.last}\';');
-      code.add('');
-      code.add('// VM entry point');
-      code.add(
-          'void _start(Map command) => run((startRequest) => ${service.name}(), command);');
-      code.add('');
-      code.add('dynamic get${service.name}Activator() => _start;');
-      buildStep.writeAsString(vmOutput, code.join('\n'));
+      final code = _generateVmCode(serviceImport, service.name);
+      buildStep.writeAsString(vmOutput, code);
     }
 
-    code.clear();
     if (webOutput != null) {
-      appendComments(code);
-      code.add('import \'package:squadron/squadron_service.dart\';');
-      code.add('import \'${buildStep.inputId.pathSegments.last}\';');
-      code.add('');
-      code.add('// Web entry point');
-      code.add('void main() => run((startRequest) => ${service.name}());');
       final workerUrl = service.baseUrl.isEmpty
           ? '${webOutput.path}.js'
           : '${service.baseUrl}/${webOutput.pathSegments.last}.js';
-      code.add('');
-      code.add('dynamic get${service.name}Activator() => \'$workerUrl\';');
-      buildStep.writeAsString(webOutput, code.join('\n'));
+      final code = _generateWebCode(serviceImport, service.name, workerUrl);
+      buildStep.writeAsString(webOutput, code);
     }
 
-    code.clear();
     if (vmOutput != null && webOutput != null && stubOutput != null) {
-      appendComments(code);
-      code.add(
-          'dynamic get${service.name}Activator() => throw UnimplementedError();');
-      buildStep.writeAsString(stubOutput, code.join('\n'));
+      final code = _generateStubCode(service.name);
+      buildStep.writeAsString(stubOutput, code);
     }
 
-    code.clear();
     if (activatorOutput != null) {
-      if (stubOutput != null && webOutput != null && vmOutput != null) {
-        appendComments(code);
-        code.add('import \'${stubOutput.pathSegments.last}\'');
-        code.add('if (dart.library.js) \'${webOutput.pathSegments.last}\'');
-        code.add('if (dart.library.html) \'${webOutput.pathSegments.last}\'');
-        code.add('if (dart.library.io) \'${vmOutput.pathSegments.last}\';');
-      } else if (vmOutput != null) {
-        appendComments(code);
-        code.add('import \'${vmOutput.pathSegments.last}\';');
-      } else if (webOutput != null) {
-        appendComments(code);
-        code.add('import \'${webOutput.pathSegments.last}\';');
-      }
-      code.add('');
-      code.add(
-          'final \$${service.name}Activator = get${service.name}Activator();');
-      buildStep.writeAsString(activatorOutput, code.join('\n'));
+      final code =
+          _generateActivatorCode(stubOutput, vmOutput, webOutput, service.name);
+      buildStep.writeAsString(activatorOutput, code);
     }
+  }
 
-    code.clear();
+  String _generateVmCode(String serviceImport, String serviceName) =>
+      '''$_generatedCodeHeader
+import 'package:squadron/squadron_service.dart';
+import '$serviceImport';
+
+// VM entry point
+void _start(Map command) {
+  run((startRequest) => $serviceName(), command);
+}
+
+dynamic get${serviceName}Activator() => _start;
+''';
+
+  String _generateWebCode(
+          String serviceImport, String serviceName, String workerUrl) =>
+      '''$_generatedCodeHeader
+import 'package:squadron/squadron_service.dart';
+import '$serviceImport';
+
+// Web entry point
+void main() {
+  run((startRequest) => $serviceName());
+}
+
+dynamic get${serviceName}Activator() => '$workerUrl';
+''';
+
+  String _generateStubCode(String serviceName) => '''$_generatedCodeHeader
+dynamic get${serviceName}Activator() => throw UnimplementedError();
+''';
+
+  String _generateActivatorCode(AssetId? stubOutput, AssetId? vmOutput,
+      AssetId? webOutput, String serviceName) {
+    if (stubOutput != null && webOutput != null && vmOutput != null) {
+      return '''$_generatedCodeHeader
+import '${stubOutput.pathSegments.last}'
+  if (dart.library.js) '${webOutput.pathSegments.last}'
+  if (dart.library.html) '${webOutput.pathSegments.last}'
+  if (dart.library.io) '${vmOutput.pathSegments.last}';
+
+final \$${serviceName}Activator = get${serviceName}Activator();
+''';
+    } else if (vmOutput != null) {
+      return '''$_generatedCodeHeader
+import '${vmOutput.pathSegments.last}';
+
+final \$${serviceName}Activator = get${serviceName}Activator();
+''';
+    } else if (webOutput != null) {
+      return '''$_generatedCodeHeader
+import '${webOutput.pathSegments.last}';
+
+final \$${serviceName}Activator = get${serviceName}Activator();
+''';
+    } else {
+      // should never happen
+      return _generatedCodeHeader;
+    }
   }
 
   Iterable<String> generateOperationsMap(
       SquadronServiceAnnotation service) sync* {
+    final serviceName = service.name;
     final commands = <SquadronMethodAnnotation>[];
     final unimplemented = <SquadronMethodAnnotation>[];
 
-    for (var method in service.methods.where((m) => !m.isStatic)) {
+    for (var method in service.methods) {
       // load command info
       final command = SquadronMethodAnnotation.load(method);
       if (method.name.startsWith('_') || command == null) {
@@ -130,68 +152,57 @@ class SquadronServiceGenerator extends GeneratorForAnnotation<SquadronService> {
     }
 
     commands.sort((a, b) => a.name.compareTo(b.name));
-
-    final code = <String>[];
-
-    code.clear();
-    code.add(
-        'Map<int, CommandHandler> build${service.name}Operations(${service.name} instance) => {');
-
-    for (var n = 0; n < commands.length; n++) {
-      final cmd = commands[n];
-      code.add(
-          '    ${n + 1}: (r) => instance.${cmd.name}(${cmd.deserializedArguments}),');
-    }
-    code.add('};');
-    yield code.join('\n');
-
-    code.clear();
-    code.add('// Worker for ${service.name}');
-    code.add(
-        'class ${service.name}Worker extends Worker implements ${service.name} {');
-    code.add('${service.name}Worker() : super(\$${service.name}Activator);');
-    for (var n = 0; n < commands.length; n++) {
-      final cmd = commands[n];
-      code.add('');
-      code.add('@override');
-      code.add('${cmd.returnType} ${cmd.name}(${cmd.parameters})');
-      code.add(
-          '=> ${cmd.workerExecutor}(${n + 1}, args: [ ${cmd.serializedArguments} ], token: ${cmd.cancellationToken ?? 'null'}, inspectRequest: ${cmd.inspectRequest}, inspectResponse: ${cmd.inspectResponse});');
+    for (var i = 0; i < commands.length; i++) {
+      commands[i].setId(i + 1);
     }
 
-    for (var n = 0; n < unimplemented.length; n++) {
-      final cmd = unimplemented[n];
-      code.add('');
-      code.add('@override');
-      code.add('${cmd.returnType} ${cmd.name}(${cmd.parameters})');
-      code.add('=> throw UnimplementedError();');
-    }
+    yield '''// Operations map for $serviceName
+Map<int, CommandHandler> build${serviceName}Operations($serviceName instance) => {
+  ${commands.map((cmd) => '''
+    ${cmd.id}: (r) => instance.${cmd.name}(${cmd.deserializedArguments}),''').join()}
+};
 
-    code.add('}');
-    yield code.join('\n');
+// Worker for $serviceName
+class ${serviceName}Worker extends Worker implements $serviceName {
+  ${serviceName}Worker() : super(\$${serviceName}Activator);
+
+  ${commands.map((cmd) => '''
+  @override
+  ${cmd.returnType} ${cmd.name}(${cmd.parameters})
+    => ${cmd.workerExecutor}(
+        ${cmd.id}, 
+        args: [ ${cmd.serializedArguments} ], 
+        token: ${cmd.cancellationToken}, 
+        inspectRequest: ${cmd.inspectRequest}, 
+        inspectResponse: ${cmd.inspectResponse},
+      )${cmd.needsSerialization ? '.then((res) => res.toJson())' : ''};''').join('\n')}
+
+  ${unimplemented.map((cmd) => '''
+  @override
+  ${cmd.returnType} ${cmd.name}(${cmd.parameters})
+    => throw UnimplementedError();''').join('\n')}
+}
+''';
 
     if (service.pool) {
-      code.clear();
-      code.add('// Worker pool for ${service.name}');
-      code.add(
-          'class ${service.name}WorkerPool extends WorkerPool<${service.name}Worker> implements ${service.name} {');
-      code.add(
-          '${service.name}WorkerPool({ConcurrencySettings? concurrencySettings}) : super(() => ${service.name}Worker(), concurrencySettings: concurrencySettings);');
-      for (var n = 0; n < commands.length; n++) {
-        final cmd = commands[n];
-        code.add('@override');
-        code.add('${cmd.returnType} ${cmd.name}(${cmd.parameters})');
-        code.add(
-            '=> ${cmd.poolExecutor}((w) => w.${cmd.name}(${cmd.arguments}));');
-      }
-      for (var n = 0; n < unimplemented.length; n++) {
-        final cmd = unimplemented[n];
-        code.add('@override');
-        code.add('${cmd.returnType} ${cmd.name}(${cmd.parameters})');
-        code.add('=> throw UnimplementedError();');
-      }
-      code.add('}');
-      yield code.join('\n');
+      yield '''// Worker pool for ${service.name}
+class ${service.name}WorkerPool extends WorkerPool<${service.name}Worker> implements ${service.name} {
+  ${service.name}WorkerPool({ConcurrencySettings? concurrencySettings}) : super(
+    () => ${service.name}Worker(),
+    concurrencySettings: concurrencySettings
+  );
+  
+  ${commands.map((cmd) => '''
+  @override
+  ${cmd.returnType} ${cmd.name}(${cmd.parameters})
+    => ${cmd.poolExecutor}((w) => w.${cmd.name}(${cmd.arguments}));''').join('\n')}
+
+  ${unimplemented.map((cmd) => '''
+  @override
+  ${cmd.returnType} ${cmd.name}(${cmd.parameters})
+    => throw UnimplementedError();''').join('\n')}
+}
+''';
     }
   }
 }

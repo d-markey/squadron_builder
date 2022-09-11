@@ -23,6 +23,10 @@ void main() async {
   ));
   await pool.start();
   await computeWith(pool, count);
+
+  final res = await pool.doSomething(MyRequest('test'));
+  print('res = $res');
+
   pool.stop();
 }
 
