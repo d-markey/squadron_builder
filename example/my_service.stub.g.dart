@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// SquadronServiceGenerator
+// SquadronWorkerGenerator
 // **************************************************************************
 
-dynamic getMyServiceActivator() => throw UnimplementedError();
+dynamic $getMyServiceActivator() => throw UnimplementedError();

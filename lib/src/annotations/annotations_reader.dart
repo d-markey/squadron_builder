@@ -4,6 +4,8 @@ import 'package:analyzer/dart/element/type.dart';
 
 import '../extensions.dart';
 
+class A {}
+
 class AnnotationReader<T> {
   AnnotationReader(Element? element)
       : _annotations = element?.findAnnotations<T>().toList() ?? const [];

@@ -1,15 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// SquadronServiceGenerator
+// SquadronWorkerGenerator
 // **************************************************************************
 
 import 'package:squadron/squadron_service.dart';
 import 'my_service.dart';
 
 // Web entry point
-void main() {
-  run((startRequest) => MyService());
-}
+void main() => run($MyServiceInitializer);
 
-dynamic getMyServiceActivator() => '/workers/my_service.web.g.dart.js';
+dynamic $getMyServiceActivator() => '/workers/my_service.web.g.dart.js';

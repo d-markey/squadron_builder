@@ -1,12 +1,11 @@
-import 'dart:io';
-
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:analyzer/dart/element/visitor.dart';
+import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron_annotations.dart';
 
 import 'annotations_reader.dart';
+import 'serialization_inspector.dart';
 
 class SquadronMethodAnnotation {
   SquadronMethodAnnotation._(
@@ -17,10 +16,10 @@ class SquadronMethodAnnotation {
   final bool inspectRequest;
   final bool inspectResponse;
 
-  int _id = -1;
-  int get id => _id;
+  int? _id;
+  int get id => _id ?? -1;
 
-  void setId(int id) => _id = id;
+  void setId(int id) => _id ??= id;
 
   String _returnType = '';
   String get returnType => _returnType;
@@ -28,11 +27,16 @@ class SquadronMethodAnnotation {
   bool _needsSerialization = false;
   bool get needsSerialization => _needsSerialization;
 
+  bool _nullable = false;
+  bool get nullable => _nullable;
+
   bool _isStream = false;
   bool get isStream => _isStream;
 
   String get workerExecutor => _isStream ? 'stream' : 'send';
   String get poolExecutor => _isStream ? 'stream' : 'execute';
+
+  String get continuation => _isStream ? 'map' : 'then';
 
   String _parameters = '';
   String get parameters => _parameters;
@@ -48,6 +52,14 @@ class SquadronMethodAnnotation {
 
   String? _cancellationToken;
   String get cancellationToken => _cancellationToken ?? 'null';
+
+  static String _asIs(String res) => res;
+
+  String Function(String res) _serializedResult = _asIs;
+  String Function(String res) get serializedResult => _serializedResult;
+
+  String Function(String res) _deserializedResult = _asIs;
+  String Function(String res) get deserializedResult => _deserializedResult;
 
   static bool _isCancellationToken(ParameterElement param) {
     final locationComponents =
@@ -68,19 +80,37 @@ class SquadronMethodAnnotation {
 
     var returnType = methodElement.returnType;
 
-    // TODO
     DartType? type;
-    if (returnType.isDartAsyncFuture && returnType is ParameterizedType) {
+    if (!returnType.isDartAsyncFuture &&
+        !returnType.isDartAsyncFutureOr &&
+        !returnType.isDartAsyncStream) {
+      throw InvalidGenerationSourceError(
+          '${methodElement.librarySource.fullName}: Service method \'${methodElement.enclosingElement3.displayName}.${methodElement.name}\' should return a Future, a FutureOr, or a Stream.');
+    }
+
+    if (returnType is ParameterizedType) {
       type = returnType.typeArguments.first;
       type.element2!.visitChildren(_inspector);
+      _nullable = (type.nullabilitySuffix != NullabilitySuffix.none);
       _needsSerialization = _inspector.isSerializable(type);
+      if (_needsSerialization) {
+        if (_nullable) {
+          _serializedResult = (String res) => '$res?.toJson()';
+          _deserializedResult = (String res) =>
+              '($res == null) ? null : ${type!.getDisplayString(withNullability: false)}.fromJson($res)';
+        } else {
+          _serializedResult = (String res) => '$res.toJson()';
+          _deserializedResult = (String res) =>
+              '${type!.getDisplayString(withNullability: false)}.fromJson($res)';
+        }
+      }
     }
 
     for (var n = 0; n < methodElement.parameters.length; n++) {
       final param = methodElement.parameters[n];
 
-      // TODO: investigate when type is nullable
       param.type.element2?.visitChildren(_inspector);
+      final isSerializable = _inspector.isSerializable(param.type);
       final nullable = (param.type.nullabilitySuffix != NullabilitySuffix.none);
 
       final isToken =
@@ -99,7 +129,7 @@ class SquadronMethodAnnotation {
       if (param.isOptionalPositional && closeOptParams.isEmpty) {
         closeOptParams = ']';
         params += '[ ';
-      } else if (param.isOptionalNamed && closeOptParams.isEmpty) {
+      } else if (param.isNamed && closeOptParams.isEmpty) {
         closeOptParams = '}';
         params += '{ ';
       }
@@ -111,12 +141,12 @@ class SquadronMethodAnnotation {
         if (isToken) {
           deserArgs += '${param.name}: r.cancelToken';
         } else {
-          serArgs += _inspector.isSerializable(param.type)
+          serArgs += isSerializable
               ? (nullable
-                  ? '(${param.name} == null) ? null : ${param.name}.toJson()'
+                  ? '${param.name}?.toJson()'
                   : '${param.name}.toJson()')
               : param.name;
-          deserArgs += _inspector.isSerializable(param.type)
+          deserArgs += isSerializable
               ? (nullable
                   ? '(r.args[$sidx] == null) ? null : ${param.type.getDisplayString(withNullability: false)}.fromJson(r.args[$sidx])'
                   : '${param.type.getDisplayString(withNullability: false)}.fromJson(r.args[$sidx])')
@@ -128,12 +158,12 @@ class SquadronMethodAnnotation {
         if (isToken) {
           deserArgs += 'r.cancelToken';
         } else {
-          serArgs += _inspector.isSerializable(param.type)
+          serArgs += isSerializable
               ? (nullable
-                  ? '(${param.name} == null) ? null : ${param.name}.toJson()'
+                  ? '${param.name}?.toJson()'
                   : '${param.name}.toJson()')
               : param.name;
-          deserArgs += _inspector.isSerializable(param.type)
+          deserArgs += isSerializable
               ? (nullable
                   ? '(r.args[$sidx] == null) ? null : ${param.type.getDisplayString(withNullability: false)}.fromJson(r.args[$sidx])'
                   : '${param.type.getDisplayString(withNullability: false)}.fromJson(r.args[$sidx])')
@@ -149,8 +179,7 @@ class SquadronMethodAnnotation {
 
     _isStream = methodElement.returnType.isDartAsyncStream;
 
-    _returnType =
-        methodElement.returnType.getDisplayString(withNullability: false);
+    _returnType = methodElement.returnType.toString();
     if (_returnType.startsWith(_futureOr)) {
       _returnType = _returnType.replaceAll(_futureOr, 'Future');
     }
@@ -177,76 +206,5 @@ class SquadronMethodAnnotation {
         SquadronMethodAnnotation._(methodElement.name, false, false);
     annotation._load(methodElement);
     return annotation;
-  }
-}
-
-class SerializationInspector extends SimpleElementVisitor {
-  final cache = <Element, List<Element>>{};
-
-  List<Element>? _getFromCache(DartType type) {
-    final element = type.element2?.declaration;
-    if (element == null) return null;
-    return cache[element];
-  }
-
-  bool hasToJson(DartType type) {
-    final info = _getFromCache(type);
-    return info?.any((m) =>
-            m is MethodElement &&
-            !m.isPrivate &&
-            !m.isAbstract &&
-            m.returnType.isDartCoreMap &&
-            m.name == 'toJson' &&
-            m.parameters.isEmpty) ??
-        false;
-  }
-
-  bool hasFromJson(DartType type) {
-    final info = _getFromCache(type);
-    return info?.any((c) =>
-            c is ConstructorElement &&
-            !c.isPrivate &&
-            !c.isAbstract &&
-            c.isFactory &&
-            c.name == 'fromJson' &&
-            c.parameters.length == 1 &&
-            c.parameters[0].declaration.type.isDartCoreMap) ??
-        false;
-  }
-
-  bool isSerializable(DartType type) => hasToJson(type) && hasFromJson(type);
-
-  @override
-  void visitTypeParameterElement(TypeParameterElement element) {
-    stdout.writeln('==> $element');
-    return;
-  }
-
-  @override
-  void visitConstructorElement(ConstructorElement element) {
-    element = element.declaration;
-    final clazz = element.enclosingElement3;
-    var info = cache[clazz];
-    if (info == null) {
-      info = [];
-      cache[clazz] = info;
-    }
-    if (!info.contains(element)) {
-      info.add(element);
-    }
-  }
-
-  @override
-  void visitMethodElement(MethodElement element) {
-    element = element.declaration;
-    final clazz = element.enclosingElement3;
-    var info = cache[clazz];
-    if (info == null) {
-      info = [];
-      cache[clazz] = info;
-    }
-    if (!info.contains(element)) {
-      info.add(element);
-    }
   }
 }
