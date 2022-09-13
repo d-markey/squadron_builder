@@ -1,6 +1,6 @@
 import 'package:squadron/squadron_service.dart';
 
-class MyServiceResponse {
+class MyServiceResponse<T> {
   MyServiceResponse._(this.result, this.sqId);
 
   MyServiceResponse(this.result) : sqId = Squadron.id ?? '<undefined>';
@@ -8,7 +8,7 @@ class MyServiceResponse {
   factory MyServiceResponse.fromJson(Map json) =>
       MyServiceResponse._(json['r'], json['i']);
 
-  final String result;
+  final T result;
   final String sqId;
 
   Map toJson() => {'r': result, 'i': sqId};

@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:squadron/squadron.dart';
+import 'package:async/async.dart';
 
 import 'my_service.dart';
 import 'my_service_config.dart';
@@ -10,11 +10,11 @@ import 'my_service_request.dart';
 void main() async {
   Squadron.setId('MAIN');
   Squadron.setLogger(ConsoleSquadronLogger());
-  Squadron.logLevel = SquadronLogLevel.info;
+  Squadron.logLevel = SquadronLogLevel.all;
 
-  int count = 3;
+  int count = 2;
 
-  final config = MyServiceConfig('TEST', 5);
+  final config = MyServiceConfig('trace', false);
 
   Squadron.info('Computing with MyService (single-threaded)');
   await computeWith(MyService(config), count);
@@ -23,43 +23,76 @@ void main() async {
   final pool = MyServiceWorkerPool(config,
       concurrencySettings: ConcurrencySettings(
         minWorkers: count,
-        maxWorkers: count,
+        maxWorkers: 2 * count,
         maxParallel: 1,
       ));
-  config.setting = 10;
-  await pool.start();
-  config.setting = 100;
+
+  // await pool.start();
   await computeWith(pool, count);
-
-  final res = await pool.doSomething(MyServiceRequest('test'));
-  print('res = $res');
-
-  pool.getConfig();
-  final task = pool.getConfig().then((c) => print('config = $c'));
-  pool.getConfig();
-  pool.getConfig();
-
-  await task;
-
   pool.stop();
 }
 
 Future computeWith(MyService service, int count) async {
+  const from = 35;
+
   final sw = Stopwatch();
   sw.start();
 
-  final futures = <Future<int>>[];
-  for (var i = 0; i < count; i++) {
-    futures.add(service.fibonacci(40 + i));
+  final fibFutures = <Future<int>>[];
+  final fibResults = <int>[];
+  for (var i = 0; i < 3 * count; i++) {
+    final f = service.fibonacci(from + i);
+    store(f, fibFutures, fibResults);
   }
 
-  final results = await Future.wait(futures);
-  Squadron.info('  * results from futures = $results');
+  await report(sw, fibFutures, fibResults);
 
-  await for (var i in service.fibonnacciStream(20, 20 + count * 2)) {
-    Squadron.info('  * received from stream: $i');
+  CancellationToken? token = CancellationToken();
+
+  final group = StreamGroup();
+  for (var i = 0; i < 3; i++) {
+    group.add(service
+        .fibonnacciStream(from + (2 * i) * count, from + (2 * (i + 1)) * count,
+            token: token)
+        .map((fib) {
+      Squadron.info(
+          '  * [${sw.elapsed}] received from stream #$i: $fib (cancelled = ${token.cancelled})');
+    }));
   }
+  group.close();
+
+  try {
+    await group.stream.drain();
+  } on CancelledException {
+    Squadron.info('  * [${sw.elapsed}] cancelled');
+  } catch (ex) {
+    Squadron.shout('  * [${sw.elapsed}] $ex');
+  }
+
+  final futures = <Future>[];
+  final results = [];
+  store(service.doSomething(MyServiceRequest('test')), futures, results);
+  store(service.doSomethingElse(MyServiceRequest('other test')), futures,
+      results);
+
+  await report(sw, futures, results);
 
   Squadron.info('  * Total elapsed time: ${sw.elapsed}');
-  sw.stop();
+}
+
+void store<T>(FutureOr<T> item, List<Future<T>> futures, List<T> results) {
+  if (item is Future<T>) {
+    futures.add(item);
+  } else {
+    results.add(item);
+  }
+}
+
+Future report<T>(Stopwatch sw, List<Future<T>> futures, List<T> results) async {
+  if (futures.isNotEmpty) {
+    results.addAll(await Future.wait(futures));
+    Squadron.info('  * [${sw.elapsed}] results from futures = $results');
+  } else {
+    Squadron.info('  * [${sw.elapsed}] results (direct) = $results');
+  }
 }

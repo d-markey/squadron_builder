@@ -157,9 +157,15 @@ final \$${serviceName}Activator = \$get${serviceName}Activator();
     }
 
     yield '''// Operations map for $serviceName
-Map<int, CommandHandler> _\$get${serviceName}Operations($serviceName instance) => {
-  ${commands.map(_generateCommandHandler).join()}
-};''';
+mixin \$${serviceName}Operations on WorkerService {
+  @override
+  late final Map<int, CommandHandler> operations =
+      _getOperations(this as $serviceName);
+
+  static Map<int, CommandHandler> _getOperations($serviceName svc) => {
+    ${commands.map(_generateCommandHandler).join()}
+  };
+}''';
 
     yield '''// Service initializer
 $serviceName \$${serviceName}Initializer(WorkerRequest startRequest)
@@ -167,10 +173,15 @@ $serviceName \$${serviceName}Initializer(WorkerRequest startRequest)
 ''';
 
     yield '''// Worker for $serviceName
-class ${serviceName}Worker extends Worker implements $serviceName {
+class ${serviceName}Worker extends Worker
+    with \$${serviceName}Operations
+    implements $serviceName {
   ${serviceName}Worker(${service.parameters}) : super(\$${serviceName}Activator${service.serializedArguments.isEmpty ? '' : ', args: [${service.serializedArguments}]'});
 
 ${commands.map(_generateWorkerMethod).join('\n')}
+
+  @override
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
 ${unimplemented.map(_generateUnimplemented).join('\n')}
 
@@ -193,13 +204,18 @@ ${service.accessors.map(_generateUnimplementedAcc).join('\n')}
       }
 
       yield '''// Worker pool for ${service.name}
-class ${service.name}WorkerPool extends WorkerPool<${service.name}Worker> implements ${service.name} {
+class ${service.name}WorkerPool extends WorkerPool<${service.name}Worker>
+    with \$${serviceName}Operations
+    implements ${service.name} {
   ${service.name}WorkerPool($poolParameters) : super(
     () => ${service.name}Worker(${service.arguments}),
     concurrencySettings: concurrencySettings
   );
   
 ${commands.map(_generatePoolMethod).join('\n')}
+
+  @override
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
 ${unimplemented.map(_generateUnimplemented).join('\n')}
 
@@ -220,17 +236,17 @@ ${service.accessors.map(_generateUnimplementedAcc).join('\n')}
   static String _generateCommandHandler(SquadronMethodAnnotation cmd) {
     if (cmd.isStream) {
       return '''
-    ${cmd.id}: (r) => instance.${cmd.name}(${cmd.deserializedArguments})
-    ${cmd.needsSerialization ? '.${cmd.continuation}((res) => ${cmd.serializedResult('res')})' : ''},''';
+    ${cmd.id}: (r) => svc.${cmd.name}(${cmd.deserializedArguments})
+      ${cmd.needsSerialization ? '.${cmd.continuation}((res) => ${cmd.serializedResult('res')})' : ''},''';
     } else if (cmd.needsSerialization) {
       return '''
     ${cmd.id}: (r) async {
-      final res = await instance.${cmd.name}(${cmd.deserializedArguments});
+      final res = await svc.${cmd.name}(${cmd.deserializedArguments});
       return ${cmd.serializedResult('res')};
     },''';
     } else {
       return '''
-    ${cmd.id}: (r) => instance.${cmd.name}(${cmd.deserializedArguments}),''';
+    ${cmd.id}: (r) => svc.${cmd.name}(${cmd.deserializedArguments}),''';
     }
   }
 

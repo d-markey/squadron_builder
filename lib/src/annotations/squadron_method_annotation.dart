@@ -126,16 +126,22 @@ class SquadronMethodAnnotation {
       if (!isToken && sidx > 0) {
         serArgs += ', ';
       }
-      if (param.isOptionalPositional && closeOptParams.isEmpty) {
+      if (param.isNamed) {
+        if (closeOptParams.isEmpty) {
+          closeOptParams = '}';
+          params += '{ ';
+        }
+        if (param.isRequired) {
+          params += 'required ';
+        }
+      } else if (param.isOptionalPositional && closeOptParams.isEmpty) {
         closeOptParams = ']';
         params += '[ ';
-      } else if (param.isNamed && closeOptParams.isEmpty) {
-        closeOptParams = '}';
-        params += '{ ';
       }
+
       final def = param.hasDefaultValue ? ' = ${param.defaultValueCode}' : '';
-      final req = param.isRequiredNamed ? 'required ' : '';
-      params += '$req${param.type} ${param.name}$def';
+      params += '${param.type} ${param.name}$def';
+
       if (param.isNamed) {
         args += '${param.name}: ${param.name}';
         if (isToken) {
@@ -148,9 +154,9 @@ class SquadronMethodAnnotation {
               : param.name;
           deserArgs += isSerializable
               ? (nullable
-                  ? '(r.args[$sidx] == null) ? null : ${param.type.getDisplayString(withNullability: false)}.fromJson(r.args[$sidx])'
-                  : '${param.type.getDisplayString(withNullability: false)}.fromJson(r.args[$sidx])')
-              : 'r.args[$sidx]';
+                  ? '${param.name}: (r.args[$sidx] == null) ? null : ${param.type.getDisplayString(withNullability: false)}.fromJson(r.args[$sidx])'
+                  : '${param.name}: ${param.type.getDisplayString(withNullability: false)}.fromJson(r.args[$sidx])')
+              : '${param.name}: r.args[$sidx]';
           sidx++;
         }
       } else {

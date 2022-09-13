@@ -1,14 +1,11 @@
-class MyServiceConfig {
-  MyServiceConfig(this.name, this.setting);
-
-  final String name;
-  int setting;
-
-  Map<String, dynamic> toJson() => {
-        'n': name,
-        's': setting,
-      };
+class MyServiceConfig<T> {
+  MyServiceConfig(this.name, this.value);
 
   factory MyServiceConfig.fromJson(Map json) =>
-      MyServiceConfig(json['n'], json['s']);
+      MyServiceConfig(json['n'], json['v']);
+
+  final String name;
+  final T value;
+
+  Map<String, dynamic> toJson() => {'n': name, 'v': value};
 }

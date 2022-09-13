@@ -7,51 +7,60 @@ part of 'my_service.dart';
 // **************************************************************************
 
 // Operations map for MyService
-Map<int, CommandHandler> _$getMyServiceOperations(MyService instance) => {
-      1: (r) async {
-        final res =
-            await instance.doSomething(MyServiceRequest.fromJson(r.args[0]));
-        return res.toJson();
-      },
-      2: (r) async {
-        final res = await instance.doSomethingElse(
-            (r.args[0] == null) ? null : MyServiceRequest.fromJson(r.args[0]));
-        return res?.toJson();
-      },
-      3: (r) => instance.fibonacci(r.args[0]),
-      4: (r) =>
-          instance.fibonnacciStream(r.args[0], r.args[1], token: r.cancelToken),
-      5: (r) async {
-        final res = await instance.getConfig();
-        return res.toJson();
-      },
-    };
+mixin $MyServiceOperations on WorkerService {
+  @override
+  late final Map<int, CommandHandler> operations =
+      _getOperations(this as MyService);
+
+  static Map<int, CommandHandler> _getOperations(MyService svc) => {
+        1: (r) async {
+          final res =
+              await svc.doSomething(MyServiceRequest.fromJson(r.args[0]));
+          return res.toJson();
+        },
+        2: (r) async {
+          final res = await svc.doSomethingElse((r.args[0] == null)
+              ? null
+              : MyServiceRequest.fromJson(r.args[0]));
+          return res?.toJson();
+        },
+        3: (r) => svc.fibonacci(r.args[0]),
+        4: (r) =>
+            svc.fibonnacciStream(r.args[0], r.args[1], token: r.cancelToken),
+      };
+}
 
 // Service initializer
 MyService $MyServiceInitializer(WorkerRequest startRequest) =>
-    MyService(MyServiceConfig.fromJson(startRequest.args[0]));
+    MyService(MyServiceConfig<bool>.fromJson(startRequest.args[0]));
 
 // Worker for MyService
-class MyServiceWorker extends Worker implements MyService {
-  MyServiceWorker(MyServiceConfig config)
+class MyServiceWorker extends Worker
+    with $MyServiceOperations
+    implements MyService {
+  MyServiceWorker(MyServiceConfig<bool> config)
       : super($MyServiceActivator, args: [config.toJson()]);
 
   @override
-  Future<MyServiceResponse> doSomething(MyServiceRequest request) => send(
+  Future<MyServiceResponse<dynamic>> doSomething(MyServiceRequest request) =>
+      send(
         1,
         args: [request.toJson()],
         token: null,
         inspectRequest: false,
         inspectResponse: false,
-      ).then((res) => MyServiceResponse.fromJson(res));
+      ).then((res) => MyServiceResponse<dynamic>.fromJson(res));
   @override
-  Future<MyServiceResponse?> doSomethingElse(MyServiceRequest? request) => send(
+  Future<MyServiceResponse<String>?> doSomethingElse(
+          MyServiceRequest? request) =>
+      send(
         2,
         args: [request?.toJson()],
         token: null,
         inspectRequest: false,
         inspectResponse: false,
-      ).then((res) => (res == null) ? null : MyServiceResponse.fromJson(res));
+      ).then((res) =>
+          (res == null) ? null : MyServiceResponse<String>.fromJson(res));
   @override
   Future<int> fibonacci(int i) => send(
         3,
@@ -70,35 +79,29 @@ class MyServiceWorker extends Worker implements MyService {
         inspectRequest: false,
         inspectResponse: false,
       );
-  @override
-  Future<MyServiceResponse> getConfig() => send(
-        5,
-        args: [],
-        token: null,
-        inspectRequest: false,
-        inspectResponse: false,
-      ).then((res) => MyServiceResponse.fromJson(res));
 
   @override
-  MyServiceConfig get config => throw UnimplementedError();
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+
   @override
-  Map<int, FutureOr<dynamic> Function(WorkerRequest)> get operations =>
-      throw UnimplementedError();
+  MyServiceConfig<bool> get config => throw UnimplementedError();
 }
 
 // Worker pool for MyService
 class MyServiceWorkerPool extends WorkerPool<MyServiceWorker>
+    with $MyServiceOperations
     implements MyService {
-  MyServiceWorkerPool(MyServiceConfig config,
+  MyServiceWorkerPool(MyServiceConfig<bool> config,
       {ConcurrencySettings? concurrencySettings})
       : super(() => MyServiceWorker(config),
             concurrencySettings: concurrencySettings);
 
   @override
-  Future<MyServiceResponse> doSomething(MyServiceRequest request) =>
+  Future<MyServiceResponse<dynamic>> doSomething(MyServiceRequest request) =>
       execute((w) => w.doSomething(request));
   @override
-  Future<MyServiceResponse?> doSomethingElse(MyServiceRequest? request) =>
+  Future<MyServiceResponse<String>?> doSomethingElse(
+          MyServiceRequest? request) =>
       execute((w) => w.doSomethingElse(request));
   @override
   Future<int> fibonacci(int i) => execute((w) => w.fibonacci(i));
@@ -106,12 +109,10 @@ class MyServiceWorkerPool extends WorkerPool<MyServiceWorker>
   Stream<int> fibonnacciStream(int start, int end,
           {CancellationToken? token}) =>
       stream((w) => w.fibonnacciStream(start, end, token: token));
-  @override
-  Future<MyServiceResponse> getConfig() => execute((w) => w.getConfig());
 
   @override
-  MyServiceConfig get config => throw UnimplementedError();
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+
   @override
-  Map<int, FutureOr<dynamic> Function(WorkerRequest)> get operations =>
-      throw UnimplementedError();
+  MyServiceConfig<bool> get config => throw UnimplementedError();
 }
