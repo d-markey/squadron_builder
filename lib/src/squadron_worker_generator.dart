@@ -153,7 +153,7 @@ final \$${serviceName}Activator = \$get${serviceName}Activator();
 
     commands.sort((a, b) => a.name.compareTo(b.name));
     for (var i = 0; i < commands.length; i++) {
-      commands[i].setId(i + 1);
+      commands[i].setNum(i + 1);
     }
 
     yield '''// Operations map for $serviceName
@@ -162,8 +162,10 @@ mixin \$${serviceName}Operations on WorkerService {
   late final Map<int, CommandHandler> operations =
       _getOperations(this as $serviceName);
 
+  ${commands.map(_generateCommandIds).join('\n')}
+
   static Map<int, CommandHandler> _getOperations($serviceName svc) => {
-    ${commands.map(_generateCommandHandler).join()}
+    ${commands.map(_generateCommandHandler).join('\n\n')}
   };
 }''';
 
@@ -178,14 +180,14 @@ class ${serviceName}Worker extends Worker
     implements $serviceName {
   ${serviceName}Worker(${service.parameters}) : super(\$${serviceName}Activator${service.serializedArguments.isEmpty ? '' : ', args: [${service.serializedArguments}]'});
 
-${commands.map(_generateWorkerMethod).join('\n')}
+${commands.map((cmd) => _generateWorkerMethod(serviceName, cmd)).join('\n\n')}
 
   @override
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
-${unimplemented.map(_generateUnimplemented).join('\n')}
+${unimplemented.map(_generateUnimplemented).join('\n\n')}
 
-${service.accessors.map(_generateUnimplementedAcc).join('\n')}
+${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
 }
 ''';
 
@@ -212,14 +214,14 @@ class ${service.name}WorkerPool extends WorkerPool<${service.name}Worker>
     concurrencySettings: concurrencySettings
   );
   
-${commands.map(_generatePoolMethod).join('\n')}
+${commands.map(_generatePoolMethod).join('\n\n')}
 
   @override
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
-${unimplemented.map(_generateUnimplemented).join('\n')}
+${unimplemented.map(_generateUnimplemented).join('\n\n')}
 
-${service.accessors.map(_generateUnimplementedAcc).join('\n')}
+${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
 }
 ''';
     }
@@ -232,6 +234,9 @@ ${service.accessors.map(_generateUnimplementedAcc).join('\n')}
       return '${service.name}(${service.deserializedArguments})';
     }
   }
+
+  static String _generateCommandIds(SquadronMethodAnnotation cmd) =>
+      'static const int ${cmd.id} = ${cmd.num};';
 
   static String _generateCommandHandler(SquadronMethodAnnotation cmd) {
     if (cmd.isStream) {
@@ -266,11 +271,13 @@ ${service.accessors.map(_generateUnimplementedAcc).join('\n')}
   set ${acc.name.replaceAll('=', '')}(${acc.returnType} value)
     => throw UnimplementedError();''';
 
-  static String _generateWorkerMethod(SquadronMethodAnnotation cmd) => '''
+  static String _generateWorkerMethod(
+          String serviceName, SquadronMethodAnnotation cmd) =>
+      '''
   @override
   ${cmd.returnType} ${cmd.name}(${cmd.parameters})
     => ${cmd.workerExecutor}(
-        ${cmd.id}, 
+        \$${serviceName}Operations.${cmd.id}, 
         args: [ ${cmd.serializedArguments} ], 
         token: ${cmd.cancellationToken}, 
         inspectRequest: ${cmd.inspectRequest}, 

@@ -1,3 +1,7 @@
+## 0.9.0
+
+- Serialize arguments/return values when `toJson()`/`fromJson()` is available.
+
 ## 0.7.1
 
 - Annotations `SquadronService` + `SquadronMethod`.

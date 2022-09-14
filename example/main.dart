@@ -10,11 +10,11 @@ import 'my_service_request.dart';
 void main() async {
   Squadron.setId('MAIN');
   Squadron.setLogger(ConsoleSquadronLogger());
-  Squadron.logLevel = SquadronLogLevel.all;
+  Squadron.logLevel = SquadronLogLevel.info;
 
   int count = 2;
 
-  final config = MyServiceConfig('trace', false);
+  final config = MyServiceConfig('trace', true);
 
   Squadron.info('Computing with MyService (single-threaded)');
   await computeWith(MyService(config), count);
@@ -48,6 +48,10 @@ Future computeWith(MyService service, int count) async {
   await report(sw, fibFutures, fibResults);
 
   CancellationToken? token = CancellationToken();
+  Timer(Duration(milliseconds: 500), () {
+    token.cancel();
+    Squadron.info('Token cancelled');
+  });
 
   final group = StreamGroup();
   for (var i = 0; i < 3; i++) {
@@ -57,17 +61,14 @@ Future computeWith(MyService service, int count) async {
         .map((fib) {
       Squadron.info(
           '  * [${sw.elapsed}] received from stream #$i: $fib (cancelled = ${token.cancelled})');
+    }).handleError((ex) {
+      Squadron.info(
+          '  * [${sw.elapsed}] error from stream #$i: ${ex.runtimeType} (cancelled = ${token.cancelled})');
     }));
   }
   group.close();
 
-  try {
-    await group.stream.drain();
-  } on CancelledException {
-    Squadron.info('  * [${sw.elapsed}] cancelled');
-  } catch (ex) {
-    Squadron.shout('  * [${sw.elapsed}] $ex');
-  }
+  await group.stream.drain();
 
   final futures = <Future>[];
   final results = [];

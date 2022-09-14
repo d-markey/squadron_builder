@@ -11,7 +11,7 @@ import 'my_service_response.dart';
 
 part 'my_service.worker.g.dart';
 
-@SquadronService(baseUrl: '/workers')
+@SquadronService(web: false)
 class MyService extends WorkerService with $MyServiceOperations {
   MyService(this.config);
 
@@ -20,7 +20,7 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SquadronMethod()
   FutureOr<int> fibonacci(int i) {
     if (config.value) {
-      Squadron.fine('fibonacci($i)');
+      Squadron.info('fibonacci($i)');
     }
     return _fib(i);
   }
@@ -31,7 +31,7 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SquadronMethod()
   FutureOr<MyServiceResponse> doSomething(MyServiceRequest request) {
     if (config.value) {
-      Squadron.fine('doSomething(${jsonEncode(request.toJson())})');
+      Squadron.info('doSomething(${jsonEncode(request.toJson())})');
     }
     return MyServiceResponse('${request.payload} done');
   }
@@ -40,7 +40,7 @@ class MyService extends WorkerService with $MyServiceOperations {
   FutureOr<MyServiceResponse<String>?> doSomethingElse(
       MyServiceRequest? request) {
     if (config.value) {
-      Squadron.fine('doSomethingElse(${jsonEncode(request?.toJson())})');
+      Squadron.info('doSomethingElse(${jsonEncode(request?.toJson())})');
     }
     return MyServiceResponse('${request?.payload ?? '<no payload>'} done too');
   }
@@ -49,16 +49,12 @@ class MyService extends WorkerService with $MyServiceOperations {
   Stream<int> fibonnacciStream(int start, int end,
       {CancellationToken? token}) async* {
     if (config.value) {
-      Squadron.fine('fibonnacciStream($start, $end)');
+      Squadron.info('fibonnacciStream($start, $end)');
     }
     var p2 = _fib(start - 2);
     var p1 = _fib(start - 1);
     for (var i = start; i < end; i++) {
-      final cancelled = token?.exception;
-      if (cancelled != null) {
-        Squadron.info('operation cancelled');
-        break;
-      }
+      if (await token?.isCancelled(throwIfCancelled: true) ?? false) return;
       final p0 = p2 + p1;
       yield p0;
       p2 = p1;

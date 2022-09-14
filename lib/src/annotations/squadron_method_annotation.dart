@@ -9,17 +9,20 @@ import 'serialization_inspector.dart';
 
 class SquadronMethodAnnotation {
   SquadronMethodAnnotation._(
-      this.name, this.inspectRequest, this.inspectResponse);
+      this.name, this.inspectRequest, this.inspectResponse)
+      : id = '_\$${name}Id';
 
   final String name;
 
   final bool inspectRequest;
   final bool inspectResponse;
 
-  int? _id;
-  int get id => _id ?? -1;
+  int? _num;
+  int get num => _num ?? -1;
 
-  void setId(int id) => _id ??= id;
+  void setNum(int num) => _num ??= num;
+
+  final String id;
 
   String _returnType = '';
   String get returnType => _returnType;
