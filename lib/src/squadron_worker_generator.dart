@@ -1,10 +1,14 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:dart_style/dart_style.dart';
+import 'package:pub_semver/pub_semver.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron_annotations.dart';
 
 import 'annotations/squadron_method_annotation.dart';
 import 'annotations/squadron_service_annotation.dart';
+
+final _formatter = DartFormatter();
 
 class SquadronWorkerGenerator extends GeneratorForAnnotation<SquadronService> {
   @override
@@ -14,7 +18,19 @@ class SquadronWorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     if (classElt is! ClassElement) return const [];
     // implementation moved to specific methods to facilitate unit tests
     final service = SquadronServiceAnnotation.load(classElt)!;
-    final workerCode = generateMapWorkerAndPool(service);
+
+    bool allowFinalizers = false;
+    try {
+      final oldSdk = classElt
+          .library.session.analysisContext.analysisOptions.sdkVersionConstraint
+          ?.difference(VersionConstraint.parse('>=2.17'));
+
+      allowFinalizers = (oldSdk != null && oldSdk.isEmpty);
+    } catch (ex) {
+      allowFinalizers = false;
+    }
+
+    final workerCode = generateMapWorkerAndPool(service, allowFinalizers);
     generateEntryPoints(buildStep, service);
     return workerCode;
   }
@@ -44,7 +60,7 @@ class SquadronWorkerGenerator extends GeneratorForAnnotation<SquadronService> {
 
     if (vmOutput != null) {
       final code = _generateVmCode(serviceImport, service, header);
-      buildStep.writeAsString(vmOutput, code);
+      buildStep.writeAsString(vmOutput, _formatter.format(code));
     }
 
     if (webOutput != null) {
@@ -52,18 +68,18 @@ class SquadronWorkerGenerator extends GeneratorForAnnotation<SquadronService> {
           ? '${webOutput.path}.js'
           : '${service.baseUrl}/${webOutput.pathSegments.last}.js';
       final code = _generateWebCode(serviceImport, service, workerUrl, header);
-      buildStep.writeAsString(webOutput, code);
+      buildStep.writeAsString(webOutput, _formatter.format(code));
     }
 
     if (vmOutput != null && webOutput != null && stubOutput != null) {
       final code = _generateStubCode(service.name, header);
-      buildStep.writeAsString(stubOutput, code);
+      buildStep.writeAsString(stubOutput, _formatter.format(code));
     }
 
     if (activatorOutput != null) {
       final code = _generateActivatorCode(
           stubOutput, vmOutput, webOutput, service.name, header);
-      buildStep.writeAsString(activatorOutput, code);
+      buildStep.writeAsString(activatorOutput, _formatter.format(code));
     }
   }
 
@@ -134,7 +150,7 @@ final \$${serviceName}Activator = \$get${serviceName}Activator();
   }
 
   static Iterable<String> generateMapWorkerAndPool(
-      SquadronServiceAnnotation service) sync* {
+      SquadronServiceAnnotation service, bool allowFinalizers) sync* {
     final serviceName = service.name;
     final commands = <SquadronMethodAnnotation>[];
     final unimplemented = <SquadronMethodAnnotation>[];
@@ -212,8 +228,12 @@ class ${service.name}WorkerPool extends WorkerPool<${service.name}Worker>
   ${service.name}WorkerPool($poolParameters) : super(
     () => ${service.name}Worker(${service.arguments}),
     concurrencySettings: concurrencySettings
-  );
-  
+  )${allowFinalizers ? ''' {
+    _finalizer.attach(this, this, detach: this);
+  }
+
+  static final _finalizer = Finalizer<${service.name}WorkerPool>((p) => p.stop());''' : ';'}
+
 ${commands.map(_generatePoolMethod).join('\n\n')}
 
   @override
@@ -282,7 +302,7 @@ ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
         token: ${cmd.cancellationToken}, 
         inspectRequest: ${cmd.inspectRequest}, 
         inspectResponse: ${cmd.inspectResponse},
-      )${cmd.needsSerialization ? '.${cmd.continuation}((res) => ${cmd.deserializedResult('res')})' : ''};''';
+      )${cmd.needsDeserialization ? '.${cmd.continuation}((res) => ${cmd.deserializedResult('res')})' : ''};''';
 
   static String _generatePoolMethod(SquadronMethodAnnotation cmd) => '''
   @override

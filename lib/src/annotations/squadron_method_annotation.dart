@@ -1,10 +1,10 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron_annotations.dart';
 
 import 'annotations_reader.dart';
+import 'serialization_info.dart';
 import 'serialization_inspector.dart';
 
 class SquadronMethodAnnotation {
@@ -27,18 +27,11 @@ class SquadronMethodAnnotation {
   String _returnType = '';
   String get returnType => _returnType;
 
-  bool _needsSerialization = false;
-  bool get needsSerialization => _needsSerialization;
-
-  bool _nullable = false;
-  bool get nullable => _nullable;
-
   bool _isStream = false;
   bool get isStream => _isStream;
 
   String get workerExecutor => _isStream ? 'stream' : 'send';
   String get poolExecutor => _isStream ? 'stream' : 'execute';
-
   String get continuation => _isStream ? 'map' : 'then';
 
   String _parameters = '';
@@ -56,13 +49,18 @@ class SquadronMethodAnnotation {
   String? _cancellationToken;
   String get cancellationToken => _cancellationToken ?? 'null';
 
-  static String _asIs(String res) => res;
-
-  String Function(String res) _serializedResult = _asIs;
+  String Function(String res) _serializedResult = SerializationInfo.asIs;
   String Function(String res) get serializedResult => _serializedResult;
+  bool get needsSerialization => _serializedResult != SerializationInfo.asIs;
 
-  String Function(String res) _deserializedResult = _asIs;
+  String Function(String res) _deserializedResult = SerializationInfo.asIs;
   String Function(String res) get deserializedResult => _deserializedResult;
+  bool get needsDeserialization =>
+      _deserializedResult != SerializationInfo.asIs;
+
+  static final _futureOr = RegExp('^FutureOr\\b');
+
+  static final _inspector = SerializationInspector();
 
   static bool _isCancellationToken(ParameterElement param) {
     final locationComponents =
@@ -72,10 +70,6 @@ class SquadronMethodAnnotation {
             'CancellationToken');
   }
 
-  static final _futureOr = RegExp('^FutureOr\\b');
-
-  static final _inspector = SerializationInspector();
-
   void _load(MethodElement methodElement) {
     var params = '', args = '', serArgs = '', deserArgs = '';
     var closeOptParams = '';
@@ -83,38 +77,30 @@ class SquadronMethodAnnotation {
 
     var returnType = methodElement.returnType;
 
-    DartType? type;
     if (!returnType.isDartAsyncFuture &&
         !returnType.isDartAsyncFutureOr &&
         !returnType.isDartAsyncStream) {
       throw InvalidGenerationSourceError(
-          '${methodElement.librarySource.fullName}: Service method \'${methodElement.enclosingElement3.displayName}.${methodElement.name}\' should return a Future, a FutureOr, or a Stream.');
+          '${methodElement.librarySource.fullName}: Service method \'${methodElement.enclosingElement3.displayName}.${methodElement.name}\' must return a Future, a FutureOr, or a Stream.');
     }
 
-    if (returnType is ParameterizedType) {
-      type = returnType.typeArguments.first;
-      type.element2!.visitChildren(_inspector);
-      _nullable = (type.nullabilitySuffix != NullabilitySuffix.none);
-      _needsSerialization = _inspector.isSerializable(type);
-      if (_needsSerialization) {
-        if (_nullable) {
-          _serializedResult = (String res) => '$res?.toJson()';
-          _deserializedResult = (String res) =>
-              '($res == null) ? null : ${type!.getDisplayString(withNullability: false)}.fromJson($res)';
-        } else {
-          _serializedResult = (String res) => '$res.toJson()';
-          _deserializedResult = (String res) =>
-              '${type!.getDisplayString(withNullability: false)}.fromJson($res)';
-        }
-      }
+    final explicitSerialiser =
+        SerializationInfo.getExplicitSerializer(methodElement);
+
+    if (explicitSerialiser != null || returnType is ParameterizedType) {
+      final type = returnType is ParameterizedType
+          ? returnType.typeArguments.first
+          : returnType;
+      final generators = _inspector.getSerializationGenerators(type,
+          explicitSerializer: explicitSerialiser);
+      _deserializedResult = generators.deserializer;
+      _serializedResult = generators.serializer;
     }
 
     for (var n = 0; n < methodElement.parameters.length; n++) {
       final param = methodElement.parameters[n];
 
-      param.type.element2?.visitChildren(_inspector);
-      final isSerializable = _inspector.isSerializable(param.type);
-      final nullable = (param.type.nullabilitySuffix != NullabilitySuffix.none);
+      final serializer = SerializationInfo.getExplicitSerializer(param);
 
       final isToken =
           (_cancellationToken == null) && _isCancellationToken(param);
@@ -146,39 +132,19 @@ class SquadronMethodAnnotation {
       params += '${param.type} ${param.name}$def';
 
       if (param.isNamed) {
-        args += '${param.name}: ${param.name}';
-        if (isToken) {
-          deserArgs += '${param.name}: r.cancelToken';
-        } else {
-          serArgs += isSerializable
-              ? (nullable
-                  ? '${param.name}?.toJson()'
-                  : '${param.name}.toJson()')
-              : param.name;
-          deserArgs += isSerializable
-              ? (nullable
-                  ? '${param.name}: (r.args[$sidx] == null) ? null : ${param.type.getDisplayString(withNullability: false)}.fromJson(r.args[$sidx])'
-                  : '${param.name}: ${param.type.getDisplayString(withNullability: false)}.fromJson(r.args[$sidx])')
-              : '${param.name}: r.args[$sidx]';
-          sidx++;
-        }
+        args += '${param.name}: ';
+        deserArgs += '${param.name}: ';
+      }
+
+      args += param.name;
+      if (isToken) {
+        deserArgs += 'r.cancelToken';
       } else {
-        args += param.name;
-        if (isToken) {
-          deserArgs += 'r.cancelToken';
-        } else {
-          serArgs += isSerializable
-              ? (nullable
-                  ? '${param.name}?.toJson()'
-                  : '${param.name}.toJson()')
-              : param.name;
-          deserArgs += isSerializable
-              ? (nullable
-                  ? '(r.args[$sidx] == null) ? null : ${param.type.getDisplayString(withNullability: false)}.fromJson(r.args[$sidx])'
-                  : '${param.type.getDisplayString(withNullability: false)}.fromJson(r.args[$sidx])')
-              : 'r.args[$sidx]';
-          sidx++;
-        }
+        final generators = _inspector.getSerializationGenerators(param.type,
+            explicitSerializer: serializer);
+        serArgs += generators.serializer(param.name);
+        deserArgs += generators.deserializer('r.args[$sidx]');
+        sidx++;
       }
     }
 

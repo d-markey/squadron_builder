@@ -10,26 +10,46 @@ import 'my_service_request.dart';
 void main() async {
   Squadron.setId('MAIN');
   Squadron.setLogger(ConsoleSquadronLogger());
-  Squadron.logLevel = SquadronLogLevel.info;
+  Squadron.debugMode = false;
+  Squadron.logLevel =
+      Squadron.debugMode ? SquadronLogLevel.all : SquadronLogLevel.info;
 
   int count = 2;
 
-  final config = MyServiceConfig('trace', true);
+  final config = MyServiceConfig('trace', false);
 
+  // FIRST RUN: single-threaded (only main thread)
   Squadron.info('Computing with MyService (single-threaded)');
   await computeWith(MyService(config), count);
 
+  // SECOND RUN: one worker (= main thread + worker thread)
+  Squadron.info('Computing with MyServiceWorker (one thread)');
+  final worker = MyServiceWorker(config);
+  await computeWith(worker, count);
+
+  // clean up worker...
+  Squadron.info(
+      '${worker.stats.id} (${worker.stats.status}): totalWorkload=${worker.stats.totalWorkload}, upTime=${worker.stats.upTime}, idleTime=${worker.stats.idleTime}');
+  worker.stop();
+
+  // SECOND RUN: worker pool (= main thread + n worker threads)
   Squadron.info('Computing with MyServiceWorkerPool (multi-threaded)');
-  final pool = MyServiceWorkerPool(config,
+  var pool = MyServiceWorkerPool(config,
       concurrencySettings: ConcurrencySettings(
         minWorkers: count,
         maxWorkers: 2 * count,
         maxParallel: 1,
       ));
-
-  // await pool.start();
   await computeWith(pool, count);
+
+  // clean up pool...
+  pool.stop((w) => w.idleTime.inMilliseconds > 500);
+  Squadron.info(pool.fullStats.map((s) =>
+      '${s.id} (${s.status}): totalWorkload=${s.totalWorkload}, upTime=${s.upTime}, idleTime=${s.idleTime}'));
+  await Future.delayed(Duration(milliseconds: 100));
   pool.stop();
+  Squadron.info(pool.fullStats.map((s) =>
+      '${s.id} (${s.status}): totalWorkload=${s.totalWorkload}, upTime=${s.upTime}, idleTime=${s.idleTime}'));
 }
 
 Future computeWith(MyService service, int count) async {
@@ -47,11 +67,9 @@ Future computeWith(MyService service, int count) async {
 
   await report(sw, fibFutures, fibResults);
 
-  CancellationToken? token = CancellationToken();
-  Timer(Duration(milliseconds: 500), () {
-    token.cancel();
-    Squadron.info('Token cancelled');
-  });
+  CancellationToken token = CancellationToken();
+  Timer(Duration(milliseconds: 500), token.cancel);
+  token.addListener(() => Squadron.info('Token cancelled'));
 
   final group = StreamGroup();
   for (var i = 0; i < 3; i++) {
@@ -78,6 +96,12 @@ Future computeWith(MyService service, int count) async {
 
   await report(sw, futures, results);
 
+  final list = await service.getSomeList(40);
+
+  if (list != null) {
+    await report(sw, [], list);
+  }
+
   Squadron.info('  * Total elapsed time: ${sw.elapsed}');
 }
 
@@ -96,4 +120,8 @@ Future report<T>(Stopwatch sw, List<Future<T>> futures, List<T> results) async {
   } else {
     Squadron.info('  * [${sw.elapsed}] results (direct) = $results');
   }
+}
+
+extension BigIntJson on BigInt {
+  String toJson() => toString();
 }

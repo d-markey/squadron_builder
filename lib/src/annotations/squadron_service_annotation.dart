@@ -1,5 +1,4 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:squadron/squadron_annotations.dart';
 
 import 'annotations_reader.dart';
@@ -54,15 +53,11 @@ class SquadronServiceAnnotation {
 
     if (ctorElement != null && ctorElement.parameters.isNotEmpty) {
       var closeOptParams = '';
-      var sidx = 0;
 
       for (var n = 0; n < ctorElement.parameters.length; n++) {
         final param = ctorElement.parameters[n];
 
-        param.type.element2?.visitChildren(_inspector);
-        final isSerializable = _inspector.isSerializable(param.type);
-        final nullable =
-            (param.type.nullabilitySuffix != NullabilitySuffix.none);
+        final generators = _inspector.getSerializationGenerators(param.type);
 
         if (n > 0) {
           params += ', ';
@@ -83,32 +78,14 @@ class SquadronServiceAnnotation {
         final req = param.isRequiredNamed ? 'required ' : '';
         params += '$req${param.type} ${param.name}$def';
         if (param.isNamed) {
-          args += '${param.name}: ${param.name}';
-          serArgs += isSerializable
-              ? (nullable
-                  ? '${param.name}?.toJson()'
-                  : '${param.name}.toJson()')
-              : param.name;
-          deserArgs += isSerializable
-              ? (nullable
-                  ? '${param.name}: (startRequest.args[$sidx] == null) ? null : ${param.type.getDisplayString(withNullability: false)}.fromJson(startRequest.args[$sidx])'
-                  : '${param.name}: ${param.type.getDisplayString(withNullability: false)}.fromJson(startRequest.args[$sidx])')
-              : '${param.name}: startRequest.args[$sidx]';
-          sidx++;
-        } else {
-          args += param.name;
-          serArgs += isSerializable
-              ? (nullable
-                  ? '${param.name}?.toJson()'
-                  : '${param.name}.toJson()')
-              : param.name;
-          deserArgs += isSerializable
-              ? (nullable
-                  ? '(startRequest.args[$sidx] == null) ? null : ${param.type.getDisplayString(withNullability: false)}.fromJson(startRequest.args[$sidx])'
-                  : '${param.type.getDisplayString(withNullability: false)}.fromJson(startRequest.args[$sidx])')
-              : 'startRequest.args[$sidx]';
-          sidx++;
+          args += '${param.name}: ';
+          serArgs += '${param.name}: ';
+          deserArgs += '${param.name}: ';
         }
+
+        args += param.name;
+        serArgs += generators.serializer(param.name);
+        deserArgs += generators.deserializer('startRequest.args[$n]');
       }
 
       if (closeOptParams.isNotEmpty) {

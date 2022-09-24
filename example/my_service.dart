@@ -54,11 +54,34 @@ class MyService extends WorkerService with $MyServiceOperations {
     var p2 = _fib(start - 2);
     var p1 = _fib(start - 1);
     for (var i = start; i < end; i++) {
-      if (await token?.isCancelled(throwIfCancelled: true) ?? false) return;
+      if (await token?.isCancelled(throwIfCancelled: true) ?? false) {
+        return;
+      }
       final p0 = p2 + p1;
       yield p0;
       p2 = p1;
       p1 = p0;
     }
+  }
+
+  @SquadronMethod()
+  FutureOr<Iterable<String?>?> getSomeIterable(int count) {
+    if (config.value) {
+      Squadron.info('getSomeIterable($count)');
+    }
+    if (count < 1) return null;
+    return Iterable.generate(count + 1, (i) => (i % 7 == 0) ? null : 'num = $i')
+        .skip(1);
+  }
+
+  @SquadronMethod()
+  Future<List<String?>?> getSomeList(int count) async {
+    if (config.value) {
+      Squadron.info('getSomeList($count)');
+    }
+    if (count < 1) return null;
+    return Iterable.generate(count + 1, (i) => (i % 7 == 0) ? null : 'num = $i')
+        .skip(1)
+        .toList();
   }
 }

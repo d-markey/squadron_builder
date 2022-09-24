@@ -16,6 +16,8 @@ mixin $MyServiceOperations on WorkerService {
   static const int _$doSomethingElseId = 2;
   static const int _$fibonacciId = 3;
   static const int _$fibonnacciStreamId = 4;
+  static const int _$getSomeIterableId = 5;
+  static const int _$getSomeListId = 6;
 
   static Map<int, CommandHandler> _getOperations(MyService svc) => {
         _$doSomethingId: (r) async {
@@ -32,6 +34,8 @@ mixin $MyServiceOperations on WorkerService {
         _$fibonacciId: (r) => svc.fibonacci(r.args[0]),
         _$fibonnacciStreamId: (r) =>
             svc.fibonnacciStream(r.args[0], r.args[1], token: r.cancelToken),
+        _$getSomeIterableId: (r) => svc.getSomeIterable(r.args[0]),
+        _$getSomeListId: (r) => svc.getSomeList(r.args[0]),
       };
 }
 
@@ -44,7 +48,14 @@ class MyServiceWorker extends Worker
     with $MyServiceOperations
     implements MyService {
   MyServiceWorker(MyServiceConfig<bool> config)
-      : super($MyServiceActivator, args: [config.toJson()]);
+      : super($MyServiceActivator, args: [config.toJson()]) {
+    _finalizer.attach(this, this, detach: this);
+  }
+
+  static final _finalizer = Finalizer<MyServiceWorker>((w) {
+    Squadron.info('FINALIZING WORKER ${w.workerId} $w');
+    w.stop();
+  });
 
   @override
   Future<MyServiceResponse<dynamic>> doSomething(MyServiceRequest request) =>
@@ -89,6 +100,24 @@ class MyServiceWorker extends Worker
       );
 
   @override
+  Future<Iterable<String?>?> getSomeIterable(int count) => send(
+        $MyServiceOperations._$getSomeIterableId,
+        args: [count],
+        token: null,
+        inspectRequest: false,
+        inspectResponse: false,
+      ).then((res) => res?.cast<String?>());
+
+  @override
+  Future<List<String?>?> getSomeList(int count) => send(
+        $MyServiceOperations._$getSomeListId,
+        args: [count],
+        token: null,
+        inspectRequest: false,
+        inspectResponse: false,
+      ).then((res) => res?.cast<String?>().toList());
+
+  @override
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
   @override
@@ -102,7 +131,11 @@ class MyServiceWorkerPool extends WorkerPool<MyServiceWorker>
   MyServiceWorkerPool(MyServiceConfig<bool> config,
       {ConcurrencySettings? concurrencySettings})
       : super(() => MyServiceWorker(config),
-            concurrencySettings: concurrencySettings);
+            concurrencySettings: concurrencySettings) {
+    _finalizer.attach(this, this, detach: this);
+  }
+
+  static final _finalizer = Finalizer<MyServiceWorkerPool>((p) => p.stop());
 
   @override
   Future<MyServiceResponse<dynamic>> doSomething(MyServiceRequest request) =>
@@ -120,6 +153,14 @@ class MyServiceWorkerPool extends WorkerPool<MyServiceWorker>
   Stream<int> fibonnacciStream(int start, int end,
           {CancellationToken? token}) =>
       stream((w) => w.fibonnacciStream(start, end, token: token));
+
+  @override
+  Future<Iterable<String?>?> getSomeIterable(int count) =>
+      execute((w) => w.getSomeIterable(count));
+
+  @override
+  Future<List<String?>?> getSomeList(int count) =>
+      execute((w) => w.getSomeList(count));
 
   @override
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
