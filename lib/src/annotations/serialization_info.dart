@@ -82,7 +82,7 @@ class SerializationInfo {
       DartObject? explicitSerializer}) {
     final useSerializer = explicitSerializer ?? serializer;
     if (useSerializer != null) {
-      var serName = useSerializer!.toTypeValue().toString();
+      var serName = useSerializer.toTypeValue().toString();
       if (serName.endsWith('*')) {
         serName = serName.substring(0, serName.length - 1);
       }
@@ -119,7 +119,7 @@ class SerializationInfo {
     final useSerializer = explicitSerializer ?? serializer;
 
     if (useSerializer != null) {
-      var serName = useSerializer!.toTypeValue().toString();
+      var serName = useSerializer.toTypeValue().toString();
       if (serName.endsWith('*')) {
         serName = serName.substring(0, serName.length - 1);
       }

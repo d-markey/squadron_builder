@@ -1,3 +1,7 @@
+## 0.9.1
+
+- Upgrade dependencies.
+
 ## 0.9.0
 
 - Serialize arguments/return values when `toJson()`/`fromJson()` is available.
