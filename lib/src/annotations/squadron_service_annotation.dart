@@ -2,7 +2,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:squadron/squadron_annotations.dart';
 
 import 'annotations_reader.dart';
-import 'serialization_inspector.dart';
+import 'marshalling_manager.dart';
 
 class SquadronServiceAnnotation {
   SquadronServiceAnnotation._(
@@ -35,7 +35,7 @@ class SquadronServiceAnnotation {
   final String serializedArguments;
   final String deserializedArguments;
 
-  static final _inspector = SerializationInspector();
+  static final _inspector = MarshallingManager();
 
   static SquadronServiceAnnotation? load(ClassElement classElement) {
     final reader = AnnotationReader<SquadronService>(classElement);
@@ -57,7 +57,11 @@ class SquadronServiceAnnotation {
       for (var n = 0; n < ctorElement.parameters.length; n++) {
         final param = ctorElement.parameters[n];
 
-        final generators = _inspector.getSerializationGenerators(param.type);
+        final explicitMarshaller =
+            AnnotationReader.getExplicitMarshaller(param);
+
+        final marshaller =
+            _inspector.getMarshaller(param.type, explicit: explicitMarshaller);
 
         if (n > 0) {
           params += ', ';
@@ -84,8 +88,9 @@ class SquadronServiceAnnotation {
         }
 
         args += param.name;
-        serArgs += generators.serializer(param.name);
-        deserArgs += generators.deserializer('startRequest.args[$n]');
+        serArgs += marshaller.serialize(param.type, param.name);
+        deserArgs +=
+            marshaller.deserialize(param.type, 'startRequest.args[$n]');
       }
 
       if (closeOptParams.isNotEmpty) {

@@ -12,30 +12,40 @@ mixin $MyServiceOperations on WorkerService {
   late final Map<int, CommandHandler> operations =
       _getOperations(this as MyService);
 
-  static const int _$doSomethingId = 1;
-  static const int _$doSomethingElseId = 2;
+  static const int _$explicitEchoWithExplicitResultId = 1;
+  static const int _$explicitEchoWithJsonResultId = 2;
   static const int _$fibonacciId = 3;
-  static const int _$fibonnacciStreamId = 4;
-  static const int _$getSomeIterableId = 5;
-  static const int _$getSomeListId = 6;
+  static const int _$fibonacciList1Id = 4;
+  static const int _$fibonacciList2Id = 5;
+  static const int _$fibonacciStreamId = 6;
+  static const int _$jsonEchoWithExplicitResultId = 7;
+  static const int _$jsonEchoWithJsonResultId = 8;
+  static const int _$jsonEncodeEchoId = 9;
 
   static Map<int, CommandHandler> _getOperations(MyService svc) => {
-        _$doSomethingId: (r) async {
-          final res =
-              await svc.doSomething(MyServiceRequest.fromJson(r.args[0]));
-          return res.toJson();
-        },
-        _$doSomethingElseId: (r) async {
-          final res = await svc.doSomethingElse((r.args[0] == null)
-              ? null
-              : MyServiceRequest.fromJson(r.args[0]));
-          return res?.toJson();
-        },
-        _$fibonacciId: (r) => svc.fibonacci(r.args[0]),
-        _$fibonnacciStreamId: (r) =>
-            svc.fibonnacciStream(r.args[0], r.args[1], token: r.cancelToken),
-        _$getSomeIterableId: (r) => svc.getSomeIterable(r.args[0]),
-        _$getSomeListId: (r) => svc.getSomeList(r.args[0]),
+        _$explicitEchoWithExplicitResultId: (req) async =>
+            MyServiceResponseOfStringToByteBuffer.instance.marshall(
+                (await svc.explicitEchoWithExplicitResult(
+                    MyServiceRequestGenericToString.instance
+                        .unmarshall(req.args[0])))),
+        _$explicitEchoWithJsonResultId: (req) => svc.explicitEchoWithJsonResult(
+            (const MyServiceRequestToString()).unmarshall(req.args[0])),
+        _$fibonacciId: (req) => svc.fibonacci(req.args[0]),
+        _$fibonacciList1Id: (req) async => (const ListIntMarshaller())
+            .marshall((await svc.fibonacciList1(req.args[0], req.args[1]))),
+        _$fibonacciList2Id: (req) async => listIntMarshaller
+            .marshall((await svc.fibonacciList2(req.args[0], req.args[1]))),
+        _$fibonacciStreamId: (req) =>
+            svc.fibonacciStream(req.args[0], req.args[1]),
+        _$jsonEchoWithExplicitResultId: (req) async =>
+            (const MyServiceResponseOfStringToByteBuffer()).marshall(
+                (await svc.jsonEchoWithExplicitResult(
+                    MyServiceRequest.fromJson(req.args[0])))),
+        _$jsonEchoWithJsonResultId: (req) =>
+            svc.jsonEchoWithJsonResult(MyServiceRequest.fromJson(req.args[0])),
+        _$jsonEncodeEchoId: (req) async => (const MyServiceResponseToJson())
+            .marshall((await svc.jsonEncodeEcho(
+                MyServiceRequestToString.instance.unmarshall(req.args[0])))),
       };
 }
 
@@ -47,37 +57,31 @@ MyService $MyServiceInitializer(WorkerRequest startRequest) =>
 class MyServiceWorker extends Worker
     with $MyServiceOperations
     implements MyService {
-  MyServiceWorker(MyServiceConfig<bool> config)
-      : super($MyServiceActivator, args: [config.toJson()]) {
-    _finalizer.attach(this, this, detach: this);
-  }
-
-  static final _finalizer = Finalizer<MyServiceWorker>((w) {
-    Squadron.info('FINALIZING WORKER ${w.workerId} $w');
-    w.stop();
-  });
+  MyServiceWorker(MyServiceConfig<bool> trace)
+      : super($MyServiceActivator, args: [trace.toJson()]);
 
   @override
-  Future<MyServiceResponse<dynamic>> doSomething(MyServiceRequest request) =>
+  Future<MyServiceResponse<String>> explicitEchoWithExplicitResult(
+          MyServiceRequest request) =>
       send(
-        $MyServiceOperations._$doSomethingId,
-        args: [request.toJson()],
-        token: null,
-        inspectRequest: false,
-        inspectResponse: false,
-      ).then((res) => MyServiceResponse<dynamic>.fromJson(res));
-
-  @override
-  Future<MyServiceResponse<String>?> doSomethingElse(
-          MyServiceRequest? request) =>
-      send(
-        $MyServiceOperations._$doSomethingElseId,
-        args: [request?.toJson()],
+        $MyServiceOperations._$explicitEchoWithExplicitResultId,
+        args: [MyServiceRequestGenericToString.instance.marshall(request)],
         token: null,
         inspectRequest: false,
         inspectResponse: false,
       ).then((res) =>
-          (res == null) ? null : MyServiceResponse<String>.fromJson(res));
+          MyServiceResponseOfStringToByteBuffer.instance.unmarshall(res));
+
+  @override
+  Future<MyServiceResponse<String>> explicitEchoWithJsonResult(
+          MyServiceRequest request) =>
+      send(
+        $MyServiceOperations._$explicitEchoWithJsonResultId,
+        args: [(const MyServiceRequestToString()).marshall(request)],
+        token: null,
+        inspectRequest: false,
+        inspectResponse: false,
+      );
 
   @override
   Future<int> fibonacci(int i) => send(
@@ -89,82 +93,123 @@ class MyServiceWorker extends Worker
       );
 
   @override
-  Stream<int> fibonnacciStream(int start, int end,
-          {CancellationToken? token}) =>
-      stream(
-        $MyServiceOperations._$fibonnacciStreamId,
-        args: [start, end],
-        token: token,
+  Future<List<int>> fibonacciList1(int s, int e) => send(
+        $MyServiceOperations._$fibonacciList1Id,
+        args: [s, e],
+        token: null,
+        inspectRequest: false,
+        inspectResponse: false,
+      ).then((res) => (const ListIntMarshaller()).unmarshall(res));
+
+  @override
+  Future<List<int>> fibonacciList2(int s, int e) => send(
+        $MyServiceOperations._$fibonacciList2Id,
+        args: [s, e],
+        token: null,
+        inspectRequest: false,
+        inspectResponse: false,
+      ).then((res) => listIntMarshaller.unmarshall(res));
+
+  @override
+  Stream<int> fibonacciStream(int s, int e) => stream(
+        $MyServiceOperations._$fibonacciStreamId,
+        args: [s, e],
+        token: null,
         inspectRequest: false,
         inspectResponse: false,
       );
 
   @override
-  Future<Iterable<String?>?> getSomeIterable(int count) => send(
-        $MyServiceOperations._$getSomeIterableId,
-        args: [count],
+  Future<MyServiceResponse<String>> jsonEchoWithExplicitResult(
+          MyServiceRequest request) =>
+      send(
+        $MyServiceOperations._$jsonEchoWithExplicitResultId,
+        args: [request.toJson()],
         token: null,
         inspectRequest: false,
         inspectResponse: false,
-      ).then((res) => res?.cast<String?>());
+      ).then((res) =>
+          (const MyServiceResponseOfStringToByteBuffer()).unmarshall(res));
 
   @override
-  Future<List<String?>?> getSomeList(int count) => send(
-        $MyServiceOperations._$getSomeListId,
-        args: [count],
+  Future<MyServiceResponse<String>> jsonEchoWithJsonResult(
+          MyServiceRequest request) =>
+      send(
+        $MyServiceOperations._$jsonEchoWithJsonResultId,
+        args: [request.toJson()],
         token: null,
         inspectRequest: false,
         inspectResponse: false,
-      ).then((res) => res?.cast<String?>().toList());
+      );
+
+  @override
+  Future<MyServiceResponse<String>> jsonEncodeEcho(MyServiceRequest request) =>
+      send(
+        $MyServiceOperations._$jsonEncodeEchoId,
+        args: [MyServiceRequestToString.instance.marshall(request)],
+        token: null,
+        inspectRequest: false,
+        inspectResponse: false,
+      ).then((res) => (const MyServiceResponseToJson()).unmarshall(res));
 
   @override
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
   @override
-  MyServiceConfig<bool> get config => throw UnimplementedError();
+  MyServiceConfig<bool> get trace => throw UnimplementedError();
 }
 
 // Worker pool for MyService
 class MyServiceWorkerPool extends WorkerPool<MyServiceWorker>
     with $MyServiceOperations
     implements MyService {
-  MyServiceWorkerPool(MyServiceConfig<bool> config,
+  MyServiceWorkerPool(MyServiceConfig<bool> trace,
       {ConcurrencySettings? concurrencySettings})
-      : super(() => MyServiceWorker(config),
-            concurrencySettings: concurrencySettings) {
-    _finalizer.attach(this, this, detach: this);
-  }
-
-  static final _finalizer = Finalizer<MyServiceWorkerPool>((p) => p.stop());
+      : super(() => MyServiceWorker(trace),
+            concurrencySettings: concurrencySettings);
 
   @override
-  Future<MyServiceResponse<dynamic>> doSomething(MyServiceRequest request) =>
-      execute((w) => w.doSomething(request));
+  Future<MyServiceResponse<String>> explicitEchoWithExplicitResult(
+          MyServiceRequest request) =>
+      execute((w) => w.explicitEchoWithExplicitResult(request));
 
   @override
-  Future<MyServiceResponse<String>?> doSomethingElse(
-          MyServiceRequest? request) =>
-      execute((w) => w.doSomethingElse(request));
+  Future<MyServiceResponse<String>> explicitEchoWithJsonResult(
+          MyServiceRequest request) =>
+      execute((w) => w.explicitEchoWithJsonResult(request));
 
   @override
   Future<int> fibonacci(int i) => execute((w) => w.fibonacci(i));
 
   @override
-  Stream<int> fibonnacciStream(int start, int end,
-          {CancellationToken? token}) =>
-      stream((w) => w.fibonnacciStream(start, end, token: token));
+  Future<List<int>> fibonacciList1(int s, int e) =>
+      execute((w) => w.fibonacciList1(s, e));
 
   @override
-  Future<Iterable<String?>?> getSomeIterable(int count) =>
-      execute((w) => w.getSomeIterable(count));
+  Future<List<int>> fibonacciList2(int s, int e) =>
+      execute((w) => w.fibonacciList2(s, e));
 
   @override
-  Future<List<String?>?> getSomeList(int count) =>
-      execute((w) => w.getSomeList(count));
+  Stream<int> fibonacciStream(int s, int e) =>
+      stream((w) => w.fibonacciStream(s, e));
+
+  @override
+  Future<MyServiceResponse<String>> jsonEchoWithExplicitResult(
+          MyServiceRequest request) =>
+      execute((w) => w.jsonEchoWithExplicitResult(request));
+
+  @override
+  Future<MyServiceResponse<String>> jsonEchoWithJsonResult(
+          MyServiceRequest request) =>
+      execute((w) => w.jsonEchoWithJsonResult(request));
+
+  @override
+  Future<MyServiceResponse<String>> jsonEncodeEcho(MyServiceRequest request) =>
+      execute((w) => w.jsonEncodeEcho(request));
 
   @override
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
   @override
-  MyServiceConfig<bool> get config => throw UnimplementedError();
+  MyServiceConfig<bool> get trace => throw UnimplementedError();
 }

@@ -1,3 +1,7 @@
+## 1.0.0
+
+- Marshall data to/from workers according to `SerializeWith` annotations.
+
 ## 0.9.1
 
 - Upgrade dependencies.

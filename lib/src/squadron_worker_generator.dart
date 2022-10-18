@@ -259,19 +259,15 @@ ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
       'static const int ${cmd.id} = ${cmd.num};';
 
   static String _generateCommandHandler(SquadronMethodAnnotation cmd) {
-    if (cmd.isStream) {
-      return '''
-    ${cmd.id}: (r) => svc.${cmd.name}(${cmd.deserializedArguments})
-      ${cmd.needsSerialization ? '.${cmd.continuation}((res) => ${cmd.serializedResult('res')})' : ''},''';
-    } else if (cmd.needsSerialization) {
-      return '''
-    ${cmd.id}: (r) async {
-      final res = await svc.${cmd.name}(${cmd.deserializedArguments});
-      return ${cmd.serializedResult('res')};
-    },''';
+    final serviceCall = 'svc.${cmd.name}(${cmd.deserializedArguments})';
+    if (cmd.needsSerialization) {
+      if (cmd.isStream) {
+        return '${cmd.id}: (${cmd.reqName}) => $serviceCall.${cmd.continuation}((res) => ${cmd.serializedResult('res')}),';
+      } else {
+        return '${cmd.id}: (${cmd.reqName}) async => ${cmd.serializedResult('(await $serviceCall)')},';
+      }
     } else {
-      return '''
-    ${cmd.id}: (r) => svc.${cmd.name}(${cmd.deserializedArguments}),''';
+      return '${cmd.id}: (${cmd.reqName}) => $serviceCall,';
     }
   }
 

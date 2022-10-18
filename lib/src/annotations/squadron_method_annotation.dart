@@ -1,18 +1,22 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:source_gen/source_gen.dart';
+import 'package:source_gen/source_gen.dart' as gen;
 import 'package:squadron/squadron_annotations.dart';
 
+import '../extensions.dart';
 import 'annotations_reader.dart';
-import 'serialization_info.dart';
-import 'serialization_inspector.dart';
+import 'marshallers/marshaller.dart';
+import 'marshallers/marshalling_info.dart';
+import 'marshalling_manager.dart';
 
 class SquadronMethodAnnotation {
   SquadronMethodAnnotation._(
-      this.name, this.inspectRequest, this.inspectResponse)
+      this.name, this._valueType, this.inspectRequest, this.inspectResponse)
       : id = '_\$${name}Id';
 
   final String name;
+
+  final String reqName = 'req';
 
   final bool inspectRequest;
   final bool inspectResponse;
@@ -29,6 +33,8 @@ class SquadronMethodAnnotation {
 
   bool _isStream = false;
   bool get isStream => _isStream;
+
+  final DartType _valueType;
 
   String get workerExecutor => _isStream ? 'stream' : 'send';
   String get poolExecutor => _isStream ? 'stream' : 'execute';
@@ -49,25 +55,24 @@ class SquadronMethodAnnotation {
   String? _cancellationToken;
   String get cancellationToken => _cancellationToken ?? 'null';
 
-  String Function(String res) _serializedResult = SerializationInfo.asIs;
-  String Function(String res) get serializedResult => _serializedResult;
-  bool get needsSerialization => _serializedResult != SerializationInfo.asIs;
+  Marshaller _resultMarshaller = Marshaller.identity;
 
-  String Function(String res) _deserializedResult = SerializationInfo.asIs;
-  String Function(String res) get deserializedResult => _deserializedResult;
-  bool get needsDeserialization =>
-      _deserializedResult != SerializationInfo.asIs;
+  late Generator serializedResult = _resultMarshaller.getSerializer(_valueType);
+  bool get needsSerialization => _resultMarshaller != Marshaller.identity;
 
-  static final _futureOr = RegExp('^FutureOr\\b');
+  late Generator deserializedResult =
+      _resultMarshaller.getDeserializer(_valueType);
+  bool get needsDeserialization => _resultMarshaller != Marshaller.identity;
 
-  static final _inspector = SerializationInspector();
+  static final _futureOr = RegExp('FutureOr\\b');
+
+  static final _marshalling = MarshallingManager();
 
   static bool _isCancellationToken(ParameterElement param) {
     final locationComponents =
         param.type.element2?.location?.components ?? const [];
     return locationComponents.any((c) => c.startsWith('package:squadron/')) &&
-        (param.type.getDisplayString(withNullability: false) ==
-            'CancellationToken');
+        (param.type.baseName == 'CancellationToken');
   }
 
   void _load(MethodElement methodElement) {
@@ -77,30 +82,26 @@ class SquadronMethodAnnotation {
 
     var returnType = methodElement.returnType;
 
-    if (!returnType.isDartAsyncFuture &&
-        !returnType.isDartAsyncFutureOr &&
-        !returnType.isDartAsyncStream) {
-      throw InvalidGenerationSourceError(
+    if (returnType is! ParameterizedType ||
+        (!returnType.isDartAsyncFuture &&
+            !returnType.isDartAsyncFutureOr &&
+            !returnType.isDartAsyncStream)) {
+      throw gen.InvalidGenerationSourceError(
           '${methodElement.librarySource.fullName}: Service method \'${methodElement.enclosingElement3.displayName}.${methodElement.name}\' must return a Future, a FutureOr, or a Stream.');
     }
 
-    final explicitSerialiser =
-        SerializationInfo.getExplicitSerializer(methodElement);
+    final resultMarshaller =
+        AnnotationReader.getExplicitMarshaller(methodElement);
 
-    if (explicitSerialiser != null || returnType is ParameterizedType) {
-      final type = returnType is ParameterizedType
-          ? returnType.typeArguments.first
-          : returnType;
-      final generators = _inspector.getSerializationGenerators(type,
-          explicitSerializer: explicitSerialiser);
-      _deserializedResult = generators.deserializer;
-      _serializedResult = generators.serializer;
+    if (resultMarshaller != null) {
+      _resultMarshaller =
+          _marshalling.getMarshaller(_valueType, explicit: resultMarshaller);
     }
 
     for (var n = 0; n < methodElement.parameters.length; n++) {
       final param = methodElement.parameters[n];
 
-      final serializer = SerializationInfo.getExplicitSerializer(param);
+      final explicitMarshaller = AnnotationReader.getExplicitMarshaller(param);
 
       final isToken =
           (_cancellationToken == null) && _isCancellationToken(param);
@@ -138,12 +139,12 @@ class SquadronMethodAnnotation {
 
       args += param.name;
       if (isToken) {
-        deserArgs += 'r.cancelToken';
+        deserArgs += '$reqName.cancelToken';
       } else {
-        final generators = _inspector.getSerializationGenerators(param.type,
-            explicitSerializer: serializer);
-        serArgs += generators.serializer(param.name);
-        deserArgs += generators.deserializer('r.args[$sidx]');
+        final marshaller = _marshalling.getMarshaller(param.type,
+            explicit: explicitMarshaller);
+        serArgs += marshaller.serialize(param.type, param.name);
+        deserArgs += marshaller.deserialize(param.type, '$reqName.args[$sidx]');
         sidx++;
       }
     }
@@ -155,7 +156,7 @@ class SquadronMethodAnnotation {
     _isStream = methodElement.returnType.isDartAsyncStream;
 
     _returnType = methodElement.returnType.toString();
-    if (_returnType.startsWith(_futureOr)) {
+    if (methodElement.returnType.isDartAsyncFutureOr) {
       _returnType = _returnType.replaceAll(_futureOr, 'Future');
     }
 
@@ -170,15 +171,19 @@ class SquadronMethodAnnotation {
     if (reader.isEmpty) return null;
     final inspectRequest = reader.isSet('inspectRequest');
     final inspectResponse = reader.isSet('inspectResponse');
+    final valueType =
+        (methodElement.returnType as ParameterizedType).typeArguments.first;
     final annotation = SquadronMethodAnnotation._(
-        methodElement.name, inspectRequest, inspectResponse);
+        methodElement.name, valueType, inspectRequest, inspectResponse);
     annotation._load(methodElement);
     return annotation;
   }
 
   static SquadronMethodAnnotation unimplemented(MethodElement methodElement) {
+    final valueType =
+        (methodElement.returnType as ParameterizedType).typeArguments.first;
     final annotation =
-        SquadronMethodAnnotation._(methodElement.name, false, false);
+        SquadronMethodAnnotation._(methodElement.name, valueType, false, false);
     annotation._load(methodElement);
     return annotation;
   }

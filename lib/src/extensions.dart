@@ -1,5 +1,4 @@
-// ignore: prefer_void_to_null
-// Null _null() => null;
+import 'package:analyzer/dart/element/type.dart';
 
 bool _notNull(dynamic x) => (x != null);
 
@@ -16,20 +15,11 @@ extension NotNullExt<T> on Iterable<T?> {
   Iterable<T> whereNotEmpty() => where(_notEmpty).cast<T>();
 }
 
-// extension NullableExt<T> on Iterable<T> {
-//   T? firstOrNull([bool Function(T)? predicate]) {
-//     if (isEmpty) return null;
-//     return (predicate == null)
-//         ? first
-//         // ignore: null_check_on_nullable_type_parameter
-//         : cast<T?>().firstWhere((e) => predicate(e!), orElse: _null);
-//   }
-
-//   T? singleOrNull([bool Function(T)? predicate]) {
-//     if (isEmpty) return null;
-//     return (predicate == null)
-//         ? single
-//         // ignore: null_check_on_nullable_type_parameter
-//         : cast<T?>().singleWhere((e) => predicate(e!), orElse: _null);
-//   }
-// }
+extension BaseNameExt on DartType {
+  String get baseName {
+    final n = toString();
+    return (n.endsWith('?') || n.endsWith('*'))
+        ? n.substring(0, n.length - 1)
+        : n;
+  }
+}

@@ -1,10 +1,10 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:source_gen/source_gen.dart';
 
 import '../extensions.dart';
-
-class A {}
+import 'marshallers/marshaller.dart';
 
 class AnnotationReader<T> {
   AnnotationReader(Element? element)
@@ -65,6 +65,35 @@ class AnnotationReader<T> {
       }
     }
     return list;
+  }
+
+  static bool _isSquadronMarshaller(InterfaceType clazz) {
+    final locationComponents = clazz.element2.location?.components ?? const [];
+    return locationComponents.any((c) => c.startsWith('package:squadron/')) &&
+        (clazz.baseName.startsWith('SquadronMarshaller'));
+  }
+
+  static Marshaller? getExplicitMarshaller(Element element) {
+    Marshaller? explicit;
+    for (var ann in element.metadata) {
+      final value = ann.computeConstantValue();
+      final marshaller = value?.getField('marshaller');
+      if (marshaller != null) {
+        final type = marshaller.toTypeValue() ?? marshaller.type;
+        final typeElt = (type?.element2 is ClassElement)
+            ? (type?.element2 as ClassElement)
+            : null;
+        final baseMarshaller =
+            typeElt?.allSupertypes.where(_isSquadronMarshaller);
+        if (baseMarshaller == null || baseMarshaller.length != 1) {
+          throw InvalidGenerationSourceError(
+              'Invalid marshaller for $element: $marshaller');
+        }
+        explicit = Marshaller.explicit(marshaller, baseMarshaller.first);
+        break;
+      }
+    }
+    return explicit;
   }
 }
 

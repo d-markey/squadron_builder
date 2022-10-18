@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:squadron/squadron_annotations.dart';
 import 'package:squadron/squadron.dart';
 
+import 'marshallers.dart';
 import 'my_service.activator.g.dart';
 import 'my_service_config.dart';
 import 'my_service_request.dart';
@@ -11,77 +12,110 @@ import 'my_service_response.dart';
 
 part 'my_service.worker.g.dart';
 
-@SquadronService(web: false)
+@SquadronService()
 class MyService extends WorkerService with $MyServiceOperations {
-  MyService(this.config);
+  MyService(this.trace);
 
-  final MyServiceConfig<bool> config;
+  final MyServiceConfig<bool> trace;
 
   @SquadronMethod()
   FutureOr<int> fibonacci(int i) {
-    if (config.value) {
+    if (trace.value) {
       Squadron.info('fibonacci($i)');
     }
     return _fib(i);
+  }
+
+  @SquadronMethod()
+  @SerializeWith(ListIntMarshaller())
+  FutureOr<List<int>> fibonacciList1(int s, int e) {
+    if (trace.value) {
+      Squadron.info('fibonacciList1($s, $e)');
+    }
+    var res = <int>[];
+    for (var i = s; i < e; i++) {
+      res.add(_fib(i));
+    }
+    return res;
+  }
+
+  @SquadronMethod()
+  @SerializeWith(listIntMarshaller)
+  FutureOr<List<int>> fibonacciList2(int s, int e) {
+    if (trace.value) {
+      Squadron.info('fibonacciList2($s, $e)');
+    }
+    var res = <int>[];
+    for (var i = s; i < e; i++) {
+      res.add(_fib(i));
+    }
+    return res;
+  }
+
+  @SquadronMethod()
+  Stream<int> fibonacciStream(int s, int e) async* {
+    if (trace.value) {
+      Squadron.info('fibonacciStream($s, $e)');
+    }
+    for (var i = s; i < e; i++) {
+      yield _fib(i);
+    }
   }
 
   // naive & inefficient implementation of the Fibonacci sequence
   static int _fib(int i) => (i < 2) ? i : (_fib(i - 2) + _fib(i - 1));
 
   @SquadronMethod()
-  FutureOr<MyServiceResponse> doSomething(MyServiceRequest request) {
-    if (config.value) {
-      Squadron.info('doSomething(${jsonEncode(request.toJson())})');
+  FutureOr<MyServiceResponse<String>> jsonEchoWithJsonResult(
+      MyServiceRequest request) {
+    if (trace.value) {
+      Squadron.info('jsonEchoWithJsonResult(${jsonEncode(request.toJson())})');
     }
     return MyServiceResponse('${request.payload} done');
   }
 
   @SquadronMethod()
-  FutureOr<MyServiceResponse<String>?> doSomethingElse(
-      MyServiceRequest? request) {
-    if (config.value) {
-      Squadron.info('doSomethingElse(${jsonEncode(request?.toJson())})');
+  FutureOr<MyServiceResponse<String>> explicitEchoWithJsonResult(
+      @SerializeWith(MyServiceRequestToString) MyServiceRequest request) {
+    if (trace.value) {
+      Squadron.info(
+          'explicitEchoWithJsonResult(${jsonEncode(request.toJson())})');
     }
-    return MyServiceResponse('${request?.payload ?? '<no payload>'} done too');
+    return MyServiceResponse('${request.payload} done');
   }
 
   @SquadronMethod()
-  Stream<int> fibonnacciStream(int start, int end,
-      {CancellationToken? token}) async* {
-    if (config.value) {
-      Squadron.info('fibonnacciStream($start, $end)');
+  @SerializeWith(MyServiceResponseOfStringToByteBuffer)
+  FutureOr<MyServiceResponse<String>> jsonEchoWithExplicitResult(
+      MyServiceRequest request) {
+    if (trace.value) {
+      Squadron.info(
+          'jsonEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     }
-    var p2 = _fib(start - 2);
-    var p1 = _fib(start - 1);
-    for (var i = start; i < end; i++) {
-      if (await token?.isCancelled(throwIfCancelled: true) ?? false) {
-        return;
-      }
-      final p0 = p2 + p1;
-      yield p0;
-      p2 = p1;
-      p1 = p0;
-    }
+    return MyServiceResponse('${request.payload} done');
   }
 
   @SquadronMethod()
-  FutureOr<Iterable<String?>?> getSomeIterable(int count) {
-    if (config.value) {
-      Squadron.info('getSomeIterable($count)');
+  @SerializeWith(MyServiceResponseOfStringToByteBuffer.instance)
+  FutureOr<MyServiceResponse<String>> explicitEchoWithExplicitResult(
+      @SerializeWith(MyServiceRequestGenericToString.instance)
+          MyServiceRequest request) {
+    if (trace.value) {
+      Squadron.info(
+          'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     }
-    if (count < 1) return null;
-    return Iterable.generate(count + 1, (i) => (i % 7 == 0) ? null : 'num = $i')
-        .skip(1);
+    return MyServiceResponse('${request.payload} done');
   }
 
   @SquadronMethod()
-  Future<List<String?>?> getSomeList(int count) async {
-    if (config.value) {
-      Squadron.info('getSomeList($count)');
+  @SerializeWith(MyServiceResponseToJson)
+  FutureOr<MyServiceResponse<String>> jsonEncodeEcho(
+      @SerializeWith(MyServiceRequestToString.instance)
+          MyServiceRequest request) {
+    if (trace.value) {
+      Squadron.info(
+          'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     }
-    if (count < 1) return null;
-    return Iterable.generate(count + 1, (i) => (i % 7 == 0) ? null : 'num = $i')
-        .skip(1)
-        .toList();
+    return MyServiceResponse('${request.payload} done');
   }
 }

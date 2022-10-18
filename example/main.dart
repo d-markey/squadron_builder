@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:squadron/squadron.dart';
-import 'package:async/async.dart';
 
 import 'my_service.dart';
 import 'my_service_config.dart';
@@ -14,18 +13,18 @@ void main() async {
   Squadron.logLevel =
       Squadron.debugMode ? SquadronLogLevel.all : SquadronLogLevel.info;
 
-  int count = 2;
+  final trace = MyServiceConfig('trace', false);
 
-  final config = MyServiceConfig('trace', false);
-
-  // FIRST RUN: single-threaded (only main thread)
+  // FIRST RUN: single-threaded (all in main thread)
   Squadron.info('Computing with MyService (single-threaded)');
-  await computeWith(MyService(config), count);
+  await testWith(MyService(trace));
+  await testWith(MyService(trace));
 
   // SECOND RUN: one worker (= main thread + worker thread)
   Squadron.info('Computing with MyServiceWorker (one thread)');
-  final worker = MyServiceWorker(config);
-  await computeWith(worker, count);
+  final worker = MyServiceWorker(trace);
+  await testWith(worker);
+  await testWith(worker);
 
   // clean up worker...
   Squadron.info(
@@ -34,13 +33,14 @@ void main() async {
 
   // SECOND RUN: worker pool (= main thread + n worker threads)
   Squadron.info('Computing with MyServiceWorkerPool (multi-threaded)');
-  var pool = MyServiceWorkerPool(config,
+  var pool = MyServiceWorkerPool(trace,
       concurrencySettings: ConcurrencySettings(
-        minWorkers: count,
-        maxWorkers: 2 * count,
+        minWorkers: 3,
+        maxWorkers: 5,
         maxParallel: 1,
       ));
-  await computeWith(pool, count);
+  await testWith(pool);
+  await testWith(pool);
 
   // clean up pool...
   pool.stop((w) => w.idleTime.inMilliseconds > 500);
@@ -52,76 +52,145 @@ void main() async {
       '${s.id} (${s.status}): totalWorkload=${s.totalWorkload}, upTime=${s.upTime}, idleTime=${s.idleTime}'));
 }
 
-Future computeWith(MyService service, int count) async {
-  const from = 35;
+Future testWith(MyService service) async {
+  final sw = Stopwatch()..start();
+  await testFibWith(service);
+  await testEchoWith(service);
+  await perfTestEchoWith(service);
+  await perfTestJsonEchoWith(service);
+  Squadron.info('ELAPSED = ${sw.elapsed}');
+}
 
-  final sw = Stopwatch();
-  sw.start();
-
-  final fibFutures = <Future<int>>[];
-  final fibResults = <int>[];
-  for (var i = 0; i < 3 * count; i++) {
-    final f = service.fibonacci(from + i);
-    store(f, fibFutures, fibResults);
-  }
-
-  await report(sw, fibFutures, fibResults);
-
-  CancellationToken token = CancellationToken();
-  Timer(Duration(milliseconds: 500), token.cancel);
-  token.addListener(() => Squadron.info('Token cancelled'));
-
-  final group = StreamGroup();
-  for (var i = 0; i < 3; i++) {
-    group.add(service
-        .fibonnacciStream(from + (2 * i) * count, from + (2 * (i + 1)) * count,
-            token: token)
-        .map((fib) {
-      Squadron.info(
-          '  * [${sw.elapsed}] received from stream #$i: $fib (cancelled = ${token.cancelled})');
-    }).handleError((ex) {
-      Squadron.info(
-          '  * [${sw.elapsed}] error from stream #$i: ${ex.runtimeType} (cancelled = ${token.cancelled})');
-    }));
-  }
-  group.close();
-
-  await group.stream.drain();
-
+Future testFibWith(MyService service) async {
   final futures = <Future>[];
-  final results = [];
-  store(service.doSomething(MyServiceRequest('test')), futures, results);
-  store(service.doSomethingElse(MyServiceRequest('other test')), futures,
-      results);
 
-  await report(sw, futures, results);
-
-  final list = await service.getSomeList(40);
-
-  if (list != null) {
-    await report(sw, [], list);
+  for (var i = 0; i < 5; i++) {
+    futures.add(service
+        .fibonacci(20 + i)
+        .toFuture()
+        .then((res) => Squadron.fine('fibonacci(${20 + i}) = $res')));
   }
+  await Future.wait(futures);
+  futures.clear();
 
-  Squadron.info('  * Total elapsed time: ${sw.elapsed}');
+  for (var i = 0; i < 5; i++) {
+    futures.add(service.fibonacciList1(20 + i, 30 + i).toFuture().then(
+        (res) => Squadron.fine('fibonacciList1(${20 + i}, ${30 + i}) = $res')));
+  }
+  await Future.wait(futures);
+  futures.clear();
+
+  for (var i = 0; i < 5; i++) {
+    futures.add(service.fibonacciList2(20 + i, 30 + i).toFuture().then(
+        (res) => Squadron.fine('fibonacciList2(${20 + i}, ${30 + i}) = $res')));
+  }
+  await Future.wait(futures);
+  futures.clear();
+
+  for (var i = 0; i < 5; i++) {
+    futures.add(service.fibonacciStream(20 + i, 30 + i).toList().then((res) =>
+        Squadron.fine('fibonacciStream(${20 + i}, ${30 + i}) = $res')));
+  }
+  await Future.wait(futures);
+  futures.clear();
 }
 
-void store<T>(FutureOr<T> item, List<Future<T>> futures, List<T> results) {
-  if (item is Future<T>) {
-    futures.add(item);
-  } else {
-    results.add(item);
+Future testEchoWith(MyService service) async {
+  final futures = <Future>[];
+
+  for (var i = 0; i < 5; i++) {
+    futures.add(service
+        .jsonEchoWithJsonResult(MyServiceRequest('echo $i'))
+        .toFuture()
+        .then((res) => Squadron.fine(
+            'jsonEchoWithJsonResult(\'echo $i\') = ${res.toJson()}')));
   }
+  await Future.wait(futures);
+  futures.clear();
+
+  for (var i = 0; i < 5; i++) {
+    futures.add(service
+        .jsonEchoWithExplicitResult(MyServiceRequest('echo $i'))
+        .toFuture()
+        .then((res) => Squadron.fine(
+            'jsonEchoWithExplicitResult(\'echo $i\') = ${res.toJson()}')));
+  }
+  await Future.wait(futures);
+  futures.clear();
+
+  for (var i = 0; i < 5; i++) {
+    futures.add(service
+        .explicitEchoWithJsonResult(MyServiceRequest('echo $i'))
+        .toFuture()
+        .then((res) => Squadron.fine(
+            'explicitEchoWithJsonResult(\'echo $i\') = ${res.toJson()}')));
+  }
+  await Future.wait(futures);
+  futures.clear();
+
+  for (var i = 0; i < 5; i++) {
+    futures.add(service
+        .explicitEchoWithExplicitResult(MyServiceRequest('echo $i'))
+        .toFuture()
+        .then((res) => Squadron.fine(
+            'explicitEchoWithExplicitResult(\'echo $i\') = ${res.toJson()}')));
+  }
+  await Future.wait(futures);
+  futures.clear();
 }
 
-Future report<T>(Stopwatch sw, List<Future<T>> futures, List<T> results) async {
-  if (futures.isNotEmpty) {
-    results.addAll(await Future.wait(futures));
-    Squadron.info('  * [${sw.elapsed}] results from futures = $results');
-  } else {
-    Squadron.info('  * [${sw.elapsed}] results (direct) = $results');
+Future perfTestEchoWith(MyService service) async {
+  final futures = <Future>[];
+
+  final jsonSw = Stopwatch()..start();
+  for (var i = 0; i < 10000; i++) {
+    futures.add(
+        service.jsonEchoWithJsonResult(MyServiceRequest('echo $i')).toFuture());
   }
+  await Future.wait(futures);
+  jsonSw.stop();
+  futures.clear();
+
+  final explicitSw = Stopwatch()..start();
+  for (var i = 0; i < 10000; i++) {
+    futures.add(service
+        .explicitEchoWithExplicitResult(MyServiceRequest('echo $i'))
+        .toFuture());
+  }
+  await Future.wait(futures);
+  explicitSw.stop();
+  futures.clear();
+
+  Squadron.info('json = ${jsonSw.elapsed} / explicit = ${explicitSw.elapsed}');
 }
 
-extension BigIntJson on BigInt {
-  String toJson() => toString();
+Future perfTestJsonEchoWith(MyService service) async {
+  final futures = <Future>[];
+
+  final jsonSw = Stopwatch()..start();
+  for (var i = 0; i < 10000; i++) {
+    futures.add(
+        service.jsonEchoWithJsonResult(MyServiceRequest('echo $i')).toFuture());
+  }
+  await Future.wait(futures);
+  jsonSw.stop();
+  futures.clear();
+
+  final jsonEncodeSw = Stopwatch()..start();
+  for (var i = 0; i < 10000; i++) {
+    futures.add(service.jsonEncodeEcho(MyServiceRequest('echo $i')).toFuture());
+  }
+  await Future.wait(futures);
+  jsonEncodeSw.stop();
+  futures.clear();
+
+  Squadron.info(
+      'json = ${jsonSw.elapsed} / json encode = ${jsonEncodeSw.elapsed}');
+}
+
+extension Futurizer<X> on FutureOr<X> {
+  Future<X> toFuture() {
+    final value = this;
+    return (value is X) ? Future.value(value) : value;
+  }
 }
