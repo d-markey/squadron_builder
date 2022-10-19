@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Specify platform support in `pubspec.yaml`.
+
 ## 1.0.0
 
 - Marshall data to/from workers according to `SerializeWith` annotations.
