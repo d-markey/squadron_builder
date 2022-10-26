@@ -10,8 +10,7 @@ void main() async {
   Squadron.setId('MAIN');
   Squadron.setLogger(ConsoleSquadronLogger());
   Squadron.debugMode = false;
-  Squadron.logLevel =
-      Squadron.debugMode ? SquadronLogLevel.all : SquadronLogLevel.info;
+  Squadron.logLevel = SquadronLogLevel.all;
 
   final trace = MyServiceConfig('trace', false);
 
@@ -69,6 +68,13 @@ Future testFibWith(MyService service) async {
         .fibonacci(20 + i)
         .toFuture()
         .then((res) => Squadron.fine('fibonacci(${20 + i}) = $res')));
+  }
+  await Future.wait(futures);
+  futures.clear();
+
+  for (var i = 0; i < 5; i++) {
+    futures.add(service.fibonacciList0(20 + i, 30 + i).toFuture().then(
+        (res) => Squadron.fine('fibonacciList0(${20 + i}, ${30 + i}) = $res')));
   }
   await Future.wait(futures);
   futures.clear();

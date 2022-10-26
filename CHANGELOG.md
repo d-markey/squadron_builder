@@ -1,3 +1,8 @@
+## 1.0.2
+
+- Upgrade packages.
+- Switch from deprecated `element2`/`enclosingElement3` to `element`/`enclosingElement`.
+
 ## 1.0.1
 
 - Specify platform support in `pubspec.yaml`.

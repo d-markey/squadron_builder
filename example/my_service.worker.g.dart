@@ -15,12 +15,13 @@ mixin $MyServiceOperations on WorkerService {
   static const int _$explicitEchoWithExplicitResultId = 1;
   static const int _$explicitEchoWithJsonResultId = 2;
   static const int _$fibonacciId = 3;
-  static const int _$fibonacciList1Id = 4;
-  static const int _$fibonacciList2Id = 5;
-  static const int _$fibonacciStreamId = 6;
-  static const int _$jsonEchoWithExplicitResultId = 7;
-  static const int _$jsonEchoWithJsonResultId = 8;
-  static const int _$jsonEncodeEchoId = 9;
+  static const int _$fibonacciList0Id = 4;
+  static const int _$fibonacciList1Id = 5;
+  static const int _$fibonacciList2Id = 6;
+  static const int _$fibonacciStreamId = 7;
+  static const int _$jsonEchoWithExplicitResultId = 8;
+  static const int _$jsonEchoWithJsonResultId = 9;
+  static const int _$jsonEncodeEchoId = 10;
 
   static Map<int, CommandHandler> _getOperations(MyService svc) => {
         _$explicitEchoWithExplicitResultId: (req) async =>
@@ -31,6 +32,8 @@ mixin $MyServiceOperations on WorkerService {
         _$explicitEchoWithJsonResultId: (req) => svc.explicitEchoWithJsonResult(
             (const MyServiceRequestToString()).unmarshall(req.args[0])),
         _$fibonacciId: (req) => svc.fibonacci(req.args[0]),
+        _$fibonacciList0Id: (req) =>
+            svc.fibonacciList0(req.args[0], req.args[1]),
         _$fibonacciList1Id: (req) async => (const ListIntMarshaller())
             .marshall((await svc.fibonacciList1(req.args[0], req.args[1]))),
         _$fibonacciList2Id: (req) async => listIntMarshaller
@@ -87,6 +90,15 @@ class MyServiceWorker extends Worker
   Future<int> fibonacci(int i) => send(
         $MyServiceOperations._$fibonacciId,
         args: [i],
+        token: null,
+        inspectRequest: false,
+        inspectResponse: false,
+      );
+
+  @override
+  Future<List<int>> fibonacciList0(int s, int e) => send(
+        $MyServiceOperations._$fibonacciList0Id,
+        args: [s, e],
         token: null,
         inspectRequest: false,
         inspectResponse: false,
@@ -180,6 +192,10 @@ class MyServiceWorkerPool extends WorkerPool<MyServiceWorker>
 
   @override
   Future<int> fibonacci(int i) => execute((w) => w.fibonacci(i));
+
+  @override
+  Future<List<int>> fibonacciList0(int s, int e) =>
+      execute((w) => w.fibonacciList0(s, e));
 
   @override
   Future<List<int>> fibonacciList1(int s, int e) =>

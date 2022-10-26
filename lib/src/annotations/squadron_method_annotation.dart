@@ -70,7 +70,7 @@ class SquadronMethodAnnotation {
 
   static bool _isCancellationToken(ParameterElement param) {
     final locationComponents =
-        param.type.element2?.location?.components ?? const [];
+        param.type.element?.location?.components ?? const [];
     return locationComponents.any((c) => c.startsWith('package:squadron/')) &&
         (param.type.baseName == 'CancellationToken');
   }
@@ -87,7 +87,7 @@ class SquadronMethodAnnotation {
             !returnType.isDartAsyncFutureOr &&
             !returnType.isDartAsyncStream)) {
       throw gen.InvalidGenerationSourceError(
-          '${methodElement.librarySource.fullName}: Service method \'${methodElement.enclosingElement3.displayName}.${methodElement.name}\' must return a Future, a FutureOr, or a Stream.');
+          '${methodElement.librarySource.fullName}: Service method \'${methodElement.enclosingElement.displayName}.${methodElement.name}\' must return a Future, a FutureOr, or a Stream.');
     }
 
     final resultMarshaller =

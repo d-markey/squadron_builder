@@ -68,7 +68,7 @@ class AnnotationReader<T> {
   }
 
   static bool _isSquadronMarshaller(InterfaceType clazz) {
-    final locationComponents = clazz.element2.location?.components ?? const [];
+    final locationComponents = clazz.element.location?.components ?? const [];
     return locationComponents.any((c) => c.startsWith('package:squadron/')) &&
         (clazz.baseName.startsWith('SquadronMarshaller'));
   }
@@ -80,8 +80,8 @@ class AnnotationReader<T> {
       final marshaller = value?.getField('marshaller');
       if (marshaller != null) {
         final type = marshaller.toTypeValue() ?? marshaller.type;
-        final typeElt = (type?.element2 is ClassElement)
-            ? (type?.element2 as ClassElement)
+        final typeElt = (type?.element is ClassElement)
+            ? (type?.element as ClassElement)
             : null;
         final baseMarshaller =
             typeElt?.allSupertypes.where(_isSquadronMarshaller);

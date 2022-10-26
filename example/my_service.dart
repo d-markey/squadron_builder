@@ -27,6 +27,18 @@ class MyService extends WorkerService with $MyServiceOperations {
   }
 
   @SquadronMethod()
+  FutureOr<List<int>> fibonacciList0(int s, int e) {
+    if (trace.value) {
+      Squadron.info('fibonacciList0($s, $e)');
+    }
+    var res = <int>[];
+    for (var i = s; i < e; i++) {
+      res.add(_fib(i));
+    }
+    return res;
+  }
+
+  @SquadronMethod()
   @SerializeWith(ListIntMarshaller())
   FutureOr<List<int>> fibonacciList1(int s, int e) {
     if (trace.value) {

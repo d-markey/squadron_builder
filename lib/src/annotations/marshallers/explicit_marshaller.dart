@@ -5,8 +5,8 @@ class _ExplicitMarshaller extends Marshaller {
     itemTypeName = marshallerType.typeArguments.first.baseName;
     final variable = marshaller.variable;
     if (variable != null) {
-      if (variable.enclosingElement3 is ClassElement) {
-        instance = '${variable.enclosingElement3!.name}.${variable.name}';
+      if (variable.enclosingElement is ClassElement) {
+        instance = '${variable.enclosingElement!.name}.${variable.name}';
       } else {
         instance = variable.name;
       }

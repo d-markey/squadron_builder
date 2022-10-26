@@ -24,7 +24,7 @@ class MarshallingManager extends SimpleElementVisitor {
   @override
   void visitConstructorElement(ConstructorElement element) {
     element = element.declaration;
-    final clazz = element.enclosingElement3;
+    final clazz = element.enclosingElement;
     final info = _getOrAddMarshallingInfo(clazz.thisType, clazz);
     if (element.isFactory && element.name == 'fromJson') {
       // only interested in factory constructor 'fromJson()'
@@ -35,7 +35,7 @@ class MarshallingManager extends SimpleElementVisitor {
   @override
   void visitMethodElement(MethodElement element) {
     element = element.declaration;
-    final clazz = element.enclosingElement3;
+    final clazz = element.enclosingElement;
     if (clazz is! InterfaceElement) {
       return;
     }
@@ -74,8 +74,8 @@ class MarshallingManager extends SimpleElementVisitor {
       return Marshaller.map(type, explicit);
     }
 
-    type.element2!.visitChildren(this);
-    final element = type.element2?.declaration;
+    type.element!.visitChildren(this);
+    final element = type.element?.declaration;
     return (element == null)
         ? Marshaller.identity
         : _getOrAddMarshallingInfo(type, element).marshaller;
