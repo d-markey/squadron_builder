@@ -1,0 +1,10 @@
+targets:
+  $default:
+    builders: 
+      squadron_builder:worker_builder: 
+        generate_for: 
+         - example/**
+        enabled: true
+        options:
+          # build_extensions: { 'example\\{{file}}.dart': [ 'example\\.gen\\{{file}}.worker.g.dart', 'example\\.gen\\{{file}}.vm.g.dart', 'example\\.gen\\{{file}}.web.g.dart', 'example\\.gen\\{{file}}.stub.g.dart', 'example\\.gen\\{{file}}.activator.g.dart' ] }
+          with_finalizers: true

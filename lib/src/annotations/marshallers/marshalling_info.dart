@@ -23,7 +23,6 @@ class MarshallingInfo {
       (c is ConstructorElement &&
           !c.isPrivate &&
           !c.isAbstract &&
-          c.isFactory &&
           c.name == 'fromJson' &&
           c.parameters.length == 1 &&
           c.parameters[0].declaration.type.isDartCoreMap) ||

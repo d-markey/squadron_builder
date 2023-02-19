@@ -36,6 +36,8 @@ class SquadronMethodAnnotation {
 
   final DartType _valueType;
 
+  String get declaration => '$returnType $name($parameters)';
+
   String get workerExecutor => _isStream ? 'stream' : 'send';
   String get poolExecutor => _isStream ? 'stream' : 'execute';
   String get continuation => _isStream ? 'map' : 'then';
@@ -63,8 +65,6 @@ class SquadronMethodAnnotation {
   late Generator deserializedResult =
       _resultMarshaller.getDeserializer(_valueType);
   bool get needsDeserialization => _resultMarshaller != Marshaller.identity;
-
-  static final _futureOr = RegExp('FutureOr\\b');
 
   static final _marshalling = MarshallingManager();
 
@@ -96,6 +96,8 @@ class SquadronMethodAnnotation {
     if (resultMarshaller != null) {
       _resultMarshaller =
           _marshalling.getMarshaller(_valueType, explicit: resultMarshaller);
+    } else {
+      _resultMarshaller = _marshalling.getMarshaller(_valueType);
     }
 
     for (var n = 0; n < methodElement.parameters.length; n++) {
@@ -157,7 +159,7 @@ class SquadronMethodAnnotation {
 
     _returnType = methodElement.returnType.toString();
     if (methodElement.returnType.isDartAsyncFutureOr) {
-      _returnType = _returnType.replaceAll(_futureOr, 'Future');
+      _returnType = _returnType.replaceAll('FutureOr', 'Future');
     }
 
     _parameters = params;

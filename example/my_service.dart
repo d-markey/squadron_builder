@@ -21,28 +21,28 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SquadronMethod()
   FutureOr<int> fibonacci(int i) {
     if (trace.value) {
-      Squadron.info('fibonacci($i)');
+      Squadron.fine(() => 'fibonacci($i)');
     }
     return _fib(i);
   }
 
   @SquadronMethod()
-  FutureOr<List<int>> fibonacciList0(int s, int e) {
+  FutureOr<Iterable<int>> fibonacciList0(int s, int e) {
     if (trace.value) {
-      Squadron.info('fibonacciList0($s, $e)');
+      Squadron.fine(() => 'fibonacciList0($s, $e)');
     }
     var res = <int>[];
     for (var i = s; i < e; i++) {
       res.add(_fib(i));
     }
-    return res;
+    return res.map((v) => v);
   }
 
   @SquadronMethod()
   @SerializeWith(ListIntMarshaller())
   FutureOr<List<int>> fibonacciList1(int s, int e) {
     if (trace.value) {
-      Squadron.info('fibonacciList1($s, $e)');
+      Squadron.fine(() => 'fibonacciList1($s, $e)');
     }
     var res = <int>[];
     for (var i = s; i < e; i++) {
@@ -55,7 +55,7 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SerializeWith(listIntMarshaller)
   FutureOr<List<int>> fibonacciList2(int s, int e) {
     if (trace.value) {
-      Squadron.info('fibonacciList2($s, $e)');
+      Squadron.fine(() => 'fibonacciList2($s, $e)');
     }
     var res = <int>[];
     for (var i = s; i < e; i++) {
@@ -67,7 +67,7 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SquadronMethod()
   Stream<int> fibonacciStream(int s, int e) async* {
     if (trace.value) {
-      Squadron.info('fibonacciStream($s, $e)');
+      Squadron.fine(() => 'fibonacciStream($s, $e)');
     }
     for (var i = s; i < e; i++) {
       yield _fib(i);
@@ -78,10 +78,11 @@ class MyService extends WorkerService with $MyServiceOperations {
   static int _fib(int i) => (i < 2) ? i : (_fib(i - 2) + _fib(i - 1));
 
   @SquadronMethod()
-  FutureOr<MyServiceResponse<String>> jsonEchoWithJsonResult(
+  FutureOr<MyServiceResponse<String>?> jsonEchoWithJsonResult(
       MyServiceRequest request) {
     if (trace.value) {
-      Squadron.info('jsonEchoWithJsonResult(${jsonEncode(request.toJson())})');
+      Squadron.fine(
+          () => 'jsonEchoWithJsonResult(${jsonEncode(request.toJson())})');
     }
     return MyServiceResponse('${request.payload} done');
   }
@@ -90,8 +91,8 @@ class MyService extends WorkerService with $MyServiceOperations {
   FutureOr<MyServiceResponse<String>> explicitEchoWithJsonResult(
       @SerializeWith(MyServiceRequestToString) MyServiceRequest request) {
     if (trace.value) {
-      Squadron.info(
-          'explicitEchoWithJsonResult(${jsonEncode(request.toJson())})');
+      Squadron.fine(
+          () => 'explicitEchoWithJsonResult(${jsonEncode(request.toJson())})');
     }
     return MyServiceResponse('${request.payload} done');
   }
@@ -101,8 +102,8 @@ class MyService extends WorkerService with $MyServiceOperations {
   FutureOr<MyServiceResponse<String>> jsonEchoWithExplicitResult(
       MyServiceRequest request) {
     if (trace.value) {
-      Squadron.info(
-          'jsonEchoWithExplicitResult(${jsonEncode(request.toJson())})');
+      Squadron.fine(
+          () => 'jsonEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     }
     return MyServiceResponse('${request.payload} done');
   }
@@ -113,7 +114,7 @@ class MyService extends WorkerService with $MyServiceOperations {
       @SerializeWith(MyServiceRequestGenericToString.instance)
           MyServiceRequest request) {
     if (trace.value) {
-      Squadron.info(
+      Squadron.fine(() =>
           'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     }
     return MyServiceResponse('${request.payload} done');
@@ -125,7 +126,7 @@ class MyService extends WorkerService with $MyServiceOperations {
       @SerializeWith(MyServiceRequestToString.instance)
           MyServiceRequest request) {
     if (trace.value) {
-      Squadron.info(
+      Squadron.fine(() =>
           'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     }
     return MyServiceResponse('${request.payload} done');

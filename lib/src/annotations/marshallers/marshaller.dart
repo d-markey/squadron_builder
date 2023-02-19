@@ -38,3 +38,7 @@ abstract class Marshaller {
   factory Marshaller.map(ParameterizedType type, Marshaller itemMarshaller) =>
       MapMarshaller(type, itemMarshaller);
 }
+
+extension _IdentityChecker on String Function(String) {
+  bool get isIdentity => this('x') == 'x';
+}

@@ -1,5 +1,3 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
+library squadron_builder;
 
-export 'src/squadron_builder.dart';
+export 'src/worker_builder.dart';

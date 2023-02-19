@@ -27,15 +27,14 @@ class _ExplicitMarshaller extends Marshaller {
   @override
   bool targets(DartType type) => type.baseName == itemTypeName;
 
-  @override
-  Generator getSerializer(DartType type) =>
+  Generator _convert(String method, DartType type) =>
       (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? (v) => '$instance.marshall($v)'
-          : (v) => '($v == null) ? null : $instance.marshall($v)';
+          ? (v) => '$instance.$method($v)'
+          : (v) => '($v == null) ? null : $instance.$method($v)';
 
   @override
-  Generator getDeserializer(DartType type) =>
-      (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? (v) => '$instance.unmarshall($v)'
-          : (v) => '($v == null) ? null : $instance.unmarshall($v)';
+  Generator getSerializer(DartType type) => _convert('marshall', type);
+
+  @override
+  Generator getDeserializer(DartType type) => _convert('unmarshall', type);
 }
