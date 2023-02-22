@@ -21,7 +21,7 @@ const workerOverrides = {
   'Stream<T> stream<T>(int command, {List args = const [], CancellationToken? token, bool inspectRequest = false, bool inspectResponse = false})':
       'stream<T>(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)',
   // finalization token
-  'Object get _finalizationToken': '_finalizationToken',
+  'Object get _detachToken': '_detachToken',
 };
 
 const workerPoolOverrides = <String, String>{
@@ -60,5 +60,5 @@ const workerPoolOverrides = <String, String>{
   r'Stream<T> stream<T>(Stream<T> Function($workerClassName worker) task, {PerfCounter? counter})':
       'stream<T>(task, counter: counter)',
   // finalization token
-  'Object get _finalizationToken': '_finalizationToken',
+  'Object get _detachToken': '_detachToken',
 };

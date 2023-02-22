@@ -13,23 +13,28 @@ import 'my_service_response.dart';
 part 'my_service.worker.g.dart';
 
 @SquadronService()
+@UseLogger(ParentSquadronLogger)
 class MyService extends WorkerService with $MyServiceOperations {
-  MyService(this.trace);
+  MyService(this._trace, this.workloadDelay)
+      : _delay = Duration(microseconds: workloadDelay.value);
 
-  final MyServiceConfig<bool> trace;
+  final MyServiceConfig<bool> _trace;
+  final MyServiceConfig<int> workloadDelay;
+
+  final Duration _delay;
 
   @SquadronMethod()
   FutureOr<int> fibonacci(int i) {
-    if (trace.value) {
-      Squadron.fine(() => 'fibonacci($i)');
+    if (_trace.value) {
+      Squadron.finer('fibonacci($i)');
     }
     return _fib(i);
   }
 
   @SquadronMethod()
   FutureOr<Iterable<int>> fibonacciList0(int s, int e) {
-    if (trace.value) {
-      Squadron.fine(() => 'fibonacciList0($s, $e)');
+    if (_trace.value) {
+      Squadron.finer('fibonacciList0($s, $e)');
     }
     var res = <int>[];
     for (var i = s; i < e; i++) {
@@ -41,8 +46,8 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SquadronMethod()
   @SerializeWith(ListIntMarshaller())
   FutureOr<List<int>> fibonacciList1(int s, int e) {
-    if (trace.value) {
-      Squadron.fine(() => 'fibonacciList1($s, $e)');
+    if (_trace.value) {
+      Squadron.finer('fibonacciList1($s, $e)');
     }
     var res = <int>[];
     for (var i = s; i < e; i++) {
@@ -54,8 +59,8 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SquadronMethod()
   @SerializeWith(listIntMarshaller)
   FutureOr<List<int>> fibonacciList2(int s, int e) {
-    if (trace.value) {
-      Squadron.fine(() => 'fibonacciList2($s, $e)');
+    if (_trace.value) {
+      Squadron.finer('fibonacciList2($s, $e)');
     }
     var res = <int>[];
     for (var i = s; i < e; i++) {
@@ -66,8 +71,8 @@ class MyService extends WorkerService with $MyServiceOperations {
 
   @SquadronMethod()
   Stream<int> fibonacciStream(int s, int e) async* {
-    if (trace.value) {
-      Squadron.fine(() => 'fibonacciStream($s, $e)');
+    if (_trace.value) {
+      Squadron.finer('fibonacciStream($s, $e)');
     }
     for (var i = s; i < e; i++) {
       yield _fib(i);
@@ -80,20 +85,21 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SquadronMethod()
   FutureOr<MyServiceResponse<String>?> jsonEchoWithJsonResult(
       MyServiceRequest request) {
-    if (trace.value) {
-      Squadron.fine(
-          () => 'jsonEchoWithJsonResult(${jsonEncode(request.toJson())})');
+    if (_trace.value) {
+      Squadron.finer('jsonEchoWithJsonResult(${jsonEncode(request.toJson())})');
     }
+    _simulateWorkload();
     return MyServiceResponse('${request.payload} done');
   }
 
   @SquadronMethod()
   FutureOr<MyServiceResponse<String>> explicitEchoWithJsonResult(
       @SerializeWith(MyServiceRequestToString) MyServiceRequest request) {
-    if (trace.value) {
-      Squadron.fine(
-          () => 'explicitEchoWithJsonResult(${jsonEncode(request.toJson())})');
+    if (_trace.value) {
+      Squadron.finer(
+          'explicitEchoWithJsonResult(${jsonEncode(request.toJson())})');
     }
+    _simulateWorkload();
     return MyServiceResponse('${request.payload} done');
   }
 
@@ -101,10 +107,11 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SerializeWith(MyServiceResponseOfStringToByteBuffer)
   FutureOr<MyServiceResponse<String>> jsonEchoWithExplicitResult(
       MyServiceRequest request) {
-    if (trace.value) {
-      Squadron.fine(
-          () => 'jsonEchoWithExplicitResult(${jsonEncode(request.toJson())})');
+    if (_trace.value) {
+      Squadron.finer(
+          'jsonEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     }
+    _simulateWorkload();
     return MyServiceResponse('${request.payload} done');
   }
 
@@ -113,10 +120,11 @@ class MyService extends WorkerService with $MyServiceOperations {
   FutureOr<MyServiceResponse<String>> explicitEchoWithExplicitResult(
       @SerializeWith(MyServiceRequestGenericToString.instance)
           MyServiceRequest request) {
-    if (trace.value) {
-      Squadron.fine(() =>
+    if (_trace.value) {
+      Squadron.finer(
           'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     }
+    _simulateWorkload();
     return MyServiceResponse('${request.payload} done');
   }
 
@@ -125,10 +133,21 @@ class MyService extends WorkerService with $MyServiceOperations {
   FutureOr<MyServiceResponse<String>> jsonEncodeEcho(
       @SerializeWith(MyServiceRequestToString.instance)
           MyServiceRequest request) {
-    if (trace.value) {
-      Squadron.fine(() =>
+    if (_trace.value) {
+      Squadron.finer(
           'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     }
+    _simulateWorkload();
     return MyServiceResponse('${request.payload} done');
+  }
+
+  void _simulateWorkload() {
+    // simulate some CPU-bound workload
+    final sw = Stopwatch()..start();
+    while (sw.elapsed < _delay) {
+      for (var i = 0; i < 250; i++) {
+        // loop
+      }
+    }
   }
 }

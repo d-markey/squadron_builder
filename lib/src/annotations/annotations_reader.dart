@@ -95,6 +95,47 @@ class AnnotationReader<T> {
     }
     return explicit;
   }
+
+  static bool _isSquadronLogger(InterfaceType clazz) {
+    final locationComponents = clazz.element.location?.components ?? const [];
+    return locationComponents.any((c) => c.startsWith('package:squadron/')) &&
+        (clazz.baseName.startsWith('SquadronLogger'));
+  }
+
+  static String? getLogger(Element element) {
+    String? instance;
+    for (var ann in element.metadata) {
+      final value = ann.computeConstantValue();
+      final logger = value?.getField('logger');
+      if (logger != null) {
+        final type = logger.toTypeValue() ?? logger.type;
+        final typeElt = (type?.element is ClassElement)
+            ? (type?.element as ClassElement)
+            : null;
+        final baseLogger = typeElt?.allSupertypes.where(_isSquadronLogger);
+        if (baseLogger == null || baseLogger.length != 1) {
+          throw InvalidGenerationSourceError(
+              'Invalid logger for $element: $logger');
+        }
+        final variable = logger.variable;
+        if (variable != null) {
+          if (variable.enclosingElement is ClassElement) {
+            instance = '${variable.enclosingElement!.name}.${variable.name}';
+          } else {
+            instance = variable.name;
+          }
+        } else {
+          var typeName = (logger.toTypeValue() ?? logger.type).toString();
+          if (typeName.endsWith('?') || typeName.endsWith('*')) {
+            typeName = typeName.substring(0, typeName.length - 1);
+          }
+          instance = '$typeName()';
+        }
+        break;
+      }
+    }
+    return instance;
+  }
 }
 
 extension _AnnotationExt on Element {

@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:squadron_builder/src/annotations/marshallers/marshalling_info.dart';
 
 import 'annotations/squadron_method_annotation.dart';
 import 'annotations/squadron_service_annotation.dart';
@@ -55,7 +56,7 @@ class WorkerAssets {
     }
   }
 
-  void generateVmCode() {
+  void generateVmCode(String? logger) {
     final output = _vmOutput;
     if (output != null) {
       final serviceImport = _getRelativePath(buildStep.inputId, output);
@@ -66,14 +67,14 @@ class WorkerAssets {
           import '$serviceImport';
 
           // VM entry point
-          void _start(Map command) => run($serviceInitializerName, command);
+          void _start(Map command) => run($serviceInitializerName, command, $logger);
 
           dynamic \$get$serviceActivator() => _start;
         '''));
     }
   }
 
-  void generateWebCode() {
+  void generateWebCode(String? logger) {
     final output = _webOutput;
     if (output != null) {
       final serviceImport = _getRelativePath(buildStep.inputId, output);
@@ -87,7 +88,7 @@ class WorkerAssets {
           import '$serviceImport';
 
           // Web entry point
-          void main() => run($serviceInitializerName);
+          void main() => run($serviceInitializerName, null, $logger);
 
           dynamic \$get$serviceActivator() => '$workerUrl';
         '''));
@@ -188,6 +189,8 @@ class WorkerAssets {
           
           _$workerClassName(${service.parameters}) : super(\$$activationsArgs);
 
+          ${service.fields.values.map(_generateField).join('\n\n')}
+
           ${commands.map(_generateWorkerMethod).join('\n\n')}
 
           @override
@@ -197,21 +200,23 @@ class WorkerAssets {
 
           ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
 
-          final Object _finalizationToken = Object();
+          final Object _detachToken = Object();
         }
 
         // Finalizable worker wrapper for ${service.name}
         class $workerClassName implements _$workerClassName {
           
-          $workerClassName(${service.parameters}) : _worker = _$workerClassName(${service.arguments}) {
-            _finalizer.attach(this, _worker, detach: _worker._finalizationToken);
+          $workerClassName(${service.nonFormalParameters}) : _worker = _$workerClassName(${service.nonFormalArguments}) {
+            _finalizer.attach(this, _worker, detach: _worker._detachToken);
           }
+
+          ${service.fields.values.map((f) => _forwardField(f, '_worker')).join('\n\n')}
 
           final _$workerClassName _worker;
 
           static final Finalizer<_$workerClassName> _finalizer = Finalizer<_$workerClassName>((w) {
             try {
-              _finalizer.detach(w._finalizationToken);
+              _finalizer.detach(w._detachToken);
               w.stop();
             } catch (ex) {
               // finalizers must not throw
@@ -237,7 +242,9 @@ class WorkerAssets {
           extends Worker with $operationsMixinName
           implements ${service.name} {
           
-          _$workerClassName(${service.parameters}) : super(\$$activationsArgs);
+          $workerClassName(${service.parameters}) : super(\$$activationsArgs);
+
+          ${service.fields.values.map(_generateField).join('\n\n')}
 
           ${commands.map(_generateWorkerMethod).join('\n\n')}
 
@@ -266,13 +273,30 @@ class WorkerAssets {
       }
 
       if (withFinalizers) {
-        var poolArguments = service.arguments;
-        if (poolParameters.isEmpty) {
-          poolArguments = 'concurrencySettings: concurrencySettings';
-        } else if (poolParameters.endsWith('}')) {
-          poolArguments += ', concurrencySettings: concurrencySettings';
+        var poolNonFormalParameters = service.nonFormalParameters;
+        var poolNonFormalArguments = service.nonFormalArguments;
+        if (poolNonFormalParameters.isEmpty) {
+          poolNonFormalParameters =
+              '{ConcurrencySettings? concurrencySettings}';
+          poolNonFormalArguments = 'concurrencySettings: concurrencySettings';
+        } else if (poolNonFormalParameters.endsWith(']')) {
+          poolNonFormalParameters = poolNonFormalParameters.substring(
+              0, poolNonFormalParameters.length - 1);
+          poolNonFormalParameters +=
+              ', ConcurrencySettings? concurrencySettings]';
+          poolNonFormalArguments += ', concurrencySettings';
+        } else if (poolNonFormalParameters.endsWith('}')) {
+          poolNonFormalParameters = poolNonFormalParameters.substring(
+              0, poolNonFormalParameters.length - 1);
+          poolNonFormalParameters +=
+              ', ConcurrencySettings? concurrencySettings}';
+          poolNonFormalArguments +=
+              ', concurrencySettings: concurrencySettings';
         } else {
-          poolArguments += ', concurrencySettings';
+          poolNonFormalParameters +=
+              ', {ConcurrencySettings? concurrencySettings}';
+          poolNonFormalArguments +=
+              ', concurrencySettings: concurrencySettings';
         }
 
         yield '''
@@ -285,6 +309,8 @@ class WorkerAssets {
                 () => $workerClassName(${service.arguments}),
                 concurrencySettings: concurrencySettings);
 
+            ${service.fields.values.map(_generateField).join('\n\n')}
+
             ${commands.map(_generatePoolMethod).join('\n\n')}
 
             @override
@@ -294,21 +320,23 @@ class WorkerAssets {
 
             ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
 
-            final Object _finalizationToken = Object();
+            final Object _detachToken = Object();
           }
 
         // Finalizable worker pool wrapper for ${service.name}
         class $workerPoolClassName implements _$workerPoolClassName {
           
-          $workerPoolClassName($poolParameters) : _pool = _$workerPoolClassName($poolArguments) {
-            _finalizer.attach(this, _pool, detach: _pool._finalizationToken);
+          $workerPoolClassName($poolNonFormalParameters) : _pool = _$workerPoolClassName($poolNonFormalArguments) {
+            _finalizer.attach(this, _pool, detach: _pool._detachToken);
           }
+
+          ${service.fields.values.map((f) => _forwardField(f, '_pool')).join('\n\n')}
 
           final _$workerPoolClassName _pool;
 
           static final Finalizer<_$workerPoolClassName> _finalizer = Finalizer<_$workerPoolClassName>((p) {
             try {
-              _finalizer.detach(p._finalizationToken);
+              _finalizer.detach(p._detachToken);
               p.stop();
             } catch (ex) {
               // finalizers must not throw
@@ -338,6 +366,8 @@ class WorkerAssets {
                 () => $workerClassName(${service.arguments}),
                 concurrencySettings: concurrencySettings);
 
+            ${service.fields.values.map(_generateField).join('\n\n')}
+
             ${commands.map(_generatePoolMethod).join('\n\n')}
 
             @override
@@ -360,16 +390,21 @@ class WorkerAssets {
 
   String _generateCommandHandler(SquadronMethodAnnotation cmd) {
     final serviceCall = 'svc.${cmd.name}(${cmd.deserializedArguments})';
-    if (cmd.needsSerialization) {
+    if (cmd.needsSerialization && !cmd.serializedResult.isIdentity) {
       if (cmd.isStream) {
-        return '${cmd.id}: (${cmd.reqName}) => $serviceCall.${cmd.continuation}((\$) => ${cmd.serializedResult('\$')})';
+        return '${cmd.id}: ($reqName) => $serviceCall.${cmd.continuation}((\$res) => ${cmd.serializedResult('\$res')})';
       } else {
-        return '${cmd.id}: (${cmd.reqName}) async => ${cmd.serializedResult('(await $serviceCall)')}';
+        return '${cmd.id}: ($reqName) async => ${cmd.serializedResult('(await $serviceCall)')}';
       }
     } else {
-      return '${cmd.id}: (${cmd.reqName}) => $serviceCall';
+      return '${cmd.id}: ($reqName) => $serviceCall';
     }
   }
+
+  String _generateField(FieldElement field) => '''
+      @override
+      ${field.isFinal ? 'final ' : ''}${field.type} ${field.name};
+    ''';
 
   String _unimplemented(String declaration, {bool override = false}) => '''
       ${override ? '@override' : ''}
@@ -387,13 +422,13 @@ class WorkerAssets {
   }
 
   String _generateWorkerMethod(SquadronMethodAnnotation cmd) {
-    var convert = '';
+    var deserialize = '';
     if (cmd.needsSerialization) {
-      convert = '(\$) => ${cmd.deserializedResult('\$')}';
-      if (convert != '(\$) => \$') {
-        convert = '.${cmd.continuation}($convert)';
+      deserialize = '(\$res) => ${cmd.deserializedResult('\$res')}';
+      if (deserialize != '(\$res) => \$res') {
+        deserialize = '.${cmd.continuation}($deserialize)';
       } else {
-        convert = '';
+        deserialize = '';
       }
     }
     return '''
@@ -404,25 +439,33 @@ class WorkerAssets {
             token: ${cmd.cancellationToken}, 
             inspectRequest: ${cmd.inspectRequest}, 
             inspectResponse: ${cmd.inspectResponse},
-          )$convert;
+          )$deserialize;
     ''';
   }
 
   String _generatePoolMethod(SquadronMethodAnnotation cmd) => '''
       @override
-      ${cmd.declaration} => ${cmd.poolExecutor}((\$) => \$.${cmd.name}(${cmd.arguments}));
+      ${cmd.declaration} => ${cmd.poolExecutor}((\$w) => \$w.${cmd.name}(${cmd.arguments}));
     ''';
 
-  String _forwardMethod(SquadronMethodAnnotation cmd, String target) {
-    var convert = '';
-    if (cmd.needsSerialization) {
-      convert = '(\$) => ${cmd.deserializedResult('\$')}';
-      if (convert != '(\$) => \$') {
-        convert = '.${cmd.continuation}($convert)';
-      } else {
-        convert = '';
-      }
+  String _forwardField(FieldElement field, String target) {
+    if (field.isFinal) {
+      return '''
+          @override
+          ${field.type} get ${field.name} => $target.${field.name};
+        ''';
+    } else {
+      return '''
+          @override
+          ${field.type} get ${field.name} => $target.${field.name};
+
+          @override
+          set ${field.name}(${field.type} value) => $target.${field.name} = value;
+        ''';
     }
+  }
+
+  String _forwardMethod(SquadronMethodAnnotation cmd, String target) {
     return '''
       @override
       ${cmd.declaration} => $target.${cmd.name}(${cmd.arguments});

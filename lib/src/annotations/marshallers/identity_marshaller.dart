@@ -7,10 +7,8 @@ class _IdentityMarshaller extends Marshaller {
   bool targets(DartType type) => true;
 
   @override
-  Generator getSerializer(DartType type) => _asIs;
+  Generator getSerializer(DartType type) => identity;
 
   @override
-  Generator getDeserializer(DartType type) => _asIs;
-
-  static String _asIs(expr) => expr;
+  Generator getDeserializer(DartType type) => identity;
 }

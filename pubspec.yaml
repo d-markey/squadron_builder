@@ -13,7 +13,8 @@ platforms:
   macos:
 
 dependencies:
-  squadron: ^4.3.3
+  squadron: #^4.3.4
+    path: ../squadron
   build: ^2.3.1
   source_gen: ^1.2.7
   analyzer: ^5.2.0

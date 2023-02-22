@@ -5,6 +5,8 @@ import 'package:squadron/squadron.dart';
 import 'my_service.dart';
 import 'my_service_config.dart';
 import 'my_service_request.dart';
+import 'perf_counters.dart';
+import 'skew_monitor.dart';
 
 void main() async {
   Squadron.setId('MAIN');
@@ -13,95 +15,159 @@ void main() async {
   Squadron.logLevel = SquadronLogLevel.info;
 
   final trace = MyServiceConfig('trace', false);
+  final workload = MyServiceConfig('workload', 250);
+
+  // start a periodic timer to measure timer deviation while executing the different scenarios.
+  final resolution = Duration(milliseconds: 20);
+  final skewMonitor = SkewMonitor(resolution);
+  await Future.delayed(resolution * 3);
 
   // FIRST RUN: single-threaded (all in main thread)
+  skewMonitor.reset();
   Squadron.info('---------------------------------------------');
   Squadron.info('1. Computing with MyService (single-threaded)');
   Squadron.info(' ');
-  await runService(trace);
-  Squadron.info(' ');
-  Squadron.info(' ');
+  final serviceCounters = await runService(trace, workload);
+  await Future.delayed(resolution * 3);
+  final serviceMaxDelay = skewMonitor.maxDelay;
+  print('');
+  print('');
 
   // SECOND RUN: one worker (= main thread + worker thread)
+  skewMonitor.reset();
   Squadron.info('----------------------------------------------');
   Squadron.info('2. Computing with MyServiceWorker (one thread)');
   Squadron.info(' ');
-  try {
-    await runWorker(trace);
-  } catch (ex) {
-    Squadron.info('   error = $ex');
-  }
-  Squadron.info(' ');
-  Squadron.info(' ');
+  final workerCounters = await runWorker(trace, workload);
+  await Future.delayed(resolution * 3);
+  final workerMaxDelay = skewMonitor.maxDelay;
+  print('');
+  print('');
 
   // THIRD RUN: worker pool (= main thread + n worker threads)
+  skewMonitor.reset();
   Squadron.info('------------------------------------------------------');
   Squadron.info('3. Computing with MyServiceWorkerPool (multi-threaded)');
   Squadron.info(' ');
-  await runPool(trace);
-  Squadron.info(' ');
-  Squadron.info(' ');
+  final workerPoolCounters = await runPool(trace, workload);
+  await Future.delayed(resolution * 3);
+  final workerPoolMaxDelay = skewMonitor.maxDelay;
+  print('');
+  print('');
+
+  skewMonitor.stop();
+
+  // print summary
+  print('');
+  print('');
+  print(
+      'MAX TIMER DELAY (resolution = $resolution aka ${1000 / resolution.inMilliseconds} frames/sec)\n'
+      '   * main thread: $serviceMaxDelay (${percent(resolution, serviceMaxDelay)})\n'
+      '   * worker: $workerMaxDelay (${percent(resolution, workerMaxDelay)})\n'
+      '   * worker pool: $workerPoolMaxDelay (${percent(resolution, workerPoolMaxDelay)})');
+  print('');
+  print('SINGLE WORKER vs MAIN THREAD: worker counters should be slightly\n'
+      'worse because of serialization/deserialization. The main advantage in\n'
+      'this scenario is to free the main event loop, eg in user-facing apps\n'
+      'to avoid glitches in the UI.');
+  final singleToMain = workerCounters.percentTo(serviceCounters);
+  print('  * Fib: ${singleToMain['fib']}');
+  print('  * Echo: ${singleToMain['echo']}');
+  print('  * Perf: ${singleToMain['perf']}');
+  print('');
+  print('WORKER POOL vs MAIN THREAD: worker pool counters should be much\n'
+      'better even considering the overhead of serialization/deserialization\n'
+      'and worker scheduling. Perf improvement depends on method execution\n'
+      'time: the heavier the workload, the more performance will be improved.');
+  final poolToMain = workerPoolCounters.percentTo(serviceCounters);
+  print('  * Fib: ${poolToMain['fib']}');
+  print('  * Echo: ${poolToMain['echo']}');
+  print('  * Perf: ${poolToMain['perf']}');
+  print('');
 }
 
-Future runService(MyServiceConfig<bool> trace) async {
-  await testWith(MyService(trace));
-  await testWith(MyService(trace));
+Future<PerfCounters> runService(
+    MyServiceConfig<bool> trace, MyServiceConfig<int> workload) async {
+  var counters = await testWith(MyService(trace, workload));
+  await Future.delayed(Duration.zero);
+  counters += await testWith(MyService(trace, workload));
+  return counters / 2;
 }
 
-Future runWorker(MyServiceConfig<bool> trace) async {
-  final worker = MyServiceWorker(trace);
-  await testWith(worker);
-  await testWith(worker);
+Future<PerfCounters> runWorker(
+    MyServiceConfig<bool> trace, MyServiceConfig<int> workload) async {
+  final worker = MyServiceWorker(trace, workload);
+
+  var counters = await testWith(worker);
+  await Future.delayed(Duration.zero);
+  counters += await testWith(worker);
 
   // clean up worker...
   Squadron.info(
       '${worker.stats.id} (${worker.stats.status}): totalWorkload=${worker.stats.totalWorkload}, upTime=${worker.stats.upTime}, idleTime=${worker.stats.idleTime}');
   // should not be necessary if with_finalizers was set to true when the code was generated
   // worker.stop();
+
+  return counters / 2;
 }
 
-Future runPool(MyServiceConfig<bool> trace) async {
-  final pool = MyServiceWorkerPool(trace,
+Future runPool(
+    MyServiceConfig<bool> trace, MyServiceConfig<int> workload) async {
+  final pool = MyServiceWorkerPool(trace, workload,
       concurrencySettings: ConcurrencySettings(
-        minWorkers: 3,
+        minWorkers: 5,
         maxWorkers: 5,
         maxParallel: 1,
       ));
-  await testWith(pool);
-  await testWith(pool);
+
+  var counters = await testWith(pool);
+  await Future.delayed(Duration.zero);
+  counters += await testWith(pool);
 
   // clean up pool...
   await Future.delayed(Duration(milliseconds: 400));
-  pool.stop((w) => w.idleTime.inMilliseconds > 410);
-  Squadron.info(pool.fullStats.map((s) =>
-      '${s.id} (${s.status}): totalWorkload=${s.totalWorkload}, upTime=${s.upTime}, idleTime=${s.idleTime}'));
+  pool.stop((w) => w.idleTime.inMilliseconds > 400);
+  for (var s in pool.fullStats) {
+    Squadron.info(
+        '${s.id} (${s.status}): totalWorkload=${s.totalWorkload}, upTime=${s.upTime}, idleTime=${s.idleTime}');
+  }
   await Future.delayed(Duration(milliseconds: 100));
   // should not be necessary if with_finalizers was set to true when the code was generated
   // pool.stop();
-  Squadron.info(pool.fullStats.map((s) =>
-      '${s.id} (${s.status}): totalWorkload=${s.totalWorkload}, upTime=${s.upTime}, idleTime=${s.idleTime}'));
+
+  return counters / 2;
 }
 
-Future testWith(MyService service) async {
+Future<PerfCounters> testWith(MyService service) async {
   final sw = Stopwatch()..start();
   await testFibWith(service);
+  final fib = sw.elapsed;
+  Squadron.info('-->   ELAPSED(fib) = $fib');
+  sw.reset();
   await testEchoWith(service);
+  final echo = sw.elapsed;
+  Squadron.info('-->   ELAPSED(echo) = $echo');
+  sw.reset();
   await perfTestEchoWith(service);
   await perfTestJsonEchoWith(service);
-  Squadron.info('ELAPSED = ${sw.elapsed}');
+  final perf = sw.elapsed;
+  Squadron.info('-->   ELAPSED(perf) = $perf');
+  return PerfCounters(fib, echo, perf);
 }
 
 Future testFibWith(MyService service) async {
   final futures = <Future>[];
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 10; i++) {
     futures.add(service.fibonacci(20 + i).toFuture().then((res) =>
         Squadron.fine('[${service.runtimeType}] fibonacci(${20 + i}) = $res')));
   }
   await Future.wait(futures);
   futures.clear();
 
-  for (var i = 0; i < 5; i++) {
+  await Future.delayed(Duration.zero);
+
+  for (var i = 0; i < 10; i++) {
     futures.add(service.fibonacciList0(20 + i, 30 + i).toFuture().then((res) =>
         Squadron.fine(
             '[${service.runtimeType}] fibonacciList0(${20 + i}, ${30 + i}) = $res')));
@@ -109,7 +175,9 @@ Future testFibWith(MyService service) async {
   await Future.wait(futures);
   futures.clear();
 
-  for (var i = 0; i < 5; i++) {
+  await Future.delayed(Duration.zero);
+
+  for (var i = 0; i < 10; i++) {
     futures.add(service.fibonacciList1(20 + i, 30 + i).toFuture().then((res) =>
         Squadron.fine(
             '[${service.runtimeType}] fibonacciList1(${20 + i}, ${30 + i}) = $res')));
@@ -117,7 +185,9 @@ Future testFibWith(MyService service) async {
   await Future.wait(futures);
   futures.clear();
 
-  for (var i = 0; i < 5; i++) {
+  await Future.delayed(Duration.zero);
+
+  for (var i = 0; i < 10; i++) {
     futures.add(service.fibonacciList2(20 + i, 30 + i).toFuture().then((res) =>
         Squadron.fine(
             '[${service.runtimeType}] fibonacciList2(${20 + i}, ${30 + i}) = $res')));
@@ -125,19 +195,25 @@ Future testFibWith(MyService service) async {
   await Future.wait(futures);
   futures.clear();
 
-  for (var i = 0; i < 5; i++) {
+  await Future.delayed(Duration.zero);
+
+  for (var i = 0; i < 10; i++) {
     futures.add(service.fibonacciStream(20 + i, 30 + i).toList().then((res) =>
         Squadron.fine(
             '[${service.runtimeType}] fibonacciStream(${20 + i}, ${30 + i}) = $res')));
   }
   await Future.wait(futures);
   futures.clear();
+
+  await Future.delayed(Duration.zero);
 }
+
+const int loops = 25;
 
 Future testEchoWith(MyService service) async {
   final futures = <Future>[];
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < loops; i++) {
     futures.add(service
         .jsonEchoWithJsonResult(MyServiceRequest('echo $i'))
         .toFuture()
@@ -147,7 +223,7 @@ Future testEchoWith(MyService service) async {
   await Future.wait(futures);
   futures.clear();
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < loops; i++) {
     futures.add(service
         .jsonEchoWithExplicitResult(MyServiceRequest('echo $i'))
         .toFuture()
@@ -157,7 +233,7 @@ Future testEchoWith(MyService service) async {
   await Future.wait(futures);
   futures.clear();
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < loops; i++) {
     futures.add(service
         .explicitEchoWithJsonResult(MyServiceRequest('echo $i'))
         .toFuture()
@@ -167,7 +243,7 @@ Future testEchoWith(MyService service) async {
   await Future.wait(futures);
   futures.clear();
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < loops; i++) {
     futures.add(service
         .explicitEchoWithExplicitResult(MyServiceRequest('echo $i'))
         .toFuture()
@@ -178,12 +254,12 @@ Future testEchoWith(MyService service) async {
   futures.clear();
 }
 
-const int loops = 50000;
+const int perfLoops = 1000;
 
 Future perfTestEchoWith(MyService service) async {
   var futures = <Future>[];
   final jsonSw = Stopwatch()..start();
-  for (var i = 0; i < loops; i++) {
+  for (var i = 0; i < perfLoops; i++) {
     final req = MyServiceRequest('echo $i');
     futures.add(service.jsonEchoWithJsonResult(req).toFuture());
   }
@@ -192,7 +268,7 @@ Future perfTestEchoWith(MyService service) async {
 
   futures = <Future>[];
   final explicitSw = Stopwatch()..start();
-  for (var i = 0; i < loops; i++) {
+  for (var i = 0; i < perfLoops; i++) {
     final req = MyServiceRequest('echo $i');
     futures.add(service.explicitEchoWithExplicitResult(req).toFuture());
   }
@@ -206,7 +282,7 @@ Future perfTestEchoWith(MyService service) async {
 Future perfTestJsonEchoWith(MyService service) async {
   var futures = <Future>[];
   final jsonSw = Stopwatch()..start();
-  for (var i = 0; i < loops; i++) {
+  for (var i = 0; i < perfLoops; i++) {
     final req = MyServiceRequest('echo $i');
     futures.add(service.jsonEchoWithJsonResult(req).toFuture());
   }
@@ -215,7 +291,7 @@ Future perfTestJsonEchoWith(MyService service) async {
 
   futures = <Future>[];
   final jsonEncodeSw = Stopwatch()..start();
-  for (var i = 0; i < loops; i++) {
+  for (var i = 0; i < perfLoops; i++) {
     final req = MyServiceRequest('echo $i');
     futures.add(service.jsonEncodeEcho(req).toFuture());
   }

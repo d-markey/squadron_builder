@@ -5,6 +5,12 @@ import 'marshaller.dart';
 
 typedef Generator = String Function(String);
 
+extension IdentityCheckerExt on Generator {
+  bool get isIdentity => (this == identity) || (this('\$x') == '\$x');
+}
+
+String identity(String expr) => expr;
+
 class MarshallingInfo {
   MarshallingInfo(this._type, this._marshaller);
 

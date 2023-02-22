@@ -56,15 +56,20 @@ mixin $MyServiceOperations on WorkerService {
 }
 
 // Service initializer
-MyService $MyServiceInitializer(WorkerRequest startRequest) =>
-    MyService(MyServiceConfig<bool>.fromJson(startRequest.args[0]));
+MyService $MyServiceInitializer(WorkerRequest startRequest) => MyService(
+    MyServiceConfig<bool>.fromJson(startRequest.args[0]),
+    MyServiceConfig<int>.fromJson(startRequest.args[1]));
 
 // Worker for MyService
 class _MyServiceWorker extends Worker
     with $MyServiceOperations
     implements MyService {
-  _MyServiceWorker(MyServiceConfig<bool> trace)
-      : super($MyServiceActivator, args: [trace.toJson()]);
+  _MyServiceWorker(MyServiceConfig<bool> trace, this.workloadDelay)
+      : super($MyServiceActivator,
+            args: [trace.toJson(), workloadDelay.toJson()]);
+
+  @override
+  final MyServiceConfig<int> workloadDelay;
 
   @override
   Future<MyServiceResponse<String>> explicitEchoWithExplicitResult(
@@ -75,8 +80,8 @@ class _MyServiceWorker extends Worker
         token: null,
         inspectRequest: false,
         inspectResponse: false,
-      ).then(
-          ($) => MyServiceResponseOfStringToByteBuffer.instance.unmarshall($));
+      ).then(($res) =>
+          MyServiceResponseOfStringToByteBuffer.instance.unmarshall($res));
 
   @override
   Future<MyServiceResponse<String>> explicitEchoWithJsonResult(
@@ -87,7 +92,7 @@ class _MyServiceWorker extends Worker
         token: null,
         inspectRequest: false,
         inspectResponse: false,
-      ).then(($) => MyServiceResponse<String>.fromJson($));
+      ).then(($res) => MyServiceResponse<String>.fromJson($res));
 
   @override
   Future<int> fibonacci(int i) => send(
@@ -105,7 +110,7 @@ class _MyServiceWorker extends Worker
         token: null,
         inspectRequest: false,
         inspectResponse: false,
-      ).then(($) => $.cast<int>());
+      ).then(($res) => $res.cast<int>());
 
   @override
   Future<List<int>> fibonacciList1(int s, int e) => send(
@@ -114,7 +119,7 @@ class _MyServiceWorker extends Worker
         token: null,
         inspectRequest: false,
         inspectResponse: false,
-      ).then(($) => (const ListIntMarshaller()).unmarshall($));
+      ).then(($res) => (const ListIntMarshaller()).unmarshall($res));
 
   @override
   Future<List<int>> fibonacciList2(int s, int e) => send(
@@ -123,7 +128,7 @@ class _MyServiceWorker extends Worker
         token: null,
         inspectRequest: false,
         inspectResponse: false,
-      ).then(($) => listIntMarshaller.unmarshall($));
+      ).then(($res) => listIntMarshaller.unmarshall($res));
 
   @override
   Stream<int> fibonacciStream(int s, int e) => stream(
@@ -143,8 +148,8 @@ class _MyServiceWorker extends Worker
         token: null,
         inspectRequest: false,
         inspectResponse: false,
-      ).then(
-          ($) => (const MyServiceResponseOfStringToByteBuffer()).unmarshall($));
+      ).then(($res) =>
+          (const MyServiceResponseOfStringToByteBuffer()).unmarshall($res));
 
   @override
   Future<MyServiceResponse<String>?> jsonEchoWithJsonResult(
@@ -155,7 +160,8 @@ class _MyServiceWorker extends Worker
         token: null,
         inspectRequest: false,
         inspectResponse: false,
-      ).then(($) => ($ == null) ? null : MyServiceResponse<String>.fromJson($));
+      ).then(($res) =>
+          ($res == null) ? null : MyServiceResponse<String>.fromJson($res));
 
   @override
   Future<MyServiceResponse<String>> jsonEncodeEcho(MyServiceRequest request) =>
@@ -165,30 +171,40 @@ class _MyServiceWorker extends Worker
         token: null,
         inspectRequest: false,
         inspectResponse: false,
-      ).then(($) => (const MyServiceResponseToJson()).unmarshall($));
+      ).then(($res) => (const MyServiceResponseToJson()).unmarshall($res));
 
   @override
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
   @override
-  MyServiceConfig<bool> get trace => throw UnimplementedError();
+  void _simulateWorkload() => throw UnimplementedError();
 
-  final Object _finalizationToken = Object();
+  @override
+  MyServiceConfig<bool> get _trace => throw UnimplementedError();
+
+  @override
+  Duration get _delay => throw UnimplementedError();
+
+  final Object _detachToken = Object();
 }
 
 // Finalizable worker wrapper for MyService
 class MyServiceWorker implements _MyServiceWorker {
-  MyServiceWorker(MyServiceConfig<bool> trace)
-      : _worker = _MyServiceWorker(trace) {
-    _finalizer.attach(this, _worker, detach: _worker._finalizationToken);
+  MyServiceWorker(
+      MyServiceConfig<bool> trace, MyServiceConfig<int> workloadDelay)
+      : _worker = _MyServiceWorker(trace, workloadDelay) {
+    _finalizer.attach(this, _worker, detach: _worker._detachToken);
   }
+
+  @override
+  MyServiceConfig<int> get workloadDelay => _worker.workloadDelay;
 
   final _MyServiceWorker _worker;
 
   static final Finalizer<_MyServiceWorker> _finalizer =
       Finalizer<_MyServiceWorker>((w) {
     try {
-      _finalizer.detach(w._finalizationToken);
+      _finalizer.detach(w._detachToken);
       w.stop();
     } catch (ex) {
       // finalizers must not throw
@@ -241,7 +257,13 @@ class MyServiceWorker implements _MyServiceWorker {
   Map<int, CommandHandler> get operations => _worker.operations;
 
   @override
-  MyServiceConfig<bool> get trace => _worker.trace;
+  void _simulateWorkload() => _worker._simulateWorkload();
+
+  @override
+  MyServiceConfig<bool> get _trace => _worker._trace;
+
+  @override
+  Duration get _delay => _worker._delay;
 
   @override
   List get args => _worker.args;
@@ -310,85 +332,98 @@ class MyServiceWorker implements _MyServiceWorker {
           inspectResponse: inspectResponse);
 
   @override
-  Object get _finalizationToken => _worker._finalizationToken;
+  Object get _detachToken => _worker._detachToken;
 }
 
 // Worker pool for MyService
 class _MyServiceWorkerPool extends WorkerPool<MyServiceWorker>
     with $MyServiceOperations
     implements MyService {
-  _MyServiceWorkerPool(MyServiceConfig<bool> trace,
+  _MyServiceWorkerPool(MyServiceConfig<bool> trace, this.workloadDelay,
       {ConcurrencySettings? concurrencySettings})
-      : super(() => MyServiceWorker(trace),
+      : super(() => MyServiceWorker(trace, workloadDelay),
             concurrencySettings: concurrencySettings);
+
+  @override
+  final MyServiceConfig<int> workloadDelay;
 
   @override
   Future<MyServiceResponse<String>> explicitEchoWithExplicitResult(
           MyServiceRequest request) =>
-      execute(($) => $.explicitEchoWithExplicitResult(request));
+      execute(($w) => $w.explicitEchoWithExplicitResult(request));
 
   @override
   Future<MyServiceResponse<String>> explicitEchoWithJsonResult(
           MyServiceRequest request) =>
-      execute(($) => $.explicitEchoWithJsonResult(request));
+      execute(($w) => $w.explicitEchoWithJsonResult(request));
 
   @override
-  Future<int> fibonacci(int i) => execute(($) => $.fibonacci(i));
+  Future<int> fibonacci(int i) => execute(($w) => $w.fibonacci(i));
 
   @override
   Future<Iterable<int>> fibonacciList0(int s, int e) =>
-      execute(($) => $.fibonacciList0(s, e));
+      execute(($w) => $w.fibonacciList0(s, e));
 
   @override
   Future<List<int>> fibonacciList1(int s, int e) =>
-      execute(($) => $.fibonacciList1(s, e));
+      execute(($w) => $w.fibonacciList1(s, e));
 
   @override
   Future<List<int>> fibonacciList2(int s, int e) =>
-      execute(($) => $.fibonacciList2(s, e));
+      execute(($w) => $w.fibonacciList2(s, e));
 
   @override
   Stream<int> fibonacciStream(int s, int e) =>
-      stream(($) => $.fibonacciStream(s, e));
+      stream(($w) => $w.fibonacciStream(s, e));
 
   @override
   Future<MyServiceResponse<String>> jsonEchoWithExplicitResult(
           MyServiceRequest request) =>
-      execute(($) => $.jsonEchoWithExplicitResult(request));
+      execute(($w) => $w.jsonEchoWithExplicitResult(request));
 
   @override
   Future<MyServiceResponse<String>?> jsonEchoWithJsonResult(
           MyServiceRequest request) =>
-      execute(($) => $.jsonEchoWithJsonResult(request));
+      execute(($w) => $w.jsonEchoWithJsonResult(request));
 
   @override
   Future<MyServiceResponse<String>> jsonEncodeEcho(MyServiceRequest request) =>
-      execute(($) => $.jsonEncodeEcho(request));
+      execute(($w) => $w.jsonEncodeEcho(request));
 
   @override
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
   @override
-  MyServiceConfig<bool> get trace => throw UnimplementedError();
+  void _simulateWorkload() => throw UnimplementedError();
 
-  final Object _finalizationToken = Object();
+  @override
+  MyServiceConfig<bool> get _trace => throw UnimplementedError();
+
+  @override
+  Duration get _delay => throw UnimplementedError();
+
+  final Object _detachToken = Object();
 }
 
 // Finalizable worker pool wrapper for MyService
 class MyServiceWorkerPool implements _MyServiceWorkerPool {
-  MyServiceWorkerPool(MyServiceConfig<bool> trace,
+  MyServiceWorkerPool(
+      MyServiceConfig<bool> trace, MyServiceConfig<int> workloadDelay,
       {ConcurrencySettings? concurrencySettings})
-      : _pool = _MyServiceWorkerPool(trace,
+      : _pool = _MyServiceWorkerPool(trace, workloadDelay,
             concurrencySettings: concurrencySettings) {
-    _finalizer.attach(this, _pool, detach: _pool._finalizationToken);
+    _finalizer.attach(this, _pool, detach: _pool._detachToken);
   }
+
+  @override
+  MyServiceConfig<int> get workloadDelay => _pool.workloadDelay;
 
   final _MyServiceWorkerPool _pool;
 
   static final Finalizer<_MyServiceWorkerPool> _finalizer =
       Finalizer<_MyServiceWorkerPool>((p) {
     try {
-      _finalizer.detach(p._finalizationToken);
+      _finalizer.detach(p._detachToken);
       p.stop();
     } catch (ex) {
       // finalizers must not throw
@@ -439,7 +474,13 @@ class MyServiceWorkerPool implements _MyServiceWorkerPool {
   Map<int, CommandHandler> get operations => _pool.operations;
 
   @override
-  MyServiceConfig<bool> get trace => _pool.trace;
+  void _simulateWorkload() => _pool._simulateWorkload();
+
+  @override
+  MyServiceConfig<bool> get _trace => _pool._trace;
+
+  @override
+  Duration get _delay => _pool._delay;
 
   @override
   ConcurrencySettings get concurrencySettings => _pool.concurrencySettings;
@@ -529,5 +570,5 @@ class MyServiceWorkerPool implements _MyServiceWorkerPool {
       _pool.stream<T>(task, counter: counter);
 
   @override
-  Object get _finalizationToken => _pool._finalizationToken;
+  Object get _detachToken => _pool._detachToken;
 }

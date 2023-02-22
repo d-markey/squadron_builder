@@ -47,12 +47,18 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
       // **************************************************************************
       ''');
 
-    assets.generateVmCode();
-    assets.generateWebCode();
+    assets.generateVmCode(service.logger);
+    assets.generateWebCode(service.logger);
     assets.generateCrossPlatformCode();
     assets.generateActivatorCode();
 
-    return assets.generateMapWorkerAndPool(withFinalizers);
+    try {
+      return assets.generateMapWorkerAndPool(withFinalizers);
+    } catch (ex, st) {
+      print('CAUGHT $ex');
+      print(st);
+      rethrow;
+    }
   }
 }
 
