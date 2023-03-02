@@ -155,7 +155,42 @@ class WorkerAssets {
       commands[i].setNum(i + 1);
     }
 
-    yield '''
+    yield _generateOperationMap(commands);
+
+    yield _generateServiceInitializer();
+
+    final generateWorker =
+        withFinalizers ? _generateFinalizableWorker : _generateWorker;
+
+    final activationsArgs = service.serializedArguments.isEmpty
+        ? serviceActivator
+        : '$serviceActivator, args: [${service.serializedArguments}]';
+
+    yield generateWorker(activationsArgs, commands, unimplemented);
+
+    if (service.pool) {
+      final generatePool =
+          withFinalizers ? _generateFinalizableWorkerPool : _generateWorkerPool;
+
+      var poolParameters = service.parameters;
+      // worker pool constructors also have an optional ConcurrencySettings parameter
+      if (poolParameters.isEmpty) {
+        poolParameters = '{ConcurrencySettings? concurrencySettings}';
+      } else if (poolParameters.endsWith('}')) {
+        poolParameters = poolParameters.substring(0, poolParameters.length - 1);
+        poolParameters += ', ConcurrencySettings? concurrencySettings}';
+      } else if (poolParameters.endsWith(']')) {
+        poolParameters = poolParameters.substring(0, poolParameters.length - 1);
+        poolParameters += ', ConcurrencySettings? concurrencySettings]';
+      } else {
+        poolParameters += ', {ConcurrencySettings? concurrencySettings}';
+      }
+
+      yield generatePool(poolParameters, commands, unimplemented);
+    }
+  }
+
+  String _generateOperationMap(List<SquadronMethodAnnotation> commands) => '''
         // Operations map for ${service.name}
         mixin $operationsMixinName on WorkerService {
           @override
@@ -169,19 +204,42 @@ class WorkerAssets {
         }
       ''';
 
-    yield '''
+  String _generateServiceInitializer() => '''
         // Service initializer
         ${service.name} $serviceInitializerName(WorkerRequest startRequest)
-            => ${_generateServiceInitializer()};
+            => ${service.name}(${service.arguments.isEmpty ? '' : service.deserializedArguments});
       ''';
 
-    var activationsArgs = serviceActivator;
-    if (service.serializedArguments.isNotEmpty) {
-      activationsArgs += ', args: [${service.serializedArguments}]';
-    }
+  String _generateWorker(
+          String activationsArgs,
+          List<SquadronMethodAnnotation> commands,
+          List<SquadronMethodAnnotation> unimplemented) =>
+      '''
+        // Worker for ${service.name}
+        class $workerClassName
+          extends Worker with $operationsMixinName
+          implements ${service.name} {
+          
+          $workerClassName(${service.parameters}) : super(\$$activationsArgs);
 
-    if (withFinalizers) {
-      yield '''
+          ${service.fields.values.map(_generateField).join('\n\n')}
+
+          ${commands.map(_generateWorkerMethod).join('\n\n')}
+
+          @override
+          Map<int, CommandHandler> get operations => WorkerService.noOperations;
+
+          ${unimplemented.map(_generateUnimplemented).join('\n\n')}
+
+          ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
+        }
+      ''';
+
+  String _generateFinalizableWorker(
+          String activationsArgs,
+          List<SquadronMethodAnnotation> commands,
+          List<SquadronMethodAnnotation> unimplemented) =>
+      '''
         // Worker for ${service.name}
         class _$workerClassName
           extends Worker with $operationsMixinName
@@ -235,71 +293,59 @@ class WorkerAssets {
           ${workerOverrides.entries.map((e) => _forwardOverride(e.key, '_worker', e.value)).join('\n\n')}
         }
       ''';
+
+  String _generateWorkerPool(
+          String poolParameters,
+          List<SquadronMethodAnnotation> commands,
+          List<SquadronMethodAnnotation> unimplemented) =>
+      '''
+          // Worker pool for ${service.name}
+          class $workerPoolClassName
+            extends WorkerPool<$workerClassName> with $operationsMixinName
+            implements ${service.name} {
+
+            $workerPoolClassName($poolParameters) : super(
+                () => $workerClassName(${service.arguments}),
+                concurrencySettings: concurrencySettings);
+
+            ${service.fields.values.map(_generateField).join('\n\n')}
+
+            ${commands.map(_generatePoolMethod).join('\n\n')}
+
+            @override
+            Map<int, CommandHandler> get operations => WorkerService.noOperations;
+
+            ${unimplemented.map(_generateUnimplemented).join('\n\n')}
+
+            ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
+          }
+        ''';
+
+  String _generateFinalizableWorkerPool(
+      String poolParameters,
+      List<SquadronMethodAnnotation> commands,
+      List<SquadronMethodAnnotation> unimplemented) {
+    var poolNonFormalParameters = service.nonFormalParameters;
+    var poolNonFormalArguments = service.nonFormalArguments;
+    if (poolNonFormalParameters.isEmpty) {
+      poolNonFormalParameters = '{ConcurrencySettings? concurrencySettings}';
+      poolNonFormalArguments = 'concurrencySettings: concurrencySettings';
+    } else if (poolNonFormalParameters.endsWith(']')) {
+      poolNonFormalParameters = poolNonFormalParameters.substring(
+          0, poolNonFormalParameters.length - 1);
+      poolNonFormalParameters += ', ConcurrencySettings? concurrencySettings]';
+      poolNonFormalArguments += ', concurrencySettings';
+    } else if (poolNonFormalParameters.endsWith('}')) {
+      poolNonFormalParameters = poolNonFormalParameters.substring(
+          0, poolNonFormalParameters.length - 1);
+      poolNonFormalParameters += ', ConcurrencySettings? concurrencySettings}';
+      poolNonFormalArguments += ', concurrencySettings: concurrencySettings';
     } else {
-      yield '''
-        // Worker for ${service.name}
-        class $workerClassName
-          extends Worker with $operationsMixinName
-          implements ${service.name} {
-          
-          $workerClassName(${service.parameters}) : super(\$$activationsArgs);
-
-          ${service.fields.values.map(_generateField).join('\n\n')}
-
-          ${commands.map(_generateWorkerMethod).join('\n\n')}
-
-          @override
-          Map<int, CommandHandler> get operations => WorkerService.noOperations;
-
-          ${unimplemented.map(_generateUnimplemented).join('\n\n')}
-
-          ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
-        }
-      ''';
+      poolNonFormalParameters += ', {ConcurrencySettings? concurrencySettings}';
+      poolNonFormalArguments += ', concurrencySettings: concurrencySettings';
     }
 
-    if (service.pool) {
-      var poolParameters = service.parameters;
-      if (poolParameters.isEmpty) {
-        poolParameters = '{ConcurrencySettings? concurrencySettings}';
-      } else if (poolParameters.endsWith('}')) {
-        poolParameters = poolParameters.substring(0, poolParameters.length - 1);
-        poolParameters += ', ConcurrencySettings? concurrencySettings}';
-      } else if (poolParameters.endsWith(']')) {
-        poolParameters = poolParameters.substring(0, poolParameters.length - 1);
-        poolParameters += ', ConcurrencySettings? concurrencySettings]';
-      } else {
-        poolParameters += ', {ConcurrencySettings? concurrencySettings}';
-      }
-
-      if (withFinalizers) {
-        var poolNonFormalParameters = service.nonFormalParameters;
-        var poolNonFormalArguments = service.nonFormalArguments;
-        if (poolNonFormalParameters.isEmpty) {
-          poolNonFormalParameters =
-              '{ConcurrencySettings? concurrencySettings}';
-          poolNonFormalArguments = 'concurrencySettings: concurrencySettings';
-        } else if (poolNonFormalParameters.endsWith(']')) {
-          poolNonFormalParameters = poolNonFormalParameters.substring(
-              0, poolNonFormalParameters.length - 1);
-          poolNonFormalParameters +=
-              ', ConcurrencySettings? concurrencySettings]';
-          poolNonFormalArguments += ', concurrencySettings';
-        } else if (poolNonFormalParameters.endsWith('}')) {
-          poolNonFormalParameters = poolNonFormalParameters.substring(
-              0, poolNonFormalParameters.length - 1);
-          poolNonFormalParameters +=
-              ', ConcurrencySettings? concurrencySettings}';
-          poolNonFormalArguments +=
-              ', concurrencySettings: concurrencySettings';
-        } else {
-          poolNonFormalParameters +=
-              ', {ConcurrencySettings? concurrencySettings}';
-          poolNonFormalArguments +=
-              ', concurrencySettings: concurrencySettings';
-        }
-
-        yield '''
+    return '''
           // Worker pool for ${service.name}
           class _$workerPoolClassName
             extends WorkerPool<$workerClassName> with $operationsMixinName
@@ -355,35 +401,7 @@ class WorkerAssets {
           ${workerPoolOverrides.entries.map((e) => _forwardOverride(e.key, '_pool', e.value)).join('\n\n')}
         }
         ''';
-      } else {
-        yield '''
-          // Worker pool for ${service.name}
-          class $workerPoolClassName
-            extends WorkerPool<$workerClassName> with $operationsMixinName
-            implements ${service.name} {
-
-            $workerPoolClassName($poolParameters) : super(
-                () => $workerClassName(${service.arguments}),
-                concurrencySettings: concurrencySettings);
-
-            ${service.fields.values.map(_generateField).join('\n\n')}
-
-            ${commands.map(_generatePoolMethod).join('\n\n')}
-
-            @override
-            Map<int, CommandHandler> get operations => WorkerService.noOperations;
-
-            ${unimplemented.map(_generateUnimplemented).join('\n\n')}
-
-            ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
-          }
-        ''';
-      }
-    }
   }
-
-  String _generateServiceInitializer() =>
-      '${service.name}(${service.arguments.isEmpty ? '' : service.deserializedArguments})';
 
   String _generateCommandIds(SquadronMethodAnnotation cmd) =>
       'static const int ${cmd.id} = ${cmd.num};';
