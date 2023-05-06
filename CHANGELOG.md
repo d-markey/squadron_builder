@@ -1,9 +1,9 @@
-## 2.0.0
+## 1.1.0
 
 - Breaking changes: several renamings, in particular the builder name which is now `squadron_builder:worker_builder`.
 - Generate appropriate code for fields used as parameters in the constructor of the service class. In previous versions, the generated code for constructors did not map parameters with fields, and fields were overriden with getters/setters throwing an `UnimplementedError`. Please note that if the field is not final or if its value is mutable, updates will not be propagated to/from the platform worker. This is by design, because the service fields and the worker/pool fields are different instances living in different threads, and threads do not share memory in Dart and browsers.
 - Support `UseLogger` annotation to generate associated code during worther thread initialization.
-- Take builder options into account. In previous versions, builder options were ignored. Note that `source_gen` currently rejects builder configurations with multiple targets. Pull request https://github.com/dart-lang/source_gen/pull/647 has been submitted to `source_gen` to support builders that produce multiple files.
+- Take builder options into account. In previous versions, builder options were ignored. Also upgraded `source_gen` to 1.3.0 (see pull request https://github.com/dart-lang/source_gen/pull/647 related to builders that produce multiple files).
 - Added explicit option `with_finalizers` to force or disable code generation for finalization, and make finalization actually work.
 - Split `build.yaml` in two to avoid interfering with the build process of client packages.
 - Reorganized the source code to make it more readable and maintainable.
