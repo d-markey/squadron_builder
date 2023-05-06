@@ -5,9 +5,10 @@
 // **************************************************************************
 
 import 'package:squadron/squadron_service.dart';
-import 'my_service.dart';
+import '../my_service.dart';
 
 // Web entry point
 void main() => run($MyServiceInitializer, null, ParentSquadronLogger());
 
-dynamic $getMyServiceActivator() => 'example/my_service.web.g.dart.js';
+dynamic $getMyServiceActivator() =>
+    'example/generated/my_service.web.g.dart.js';

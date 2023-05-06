@@ -12,31 +12,21 @@ Builder workerBuilder(BuilderOptions options) {
     );
   }
 
-  // // PartBuilder disallows additionalOutputExtensions when options is provided
-  // // => a default config is provided in options if necessary
-  // if (!options.config.containsKey('build_extensions')) {
-  //   options = options.overrideWith(BuilderOptions({
-  //     'build_extensions': {
-  //       '.dart': [
-  //         '.worker.g.dart',
-  //         '.vm.g.dart',
-  //         '.web.g.dart',
-  //         '.stub.g.dart',
-  //         '.activator.g.dart',
-  //       ]
-  //     }
-  //   }));
-  // }
-
-  // currently source_gen rejects configurations with multiple outputs
-  final additionalOutputs = options.config.containsKey('build_extensions')
-      ? const <String>[]
-      : [
+  // PartBuilder disallows additionalOutputExtensions when options is provided
+  // => a default config is provided in options if necessary
+  if (!options.config.containsKey('build_extensions')) {
+    options = options.overrideWith(BuilderOptions({
+      'build_extensions': {
+        '.dart': [
+          '.worker.g.dart',
           '.vm.g.dart',
           '.web.g.dart',
           '.stub.g.dart',
           '.activator.g.dart',
-        ];
+        ]
+      }
+    }));
+  }
 
   final formatOutput = PartBuilder([WorkerGenerator()], '.g.dart').formatOutput;
 
@@ -49,7 +39,6 @@ Builder workerBuilder(BuilderOptions options) {
     ],
     '.worker.g.dart',
     formatOutput: formatOutput,
-    additionalOutputExtensions: additionalOutputs,
-    options: additionalOutputs.isEmpty ? options : null,
+    options: options,
   );
 }

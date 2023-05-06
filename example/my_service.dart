@@ -5,12 +5,12 @@ import 'package:squadron/squadron_annotations.dart';
 import 'package:squadron/squadron.dart';
 
 import 'marshallers.dart';
-import 'my_service.activator.g.dart';
+import 'generated/my_service.activator.g.dart';
 import 'my_service_config.dart';
 import 'my_service_request.dart';
 import 'my_service_response.dart';
 
-part 'my_service.worker.g.dart';
+part 'generated/my_service.worker.g.dart';
 
 @SquadronService()
 @UseLogger(ParentSquadronLogger)

@@ -64,7 +64,7 @@ class SquadronMethodAnnotation {
   String get deserializedArguments => _deserializedArguments;
 
   String? _cancellationToken;
-  String get cancellationToken => _cancellationToken ?? 'null';
+  String? get cancellationToken => _cancellationToken;
 
   Marshaller _resultMarshaller = Marshaller.identity;
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'my_service.dart';
+part of '../my_service.dart';
 
 // **************************************************************************
 // WorkerGenerator
@@ -77,9 +77,6 @@ class _MyServiceWorker extends Worker
       send(
         $MyServiceOperations._$explicitEchoWithExplicitResultId,
         args: [MyServiceRequestGenericToString.instance.marshall(request)],
-        token: null,
-        inspectRequest: false,
-        inspectResponse: false,
       ).then(($res) =>
           MyServiceResponseOfStringToByteBuffer.instance.unmarshall($res));
 
@@ -89,54 +86,36 @@ class _MyServiceWorker extends Worker
       send(
         $MyServiceOperations._$explicitEchoWithJsonResultId,
         args: [(const MyServiceRequestToString()).marshall(request)],
-        token: null,
-        inspectRequest: false,
-        inspectResponse: false,
       ).then(($res) => MyServiceResponse<String>.fromJson($res));
 
   @override
   Future<int> fibonacci(int i) => send(
         $MyServiceOperations._$fibonacciId,
         args: [i],
-        token: null,
-        inspectRequest: false,
-        inspectResponse: false,
       );
 
   @override
   Future<Iterable<int>> fibonacciList0(int s, int e) => send(
         $MyServiceOperations._$fibonacciList0Id,
         args: [s, e],
-        token: null,
-        inspectRequest: false,
-        inspectResponse: false,
       ).then(($res) => $res.cast<int>());
 
   @override
   Future<List<int>> fibonacciList1(int s, int e) => send(
         $MyServiceOperations._$fibonacciList1Id,
         args: [s, e],
-        token: null,
-        inspectRequest: false,
-        inspectResponse: false,
       ).then(($res) => (const ListIntMarshaller()).unmarshall($res));
 
   @override
   Future<List<int>> fibonacciList2(int s, int e) => send(
         $MyServiceOperations._$fibonacciList2Id,
         args: [s, e],
-        token: null,
-        inspectRequest: false,
-        inspectResponse: false,
       ).then(($res) => listIntMarshaller.unmarshall($res));
 
   @override
   Stream<int> fibonacciStream(int s, int e) => stream(
         $MyServiceOperations._$fibonacciStreamId,
         args: [s, e],
-        token: null,
-        inspectRequest: false,
-        inspectResponse: false,
       );
 
   @override
@@ -145,9 +124,6 @@ class _MyServiceWorker extends Worker
       send(
         $MyServiceOperations._$jsonEchoWithExplicitResultId,
         args: [request.toJson()],
-        token: null,
-        inspectRequest: false,
-        inspectResponse: false,
       ).then(($res) =>
           (const MyServiceResponseOfStringToByteBuffer()).unmarshall($res));
 
@@ -157,9 +133,6 @@ class _MyServiceWorker extends Worker
       send(
         $MyServiceOperations._$jsonEchoWithJsonResultId,
         args: [request.toJson()],
-        token: null,
-        inspectRequest: false,
-        inspectResponse: false,
       ).then(($res) =>
           ($res == null) ? null : MyServiceResponse<String>.fromJson($res));
 
@@ -168,9 +141,6 @@ class _MyServiceWorker extends Worker
       send(
         $MyServiceOperations._$jsonEncodeEchoId,
         args: [MyServiceRequestToString.instance.marshall(request)],
-        token: null,
-        inspectRequest: false,
-        inspectResponse: false,
       ).then(($res) => (const MyServiceResponseToJson()).unmarshall($res));
 
   @override
@@ -531,7 +501,7 @@ class MyServiceWorkerPool implements _MyServiceWorkerPool {
   void cancel([Task? task, String? message]) => _pool.cancel(task, message);
 
   @override
-  Future start() => _pool.start();
+  FutureOr start() => _pool.start();
 
   @override
   int stop([bool Function(MyServiceWorker worker)? predicate]) =>

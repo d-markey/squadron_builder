@@ -454,9 +454,9 @@ class WorkerAssets {
       ${cmd.declaration} => ${cmd.workerExecutor}(
             $operationsMixinName.${cmd.id}, 
             args: [ ${cmd.serializedArguments} ], 
-            token: ${cmd.cancellationToken}, 
-            inspectRequest: ${cmd.inspectRequest}, 
-            inspectResponse: ${cmd.inspectResponse},
+            ${cmd.cancellationToken != null ? 'token: ${cmd.cancellationToken},' : ''}
+            ${cmd.inspectRequest ? 'inspectRequest: true,' : ''}
+            ${cmd.inspectResponse ? 'inspectResponse: true,' : ''}
           )$deserialize;
     ''';
   }

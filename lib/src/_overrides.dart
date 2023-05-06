@@ -43,7 +43,7 @@ const workerPoolOverrides = <String, String>{
   'int get workload': 'workload',
   // pool & task control
   'void cancel([Task? task, String? message])': 'cancel(task, message)',
-  'Future start()': 'start()',
+  'FutureOr start()': 'start()',
   r'int stop([bool Function($workerClassName worker)? predicate])':
       'stop(predicate)',
   r'Object registerWorkerPoolListener(void Function($workerClassName worker, bool removed) listener)':
