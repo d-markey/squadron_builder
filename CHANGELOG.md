@@ -1,4 +1,4 @@
-## 1.1.0
+## 2.0.0
 
 - Breaking changes: several renamings, in particular the builder name which is now `squadron_builder:worker_builder`.
 - Generate appropriate code for fields used as parameters in the constructor of the service class. In previous versions, the generated code for constructors did not map parameters with fields, and fields were overriden with getters/setters throwing an `UnimplementedError`. Please note that if the field is not final or if its value is mutable, updates will not be propagated to/from the platform worker. This is by design, because the service fields and the worker/pool fields are different instances living in different threads, and threads do not share memory in Dart and browsers.
