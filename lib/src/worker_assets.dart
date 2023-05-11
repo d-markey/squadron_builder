@@ -56,7 +56,7 @@ class WorkerAssets {
     }
   }
 
-  void generateVmCode(String? logger) {
+  void generateVmCode(String? logger, String serializationType) {
     final output = _vmOutput;
     if (output != null) {
       final serviceImport = _getRelativePath(buildStep.inputId, output);
@@ -67,14 +67,14 @@ class WorkerAssets {
           import '$serviceImport';
 
           // VM entry point
-          void _start(Map command) => run($serviceInitializerName, command, $logger);
+          void _start($serializationType command) => run($serviceInitializerName, command, $logger);
 
           dynamic \$get$serviceActivator() => _start;
         '''));
     }
   }
 
-  void generateWebCode(String? logger) {
+  void generateWebCode(String? logger, String serializationType) {
     final output = _webOutput;
     if (output != null) {
       final serviceImport = _getRelativePath(buildStep.inputId, output);

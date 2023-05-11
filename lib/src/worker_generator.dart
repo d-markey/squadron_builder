@@ -1,6 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:pub_semver/pub_semver.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron_annotations.dart';
 
@@ -9,11 +8,12 @@ import 'worker_assets.dart';
 
 class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
   const WorkerGenerator(
-      {this.formatOutput = _noFormatting, this.allowFinalizers});
+      {this.formatOutput = _noFormatting,
+      this.withFinalizers = false,
+      this.serializationType = 'Map'});
 
-  static const dummy = WorkerGenerator();
-
-  final bool? allowFinalizers;
+  final bool withFinalizers;
+  final String serializationType;
   final String Function(String source) formatOutput;
 
   @override
@@ -25,20 +25,6 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     // implementation moved to specific methods to facilitate unit tests
     final service = SquadronServiceAnnotation.load(classElt)!;
 
-    var withFinalizers = allowFinalizers ?? false;
-    if (allowFinalizers == null) {
-      try {
-        final sdkConstrains = classElt.library.session.analysisContext
-            .analysisOptions.sdkVersionConstraint;
-        if (sdkConstrains != null) {
-          withFinalizers =
-              VersionConstraint.parse('>=2.17').allowsAll(sdkConstrains);
-        }
-      } catch (ex) {
-        withFinalizers = false;
-      }
-    }
-
     final assets = WorkerAssets(buildStep, service, formatOutput, header: '''
       // GENERATED CODE - DO NOT MODIFY BY HAND
       
@@ -47,8 +33,8 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
       // **************************************************************************
       ''');
 
-    assets.generateVmCode(service.logger);
-    assets.generateWebCode(service.logger);
+    assets.generateVmCode(service.logger, serializationType);
+    assets.generateWebCode(service.logger, serializationType);
     assets.generateCrossPlatformCode();
     assets.generateActivatorCode();
 

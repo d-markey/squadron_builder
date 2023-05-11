@@ -48,7 +48,7 @@ class MarshallingManager extends SimpleElementVisitor {
   }
 
   Marshaller getMarshaller(DartType type, {Marshaller? explicit}) {
-    if (type.isDynamic) {
+    if (type is DynamicType) {
       return Marshaller.identity;
     }
 

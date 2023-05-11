@@ -15,4 +15,5 @@ targets:
               'example/generated/{{file}}.activator.g.dart'
             ]
           }
-          with_finalizers: true
+          with_finalizers: false # 'true' requires Dart SDK >= 2.17.0
+          serialization_type: Map # for Squadron < 5.0.0; use 'List' with Squadron >= 5.0.0

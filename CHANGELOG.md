@@ -1,3 +1,9 @@
+## 2.1.0
+
+- Enable support of Dart 3.
+- Fix issues reported by `pub.dev` score.
+- Add option `serialization_type` to configure the serialization type used for worker request/response (`Map` for Squadron < 5.0.0, `List` for Squadron >= 5.0.0).
+
 ## 2.0.0
 
 - Breaking changes: several renamings, in particular the builder name which is now `squadron_builder:worker_builder`.

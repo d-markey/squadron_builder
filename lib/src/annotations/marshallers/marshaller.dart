@@ -25,7 +25,7 @@ abstract class Marshaller {
   static const Marshaller identity = _IdentityMarshaller();
 
   factory Marshaller.implicit(DartType type) =>
-      type.isDynamic ? identity : _JsonMarshaller(type);
+      (type is DynamicType) ? identity : _JsonMarshaller(type);
 
   factory Marshaller.explicit(
           DartObject marshaller, InterfaceType marshallerType) =>
