@@ -1,3 +1,7 @@
+## 2.1.1
+
+- Downgrade version for `analyzer` (fix for https://github.com/d-markey/squadron_builder/issues/4).
+
 ## 2.1.0
 
 - Enable support of Dart 3.
