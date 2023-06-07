@@ -18,14 +18,14 @@ Builder workerBuilder(BuilderOptions options) {
     );
   }
 
-  final serializationType = options.config['serialization_type'] ?? 'Map';
-  if (!{'List', 'Map'}.contains(serializationType)) {
-    throw ArgumentError.value(
-      serializationType,
-      'serialization_type',
-      'Invalid value for \'serialization_type\': it must be one of \'Map\' (Squadron < 5.0.0) or \'List\' (Squadron >= 5.0.0).',
-    );
-  }
+  // final serializationType = options.config['serialization_type'] ?? 'Map';
+  // if (!{'List', 'Map'}.contains(serializationType)) {
+  //   throw ArgumentError.value(
+  //     serializationType,
+  //     'serialization_type',
+  //     'Invalid value for \'serialization_type\': it must be one of \'Map\' (Squadron < 5.0.0) or \'List\' (Squadron >= 5.0.0).',
+  //   );
+  // }
 
   // PartBuilder disallows additionalOutputExtensions when options is provided
   // => a default config is provided in options if necessary
@@ -50,7 +50,6 @@ Builder workerBuilder(BuilderOptions options) {
       WorkerGenerator(
         formatOutput: formatOutput,
         withFinalizers: withFinalizers,
-        serializationType: serializationType,
       )
     ],
     '.worker.g.dart',

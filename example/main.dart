@@ -29,7 +29,7 @@ void main() async {
   Squadron.info(' ');
   final serviceCounters = await runService(trace, workload);
   await Future.delayed(resolution * 3);
-  final serviceMaxDelay = skewMonitor.maxDelay;
+  final serviceMaxSkew = skewMonitor.maxDelay;
   print('');
   print('');
 
@@ -40,7 +40,7 @@ void main() async {
   Squadron.info(' ');
   final workerCounters = await runWorker(trace, workload);
   await Future.delayed(resolution * 3);
-  final workerMaxDelay = skewMonitor.maxDelay;
+  final workerMaxSkew = skewMonitor.maxDelay;
   print('');
   print('');
 
@@ -51,7 +51,7 @@ void main() async {
   Squadron.info(' ');
   final workerPoolCounters = await runPool(trace, workload);
   await Future.delayed(resolution * 3);
-  final workerPoolMaxDelay = skewMonitor.maxDelay;
+  final workerPoolMaxSkew = skewMonitor.maxDelay;
   print('');
   print('');
 
@@ -62,9 +62,9 @@ void main() async {
   print('');
   print(
       'MAX TIMER DELAY (resolution = $resolution aka ${1000 / resolution.inMilliseconds} frames/sec)\n'
-      '   * main thread: $serviceMaxDelay (${percent(resolution, serviceMaxDelay)})\n'
-      '   * worker: $workerMaxDelay (${percent(resolution, workerMaxDelay)})\n'
-      '   * worker pool: $workerPoolMaxDelay (${percent(resolution, workerPoolMaxDelay)})');
+      '   * main thread: $serviceMaxSkew (${percent(resolution, serviceMaxSkew)})\n'
+      '   * worker: $workerMaxSkew (${percent(resolution, workerMaxSkew)})\n'
+      '   * worker pool: $workerPoolMaxSkew (${percent(resolution, workerPoolMaxSkew)})');
   print('');
   print('SINGLE WORKER vs MAIN THREAD: worker counters should be slightly\n'
       'worse because of serialization/deserialization. The main advantage in\n'
@@ -87,16 +87,19 @@ void main() async {
 }
 
 Future<PerfCounters> runService(
-    MyServiceConfig<bool> trace, MyServiceConfig<int> workload) async {
-  var counters = await testWith(MyService(trace, workload));
+    MyServiceConfig<bool> trace, MyServiceConfig<int> workloadDelay) async {
+  var counters = await testWith(MyService(trace, workloadDelay: workloadDelay));
   await Future.delayed(Duration.zero);
-  counters += await testWith(MyService(trace, workload));
+  counters += await testWith(MyService(trace, workloadDelay: workloadDelay));
   return counters / 2;
 }
 
 Future<PerfCounters> runWorker(
-    MyServiceConfig<bool> trace, MyServiceConfig<int> workload) async {
-  final worker = MyServiceWorker(trace, workload);
+    MyServiceConfig<bool> trace, MyServiceConfig<int> workloadDelay) async {
+  final worker = MyServiceWorker(trace,
+      workloadDelay: workloadDelay,
+      platformWorkerHook: (w) => Squadron.info(
+          'Standalone worker ready (platform worker is a ${w.runtimeType})'));
 
   var counters = await testWith(worker);
   await Future.delayed(Duration.zero);
@@ -106,19 +109,22 @@ Future<PerfCounters> runWorker(
   Squadron.info(
       '${worker.stats.id} (${worker.stats.status}): totalWorkload=${worker.stats.totalWorkload}, upTime=${worker.stats.upTime}, idleTime=${worker.stats.idleTime}');
   // should not be necessary if with_finalizers was set to true when the code was generated
-  // worker.stop();
+  worker.stop();
 
   return counters / 2;
 }
 
 Future runPool(
-    MyServiceConfig<bool> trace, MyServiceConfig<int> workload) async {
-  final pool = MyServiceWorkerPool(trace, workload,
+    MyServiceConfig<bool> trace, MyServiceConfig<int> workloadDelay) async {
+  final pool = MyServiceWorkerPool(trace,
+      workloadDelay: workloadDelay,
       concurrencySettings: ConcurrencySettings(
         minWorkers: 5,
         maxWorkers: 5,
         maxParallel: 1,
-      ));
+      ),
+      platformWorkerHook: (w) => Squadron.info(
+          'Pool worker ready (platform worker is a ${w.runtimeType})'));
 
   var counters = await testWith(pool);
   await Future.delayed(Duration.zero);
@@ -133,7 +139,7 @@ Future runPool(
   }
   await Future.delayed(Duration(milliseconds: 100));
   // should not be necessary if with_finalizers was set to true when the code was generated
-  // pool.stop();
+  pool.stop();
 
   return counters / 2;
 }
@@ -208,7 +214,7 @@ Future testFibWith(MyService service) async {
   await Future.delayed(Duration.zero);
 }
 
-const int loops = 25;
+const int loops = 500;
 
 Future testEchoWith(MyService service) async {
   final futures = <Future>[];
@@ -254,7 +260,7 @@ Future testEchoWith(MyService service) async {
   futures.clear();
 }
 
-const int perfLoops = 1000;
+const int perfLoops = 5000;
 
 Future perfTestEchoWith(MyService service) async {
   var futures = <Future>[];

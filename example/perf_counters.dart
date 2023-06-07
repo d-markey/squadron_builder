@@ -6,7 +6,7 @@ class PerfCounters {
   final Duration perf;
 
   PerfCounters operator +(PerfCounters other) =>
-      PerfCounters(fib + other.fib, echo + other.echo, perf + other.echo);
+      PerfCounters(fib + other.fib, echo + other.echo, perf + other.perf);
 
   PerfCounters operator /(int n) =>
       PerfCounters(fib ~/ n, echo ~/ n, perf ~/ n);

@@ -1,19 +1,24 @@
+import 'dart:async';
+
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:source_gen/source_gen.dart';
-import 'package:squadron_builder/src/annotations/marshallers/marshalling_info.dart';
 
+import 'annotations/marshallers/marshalling_info.dart';
+import 'annotations/squadron_library.dart';
 import 'annotations/squadron_method_annotation.dart';
 import 'annotations/squadron_service_annotation.dart';
 import '_overrides.dart';
 
 class WorkerAssets {
-  WorkerAssets(this.buildStep, this.service, this.formatOutput, {this.header})
+  WorkerAssets(BuildStep buildStep, this._squadron, this.service,
+      this.formatOutput, this.header)
       : workerClassName = '${service.name}Worker',
         workerPoolClassName = '${service.name}WorkerPool',
         operationsMixinName = '\$${service.name}Operations',
         serviceInitializerName = '\$${service.name}Initializer',
-        serviceActivator = '${service.name}Activator' {
+        serviceActivator = '${service.name}Activator',
+        _inputId = buildStep.inputId,
+        _writeCode = buildStep.writeAsString {
     for (var output in buildStep.allowedOutputs) {
       final path = output.path.toLowerCase();
       if (service.vm && path.endsWith('.vm.g.dart')) {
@@ -28,16 +33,19 @@ class WorkerAssets {
     }
   }
 
+  final AssetId _inputId;
   AssetId? _vmOutput;
   AssetId? _webOutput;
   AssetId? _xplatOutput;
   AssetId? _activatorOutput;
 
-  String Function(String source) formatOutput;
+  final Future<void> Function(AssetId, FutureOr<String>) _writeCode;
+  final String Function(String source) formatOutput;
 
-  final BuildStep buildStep;
   final SquadronServiceAnnotation service;
-  final String? header;
+  final String header;
+
+  final SquadronLibrary? _squadron;
 
   final String operationsMixinName;
   final String workerClassName;
@@ -45,65 +53,70 @@ class WorkerAssets {
   final String serviceInitializerName;
   final String serviceActivator;
 
-  void generateCrossPlatformCode() {
+  String get entryPointType => _squadron?.entryPointType ?? 'dynamic';
+
+  Future<void> generateCrossPlatformCode() async {
     final output = _xplatOutput;
     if (output != null && _vmOutput != null && _webOutput != null) {
-      buildStep.writeAsString(output, formatOutput('''
-          ${header ?? defaultFileHeader}
+      await _writeCode(output, formatOutput('''
+          $header
 
-          ${_unimplemented('dynamic \$get$serviceActivator()')}
+          ${entryPointType == 'dynamic' ? '' : 'import \'package:squadron/squadron.dart\';'}
+
+          ${_unimplemented('$entryPointType \$get$serviceActivator()')}
         '''));
     }
   }
 
-  void generateVmCode(String? logger, String serializationType) {
+  Future<void> generateVmCode(String? logger) async {
     final output = _vmOutput;
     if (output != null) {
-      final serviceImport = _getRelativePath(buildStep.inputId, output);
-      buildStep.writeAsString(output, formatOutput('''
-          ${header ?? defaultFileHeader}
+      final serializationType = (_squadron?.useList ?? false) ? 'List' : 'Map';
+      final serviceImport = _getRelativePath(_inputId, output);
+      await _writeCode(output, formatOutput('''
+          $header
 
-          import 'package:squadron/squadron_service.dart';
+          import 'package:squadron/squadron.dart';
           import '$serviceImport';
 
           // VM entry point
           void _start($serializationType command) => run($serviceInitializerName, command, $logger);
 
-          dynamic \$get$serviceActivator() => _start;
+          $entryPointType \$get$serviceActivator() => _start;
         '''));
     }
   }
 
-  void generateWebCode(String? logger, String serializationType) {
+  Future<void> generateWebCode(String? logger) async {
     final output = _webOutput;
     if (output != null) {
-      final serviceImport = _getRelativePath(buildStep.inputId, output);
+      final serviceImport = _getRelativePath(_inputId, output);
       final workerUrl = service.baseUrl.isEmpty
           ? '${output.path}.js'
           : '${service.baseUrl}/${output.pathSegments.last}.js';
-      buildStep.writeAsString(output, formatOutput('''
-          ${header ?? defaultFileHeader}
+      await _writeCode(output, formatOutput('''
+          $header
 
-          import 'package:squadron/squadron_service.dart';
+          import 'package:squadron/squadron.dart';
           import '$serviceImport';
 
           // Web entry point
           void main() => run($serviceInitializerName, null, $logger);
 
-          dynamic \$get$serviceActivator() => '$workerUrl';
+          $entryPointType \$get$serviceActivator() => '$workerUrl';
         '''));
     }
   }
 
-  void generateActivatorCode() {
+  Future<void> generateActivatorCode() async {
     final output = _activatorOutput;
     if (output != null) {
       if (_xplatOutput != null && _webOutput != null && _vmOutput != null) {
         final stubImport = _getRelativePath(_xplatOutput!, output);
         final webImport = _getRelativePath(_webOutput!, output);
         final vmImport = _getRelativePath(_vmOutput!, output);
-        buildStep.writeAsString(output, formatOutput('''
-          ${header ?? defaultFileHeader}
+        await _writeCode(output, formatOutput('''
+          $header
 
           import '$stubImport'
             if (dart.library.js) '$webImport'
@@ -114,8 +127,8 @@ class WorkerAssets {
         '''));
       } else if (_vmOutput != null) {
         final vmImport = _getRelativePath(_vmOutput!, output);
-        buildStep.writeAsString(output, formatOutput('''
-          ${header ?? defaultFileHeader}
+        await _writeCode(output, formatOutput('''
+          $header
 
           import '$vmImport';
 
@@ -123,8 +136,8 @@ class WorkerAssets {
         '''));
       } else if (_webOutput != null) {
         final webImport = _getRelativePath(_webOutput!, output);
-        buildStep.writeAsString(output, formatOutput('''
-          ${header ?? defaultFileHeader}
+        await _writeCode(output, formatOutput('''
+          $header
 
           import '$webImport';
 
@@ -134,7 +147,7 @@ class WorkerAssets {
     }
   }
 
-  Iterable<String> generateMapWorkerAndPool(bool withFinalizers) sync* {
+  Stream<String> generateMapWorkerAndPool(bool withFinalizers) async* {
     final commands = <SquadronMethodAnnotation>[];
     final unimplemented = <SquadronMethodAnnotation>[];
 
@@ -162,11 +175,33 @@ class WorkerAssets {
     final generateWorker =
         withFinalizers ? _generateFinalizableWorker : _generateWorker;
 
-    final activationsArgs = service.serializedArguments.isEmpty
+    var activationsArgs = service.serializedArguments.isEmpty
         ? serviceActivator
         : '$serviceActivator, args: [${service.serializedArguments}]';
 
-    yield generateWorker(activationsArgs, commands, unimplemented);
+    final platformWorkerHook = _squadron?.hasPlatformWorkerHook ?? false;
+
+    var workerParameters = service.parameters;
+    if (platformWorkerHook) {
+      // worker constructors also have an optional PlatformWorkerHook parameter
+      activationsArgs += ', platformWorkerHook: platformWorkerHook';
+      if (workerParameters.isEmpty) {
+        workerParameters = '{PlatformWorkerHook? platformWorkerHook}';
+      } else if (workerParameters.endsWith('}')) {
+        workerParameters =
+            workerParameters.substring(0, workerParameters.length - 1);
+        workerParameters += ', PlatformWorkerHook? platformWorkerHook}';
+      } else if (workerParameters.endsWith(']')) {
+        workerParameters =
+            workerParameters.substring(0, workerParameters.length - 1);
+        workerParameters += ', PlatformWorkerHook? platformWorkerHook]';
+      } else {
+        workerParameters += ', {PlatformWorkerHook? platformWorkerHook}';
+      }
+    }
+
+    yield generateWorker(
+        workerParameters, activationsArgs, commands, unimplemented);
 
     if (service.pool) {
       final generatePool =
@@ -175,18 +210,27 @@ class WorkerAssets {
       var poolParameters = service.parameters;
       // worker pool constructors also have an optional ConcurrencySettings parameter
       if (poolParameters.isEmpty) {
-        poolParameters = '{ConcurrencySettings? concurrencySettings}';
+        poolParameters = platformWorkerHook
+            ? '{ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
+            : '{ConcurrencySettings? concurrencySettings}';
       } else if (poolParameters.endsWith('}')) {
         poolParameters = poolParameters.substring(0, poolParameters.length - 1);
-        poolParameters += ', ConcurrencySettings? concurrencySettings}';
+        poolParameters += platformWorkerHook
+            ? ', ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
+            : ', ConcurrencySettings? concurrencySettings}';
       } else if (poolParameters.endsWith(']')) {
         poolParameters = poolParameters.substring(0, poolParameters.length - 1);
-        poolParameters += ', ConcurrencySettings? concurrencySettings]';
+        poolParameters += platformWorkerHook
+            ? ', ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook]'
+            : ', ConcurrencySettings? concurrencySettings]';
       } else {
-        poolParameters += ', {ConcurrencySettings? concurrencySettings}';
+        poolParameters += platformWorkerHook
+            ? ', {ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
+            : ', {ConcurrencySettings? concurrencySettings}';
       }
 
-      yield generatePool(poolParameters, commands, unimplemented);
+      yield generatePool(
+          poolParameters, platformWorkerHook, commands, unimplemented);
     }
   }
 
@@ -211,6 +255,7 @@ class WorkerAssets {
       ''';
 
   String _generateWorker(
+          String workerParameters,
           String activationsArgs,
           List<SquadronMethodAnnotation> commands,
           List<SquadronMethodAnnotation> unimplemented) =>
@@ -220,7 +265,7 @@ class WorkerAssets {
           extends Worker with $operationsMixinName
           implements ${service.name} {
           
-          $workerClassName(${service.parameters}) : super(\$$activationsArgs);
+          $workerClassName($workerParameters) : super(\$$activationsArgs);
 
           ${service.fields.values.map(_generateField).join('\n\n')}
 
@@ -236,6 +281,7 @@ class WorkerAssets {
       ''';
 
   String _generateFinalizableWorker(
+          String workerParameters,
           String activationsArgs,
           List<SquadronMethodAnnotation> commands,
           List<SquadronMethodAnnotation> unimplemented) =>
@@ -245,7 +291,7 @@ class WorkerAssets {
           extends Worker with $operationsMixinName
           implements ${service.name} {
           
-          _$workerClassName(${service.parameters}) : super(\$$activationsArgs);
+          _$workerClassName($workerParameters) : super(\$$activationsArgs);
 
           ${service.fields.values.map(_generateField).join('\n\n')}
 
@@ -295,17 +341,29 @@ class WorkerAssets {
       ''';
 
   String _generateWorkerPool(
-          String poolParameters,
-          List<SquadronMethodAnnotation> commands,
-          List<SquadronMethodAnnotation> unimplemented) =>
-      '''
+      String poolParameters,
+      bool platformWorkerHook,
+      List<SquadronMethodAnnotation> commands,
+      List<SquadronMethodAnnotation> unimplemented) {
+    var serviceArguments = service.arguments;
+    if (platformWorkerHook) {
+      if (serviceArguments.isEmpty) {
+        serviceArguments = 'platformWorkerHook: platformWorkerHook';
+      } else if (service.parameters.endsWith(']')) {
+        serviceArguments += ', platformWorkerHook';
+      } else {
+        serviceArguments += ', platformWorkerHook: platformWorkerHook';
+      }
+    }
+
+    return '''
           // Worker pool for ${service.name}
           class $workerPoolClassName
             extends WorkerPool<$workerClassName> with $operationsMixinName
             implements ${service.name} {
 
             $workerPoolClassName($poolParameters) : super(
-                () => $workerClassName(${service.arguments}),
+                () => $workerClassName($serviceArguments),
                 concurrencySettings: concurrencySettings);
 
             ${service.fields.values.map(_generateField).join('\n\n')}
@@ -320,29 +378,58 @@ class WorkerAssets {
             ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
           }
         ''';
+  }
 
   String _generateFinalizableWorkerPool(
       String poolParameters,
+      bool platformWorkerHook,
       List<SquadronMethodAnnotation> commands,
       List<SquadronMethodAnnotation> unimplemented) {
     var poolNonFormalParameters = service.nonFormalParameters;
     var poolNonFormalArguments = service.nonFormalArguments;
     if (poolNonFormalParameters.isEmpty) {
-      poolNonFormalParameters = '{ConcurrencySettings? concurrencySettings}';
-      poolNonFormalArguments = 'concurrencySettings: concurrencySettings';
+      poolNonFormalParameters = platformWorkerHook
+          ? '{ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
+          : '{ConcurrencySettings? concurrencySettings}';
+      poolNonFormalArguments = platformWorkerHook
+          ? 'concurrencySettings: concurrencySettings, platformWorkerHook: platformWorkerHook'
+          : 'concurrencySettings: concurrencySettings';
     } else if (poolNonFormalParameters.endsWith(']')) {
       poolNonFormalParameters = poolNonFormalParameters.substring(
           0, poolNonFormalParameters.length - 1);
-      poolNonFormalParameters += ', ConcurrencySettings? concurrencySettings]';
-      poolNonFormalArguments += ', concurrencySettings';
+      poolNonFormalParameters += platformWorkerHook
+          ? ', ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook]'
+          : ', ConcurrencySettings? concurrencySettings]';
+      poolNonFormalArguments += platformWorkerHook
+          ? ', concurrencySettings, platformWorkerHook'
+          : ', concurrencySettings';
     } else if (poolNonFormalParameters.endsWith('}')) {
       poolNonFormalParameters = poolNonFormalParameters.substring(
           0, poolNonFormalParameters.length - 1);
-      poolNonFormalParameters += ', ConcurrencySettings? concurrencySettings}';
-      poolNonFormalArguments += ', concurrencySettings: concurrencySettings';
+      poolNonFormalParameters += platformWorkerHook
+          ? ', ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
+          : ', ConcurrencySettings? concurrencySettings}';
+      poolNonFormalArguments += platformWorkerHook
+          ? ', concurrencySettings: concurrencySettings, platformWorkerHook: platformWorkerHook'
+          : ', concurrencySettings: concurrencySettings';
     } else {
-      poolNonFormalParameters += ', {ConcurrencySettings? concurrencySettings}';
-      poolNonFormalArguments += ', concurrencySettings: concurrencySettings';
+      poolNonFormalParameters += platformWorkerHook
+          ? ', {ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
+          : ', {ConcurrencySettings? concurrencySettings}';
+      poolNonFormalArguments += platformWorkerHook
+          ? ', concurrencySettings: concurrencySettings, platformWorkerHook: platformWorkerHook'
+          : ', concurrencySettings: concurrencySettings';
+    }
+
+    var serviceArguments = service.arguments;
+    if (platformWorkerHook) {
+      if (serviceArguments.isEmpty) {
+        serviceArguments = 'platformWorkerHook: platformWorkerHook';
+      } else if (service.parameters.endsWith(']')) {
+        serviceArguments += ', platformWorkerHook';
+      } else {
+        serviceArguments += ', platformWorkerHook: platformWorkerHook';
+      }
     }
 
     return '''
@@ -352,7 +439,7 @@ class WorkerAssets {
             implements ${service.name} {
 
             _$workerPoolClassName($poolParameters) : super(
-                () => $workerClassName(${service.arguments}),
+                () => $workerClassName($serviceArguments}),
                 concurrencySettings: concurrencySettings);
 
             ${service.fields.values.map(_generateField).join('\n\n')}

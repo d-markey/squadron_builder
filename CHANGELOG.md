@@ -1,3 +1,8 @@
+## 2.2.0
+
+- Automatically discover Squadron capabilities (`WorkerRequest`/`WorkerResponse` serialization type + availability of `EntryPoint` and `PlatformWorkerHook`).
+- Retire option `serialization_type` as it is now discovered automatically.
+
 ## 2.1.2
 
 - Downgrade version for `analyzer` (fix for https://github.com/d-markey/squadron_builder/issues/4).

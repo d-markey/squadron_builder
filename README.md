@@ -1,11 +1,12 @@
 # squadron_builder
-Dart code generator for Squadron workers. Implement your worker service and let squadron_builder bridge the gap with Web Workers and Isolates!
+
+Dart code generator for Squadron workers. Implement your worker service and let `squadron_builder` bridge the gap with Web Workers and Isolates!
 
 # Example
 
 The example computes Fibonacci numbers recursively, simply applying the definition of the Fibonacci sequence. It is very inefficient, but illustrates the effect of multithreading.
 
-The service implementation uses annotations from [squadron](https://pub.dev/packages/squadron):
+The service implementation uses [Squadron](https://pub.dev/packages/squadron) annotations to enable automatic code generation.
 
 ```dart
 import 'dart:async';

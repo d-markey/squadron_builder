@@ -15,11 +15,10 @@ part 'generated/my_service.worker.g.dart';
 @SquadronService()
 @UseLogger(ParentSquadronLogger)
 class MyService extends WorkerService with $MyServiceOperations {
-  MyService(this._trace, this.workloadDelay)
-      : _delay = Duration(microseconds: workloadDelay.value);
+  MyService(this._trace, {MyServiceConfig<int>? workloadDelay})
+      : _delay = Duration(microseconds: workloadDelay?.value ?? 50);
 
   final MyServiceConfig<bool> _trace;
-  final MyServiceConfig<int> workloadDelay;
 
   final Duration _delay;
 
@@ -119,7 +118,7 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SerializeWith(MyServiceResponseOfStringToByteBuffer.instance)
   FutureOr<MyServiceResponse<String>> explicitEchoWithExplicitResult(
       @SerializeWith(MyServiceRequestGenericToString.instance)
-          MyServiceRequest request) {
+      MyServiceRequest request) {
     if (_trace.value) {
       Squadron.finer(
           'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
@@ -132,7 +131,7 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SerializeWith(MyServiceResponseToJson)
   FutureOr<MyServiceResponse<String>> jsonEncodeEcho(
       @SerializeWith(MyServiceRequestToString.instance)
-          MyServiceRequest request) {
+      MyServiceRequest request) {
     if (_trace.value) {
       Squadron.finer(
           'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');

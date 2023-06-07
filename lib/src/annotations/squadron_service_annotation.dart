@@ -109,7 +109,7 @@ class SquadronServiceAnnotation {
         if (param.isNamed) {
           _arguments += '${param.name}: ';
           _nonFormalArguments += '${param.name}: ';
-          _serializedArguments += '${param.name}: ';
+          // _serializedArguments += '${param.name}: ';
           _deserializedArguments += '${param.name}: ';
         }
 
@@ -145,6 +145,8 @@ class SquadronServiceAnnotation {
       baseUrl = baseUrl.substring(0, baseUrl.length - 1);
     }
     final logger = AnnotationReader.getLogger(clazz);
-    return SquadronServiceAnnotation._(clazz, pool, vm, web, baseUrl, logger);
+    final annotation =
+        SquadronServiceAnnotation._(clazz, pool, vm, web, baseUrl, logger);
+    return annotation;
   }
 }

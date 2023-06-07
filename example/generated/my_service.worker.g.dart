@@ -3,7 +3,7 @@
 part of '../my_service.dart';
 
 // **************************************************************************
-// WorkerGenerator
+// Generator: WorkerGenerator 2.2.0
 // **************************************************************************
 
 // Operations map for MyService
@@ -56,20 +56,22 @@ mixin $MyServiceOperations on WorkerService {
 }
 
 // Service initializer
-MyService $MyServiceInitializer(WorkerRequest startRequest) => MyService(
-    MyServiceConfig<bool>.fromJson(startRequest.args[0]),
-    MyServiceConfig<int>.fromJson(startRequest.args[1]));
+MyService $MyServiceInitializer(WorkerRequest startRequest) =>
+    MyService(MyServiceConfig<bool>.fromJson(startRequest.args[0]),
+        workloadDelay: (startRequest.args[1] == null)
+            ? null
+            : MyServiceConfig<int>.fromJson(startRequest.args[1]));
 
 // Worker for MyService
 class MyServiceWorker extends Worker
     with $MyServiceOperations
     implements MyService {
-  MyServiceWorker(MyServiceConfig<bool> trace, this.workloadDelay)
+  MyServiceWorker(MyServiceConfig<bool> trace,
+      {MyServiceConfig<int>? workloadDelay,
+      PlatformWorkerHook? platformWorkerHook})
       : super($MyServiceActivator,
-            args: [trace.toJson(), workloadDelay.toJson()]);
-
-  @override
-  final MyServiceConfig<int> workloadDelay;
+            args: [trace.toJson(), workloadDelay?.toJson()],
+            platformWorkerHook: platformWorkerHook);
 
   @override
   Future<MyServiceResponse<String>> explicitEchoWithExplicitResult(
@@ -160,13 +162,15 @@ class MyServiceWorker extends Worker
 class MyServiceWorkerPool extends WorkerPool<MyServiceWorker>
     with $MyServiceOperations
     implements MyService {
-  MyServiceWorkerPool(MyServiceConfig<bool> trace, this.workloadDelay,
-      {ConcurrencySettings? concurrencySettings})
-      : super(() => MyServiceWorker(trace, workloadDelay),
+  MyServiceWorkerPool(MyServiceConfig<bool> trace,
+      {MyServiceConfig<int>? workloadDelay,
+      ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook})
+      : super(
+            () => MyServiceWorker(trace,
+                workloadDelay: workloadDelay,
+                platformWorkerHook: platformWorkerHook),
             concurrencySettings: concurrencySettings);
-
-  @override
-  final MyServiceConfig<int> workloadDelay;
 
   @override
   Future<MyServiceResponse<String>> explicitEchoWithExplicitResult(
