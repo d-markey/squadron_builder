@@ -15,7 +15,8 @@ part 'generated/my_service.worker.g.dart';
 @SquadronService()
 @UseLogger(ParentSquadronLogger)
 class MyService extends WorkerService with $MyServiceOperations {
-  MyService(this._trace, MyServiceConfig<int>? workloadDelay)
+  MyService(this._trace,
+      {MyServiceConfig<int>? workloadDelay, bool test = false})
       : _delay = Duration(microseconds: workloadDelay?.value ?? 50);
 
   final MyServiceConfig<bool> _trace;
@@ -118,7 +119,8 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SerializeWith(MyServiceResponseOfStringToByteBuffer.instance)
   FutureOr<MyServiceResponse<String>> explicitEchoWithExplicitResult(
       @SerializeWith(MyServiceRequestGenericToString.instance)
-      MyServiceRequest request) {
+      MyServiceRequest request,
+      {CancellationToken? token}) {
     if (_trace.value) {
       Squadron.finer(
           'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
@@ -131,7 +133,8 @@ class MyService extends WorkerService with $MyServiceOperations {
   @SerializeWith(MyServiceResponseToJson)
   FutureOr<MyServiceResponse<String>> jsonEncodeEcho(
       @SerializeWith(MyServiceRequestToString.instance)
-      MyServiceRequest request) {
+      MyServiceRequest request,
+      [CancellationToken? token]) {
     if (_trace.value) {
       Squadron.finer(
           'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
@@ -144,9 +147,7 @@ class MyService extends WorkerService with $MyServiceOperations {
     // simulate some CPU-bound workload
     final sw = Stopwatch()..start();
     while (sw.elapsed < _delay) {
-      for (var i = 0; i < 250; i++) {
-        // loop
-      }
+      // loop
     }
   }
 }

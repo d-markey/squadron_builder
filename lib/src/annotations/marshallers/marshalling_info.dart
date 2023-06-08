@@ -3,12 +3,13 @@ import 'package:analyzer/dart/element/type.dart';
 
 import 'marshaller.dart';
 
-typedef Generator = String Function(String);
+typedef Adapter = String Function(String);
 
-extension IdentityCheckerExt on Generator {
+extension IdentityCheckerExt on Adapter {
   bool get isIdentity => (this == identity) || (this('\$x') == '\$x');
 }
 
+// identity is an Adapter
 String identity(String expr) => expr;
 
 class MarshallingInfo {

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 
 import 'annotations/marshallers/marshalling_info.dart';
@@ -45,7 +46,7 @@ class WorkerAssets {
   final SquadronServiceAnnotation service;
   final String header;
 
-  final SquadronLibrary? _squadron;
+  final SquadronLibrary _squadron;
 
   final String operationsMixinName;
   final String workerClassName;
@@ -53,17 +54,15 @@ class WorkerAssets {
   final String serviceInitializerName;
   final String serviceActivator;
 
-  String get entryPointType => _squadron?.entryPointType ?? 'dynamic';
-
   Future<void> generateCrossPlatformCode() async {
     final output = _xplatOutput;
     if (output != null && _vmOutput != null && _webOutput != null) {
       await _writeCode(output, formatOutput('''
           $header
 
-          ${entryPointType == 'dynamic' ? '' : 'import \'package:squadron/squadron.dart\';'}
+          ${_squadron.entryPointTypeName is DynamicType ? '' : 'import \'package:squadron/squadron.dart\';'}
 
-          ${_unimplemented('$entryPointType \$get$serviceActivator()')}
+          ${_unimplemented('${_squadron.entryPointTypeName} \$get$serviceActivator()')}
         '''));
     }
   }
@@ -71,7 +70,7 @@ class WorkerAssets {
   Future<void> generateVmCode(String? logger) async {
     final output = _vmOutput;
     if (output != null) {
-      final serializationType = (_squadron?.useList ?? false) ? 'List' : 'Map';
+      final serializationType = _squadron.serializationTypeName.toString();
       final serviceImport = _getRelativePath(_inputId, output);
       await _writeCode(output, formatOutput('''
           $header
@@ -82,7 +81,7 @@ class WorkerAssets {
           // VM entry point
           void _start($serializationType command) => run($serviceInitializerName, command, $logger);
 
-          $entryPointType \$get$serviceActivator() => _start;
+          ${_squadron.entryPointTypeName} \$get$serviceActivator() => _start;
         '''));
     }
   }
@@ -103,7 +102,7 @@ class WorkerAssets {
           // Web entry point
           void main() => run($serviceInitializerName, null, $logger);
 
-          $entryPointType \$get$serviceActivator() => '$workerUrl';
+          ${_squadron.entryPointTypeName} \$get$serviceActivator() => '$workerUrl';
         '''));
     }
   }
@@ -172,66 +171,14 @@ class WorkerAssets {
 
     yield _generateServiceInitializer();
 
-    final withPlatformWorkerHook = _squadron?.hasPlatformWorkerHook ?? false;
+    final generators = [
+      withFinalizers ? _generateFinalizableWorker : _generateWorker,
+      if (service.pool)
+        withFinalizers ? _generateFinalizableWorkerPool : _generateWorkerPool,
+    ];
 
-    final generateWorker =
-        withFinalizers ? _generateFinalizableWorker : _generateWorker;
-
-    var activationsArgs = service.serializedArguments.isEmpty
-        ? serviceActivator
-        : '$serviceActivator, args: [${service.serializedArguments}]';
-
-    var workerParameters = service.parameters;
-
-    if (withPlatformWorkerHook) {
-      // worker constructors also have an optional PlatformWorkerHook parameter
-      activationsArgs += ', platformWorkerHook: platformWorkerHook';
-      if (workerParameters.isEmpty) {
-        workerParameters = '{PlatformWorkerHook? platformWorkerHook}';
-      } else if (workerParameters.endsWith('}')) {
-        workerParameters =
-            workerParameters.substring(0, workerParameters.length - 1);
-        workerParameters += ', PlatformWorkerHook? platformWorkerHook}';
-      } else if (workerParameters.endsWith(']')) {
-        workerParameters =
-            workerParameters.substring(0, workerParameters.length - 1);
-        workerParameters += ', PlatformWorkerHook? platformWorkerHook]';
-      } else {
-        workerParameters += ', {PlatformWorkerHook? platformWorkerHook}';
-      }
-    }
-
-    yield generateWorker(workerParameters, activationsArgs,
-        withPlatformWorkerHook, commands, unimplemented);
-
-    if (service.pool) {
-      final generatePool =
-          withFinalizers ? _generateFinalizableWorkerPool : _generateWorkerPool;
-
-      var poolParameters = service.parameters;
-      // worker pool constructors also have an optional ConcurrencySettings parameter
-      if (poolParameters.isEmpty) {
-        poolParameters = withPlatformWorkerHook
-            ? '{ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
-            : '{ConcurrencySettings? concurrencySettings}';
-      } else if (poolParameters.endsWith('}')) {
-        poolParameters = poolParameters.substring(0, poolParameters.length - 1);
-        poolParameters += withPlatformWorkerHook
-            ? ', ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
-            : ', ConcurrencySettings? concurrencySettings}';
-      } else if (poolParameters.endsWith(']')) {
-        poolParameters = poolParameters.substring(0, poolParameters.length - 1);
-        poolParameters += withPlatformWorkerHook
-            ? ', ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook]'
-            : ', ConcurrencySettings? concurrencySettings]';
-      } else {
-        poolParameters += withPlatformWorkerHook
-            ? ', {ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
-            : ', {ConcurrencySettings? concurrencySettings}';
-      }
-
-      yield generatePool(
-          poolParameters, withPlatformWorkerHook, commands, unimplemented);
+    for (var generator in generators) {
+      yield generator(commands, unimplemented);
     }
   }
 
@@ -252,22 +199,31 @@ class WorkerAssets {
   String _generateServiceInitializer() => '''
         // Service initializer
         ${service.name} $serviceInitializerName(WorkerRequest startRequest)
-            => ${service.name}(${service.arguments.isEmpty ? '' : service.deserializedArguments});
+            => ${service.name}(${service.parameters.deserialize('startRequest')});
       ''';
 
-  String _generateWorker(
-          String workerParameters,
-          String activationsArgs,
-          bool platformWorkerHook,
-          List<SquadronMethodAnnotation> commands,
-          List<SquadronMethodAnnotation> unimplemented) =>
-      '''
+  String _generateWorker(List<SquadronMethodAnnotation> commands,
+      List<SquadronMethodAnnotation> unimplemented) {
+    final serialized = service.parameters.serialize();
+    var activationsArgs = serialized.isEmpty
+        ? serviceActivator
+        : '$serviceActivator, args: [$serialized]';
+
+    var params = service.parameters;
+    if (_squadron.platformWorkerHookTypeName != null) {
+      params = params.clone();
+      final pwh = params.addOptional(
+          'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
+      activationsArgs += ', ${pwh.toFormalArgument()}';
+    }
+
+    return '''
         // Worker for ${service.name}
         class $workerClassName
           extends Worker with $operationsMixinName
           implements ${service.name} {
           
-          $workerClassName($workerParameters) : super(\$$activationsArgs);
+          $workerClassName($params) : super(\$$activationsArgs);
 
           ${service.fields.values.map(_generateField).join('\n\n')}
 
@@ -281,30 +237,30 @@ class WorkerAssets {
           ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
         }
       ''';
+  }
 
-  String _generateFinalizableWorker(
-      String workerParameters,
-      String activationsArgs,
-      bool withPlatformWorkerHook,
-      List<SquadronMethodAnnotation> commands,
+  String _generateFinalizableWorker(List<SquadronMethodAnnotation> commands,
       List<SquadronMethodAnnotation> unimplemented) {
-    var nonFormalArguments = service.nonFormalArguments;
-    if (withPlatformWorkerHook) {
-      if (nonFormalArguments.isEmpty) {
-        nonFormalArguments = 'platformWorkerHook: platformWorkerHook';
-      } else if (service.parameters.endsWith(']')) {
-        nonFormalArguments += ', platformWorkerHook';
-      } else {
-        nonFormalArguments += ', platformWorkerHook: platformWorkerHook';
-      }
+    final serialized = service.parameters.serialize();
+    var activationArgs = serialized.isEmpty
+        ? serviceActivator
+        : '$serviceActivator, args: [$serialized]';
+
+    var params = service.parameters;
+    if (_squadron.platformWorkerHookTypeName != null) {
+      params = params.clone();
+      final pwh = params.addOptional(
+          'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
+      activationArgs += ', ${pwh.toFormalArgument()}';
     }
+
     return '''
         // Worker for ${service.name}
         class _$workerClassName
           extends Worker with $operationsMixinName
           implements ${service.name} {
           
-          _$workerClassName($workerParameters) : super(\$$activationsArgs);
+          _$workerClassName($params) : super(\$$activationArgs);
 
           ${service.fields.values.map(_generateField).join('\n\n')}
 
@@ -323,7 +279,7 @@ class WorkerAssets {
         // Finalizable worker wrapper for ${service.name}
         class $workerClassName implements _$workerClassName {
           
-          $workerClassName($workerParameters) : _worker = _$workerClassName($nonFormalArguments) {
+          $workerClassName($params) : _worker = _$workerClassName(${params.toFormalArguments()}) {
             _finalizer.attach(this, _worker, detach: _worker._detachToken);
           }
 
@@ -354,20 +310,18 @@ class WorkerAssets {
       ''';
   }
 
-  String _generateWorkerPool(
-      String poolParameters,
-      bool platformWorkerHook,
-      List<SquadronMethodAnnotation> commands,
+  String _generateWorkerPool(List<SquadronMethodAnnotation> commands,
       List<SquadronMethodAnnotation> unimplemented) {
-    var serviceArguments = service.arguments;
-    if (platformWorkerHook) {
-      if (serviceArguments.isEmpty) {
-        serviceArguments = 'platformWorkerHook: platformWorkerHook';
-      } else if (service.parameters.endsWith(']')) {
-        serviceArguments += ', platformWorkerHook';
-      } else {
-        serviceArguments += ', platformWorkerHook: platformWorkerHook';
-      }
+    var poolParams = service.parameters.clone();
+    poolParams.addOptional(
+        'concurrencySettings', _squadron.concurrencySettingsTypeName);
+    var serviceParams = service.parameters;
+    if (_squadron.platformWorkerHookTypeName != null) {
+      poolParams.addOptional(
+          'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
+      serviceParams = serviceParams.clone();
+      serviceParams.addOptional(
+          'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
     }
 
     return '''
@@ -376,8 +330,8 @@ class WorkerAssets {
             extends WorkerPool<$workerClassName> with $operationsMixinName
             implements ${service.name} {
 
-            $workerPoolClassName($poolParameters) : super(
-                () => $workerClassName($serviceArguments),
+            $workerPoolClassName($poolParams) : super(
+                () => $workerClassName(${serviceParams.toFormalArguments()}),
                 concurrencySettings: concurrencySettings);
 
             ${service.fields.values.map(_generateField).join('\n\n')}
@@ -394,56 +348,18 @@ class WorkerAssets {
         ''';
   }
 
-  String _generateFinalizableWorkerPool(
-      String poolParameters,
-      bool platformWorkerHook,
-      List<SquadronMethodAnnotation> commands,
+  String _generateFinalizableWorkerPool(List<SquadronMethodAnnotation> commands,
       List<SquadronMethodAnnotation> unimplemented) {
-    var poolNonFormalParameters = service.nonFormalParameters;
-    var poolNonFormalArguments = service.nonFormalArguments;
-    if (poolNonFormalParameters.isEmpty) {
-      poolNonFormalParameters = platformWorkerHook
-          ? '{ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
-          : '{ConcurrencySettings? concurrencySettings}';
-      poolNonFormalArguments = platformWorkerHook
-          ? 'concurrencySettings: concurrencySettings, platformWorkerHook: platformWorkerHook'
-          : 'concurrencySettings: concurrencySettings';
-    } else if (poolNonFormalParameters.endsWith(']')) {
-      poolNonFormalParameters = poolNonFormalParameters.substring(
-          0, poolNonFormalParameters.length - 1);
-      poolNonFormalParameters += platformWorkerHook
-          ? ', ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook]'
-          : ', ConcurrencySettings? concurrencySettings]';
-      poolNonFormalArguments += platformWorkerHook
-          ? ', concurrencySettings, platformWorkerHook'
-          : ', concurrencySettings';
-    } else if (poolNonFormalParameters.endsWith('}')) {
-      poolNonFormalParameters = poolNonFormalParameters.substring(
-          0, poolNonFormalParameters.length - 1);
-      poolNonFormalParameters += platformWorkerHook
-          ? ', ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
-          : ', ConcurrencySettings? concurrencySettings}';
-      poolNonFormalArguments += platformWorkerHook
-          ? ', concurrencySettings: concurrencySettings, platformWorkerHook: platformWorkerHook'
-          : ', concurrencySettings: concurrencySettings';
-    } else {
-      poolNonFormalParameters += platformWorkerHook
-          ? ', {ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
-          : ', {ConcurrencySettings? concurrencySettings}';
-      poolNonFormalArguments += platformWorkerHook
-          ? ', concurrencySettings: concurrencySettings, platformWorkerHook: platformWorkerHook'
-          : ', concurrencySettings: concurrencySettings';
-    }
-
-    var serviceArguments = service.arguments;
-    if (platformWorkerHook) {
-      if (serviceArguments.isEmpty) {
-        serviceArguments = 'platformWorkerHook: platformWorkerHook';
-      } else if (service.parameters.endsWith(']')) {
-        serviceArguments += ', platformWorkerHook';
-      } else {
-        serviceArguments += ', platformWorkerHook: platformWorkerHook';
-      }
+    var poolParams = service.parameters.clone();
+    var serviceParams = service.parameters;
+    poolParams.addOptional(
+        'concurrencySettings', _squadron.concurrencySettingsTypeName);
+    if (_squadron.platformWorkerHookTypeName != null) {
+      poolParams.addOptional(
+          'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
+      serviceParams = serviceParams.clone();
+      serviceParams.addOptional(
+          'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
     }
 
     return '''
@@ -452,8 +368,8 @@ class WorkerAssets {
             extends WorkerPool<$workerClassName> with $operationsMixinName
             implements ${service.name} {
 
-            _$workerPoolClassName($poolParameters) : super(
-                () => $workerClassName($serviceArguments),
+            _$workerPoolClassName($poolParams) : super(
+                () => $workerClassName(${serviceParams.toFormalArguments()}),
                 concurrencySettings: concurrencySettings);
 
             ${service.fields.values.map(_generateField).join('\n\n')}
@@ -473,7 +389,7 @@ class WorkerAssets {
         // Finalizable worker pool wrapper for ${service.name}
         class $workerPoolClassName implements _$workerPoolClassName {
           
-          $workerPoolClassName($poolNonFormalParameters) : _pool = _$workerPoolClassName($poolNonFormalArguments) {
+          $workerPoolClassName($poolParams) : _pool = _$workerPoolClassName(${poolParams.toFormalArguments()}) {
             _finalizer.attach(this, _pool, detach: _pool._detachToken);
           }
 
@@ -508,15 +424,15 @@ class WorkerAssets {
       'static const int ${cmd.id} = ${cmd.num};';
 
   String _generateCommandHandler(SquadronMethodAnnotation cmd) {
-    final serviceCall = 'svc.${cmd.name}(${cmd.deserializedArguments})';
+    final serviceCall = 'svc.${cmd.name}(${cmd.parameters.deserialize('req')})';
     if (cmd.needsSerialization && !cmd.serializedResult.isIdentity) {
       if (cmd.isStream) {
-        return '${cmd.id}: ($reqName) => $serviceCall.${cmd.continuation}((\$res) => ${cmd.serializedResult('\$res')})';
+        return '${cmd.id}: (req) => $serviceCall.${cmd.continuation}((\$res) => ${cmd.serializedResult('\$res')})';
       } else {
-        return '${cmd.id}: ($reqName) async => ${cmd.serializedResult('(await $serviceCall)')}';
+        return '${cmd.id}: (req) async => ${cmd.serializedResult('(await $serviceCall)')}';
       }
     } else {
-      return '${cmd.id}: ($reqName) => $serviceCall';
+      return '${cmd.id}: (req) => $serviceCall';
     }
   }
 
@@ -542,19 +458,15 @@ class WorkerAssets {
 
   String _generateWorkerMethod(SquadronMethodAnnotation cmd) {
     var deserialize = '';
-    if (cmd.needsSerialization) {
-      deserialize = '(\$res) => ${cmd.deserializedResult('\$res')}';
-      if (deserialize != '(\$res) => \$res') {
-        deserialize = '.${cmd.continuation}($deserialize)';
-      } else {
-        deserialize = '';
-      }
+    if (cmd.needsSerialization && !cmd.deserializedResult.isIdentity) {
+      deserialize =
+          '.${cmd.continuation}((\$res) => ${cmd.deserializedResult('\$res')})';
     }
     return '''
       @override
       ${cmd.declaration} => ${cmd.workerExecutor}(
             $operationsMixinName.${cmd.id}, 
-            args: [ ${cmd.serializedArguments} ], 
+            args: [ ${cmd.parameters.serialize()} ], 
             ${cmd.cancellationToken != null ? 'token: ${cmd.cancellationToken},' : ''}
             ${cmd.inspectRequest ? 'inspectRequest: true,' : ''}
             ${cmd.inspectResponse ? 'inspectResponse: true,' : ''}
@@ -564,7 +476,7 @@ class WorkerAssets {
 
   String _generatePoolMethod(SquadronMethodAnnotation cmd) => '''
       @override
-      ${cmd.declaration} => ${cmd.poolExecutor}((\$w) => \$w.${cmd.name}(${cmd.arguments}));
+      ${cmd.declaration} => ${cmd.poolExecutor}((\$w) => \$w.${cmd.name}(${cmd.parameters.toFormalArguments()}));
     ''';
 
   String _forwardField(FieldElement field, String target) {
@@ -587,7 +499,7 @@ class WorkerAssets {
   String _forwardMethod(SquadronMethodAnnotation cmd, String target) {
     return '''
       @override
-      ${cmd.declaration} => $target.${cmd.name}(${cmd.arguments});
+      ${cmd.declaration} => $target.${cmd.name}(${cmd.parameters.toFormalArguments()});
     ''';
   }
 

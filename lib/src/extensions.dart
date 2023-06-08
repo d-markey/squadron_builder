@@ -17,9 +17,10 @@ extension NotNullExt<T> on Iterable<T?> {
 
 extension BaseNameExt on DartType {
   String get baseName {
-    final n = toString();
-    return (n.endsWith('?') || n.endsWith('*'))
-        ? n.substring(0, n.length - 1)
-        : n;
+    var n = toString();
+    while (n.endsWith('?') || n.endsWith('*')) {
+      n = n.substring(0, n.length - 1);
+    }
+    return n;
   }
 }

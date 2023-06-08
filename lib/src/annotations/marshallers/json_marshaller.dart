@@ -9,13 +9,13 @@ class _JsonMarshaller extends Marshaller {
   bool targets(DartType type) => type.baseName == typeName;
 
   @override
-  Generator getSerializer(DartType type) =>
+  Adapter getSerializer(DartType type) =>
       (type.nullabilitySuffix == NullabilitySuffix.none)
           ? (v) => '$v.toJson()'
           : (v) => '$v?.toJson()';
 
   @override
-  Generator getDeserializer(DartType type) {
+  Adapter getDeserializer(DartType type) {
     final typeName = type.baseName;
     return (type.nullabilitySuffix == NullabilitySuffix.none)
         ? (v) => '$typeName.fromJson($v)'

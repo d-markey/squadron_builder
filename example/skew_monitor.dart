@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:squadron/squadron.dart';
 
+import 'perf_counters.dart';
+
 class SkewMonitor {
   SkewMonitor(this.resolution) {
     _timer = Timer.periodic(resolution, monitor);
@@ -18,11 +20,10 @@ class SkewMonitor {
   void monitor(Timer timer) {
     final now = DateTime.now();
     final diff = now.difference(_last);
-    final skew = (100 * (diff.inMilliseconds - resolution.inMilliseconds)) /
-        resolution.inMilliseconds;
     if (diff.abs() > _maxDelay.abs()) {
       _maxDelay = diff;
     }
+    final skew = percent(resolution, diff);
     if (skew.abs() >= 100) {
       Squadron.info('skew = ${skew.toStringAsFixed(2)} % (elapsed = $diff)');
     } else {

@@ -16,8 +16,8 @@ abstract class Marshaller {
   const Marshaller();
 
   bool targets(DartType type);
-  Generator getSerializer(DartType type);
-  Generator getDeserializer(DartType type);
+  Adapter getSerializer(DartType type);
+  Adapter getDeserializer(DartType type);
 
   String serialize(DartType type, String expr) => getSerializer(type)(expr);
   String deserialize(DartType type, String expr) => getDeserializer(type)(expr);

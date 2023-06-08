@@ -16,12 +16,12 @@ class MapMarshaller extends Marshaller {
       (type.isDartCoreMap) &&
       (type as ParameterizedType).typeArguments.last.baseName == itemTypeName;
 
-  Generator _cast(DartType type) =>
+  Adapter _cast(DartType type) =>
       (type.nullabilitySuffix == NullabilitySuffix.none)
           ? (map) => '$map.cast<$keyType, $itemType>()'
           : (map) => '$map?.cast<$keyType, $itemType>()';
 
-  Generator _convert(String Function(String) converter, DartType type) {
+  Adapter _convert(Adapter converter, DartType type) {
     final entry = '(e) => MapEntry(e.key, ${converter('e.value')})';
     return (type.nullabilitySuffix == NullabilitySuffix.none)
         ? (map) => 'Map.fromEntries($map.entries.map($entry))'
@@ -30,14 +30,14 @@ class MapMarshaller extends Marshaller {
   }
 
   @override
-  Generator getSerializer(DartType type) {
+  Adapter getSerializer(DartType type) {
     final serialize = itemMarshaller
         .getSerializer((type as ParameterizedType).typeArguments.last);
     return serialize.isIdentity ? _cast(type) : _convert(serialize, type);
   }
 
   @override
-  Generator getDeserializer(DartType type) {
+  Adapter getDeserializer(DartType type) {
     final deserialize = itemMarshaller
         .getDeserializer((type as ParameterizedType).typeArguments.last);
     return deserialize.isIdentity ? _cast(type) : _convert(deserialize, type);

@@ -3,13 +3,11 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart' as gen;
 import 'package:squadron/squadron_annotations.dart';
 
-import '../extensions.dart';
 import 'annotations_reader.dart';
 import 'marshallers/marshaller.dart';
 import 'marshallers/marshalling_info.dart';
 import 'marshalling_manager.dart';
-
-const String reqName = 'req';
+import 'squadron_parameters.dart';
 
 class SquadronMethodAnnotation {
   SquadronMethodAnnotation._(
@@ -51,43 +49,22 @@ class SquadronMethodAnnotation {
   String get poolExecutor => isStream ? 'stream' : 'execute';
   String get continuation => isStream ? 'map' : 'then';
 
-  String _parameters = '';
-  String get parameters => _parameters;
+  final parameters = SquadronParameters();
 
-  String _arguments = '';
-  String get arguments => _arguments;
-
-  String _serializedArguments = '';
-  String get serializedArguments => _serializedArguments;
-
-  String _deserializedArguments = '';
-  String get deserializedArguments => _deserializedArguments;
-
-  String? _cancellationToken;
-  String? get cancellationToken => _cancellationToken;
+  String? get cancellationToken => parameters.cancellationToken;
 
   Marshaller _resultMarshaller = Marshaller.identity;
 
-  late Generator serializedResult = _resultMarshaller.getSerializer(valueType);
+  late Adapter serializedResult = _resultMarshaller.getSerializer(valueType);
   bool get needsSerialization => _resultMarshaller != Marshaller.identity;
 
-  late Generator deserializedResult =
+  late Adapter deserializedResult =
       _resultMarshaller.getDeserializer(valueType);
   bool get needsDeserialization => _resultMarshaller != Marshaller.identity;
 
   static final _marshalling = MarshallingManager();
 
-  static bool _isCancellationToken(ParameterElement param) {
-    final locationComponents =
-        param.type.element?.location?.components ?? const [];
-    return locationComponents.any((c) => c.startsWith('package:squadron/')) &&
-        (param.type.baseName == 'CancellationToken');
-  }
-
   void _load(MethodElement method) {
-    var closeOptParams = '';
-    var sidx = 0;
-
     if (method.isPublic) {
       if (!_returnType.isDartAsyncFuture &&
           !_returnType.isDartAsyncFutureOr &&
@@ -107,58 +84,8 @@ class SquadronMethodAnnotation {
 
     for (var n = 0; n < method.parameters.length; n++) {
       final param = method.parameters[n];
-
-      final explicitMarshaller = AnnotationReader.getExplicitMarshaller(param);
-
-      final isToken =
-          (_cancellationToken == null) && _isCancellationToken(param);
-      if (isToken) {
-        _cancellationToken = param.name;
-      }
-      if (n > 0) {
-        _parameters += ', ';
-        _arguments += ', ';
-        _deserializedArguments += ', ';
-      }
-      if (!isToken && sidx > 0) {
-        _serializedArguments += ', ';
-      }
-      if (param.isNamed) {
-        if (closeOptParams.isEmpty) {
-          closeOptParams = '}';
-          _parameters += '{ ';
-        }
-        if (param.isRequired) {
-          _parameters += 'required ';
-        }
-      } else if (param.isOptionalPositional && closeOptParams.isEmpty) {
-        closeOptParams = ']';
-        _parameters += '[ ';
-      }
-
-      final def = param.hasDefaultValue ? ' = ${param.defaultValueCode}' : '';
-      _parameters += '${param.type} ${param.name}$def';
-
-      if (param.isNamed) {
-        _arguments += '${param.name}: ';
-        _deserializedArguments += '${param.name}: ';
-      }
-
-      _arguments += param.name;
-      if (isToken) {
-        _deserializedArguments += '$reqName.cancelToken';
-      } else {
-        final marshaller = _marshalling.getMarshaller(param.type,
-            explicit: explicitMarshaller);
-        _serializedArguments += marshaller.serialize(param.type, param.name);
-        _deserializedArguments +=
-            marshaller.deserialize(param.type, '$reqName.args[$sidx]');
-        sidx++;
-      }
-    }
-
-    if (closeOptParams.isNotEmpty) {
-      _parameters += ' $closeOptParams';
+      final marshaller = _marshalling.getMarshallerFor(param);
+      parameters.register(param, marshaller);
     }
   }
 

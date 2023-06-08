@@ -11,12 +11,12 @@ class PerfCounters {
   PerfCounters operator /(int n) =>
       PerfCounters(fib ~/ n, echo ~/ n, perf ~/ n);
 
-  Map<String, String> percentTo(PerfCounters baseline) => {
+  Map<String, double> percentTo(PerfCounters baseline) => {
         'fib': percent(baseline.fib, fib),
         'echo': percent(baseline.echo, echo),
         'perf': percent(baseline.perf, perf),
       };
 }
 
-String percent(Duration ref, Duration val) =>
-    '${((100 * (val - ref).inMicroseconds) / ref.inMicroseconds).toStringAsFixed(2)} %';
+double percent(Duration ref, Duration val) =>
+    (100 * (val - ref).inMicroseconds) / ref.inMicroseconds;

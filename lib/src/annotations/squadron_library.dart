@@ -10,35 +10,39 @@ class SquadronLibrary {
     final wr = find('WorkerRequest');
     if (wr is TypeAliasElement) {
       // Squadron >= 5.1.0 defines WorkerRequest as an alias for List
-      useList = true;
+      serializationTypeName = wr.aliasedType.toString();
     } else if (wr is ClassElement) {
       // Squadron < 5.1.0 implements WorkerRequest.serialize() which returns
       // a Map (< 5.0.0) or a List (>= 5.0.0)
-      final serializeType = wr.getMethod('serialize')?.returnType;
-      useList = serializeType?.isDartCoreList ?? false;
+      serializationTypeName = wr.getMethod('serialize')!.returnType.toString();
     }
 
     // check availability of EntryPoint typedef
     final ep = find('EntryPoint');
-    entryPointType = ep is TypeAliasElement ? 'EntryPoint' : 'dynamic';
+    entryPointTypeName = (ep is TypeAliasElement) ? 'EntryPoint' : 'dynamic';
 
     // check availability of PlatformWorkerHook typedef
     final pwh = find('PlatformWorkerHook');
-    hasPlatformWorkerHook = pwh is TypeAliasElement;
+    platformWorkerHookTypeName =
+        (pwh is TypeAliasElement) ? 'PlatformWorkerHook' : null;
   }
 
   final LibraryElement _squadronLibrary;
-  late final String entryPointType;
-  late final bool useList;
-  late final bool hasPlatformWorkerHook;
+  late final String concurrencySettingsTypeName = 'ConcurrencySettings';
+  late final String serializationTypeName;
+  late final String entryPointTypeName;
+  late final String? platformWorkerHookTypeName;
 
-  static Future<SquadronLibrary?> load(AnalysisSession? session) =>
-      (session == null)
-          ? Future.value(null)
-          : session.getLibraryByUri('package:squadron/squadron.dart').then(
-              (lib) => (lib is LibraryElementResult)
-                  ? SquadronLibrary._(lib.element)
-                  : null);
+  static Future<SquadronLibrary?> load(AnalysisSession? session) async {
+    if (session == null) {
+      return null;
+    }
+    final lib = await session.getLibraryByUri('package:squadron/squadron.dart');
+    if (lib is! LibraryElementResult) {
+      return null;
+    }
+    return SquadronLibrary._(lib.element);
+  }
 
   Element? find(String name) => _squadronLibrary.exportNamespace.get(name);
 }

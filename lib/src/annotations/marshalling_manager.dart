@@ -47,6 +47,14 @@ class MarshallingManager extends SimpleElementVisitor {
     }
   }
 
+  Marshaller getMarshallerFor(ParameterElement param) {
+    final explicitMarshaller = AnnotationReader.getExplicitMarshaller(param);
+    final type = (param is FieldFormalParameterElement && param.field != null)
+        ? param.field!.type
+        : param.type;
+    return getMarshaller(type, explicit: explicitMarshaller);
+  }
+
   Marshaller getMarshaller(DartType type, {Marshaller? explicit}) {
     if (type is DynamicType) {
       return Marshaller.identity;

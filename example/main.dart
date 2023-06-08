@@ -29,29 +29,29 @@ void main() async {
   Squadron.info(' ');
   final serviceCounters = await runService(trace, workload);
   await Future.delayed(resolution * 3);
-  final serviceMaxSkew = skewMonitor.maxDelay;
+  final serviceMaxDelay = skewMonitor.maxDelay;
   print('');
   print('');
 
-  // SECOND RUN: one worker (= main thread + worker thread)
+  // SECOND RUN: one worker (= main thread + 1 worker thread)
   skewMonitor.reset();
   Squadron.info('----------------------------------------------');
   Squadron.info('2. Computing with MyServiceWorker (one thread)');
   Squadron.info(' ');
   final workerCounters = await runWorker(trace, workload);
   await Future.delayed(resolution * 3);
-  final workerMaxSkew = skewMonitor.maxDelay;
+  final workerMaxDelay = skewMonitor.maxDelay;
   print('');
   print('');
 
   // THIRD RUN: worker pool (= main thread + n worker threads)
   skewMonitor.reset();
   Squadron.info('------------------------------------------------------');
-  Squadron.info('3. Computing with MyServiceWorkerPool (multi-threaded)');
+  Squadron.info('3. Computing with MyServiceWorkerPool (multithreaded)');
   Squadron.info(' ');
   final workerPoolCounters = await runPool(trace, workload);
   await Future.delayed(resolution * 3);
-  final workerPoolMaxSkew = skewMonitor.maxDelay;
+  final workerPoolMaxDelay = skewMonitor.maxDelay;
   print('');
   print('');
 
@@ -62,41 +62,42 @@ void main() async {
   print('');
   print(
       'MAX TIMER DELAY (resolution = $resolution aka ${1000 / resolution.inMilliseconds} frames/sec)\n'
-      '   * main thread: $serviceMaxSkew (${percent(resolution, serviceMaxSkew)})\n'
-      '   * worker: $workerMaxSkew (${percent(resolution, workerMaxSkew)})\n'
-      '   * worker pool: $workerPoolMaxSkew (${percent(resolution, workerPoolMaxSkew)})');
+      '   * main thread: $serviceMaxDelay (${percent(resolution, serviceMaxDelay).toStringAsFixed(2)} %)\n'
+      '   * worker: $workerMaxDelay (${percent(resolution, workerMaxDelay).toStringAsFixed(2)} %)\n'
+      '   * worker pool: $workerPoolMaxDelay (${percent(resolution, workerPoolMaxDelay).toStringAsFixed(2)}) %');
   print('');
   print('SINGLE WORKER vs MAIN THREAD: worker counters should be slightly\n'
       'worse because of serialization/deserialization. The main advantage in\n'
       'this scenario is to free the main event loop, eg in user-facing apps\n'
       'to avoid glitches in the UI.');
   final singleToMain = workerCounters.percentTo(serviceCounters);
-  print('  * Fib: ${singleToMain['fib']}');
-  print('  * Echo: ${singleToMain['echo']}');
-  print('  * Perf: ${singleToMain['perf']}');
+  print('  * Fib: ${singleToMain['fib']?.toStringAsFixed(2)} %');
+  print('  * Echo: ${singleToMain['echo']?.toStringAsFixed(2)} %');
+  print('  * Perf: ${singleToMain['perf']?.toStringAsFixed(2)} %');
   print('');
   print('WORKER POOL vs MAIN THREAD: worker pool counters should be much\n'
       'better even considering the overhead of serialization/deserialization\n'
       'and worker scheduling. Perf improvement depends on method execution\n'
       'time: the heavier the workload, the more performance will be improved.');
   final poolToMain = workerPoolCounters.percentTo(serviceCounters);
-  print('  * Fib: ${poolToMain['fib']}');
-  print('  * Echo: ${poolToMain['echo']}');
-  print('  * Perf: ${poolToMain['perf']}');
+  print('  * Fib: ${poolToMain['fib']?.toStringAsFixed(2)} %');
+  print('  * Echo: ${poolToMain['echo']?.toStringAsFixed(2)} %');
+  print('  * Perf: ${poolToMain['perf']?.toStringAsFixed(2)} %');
   print('');
 }
 
 Future<PerfCounters> runService(
     MyServiceConfig<bool> trace, MyServiceConfig<int> workloadDelay) async {
-  var counters = await testWith(MyService(trace, workloadDelay));
+  var counters = await testWith(MyService(trace, workloadDelay: workloadDelay));
   await Future.delayed(Duration.zero);
-  counters += await testWith(MyService(trace, workloadDelay));
+  counters += await testWith(MyService(trace, workloadDelay: workloadDelay));
   return counters / 2;
 }
 
 Future<PerfCounters> runWorker(
     MyServiceConfig<bool> trace, MyServiceConfig<int> workloadDelay) async {
-  final worker = MyServiceWorker(trace, workloadDelay,
+  final worker = MyServiceWorker(trace,
+      workloadDelay: workloadDelay,
       platformWorkerHook: (w) => Squadron.info(
           'Standalone worker ready (platform worker is a ${w.runtimeType})'));
 
@@ -115,7 +116,8 @@ Future<PerfCounters> runWorker(
 
 Future runPool(
     MyServiceConfig<bool> trace, MyServiceConfig<int> workloadDelay) async {
-  final pool = MyServiceWorkerPool(trace, workloadDelay,
+  final pool = MyServiceWorkerPool(trace,
+      workloadDelay: workloadDelay,
       concurrencySettings: ConcurrencySettings(
         minWorkers: 5,
         maxWorkers: 5,

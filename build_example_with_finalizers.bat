@@ -1,0 +1,1 @@
+call dart run build_runner build -c example_with_finalizers

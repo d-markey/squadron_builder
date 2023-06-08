@@ -13,12 +13,12 @@ class IterableMarshaller extends Marshaller {
       (type.isDartCoreList || type.isDartCoreIterable) &&
       (type as ParameterizedType).typeArguments.first == itemType;
 
-  Generator _cast(DartType type) =>
+  Adapter _cast(DartType type) =>
       (type.nullabilitySuffix == NullabilitySuffix.none)
           ? (list) => '$list.cast<$itemType>()'
           : (list) => '$list?.cast<$itemType>()';
 
-  Generator _map(String Function(String) convert, DartType type) {
+  Adapter _map(Adapter convert, DartType type) {
     final toList = type.isDartCoreList ? '.toList()' : '';
     final item = '(v) => ${convert('v')}';
     return (type.nullabilitySuffix == NullabilitySuffix.none)
@@ -27,14 +27,14 @@ class IterableMarshaller extends Marshaller {
   }
 
   @override
-  Generator getSerializer(DartType type) {
+  Adapter getSerializer(DartType type) {
     final serialize = itemMarshaller
         .getSerializer((type as ParameterizedType).typeArguments.first);
     return serialize.isIdentity ? _cast(type) : _map(serialize, type);
   }
 
   @override
-  Generator getDeserializer(DartType type) {
+  Adapter getDeserializer(DartType type) {
     final deserialize = itemMarshaller
         .getDeserializer((type as ParameterizedType).typeArguments.first);
     return deserialize.isIdentity ? _cast(type) : _map(deserialize, type);

@@ -2,8 +2,8 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron_annotations.dart';
-import 'package:squadron_builder/src/annotations/squadron_library.dart';
 
+import 'annotations/squadron_library.dart';
 import 'annotations/squadron_service_annotation.dart';
 import 'worker_assets.dart';
 
@@ -28,7 +28,7 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     final service = SquadronServiceAnnotation.load(classElt)!;
 
     // load Squadron main library
-    final squadron = await SquadronLibrary.load(element.session);
+    final squadron = (await SquadronLibrary.load(element.session))!;
 
     final assets = WorkerAssets(buildStep, squadron, service, formatOutput, '''
       // GENERATED CODE - DO NOT MODIFY BY HAND

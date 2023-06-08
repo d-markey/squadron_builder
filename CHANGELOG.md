@@ -1,6 +1,7 @@
 ## 2.2.1
 
 - Properly handle platform worker thread parameter + getter in generated worker/worker pool when `with_finalizers` is enabled (fix for https://github.com/d-markey/squadron_builder/issues/5).
+- Refactored service/method parameter management.
 
 ## 2.2.0
 
