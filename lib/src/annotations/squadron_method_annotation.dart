@@ -51,8 +51,6 @@ class SquadronMethodAnnotation {
 
   final parameters = SquadronParameters();
 
-  String? get cancellationToken => parameters.cancellationToken;
-
   Marshaller _resultMarshaller = Marshaller.identity;
 
   late Adapter serializedResult = _resultMarshaller.getSerializer(valueType);
