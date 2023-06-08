@@ -56,19 +56,19 @@ mixin $MyServiceOperations on WorkerService {
 }
 
 // Service initializer
-MyService $MyServiceInitializer(WorkerRequest startRequest) =>
-    MyService(MyServiceConfig<bool>.fromJson(startRequest.args[0]),
-        workloadDelay: (startRequest.args[1] == null)
-            ? null
-            : MyServiceConfig<int>.fromJson(startRequest.args[1]));
+MyService $MyServiceInitializer(WorkerRequest startRequest) => MyService(
+    MyServiceConfig<bool>.fromJson(startRequest.args[0]),
+    (startRequest.args[1] == null)
+        ? null
+        : MyServiceConfig<int>.fromJson(startRequest.args[1]));
 
 // Worker for MyService
 class MyServiceWorker extends Worker
     with $MyServiceOperations
     implements MyService {
-  MyServiceWorker(MyServiceConfig<bool> trace,
-      {MyServiceConfig<int>? workloadDelay,
-      PlatformWorkerHook? platformWorkerHook})
+  MyServiceWorker(
+      MyServiceConfig<bool> trace, MyServiceConfig<int>? workloadDelay,
+      {PlatformWorkerHook? platformWorkerHook})
       : super($MyServiceActivator,
             args: [trace.toJson(), workloadDelay?.toJson()],
             platformWorkerHook: platformWorkerHook);
@@ -162,13 +162,12 @@ class MyServiceWorker extends Worker
 class MyServiceWorkerPool extends WorkerPool<MyServiceWorker>
     with $MyServiceOperations
     implements MyService {
-  MyServiceWorkerPool(MyServiceConfig<bool> trace,
-      {MyServiceConfig<int>? workloadDelay,
-      ConcurrencySettings? concurrencySettings,
+  MyServiceWorkerPool(
+      MyServiceConfig<bool> trace, MyServiceConfig<int>? workloadDelay,
+      {ConcurrencySettings? concurrencySettings,
       PlatformWorkerHook? platformWorkerHook})
       : super(
-            () => MyServiceWorker(trace,
-                workloadDelay: workloadDelay,
+            () => MyServiceWorker(trace, workloadDelay,
                 platformWorkerHook: platformWorkerHook),
             concurrencySettings: concurrencySettings);
 

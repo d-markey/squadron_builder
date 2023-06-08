@@ -12,6 +12,7 @@ const workerOverrides = {
   'Duration get upTime': 'upTime',
   'String get workerId': 'workerId',
   'int get workload': 'workload',
+  'PlatformWorkerHook? get platformWorkerHook': 'platformWorkerHook',
   // worker control
   'Future<Channel> start()': 'start()',
   'void stop()': 'stop()',

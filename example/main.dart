@@ -88,16 +88,15 @@ void main() async {
 
 Future<PerfCounters> runService(
     MyServiceConfig<bool> trace, MyServiceConfig<int> workloadDelay) async {
-  var counters = await testWith(MyService(trace, workloadDelay: workloadDelay));
+  var counters = await testWith(MyService(trace, workloadDelay));
   await Future.delayed(Duration.zero);
-  counters += await testWith(MyService(trace, workloadDelay: workloadDelay));
+  counters += await testWith(MyService(trace, workloadDelay));
   return counters / 2;
 }
 
 Future<PerfCounters> runWorker(
     MyServiceConfig<bool> trace, MyServiceConfig<int> workloadDelay) async {
-  final worker = MyServiceWorker(trace,
-      workloadDelay: workloadDelay,
+  final worker = MyServiceWorker(trace, workloadDelay,
       platformWorkerHook: (w) => Squadron.info(
           'Standalone worker ready (platform worker is a ${w.runtimeType})'));
 
@@ -116,8 +115,7 @@ Future<PerfCounters> runWorker(
 
 Future runPool(
     MyServiceConfig<bool> trace, MyServiceConfig<int> workloadDelay) async {
-  final pool = MyServiceWorkerPool(trace,
-      workloadDelay: workloadDelay,
+  final pool = MyServiceWorkerPool(trace, workloadDelay,
       concurrencySettings: ConcurrencySettings(
         minWorkers: 5,
         maxWorkers: 5,

@@ -15,7 +15,7 @@ part 'generated/my_service.worker.g.dart';
 @SquadronService()
 @UseLogger(ParentSquadronLogger)
 class MyService extends WorkerService with $MyServiceOperations {
-  MyService(this._trace, {MyServiceConfig<int>? workloadDelay})
+  MyService(this._trace, MyServiceConfig<int>? workloadDelay)
       : _delay = Duration(microseconds: workloadDelay?.value ?? 50);
 
   final MyServiceConfig<bool> _trace;

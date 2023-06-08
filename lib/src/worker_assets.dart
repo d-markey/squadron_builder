@@ -172,6 +172,8 @@ class WorkerAssets {
 
     yield _generateServiceInitializer();
 
+    final withPlatformWorkerHook = _squadron?.hasPlatformWorkerHook ?? false;
+
     final generateWorker =
         withFinalizers ? _generateFinalizableWorker : _generateWorker;
 
@@ -179,10 +181,9 @@ class WorkerAssets {
         ? serviceActivator
         : '$serviceActivator, args: [${service.serializedArguments}]';
 
-    final platformWorkerHook = _squadron?.hasPlatformWorkerHook ?? false;
-
     var workerParameters = service.parameters;
-    if (platformWorkerHook) {
+
+    if (withPlatformWorkerHook) {
       // worker constructors also have an optional PlatformWorkerHook parameter
       activationsArgs += ', platformWorkerHook: platformWorkerHook';
       if (workerParameters.isEmpty) {
@@ -200,8 +201,8 @@ class WorkerAssets {
       }
     }
 
-    yield generateWorker(
-        workerParameters, activationsArgs, commands, unimplemented);
+    yield generateWorker(workerParameters, activationsArgs,
+        withPlatformWorkerHook, commands, unimplemented);
 
     if (service.pool) {
       final generatePool =
@@ -210,27 +211,27 @@ class WorkerAssets {
       var poolParameters = service.parameters;
       // worker pool constructors also have an optional ConcurrencySettings parameter
       if (poolParameters.isEmpty) {
-        poolParameters = platformWorkerHook
+        poolParameters = withPlatformWorkerHook
             ? '{ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
             : '{ConcurrencySettings? concurrencySettings}';
       } else if (poolParameters.endsWith('}')) {
         poolParameters = poolParameters.substring(0, poolParameters.length - 1);
-        poolParameters += platformWorkerHook
+        poolParameters += withPlatformWorkerHook
             ? ', ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
             : ', ConcurrencySettings? concurrencySettings}';
       } else if (poolParameters.endsWith(']')) {
         poolParameters = poolParameters.substring(0, poolParameters.length - 1);
-        poolParameters += platformWorkerHook
+        poolParameters += withPlatformWorkerHook
             ? ', ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook]'
             : ', ConcurrencySettings? concurrencySettings]';
       } else {
-        poolParameters += platformWorkerHook
+        poolParameters += withPlatformWorkerHook
             ? ', {ConcurrencySettings? concurrencySettings, PlatformWorkerHook? platformWorkerHook}'
             : ', {ConcurrencySettings? concurrencySettings}';
       }
 
       yield generatePool(
-          poolParameters, platformWorkerHook, commands, unimplemented);
+          poolParameters, withPlatformWorkerHook, commands, unimplemented);
     }
   }
 
@@ -257,6 +258,7 @@ class WorkerAssets {
   String _generateWorker(
           String workerParameters,
           String activationsArgs,
+          bool platformWorkerHook,
           List<SquadronMethodAnnotation> commands,
           List<SquadronMethodAnnotation> unimplemented) =>
       '''
@@ -281,11 +283,22 @@ class WorkerAssets {
       ''';
 
   String _generateFinalizableWorker(
-          String workerParameters,
-          String activationsArgs,
-          List<SquadronMethodAnnotation> commands,
-          List<SquadronMethodAnnotation> unimplemented) =>
-      '''
+      String workerParameters,
+      String activationsArgs,
+      bool withPlatformWorkerHook,
+      List<SquadronMethodAnnotation> commands,
+      List<SquadronMethodAnnotation> unimplemented) {
+    var nonFormalArguments = service.nonFormalArguments;
+    if (withPlatformWorkerHook) {
+      if (nonFormalArguments.isEmpty) {
+        nonFormalArguments = 'platformWorkerHook: platformWorkerHook';
+      } else if (service.parameters.endsWith(']')) {
+        nonFormalArguments += ', platformWorkerHook';
+      } else {
+        nonFormalArguments += ', platformWorkerHook: platformWorkerHook';
+      }
+    }
+    return '''
         // Worker for ${service.name}
         class _$workerClassName
           extends Worker with $operationsMixinName
@@ -310,7 +323,7 @@ class WorkerAssets {
         // Finalizable worker wrapper for ${service.name}
         class $workerClassName implements _$workerClassName {
           
-          $workerClassName(${service.nonFormalParameters}) : _worker = _$workerClassName(${service.nonFormalArguments}) {
+          $workerClassName($workerParameters) : _worker = _$workerClassName($nonFormalArguments) {
             _finalizer.attach(this, _worker, detach: _worker._detachToken);
           }
 
@@ -339,6 +352,7 @@ class WorkerAssets {
           ${workerOverrides.entries.map((e) => _forwardOverride(e.key, '_worker', e.value)).join('\n\n')}
         }
       ''';
+  }
 
   String _generateWorkerPool(
       String poolParameters,
@@ -439,7 +453,7 @@ class WorkerAssets {
             implements ${service.name} {
 
             _$workerPoolClassName($poolParameters) : super(
-                () => $workerClassName($serviceArguments}),
+                () => $workerClassName($serviceArguments),
                 concurrencySettings: concurrencySettings);
 
             ${service.fields.values.map(_generateField).join('\n\n')}

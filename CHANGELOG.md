@@ -1,3 +1,7 @@
+## 2.2.1
+
+- Properly handle platform worker thread parameter + getter in generated worker/worker pool when `with_finalizers` is enabled (fix for https://github.com/d-markey/squadron_builder/issues/5).
+
 ## 2.2.0
 
 - Automatically discover Squadron capabilities (`WorkerRequest`/`WorkerResponse` serialization type + availability of `EntryPoint` and `PlatformWorkerHook`).
