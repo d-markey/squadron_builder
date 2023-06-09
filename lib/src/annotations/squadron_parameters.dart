@@ -118,4 +118,26 @@ class SquadronParameters {
       return '';
     }
   }
+
+  String toStringNoFields() {
+    if (_hasPositionalParameters) {
+      if (_hasOptionalParameters) {
+        return '${positional.noField().join(', ')}, [${optional.noField().join(', ')}]';
+      } else if (_hasNamedParameters) {
+        return '${positional.noField().join(', ')}, {${named.noField().join(', ')}}';
+      } else {
+        return positional.noField().join(', ');
+      }
+    } else if (_hasOptionalParameters) {
+      return '[${optional.noField().join(', ')}]';
+    } else if (_hasNamedParameters) {
+      return '{${named.noField().join(', ')}}';
+    } else {
+      return '';
+    }
+  }
+}
+
+extension _ParamExt on Iterable<SquadronParameter> {
+  Iterable<String> noField() => map((p) => p.toStringNoField());
 }

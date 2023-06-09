@@ -279,7 +279,7 @@ class WorkerAssets {
         // Finalizable worker wrapper for ${service.name}
         class $workerClassName implements _$workerClassName {
           
-          $workerClassName($params) : _worker = _$workerClassName(${params.arguments()}) {
+          $workerClassName(${params.toStringNoFields()}) : _worker = _$workerClassName(${params.arguments()}) {
             _finalizer.attach(this, _worker, detach: _worker._detachToken);
           }
 
@@ -389,7 +389,7 @@ class WorkerAssets {
         // Finalizable worker pool wrapper for ${service.name}
         class $workerPoolClassName implements _$workerPoolClassName {
           
-          $workerPoolClassName($poolParams) : _pool = _$workerPoolClassName(${poolParams.arguments()}) {
+          $workerPoolClassName(${poolParams.toStringNoFields()}) : _pool = _$workerPoolClassName(${poolParams.arguments()}) {
             _finalizer.attach(this, _pool, detach: _pool._detachToken);
           }
 

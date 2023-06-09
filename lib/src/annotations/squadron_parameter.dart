@@ -82,4 +82,7 @@ class SquadronParameter {
   @override
   String toString() =>
       '$required${isPublicField ? 'this.' : '$typeName '}$name${defaultValue == null ? '' : ' = $defaultValue'}';
+
+  String toStringNoField() =>
+      '$required$typeName $name${defaultValue == null ? '' : ' = $defaultValue'}';
 }
