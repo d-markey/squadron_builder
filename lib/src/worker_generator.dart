@@ -13,7 +13,7 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
   const WorkerGenerator(
       {this.formatOutput = _noFormatting, this.withFinalizers = false});
 
-  static const version = '2.2.0';
+  static const version = '2.2.1';
 
   final bool withFinalizers;
   final Formatter formatOutput;

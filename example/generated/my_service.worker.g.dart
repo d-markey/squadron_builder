@@ -3,7 +3,7 @@
 part of '../my_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.2.0
+// Generator: WorkerGenerator 2.2.1
 // **************************************************************************
 
 // Operations map for MyService
