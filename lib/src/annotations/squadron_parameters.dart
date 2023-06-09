@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -9,28 +7,12 @@ import 'squadron_parameter.dart';
 
 class SquadronParameters {
   SquadronParameters clone() {
-    stdout.writeln('Cloning');
-    stdout.writeln('   this = $this');
-    stdout.writeln('   _cancellationToken = $_cancellationToken');
-    stdout.writeln('   _hasPositionalParameters = $_hasPositionalParameters');
-    stdout.writeln('   _hasOptionalParameters = $_hasOptionalParameters');
-    stdout.writeln('   _hasNamedParameters = $_hasNamedParameters');
     final params = SquadronParameters();
     params._params.addAll(_params);
     params._cancellationToken = _cancellationToken;
     params._hasPositionalParameters = _hasPositionalParameters;
     params._hasNamedParameters = _hasNamedParameters;
     params._hasOptionalParameters = _hasOptionalParameters;
-    stdout.writeln('Cloned');
-    stdout.writeln('   params = $params');
-    stdout
-        .writeln('   params._cancellationToken = ${params._cancellationToken}');
-    stdout.writeln(
-        '   params._hasPositionalParameters = ${params._hasPositionalParameters}');
-    stdout.writeln(
-        '   params._hasOptionalParameters = ${params._hasOptionalParameters}');
-    stdout.writeln(
-        '   params._hasNamedParameters = ${params._hasNamedParameters}');
     return params;
   }
 
@@ -121,11 +103,6 @@ class SquadronParameters {
 
   @override
   String toString() {
-    stdout.writeln('toString()');
-    stdout.writeln('   _cancellationToken = $_cancellationToken');
-    stdout.writeln('   _hasPositionalParameters = $_hasPositionalParameters');
-    stdout.writeln('   _hasOptionalParameters = $_hasOptionalParameters');
-    stdout.writeln('   _hasNamedParameters = $_hasNamedParameters');
     if (_hasPositionalParameters) {
       if (_hasOptionalParameters) {
         return '${positional.join(', ')}, [${optional.join(', ')}]';
