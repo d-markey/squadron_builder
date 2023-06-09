@@ -89,8 +89,7 @@ class SquadronParameters {
     return param;
   }
 
-  String toFormalArguments() =>
-      _params.map((p) => p.toFormalArgument()).join(', ');
+  String arguments() => _params.map((p) => p.argument()).join(', ');
 
   String serialize() => _params
       // cancellation token is passed separately when invoking the worker

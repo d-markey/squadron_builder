@@ -205,7 +205,7 @@ class WorkerAssets {
   String _generateWorker(List<SquadronMethodAnnotation> commands,
       List<SquadronMethodAnnotation> unimplemented) {
     final serialized = service.parameters.serialize();
-    var activationsArgs = serialized.isEmpty
+    var activationArgs = serialized.isEmpty
         ? serviceActivator
         : '$serviceActivator, args: [$serialized]';
 
@@ -214,7 +214,7 @@ class WorkerAssets {
       params = params.clone();
       final pwh = params.addOptional(
           'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
-      activationsArgs += ', ${pwh.toFormalArgument()}';
+      activationArgs += ', ${pwh.namedArgument()}';
     }
 
     return '''
@@ -223,7 +223,7 @@ class WorkerAssets {
           extends Worker with $operationsMixinName
           implements ${service.name} {
           
-          $workerClassName($params) : super(\$$activationsArgs);
+          $workerClassName($params) : super(\$$activationArgs);
 
           ${service.fields.values.map(_generateField).join('\n\n')}
 
@@ -251,7 +251,7 @@ class WorkerAssets {
       params = params.clone();
       final pwh = params.addOptional(
           'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
-      activationArgs += ', ${pwh.toFormalArgument()}';
+      activationArgs += ', ${pwh.namedArgument()}';
     }
 
     return '''
@@ -279,7 +279,7 @@ class WorkerAssets {
         // Finalizable worker wrapper for ${service.name}
         class $workerClassName implements _$workerClassName {
           
-          $workerClassName($params) : _worker = _$workerClassName(${params.toFormalArguments()}) {
+          $workerClassName($params) : _worker = _$workerClassName(${params.arguments()}) {
             _finalizer.attach(this, _worker, detach: _worker._detachToken);
           }
 
@@ -313,7 +313,7 @@ class WorkerAssets {
   String _generateWorkerPool(List<SquadronMethodAnnotation> commands,
       List<SquadronMethodAnnotation> unimplemented) {
     var poolParams = service.parameters.clone();
-    poolParams.addOptional(
+    final cs = poolParams.addOptional(
         'concurrencySettings', _squadron.concurrencySettingsTypeName);
     var serviceParams = service.parameters;
     if (_squadron.platformWorkerHookTypeName != null) {
@@ -331,8 +331,8 @@ class WorkerAssets {
             implements ${service.name} {
 
             $workerPoolClassName($poolParams) : super(
-                () => $workerClassName(${serviceParams.toFormalArguments()}),
-                concurrencySettings: concurrencySettings);
+                () => $workerClassName(${serviceParams.arguments()}),
+                ${cs.namedArgument()});
 
             ${service.fields.values.map(_generateField).join('\n\n')}
 
@@ -352,7 +352,7 @@ class WorkerAssets {
       List<SquadronMethodAnnotation> unimplemented) {
     var poolParams = service.parameters.clone();
     var serviceParams = service.parameters;
-    poolParams.addOptional(
+    final cs = poolParams.addOptional(
         'concurrencySettings', _squadron.concurrencySettingsTypeName);
     if (_squadron.platformWorkerHookTypeName != null) {
       poolParams.addOptional(
@@ -369,8 +369,8 @@ class WorkerAssets {
             implements ${service.name} {
 
             _$workerPoolClassName($poolParams) : super(
-                () => $workerClassName(${serviceParams.toFormalArguments()}),
-                concurrencySettings: concurrencySettings);
+                () => $workerClassName(${serviceParams.arguments()}),
+                ${cs.namedArgument()});
 
             ${service.fields.values.map(_generateField).join('\n\n')}
 
@@ -389,7 +389,7 @@ class WorkerAssets {
         // Finalizable worker pool wrapper for ${service.name}
         class $workerPoolClassName implements _$workerPoolClassName {
           
-          $workerPoolClassName($poolParams) : _pool = _$workerPoolClassName(${poolParams.toFormalArguments()}) {
+          $workerPoolClassName($poolParams) : _pool = _$workerPoolClassName(${poolParams.arguments()}) {
             _finalizer.attach(this, _pool, detach: _pool._detachToken);
           }
 
@@ -476,7 +476,7 @@ class WorkerAssets {
 
   String _generatePoolMethod(SquadronMethodAnnotation cmd) => '''
       @override
-      ${cmd.declaration} => ${cmd.poolExecutor}((\$w) => \$w.${cmd.name}(${cmd.parameters.toFormalArguments()}));
+      ${cmd.declaration} => ${cmd.poolExecutor}((\$w) => \$w.${cmd.name}(${cmd.parameters.arguments()}));
     ''';
 
   String _forwardField(FieldElement field, String target) {
@@ -499,7 +499,7 @@ class WorkerAssets {
   String _forwardMethod(SquadronMethodAnnotation cmd, String target) {
     return '''
       @override
-      ${cmd.declaration} => $target.${cmd.name}(${cmd.parameters.toFormalArguments()});
+      ${cmd.declaration} => $target.${cmd.name}(${cmd.parameters.arguments()});
     ''';
   }
 

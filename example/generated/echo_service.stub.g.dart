@@ -4,9 +4,6 @@
 // Generator: WorkerGenerator 2.2.1
 // **************************************************************************
 
-import 'my_service.stub.g.dart'
-    if (dart.library.js) 'my_service.web.g.dart'
-    if (dart.library.html) 'my_service.web.g.dart'
-    if (dart.library.io) 'my_service.vm.g.dart';
+import 'package:squadron/squadron.dart';
 
-final $MyServiceActivator = $getMyServiceActivator();
+EntryPoint $getEchoServiceActivator() => throw UnimplementedError();

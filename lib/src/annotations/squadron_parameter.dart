@@ -8,7 +8,7 @@ class SquadronParameter {
       this.name,
       this.dartType,
       this.typeName,
-      this.isField,
+      this.field,
       this.isNamed,
       this.isOptional,
       bool isRequired,
@@ -19,14 +19,16 @@ class SquadronParameter {
       : required = isRequired ? 'required ' : '';
 
   static SquadronParameter opt(String name, String typeName, bool named) =>
-      SquadronParameter._(name, null, '$typeName?', false, named, !named, false,
+      SquadronParameter._(name, null, '$typeName?', null, named, !named, false,
           false, null, null, -1);
 
   static SquadronParameter from(ParameterElement param, bool isToken,
       Marshaller? marshaller, int serIdx) {
     var name = param.name;
     var type = param.type;
+    FieldElement? field;
     if (param is FieldFormalParameterElement && param.field != null) {
+      field = param.field;
       type = param.field!.type;
       name = param.field!.name;
       while (name.startsWith('_')) {
@@ -37,7 +39,7 @@ class SquadronParameter {
         name,
         type,
         type.toString(),
-        false,
+        field,
         param.isNamed,
         param.isOptionalPositional,
         (param.isOptionalNamed || param.isOptionalPositional) &&
@@ -51,7 +53,7 @@ class SquadronParameter {
   final String name;
   final DartType? dartType;
   final String typeName;
-  final bool isField;
+  final FieldElement? field;
   final bool isNamed;
   final bool isOptional;
   final String required;
@@ -60,7 +62,11 @@ class SquadronParameter {
   final int serIdx;
   final Marshaller? marshaller;
 
-  String toFormalArgument() => isNamed ? '$name: $name' : name;
+  bool get isPublicField => field != null && !field!.name.startsWith('_');
+
+  String argument() => isNamed ? '$name: $name' : name;
+
+  String namedArgument() => '$name: $name';
 
   String serialized() {
     return marshaller?.serialize(dartType!, name) ?? name;
@@ -75,5 +81,5 @@ class SquadronParameter {
 
   @override
   String toString() =>
-      '$required${isField ? 'this.' : '$typeName '}$name${defaultValue == null ? '' : ' = $defaultValue'}';
+      '$required${isPublicField ? 'this.' : '$typeName '}$name${defaultValue == null ? '' : ' = $defaultValue'}';
 }

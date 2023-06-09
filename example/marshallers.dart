@@ -3,8 +3,8 @@ import 'dart:typed_data';
 
 import 'package:squadron/squadron_service.dart';
 
-import 'my_service_request.dart';
-import 'my_service_response.dart';
+import 'service_request.dart';
+import 'service_response.dart';
 
 class ListIntMarshaller extends SquadronMarshaller<List<int>, ByteBuffer> {
   const ListIntMarshaller();
@@ -18,39 +18,39 @@ class ListIntMarshaller extends SquadronMarshaller<List<int>, ByteBuffer> {
 
 const listIntMarshaller = ListIntMarshaller();
 
-class MyServiceRequestToString
-    extends SquadronMarshaller<MyServiceRequest, String> {
-  const MyServiceRequestToString();
+class ServiceRequestToString
+    extends SquadronMarshaller<ServiceRequest, String> {
+  const ServiceRequestToString();
 
   @override
-  String marshall(MyServiceRequest x) => x.payload;
+  String marshall(ServiceRequest x) => x.payload;
 
   @override
-  MyServiceRequest unmarshall(String x) => MyServiceRequest(x);
+  ServiceRequest unmarshall(String x) => ServiceRequest(x);
 
-  static const instance = MyServiceRequestToString();
+  static const instance = ServiceRequestToString();
 }
 
-abstract class MyServiceRequestGeneric<T>
-    extends SquadronMarshaller<MyServiceRequest, T> {
-  const MyServiceRequestGeneric();
+abstract class ServiceRequestGeneric<T>
+    extends SquadronMarshaller<ServiceRequest, T> {
+  const ServiceRequestGeneric();
 }
 
-class MyServiceRequestGenericToString extends MyServiceRequestGeneric<String> {
-  const MyServiceRequestGenericToString();
+class ServiceRequestGenericToString extends ServiceRequestGeneric<String> {
+  const ServiceRequestGenericToString();
 
   @override
-  String marshall(MyServiceRequest x) => x.payload;
+  String marshall(ServiceRequest x) => x.payload;
 
   @override
-  MyServiceRequest unmarshall(String x) => MyServiceRequest(x);
+  ServiceRequest unmarshall(String x) => ServiceRequest(x);
 
-  static const instance = MyServiceRequestGenericToString();
+  static const instance = ServiceRequestGenericToString();
 }
 
-class MyServiceResponseOfStringToByteBuffer
-    extends SquadronMarshaller<MyServiceResponse<String>, ByteBuffer> {
-  const MyServiceResponseOfStringToByteBuffer();
+class ServiceResponseOfStringToByteBuffer
+    extends SquadronMarshaller<ServiceResponse<String>, ByteBuffer> {
+  const ServiceResponseOfStringToByteBuffer();
 
   void _writeInt(Uint8List bytes, int offset, int value) {
     bytes[offset + 0] = (value & 0xFF000000) >> 24;
@@ -60,7 +60,7 @@ class MyServiceResponseOfStringToByteBuffer
   }
 
   @override
-  ByteBuffer marshall(MyServiceResponse<String> x) {
+  ByteBuffer marshall(ServiceResponse<String> x) {
     var resbytes = utf8.encoder.convert(x.result);
     var reslen = resbytes.length;
     var sqidbytes = utf8.encoder.convert(x.sqId);
@@ -86,7 +86,7 @@ class MyServiceResponseOfStringToByteBuffer
       bytes[offset + 3];
 
   @override
-  MyServiceResponse<String> unmarshall(ByteBuffer x) {
+  ServiceResponse<String> unmarshall(ByteBuffer x) {
     final bytes = Uint8List.view(x);
     final reslen = _readInt(bytes, 0);
     final res = utf8.decoder.convert(bytes.sublist(4, 4 + reslen));
@@ -94,20 +94,20 @@ class MyServiceResponseOfStringToByteBuffer
     final sqidlen = _readInt(bytes, sqidOffset);
     final sqid = utf8.decoder
         .convert(bytes.sublist(sqidOffset + 4, sqidOffset + 4 + sqidlen));
-    return MyServiceResponse.hydrate(res, sqid);
+    return ServiceResponse.hydrate(res, sqid);
   }
 
-  static const instance = MyServiceResponseOfStringToByteBuffer();
+  static const instance = ServiceResponseOfStringToByteBuffer();
 }
 
-class MyServiceResponseToJson
-    extends SquadronMarshaller<MyServiceResponse<String>, String> {
-  const MyServiceResponseToJson();
+class ServiceResponseToJson
+    extends SquadronMarshaller<ServiceResponse<String>, String> {
+  const ServiceResponseToJson();
 
   @override
-  String marshall(MyServiceResponse<String> data) => jsonEncode(data.toJson());
+  String marshall(ServiceResponse<String> data) => jsonEncode(data.toJson());
 
   @override
-  MyServiceResponse<String> unmarshall(String data) =>
-      MyServiceResponse<String>.fromJson(jsonDecode(data));
+  ServiceResponse<String> unmarshall(String data) =>
+      ServiceResponse<String>.fromJson(jsonDecode(data));
 }

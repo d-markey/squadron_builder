@@ -5,10 +5,10 @@
 // **************************************************************************
 
 import 'package:squadron/squadron.dart';
-import '../my_service.dart';
+import '../fibonacci_service.dart';
 
 // VM entry point
 void _start(List<dynamic> command) =>
-    run($MyServiceInitializer, command, ParentSquadronLogger());
+    run($FibonacciServiceInitializer, command, ParentSquadronLogger());
 
-EntryPoint $getMyServiceActivator() => _start;
+EntryPoint $getFibonacciServiceActivator() => _start;

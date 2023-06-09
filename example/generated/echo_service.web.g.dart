@@ -5,10 +5,10 @@
 // **************************************************************************
 
 import 'package:squadron/squadron.dart';
-import '../my_service.dart';
+import '../echo_service.dart';
 
 // Web entry point
-void main() => run($MyServiceInitializer, null, ParentSquadronLogger());
+void main() => run($EchoServiceInitializer, null, ParentSquadronLogger());
 
-EntryPoint $getMyServiceActivator() =>
-    'example/generated/my_service.web.g.dart.js';
+EntryPoint $getEchoServiceActivator() =>
+    'example/generated/echo_service.web.g.dart.js';

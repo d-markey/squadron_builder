@@ -6,4 +6,4 @@
 
 import 'package:squadron/squadron.dart';
 
-EntryPoint $getMyServiceActivator() => throw UnimplementedError();
+EntryPoint $getFibonacciServiceActivator() => throw UnimplementedError();
