@@ -8,7 +8,7 @@ import 'generated/fibonacci_service.activator.g.dart';
 
 part 'generated/fibonacci_service.worker.g.dart';
 
-@SquadronService()
+@SquadronService(web: false)
 @UseLogger(ParentSquadronLogger)
 class FibonacciService extends WorkerService with $FibonacciServiceOperations {
   FibonacciService({this.trace = false});

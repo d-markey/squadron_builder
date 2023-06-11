@@ -3,42 +3,51 @@
 part of '../fibonacci_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.2.1
+// Generator: WorkerGenerator 2.3.0
 // **************************************************************************
 
-// Operations map for FibonacciService
+/// Operations map for FibonacciService
 mixin $FibonacciServiceOperations on WorkerService {
+  Map<int, CommandHandler>? _operations;
+
   @override
-  late final Map<int, CommandHandler> operations =
-      _getOperations(this as FibonacciService);
+  Map<int, CommandHandler> get operations {
+    var ops = _operations;
+    if (ops == null) {
+      ops = {
+        _$fibonacciId: (req) =>
+            (this as FibonacciService).fibonacci(req.args[0]),
+        _$fibonacciList0Id: (req) async => (await (this as FibonacciService)
+                .fibonacciList0(req.args[0], req.args[1]))
+            .cast<int>(),
+        _$fibonacciList1Id: (req) async => (const ListIntMarshaller()).marshall(
+            (await (this as FibonacciService)
+                .fibonacciList1(req.args[0], req.args[1]))),
+        _$fibonacciList2Id: (req) async => listIntMarshaller.marshall(
+            (await (this as FibonacciService)
+                .fibonacciList2(req.args[0], req.args[1]))),
+        _$fibonacciStreamId: (req) => (this as FibonacciService)
+            .fibonacciStream(req.args[0],
+                end: req.args[1], token: req.cancelToken)
+      };
+      _operations = ops;
+    }
+    return ops;
+  }
 
   static const int _$fibonacciId = 1;
   static const int _$fibonacciList0Id = 2;
   static const int _$fibonacciList1Id = 3;
   static const int _$fibonacciList2Id = 4;
   static const int _$fibonacciStreamId = 5;
-
-  static Map<int, CommandHandler> _getOperations(FibonacciService svc) => {
-        _$fibonacciId: (req) => svc.fibonacci(req.args[0]),
-        _$fibonacciList0Id: (req) async =>
-            (await svc.fibonacciList0(req.args[0], req.args[1])).cast<int>(),
-        _$fibonacciList1Id: (req) async => (const ListIntMarshaller())
-            .marshall((await svc.fibonacciList1(req.args[0], req.args[1]))),
-        _$fibonacciList2Id: (req) async => listIntMarshaller
-            .marshall((await svc.fibonacciList2(req.args[0], req.args[1]))),
-        _$fibonacciStreamId: (req) => svc.fibonacciStream(req.args[0],
-            end: req.args[1], token: req.cancelToken)
-      };
 }
 
-// Service initializer
+/// Service initializer for FibonacciService
 FibonacciService $FibonacciServiceInitializer(WorkerRequest startRequest) =>
     FibonacciService(trace: startRequest.args[0]);
 
-// Worker for FibonacciService
-class _FibonacciServiceWorker extends Worker
-    with $FibonacciServiceOperations
-    implements FibonacciService {
+/// Worker for FibonacciService
+class _FibonacciServiceWorker extends Worker implements FibonacciService {
   _FibonacciServiceWorker(
       {this.trace = false, PlatformWorkerHook? platformWorkerHook})
       : super($FibonacciServiceActivator,
@@ -81,12 +90,12 @@ class _FibonacciServiceWorker extends Worker
       );
 
   @override
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+  Map<int, CommandHandler>? _operations;
 
   final Object _detachToken = Object();
 }
 
-// Finalizable worker wrapper for FibonacciService
+/// Finalizable worker wrapper for FibonacciService
 class FibonacciServiceWorker implements _FibonacciServiceWorker {
   FibonacciServiceWorker(
       {bool trace = false, PlatformWorkerHook? platformWorkerHook})
@@ -131,7 +140,10 @@ class FibonacciServiceWorker implements _FibonacciServiceWorker {
       _worker.fibonacciStream(start, end: end, token: token);
 
   @override
-  Map<int, CommandHandler> get operations => _worker.operations;
+  Map<int, CommandHandler>? _operations;
+
+  @override
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
   @override
   List get args => _worker.args;
@@ -206,9 +218,8 @@ class FibonacciServiceWorker implements _FibonacciServiceWorker {
   Object get _detachToken => _worker._detachToken;
 }
 
-// Worker pool for FibonacciService
+/// Worker pool for FibonacciService
 class _FibonacciServiceWorkerPool extends WorkerPool<FibonacciServiceWorker>
-    with $FibonacciServiceOperations
     implements FibonacciService {
   _FibonacciServiceWorkerPool(
       {this.trace = false,
@@ -243,12 +254,12 @@ class _FibonacciServiceWorkerPool extends WorkerPool<FibonacciServiceWorker>
       stream(($w) => $w.fibonacciStream(start, end: end, token: token));
 
   @override
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+  Map<int, CommandHandler>? _operations;
 
   final Object _detachToken = Object();
 }
 
-// Finalizable worker pool wrapper for FibonacciService
+/// Finalizable worker pool wrapper for FibonacciService
 class FibonacciServiceWorkerPool implements _FibonacciServiceWorkerPool {
   FibonacciServiceWorkerPool(
       {bool trace = false,
@@ -295,7 +306,10 @@ class FibonacciServiceWorkerPool implements _FibonacciServiceWorkerPool {
       _pool.fibonacciStream(start, end: end, token: token);
 
   @override
-  Map<int, CommandHandler> get operations => _pool.operations;
+  Map<int, CommandHandler>? _operations;
+
+  @override
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
   @override
   ConcurrencySettings get concurrencySettings => _pool.concurrencySettings;

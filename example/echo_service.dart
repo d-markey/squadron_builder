@@ -12,20 +12,20 @@ import 'service_response.dart';
 
 part 'generated/echo_service.worker.g.dart';
 
-@SquadronService()
+@SquadronService(web: false)
 @UseLogger(ParentSquadronLogger)
 class EchoService extends WorkerService with $EchoServiceOperations {
-  EchoService(this._trace, {ServiceConfig<int>? workloadDelay})
+  EchoService([this._trace = false, ServiceConfig<int>? workloadDelay])
       : _delay = Duration(microseconds: workloadDelay?.value ?? 50);
 
-  final ServiceConfig<bool> _trace;
+  final bool _trace;
 
   final Duration _delay;
 
   @SquadronMethod()
   FutureOr<ServiceResponse<String>?> jsonEchoWithJsonResult(
       ServiceRequest request) {
-    if (_trace.value) {
+    if (_trace) {
       Squadron.finer('jsonEchoWithJsonResult(${jsonEncode(request.toJson())})');
     }
     _simulateWorkload();
@@ -35,7 +35,7 @@ class EchoService extends WorkerService with $EchoServiceOperations {
   @SquadronMethod()
   FutureOr<ServiceResponse<String>> explicitEchoWithJsonResult(
       @SerializeWith(ServiceRequestToString) ServiceRequest request) {
-    if (_trace.value) {
+    if (_trace) {
       Squadron.finer(
           'explicitEchoWithJsonResult(${jsonEncode(request.toJson())})');
     }
@@ -47,7 +47,7 @@ class EchoService extends WorkerService with $EchoServiceOperations {
   @SerializeWith(ServiceResponseOfStringToByteBuffer)
   FutureOr<ServiceResponse<String>> jsonEchoWithExplicitResult(
       ServiceRequest request) {
-    if (_trace.value) {
+    if (_trace) {
       Squadron.finer(
           'jsonEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     }
@@ -61,7 +61,7 @@ class EchoService extends WorkerService with $EchoServiceOperations {
       @SerializeWith(ServiceRequestGenericToString.instance)
       ServiceRequest request,
       {CancellationToken? token}) {
-    if (_trace.value) {
+    if (_trace) {
       Squadron.finer(
           'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     }
@@ -74,7 +74,7 @@ class EchoService extends WorkerService with $EchoServiceOperations {
   FutureOr<ServiceResponse<String>> jsonEncodeEcho(
       @SerializeWith(ServiceRequestToString.instance) ServiceRequest request,
       [CancellationToken? token]) {
-    if (_trace.value) {
+    if (_trace) {
       Squadron.finer(
           'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     }

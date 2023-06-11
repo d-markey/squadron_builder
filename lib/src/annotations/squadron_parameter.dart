@@ -28,9 +28,9 @@ class SquadronParameter {
     var type = param.type;
     FieldElement? field;
     if (param is FieldFormalParameterElement && param.field != null) {
-      field = param.field;
-      type = param.field!.type;
-      name = param.field!.name;
+      field = param.field!;
+      type = field.type;
+      name = field.name;
       while (name.startsWith('_')) {
         name = name.substring((1));
       }

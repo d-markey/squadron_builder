@@ -3,62 +3,67 @@
 part of '../echo_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.2.1
+// Generator: WorkerGenerator 2.3.0
 // **************************************************************************
 
-// Operations map for EchoService
+/// Operations map for EchoService
 mixin $EchoServiceOperations on WorkerService {
+  Map<int, CommandHandler>? _operations;
+
   @override
-  late final Map<int, CommandHandler> operations =
-      _getOperations(this as EchoService);
+  Map<int, CommandHandler> get operations {
+    var ops = _operations;
+    if (ops == null) {
+      ops = {
+        _$explicitEchoWithExplicitResultId: (req) async =>
+            ServiceResponseOfStringToByteBuffer.instance.marshall(
+                (await (this as EchoService).explicitEchoWithExplicitResult(
+                    ServiceRequestGenericToString.instance
+                        .unmarshall(req.args[0]),
+                    token: req.cancelToken))),
+        _$explicitEchoWithJsonResultId: (req) async =>
+            (await (this as EchoService).explicitEchoWithJsonResult(
+                    (const ServiceRequestToString()).unmarshall(req.args[0])))
+                .toJson(),
+        _$jsonEchoWithExplicitResultId: (req) async =>
+            (const ServiceResponseOfStringToByteBuffer()).marshall(
+                (await (this as EchoService).jsonEchoWithExplicitResult(
+                    ServiceRequest.fromJson(req.args[0])))),
+        _$jsonEchoWithJsonResultId: (req) async => (await (this as EchoService)
+                .jsonEchoWithJsonResult(ServiceRequest.fromJson(req.args[0])))
+            ?.toJson(),
+        _$jsonEncodeEchoId: (req) async => (const ServiceResponseToJson())
+            .marshall((await (this as EchoService).jsonEncodeEcho(
+                ServiceRequestToString.instance.unmarshall(req.args[0]),
+                req.cancelToken)))
+      };
+      _operations = ops;
+    }
+    return ops;
+  }
 
   static const int _$explicitEchoWithExplicitResultId = 1;
   static const int _$explicitEchoWithJsonResultId = 2;
   static const int _$jsonEchoWithExplicitResultId = 3;
   static const int _$jsonEchoWithJsonResultId = 4;
   static const int _$jsonEncodeEchoId = 5;
-
-  static Map<int, CommandHandler> _getOperations(EchoService svc) => {
-        _$explicitEchoWithExplicitResultId: (req) async =>
-            ServiceResponseOfStringToByteBuffer.instance.marshall(
-                (await svc.explicitEchoWithExplicitResult(
-                    ServiceRequestGenericToString.instance
-                        .unmarshall(req.args[0]),
-                    token: req.cancelToken))),
-        _$explicitEchoWithJsonResultId: (req) async =>
-            (await svc.explicitEchoWithJsonResult(
-                    (const ServiceRequestToString()).unmarshall(req.args[0])))
-                .toJson(),
-        _$jsonEchoWithExplicitResultId: (req) async =>
-            (const ServiceResponseOfStringToByteBuffer()).marshall(
-                (await svc.jsonEchoWithExplicitResult(
-                    ServiceRequest.fromJson(req.args[0])))),
-        _$jsonEchoWithJsonResultId: (req) async => (await svc
-                .jsonEchoWithJsonResult(ServiceRequest.fromJson(req.args[0])))
-            ?.toJson(),
-        _$jsonEncodeEchoId: (req) async => (const ServiceResponseToJson())
-            .marshall((await svc.jsonEncodeEcho(
-                ServiceRequestToString.instance.unmarshall(req.args[0]),
-                req.cancelToken)))
-      };
 }
 
-// Service initializer
-EchoService $EchoServiceInitializer(WorkerRequest startRequest) =>
-    EchoService(ServiceConfig<bool>.fromJson(startRequest.args[0]),
-        workloadDelay: (startRequest.args[1] == null)
-            ? null
-            : ServiceConfig<int>.fromJson(startRequest.args[1]));
+/// Service initializer for EchoService
+EchoService $EchoServiceInitializer(WorkerRequest startRequest) => EchoService(
+    startRequest.args[0],
+    (startRequest.args[1] == null)
+        ? null
+        : ServiceConfig<int>.fromJson(startRequest.args[1]));
 
-// Worker for EchoService
-class _EchoServiceWorker extends Worker
-    with $EchoServiceOperations
-    implements EchoService {
-  _EchoServiceWorker(ServiceConfig<bool> trace,
-      {ServiceConfig<int>? workloadDelay,
-      PlatformWorkerHook? platformWorkerHook})
+/// Worker for EchoService
+class _EchoServiceWorker extends Worker implements EchoService {
+  _EchoServiceWorker(
+      [bool trace = false,
+      ServiceConfig<int>? workloadDelay,
+      PlatformWorkerHook? platformWorkerHook])
       : super($EchoServiceActivator,
-            args: [trace.toJson(), workloadDelay?.toJson()],
+            args: [trace, workloadDelay?.toJson()],
             platformWorkerHook: platformWorkerHook);
 
   @override
@@ -108,28 +113,27 @@ class _EchoServiceWorker extends Worker
       ).then(($res) => (const ServiceResponseToJson()).unmarshall($res));
 
   @override
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-
-  @override
   void _simulateWorkload() => throw UnimplementedError();
 
   @override
-  ServiceConfig<bool> get _trace => throw UnimplementedError();
+  bool get _trace => throw UnimplementedError();
 
   @override
   Duration get _delay => throw UnimplementedError();
 
+  @override
+  Map<int, CommandHandler>? _operations;
+
   final Object _detachToken = Object();
 }
 
-// Finalizable worker wrapper for EchoService
+/// Finalizable worker wrapper for EchoService
 class EchoServiceWorker implements _EchoServiceWorker {
-  EchoServiceWorker(ServiceConfig<bool> trace,
-      {ServiceConfig<int>? workloadDelay,
-      PlatformWorkerHook? platformWorkerHook})
-      : _worker = _EchoServiceWorker(trace,
-            workloadDelay: workloadDelay,
-            platformWorkerHook: platformWorkerHook) {
+  EchoServiceWorker(
+      [bool trace = false,
+      ServiceConfig<int>? workloadDelay,
+      PlatformWorkerHook? platformWorkerHook])
+      : _worker = _EchoServiceWorker(trace, workloadDelay, platformWorkerHook) {
     _finalizer.attach(this, _worker, detach: _worker._detachToken);
   }
 
@@ -172,13 +176,16 @@ class EchoServiceWorker implements _EchoServiceWorker {
       _worker.jsonEncodeEcho(request, token);
 
   @override
-  Map<int, CommandHandler> get operations => _worker.operations;
-
-  @override
   void _simulateWorkload() => _worker._simulateWorkload();
 
   @override
-  ServiceConfig<bool> get _trace => _worker._trace;
+  Map<int, CommandHandler>? _operations;
+
+  @override
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+
+  @override
+  bool get _trace => _worker._trace;
 
   @override
   Duration get _delay => _worker._delay;
@@ -256,18 +263,15 @@ class EchoServiceWorker implements _EchoServiceWorker {
   Object get _detachToken => _worker._detachToken;
 }
 
-// Worker pool for EchoService
+/// Worker pool for EchoService
 class _EchoServiceWorkerPool extends WorkerPool<EchoServiceWorker>
-    with $EchoServiceOperations
     implements EchoService {
-  _EchoServiceWorkerPool(ServiceConfig<bool> trace,
-      {ServiceConfig<int>? workloadDelay,
+  _EchoServiceWorkerPool(
+      [bool trace = false,
+      ServiceConfig<int>? workloadDelay,
       ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook})
-      : super(
-            () => EchoServiceWorker(trace,
-                workloadDelay: workloadDelay,
-                platformWorkerHook: platformWorkerHook),
+      PlatformWorkerHook? platformWorkerHook])
+      : super(() => EchoServiceWorker(trace, workloadDelay, platformWorkerHook),
             concurrencySettings: concurrencySettings);
 
   @override
@@ -297,30 +301,29 @@ class _EchoServiceWorkerPool extends WorkerPool<EchoServiceWorker>
       execute(($w) => $w.jsonEncodeEcho(request, token));
 
   @override
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-
-  @override
   void _simulateWorkload() => throw UnimplementedError();
 
   @override
-  ServiceConfig<bool> get _trace => throw UnimplementedError();
+  bool get _trace => throw UnimplementedError();
 
   @override
   Duration get _delay => throw UnimplementedError();
 
+  @override
+  Map<int, CommandHandler>? _operations;
+
   final Object _detachToken = Object();
 }
 
-// Finalizable worker pool wrapper for EchoService
+/// Finalizable worker pool wrapper for EchoService
 class EchoServiceWorkerPool implements _EchoServiceWorkerPool {
-  EchoServiceWorkerPool(ServiceConfig<bool> trace,
-      {ServiceConfig<int>? workloadDelay,
+  EchoServiceWorkerPool(
+      [bool trace = false,
+      ServiceConfig<int>? workloadDelay,
       ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook})
-      : _pool = _EchoServiceWorkerPool(trace,
-            workloadDelay: workloadDelay,
-            concurrencySettings: concurrencySettings,
-            platformWorkerHook: platformWorkerHook) {
+      PlatformWorkerHook? platformWorkerHook])
+      : _pool = _EchoServiceWorkerPool(
+            trace, workloadDelay, concurrencySettings, platformWorkerHook) {
     _finalizer.attach(this, _pool, detach: _pool._detachToken);
   }
 
@@ -363,13 +366,16 @@ class EchoServiceWorkerPool implements _EchoServiceWorkerPool {
       _pool.jsonEncodeEcho(request, token);
 
   @override
-  Map<int, CommandHandler> get operations => _pool.operations;
-
-  @override
   void _simulateWorkload() => _pool._simulateWorkload();
 
   @override
-  ServiceConfig<bool> get _trace => _pool._trace;
+  Map<int, CommandHandler>? _operations;
+
+  @override
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+
+  @override
+  bool get _trace => _pool._trace;
 
   @override
   Duration get _delay => _pool._delay;

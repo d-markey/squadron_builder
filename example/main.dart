@@ -17,7 +17,7 @@ void main() async {
   final deviationMonitor = await installDeviationMonitor(resolution);
 
   // service parameters
-  final trace = ServiceConfig('trace', false);
+  final trace = false;
   final workload = ServiceConfig('workload', 250);
 
   // FIRST RUN: single-threaded (all in main thread)
@@ -96,16 +96,16 @@ the more performance will be improved.
 ''');
 }
 
-Future<PerfCounters> runServices(DeviationMonitor monitor,
-    ServiceConfig<bool> trace, ServiceConfig<int> workloadDelay) async {
+Future<PerfCounters> runServices(DeviationMonitor monitor, bool trace,
+    ServiceConfig<int> workloadDelay) async {
   Squadron.info('''
 ----------------------------------------------------------
 1. Computing with services (single-threaded)
 ----------------------------------------------------------
 ''');
 
-  final fibonacciService = FibonacciService(trace: trace.value);
-  final echoService = EchoService(trace, workloadDelay: workloadDelay);
+  final fibonacciService = FibonacciService(trace: trace);
+  final echoService = EchoService(trace, workloadDelay);
 
   monitor.start();
   var counters = await testWith(monitor, fibonacciService, echoService);
@@ -127,8 +127,8 @@ void displayStats(WorkerStat stats) {
       '${stats.workerType} ${stats.id} (${stats.status}): totalWorkload=${stats.totalWorkload}, upTime=${stats.upTime}, idleTime=${stats.idleTime}');
 }
 
-Future<PerfCounters> runWorkers(DeviationMonitor monitor,
-    ServiceConfig<bool> trace, ServiceConfig<int> workloadDelay) async {
+Future<PerfCounters> runWorkers(DeviationMonitor monitor, bool trace,
+    ServiceConfig<int> workloadDelay) async {
   Squadron.info('''
 ----------------------------------------------------------
 2. Computing with single service workers (one thread each)
@@ -136,11 +136,10 @@ Future<PerfCounters> runWorkers(DeviationMonitor monitor,
 ''');
 
   final fibonacciWorker = FibonacciServiceWorker(
-      trace: trace.value,
+      trace: trace,
       platformWorkerHook: (w) => platformWorkerHook<FibonacciServiceWorker>(w));
-  final echoWorker = EchoServiceWorker(trace,
-      workloadDelay: workloadDelay,
-      platformWorkerHook: (w) => platformWorkerHook<EchoServiceWorker>(w));
+  final echoWorker = EchoServiceWorker(
+      trace, workloadDelay, (w) => platformWorkerHook<EchoServiceWorker>(w));
 
   await Future.wait([fibonacciWorker.start(), echoWorker.start()]);
 
@@ -161,8 +160,8 @@ Future<PerfCounters> runWorkers(DeviationMonitor monitor,
   return counters / 2;
 }
 
-Future<PerfCounters> runPools(DeviationMonitor monitor,
-    ServiceConfig<bool> trace, ServiceConfig<int> workloadDelay) async {
+Future<PerfCounters> runPools(DeviationMonitor monitor, bool trace,
+    ServiceConfig<int> workloadDelay) async {
   Squadron.info('''
 ----------------------------------------------------------
 3. Computing with service worker pools (multithreaded)
@@ -175,14 +174,12 @@ Future<PerfCounters> runPools(DeviationMonitor monitor,
     maxParallel: 1,
   );
   final fibonacciPool = FibonacciServiceWorkerPool(
-      trace: trace.value,
+      trace: trace,
       concurrencySettings: concurrency,
       platformWorkerHook: (w) =>
           platformWorkerHook<FibonacciServiceWorkerPool>(w));
-  final echoPool = EchoServiceWorkerPool(trace,
-      workloadDelay: workloadDelay,
-      concurrencySettings: concurrency,
-      platformWorkerHook: (w) => platformWorkerHook<EchoServiceWorkerPool>(w));
+  final echoPool = EchoServiceWorkerPool(trace, workloadDelay, concurrency,
+      (w) => platformWorkerHook<EchoServiceWorkerPool>(w));
 
   await Future.wait(
       [fibonacciPool.start().toFuture(), echoPool.start().toFuture()]);

@@ -9,17 +9,16 @@ import 'annotations/squadron_library.dart';
 import 'annotations/squadron_method_annotation.dart';
 import 'annotations/squadron_service_annotation.dart';
 import '_overrides.dart';
+import 'build_step_events.dart';
 
 class WorkerAssets {
-  WorkerAssets(BuildStep buildStep, this._squadron, this.service,
-      this.formatOutput, this.header)
+  WorkerAssets(BuildStep buildStep, this._squadron, this.service)
       : workerClassName = '${service.name}Worker',
         workerPoolClassName = '${service.name}WorkerPool',
         operationsMixinName = '\$${service.name}Operations',
         serviceInitializerName = '\$${service.name}Initializer',
         serviceActivator = '${service.name}Activator',
-        _inputId = buildStep.inputId,
-        _writeCode = buildStep.writeAsString {
+        _inputId = buildStep.inputId {
     for (var output in buildStep.allowedOutputs) {
       final path = output.path.toLowerCase();
       if (service.vm && path.endsWith('.vm.g.dart')) {
@@ -40,11 +39,7 @@ class WorkerAssets {
   AssetId? _xplatOutput;
   AssetId? _activatorOutput;
 
-  final Future<void> Function(AssetId, FutureOr<String>) _writeCode;
-  final String Function(String source) formatOutput;
-
   final SquadronServiceAnnotation service;
-  final String header;
 
   final SquadronLibrary _squadron;
 
@@ -54,94 +49,83 @@ class WorkerAssets {
   final String serviceInitializerName;
   final String serviceActivator;
 
-  Future<void> generateCrossPlatformCode() async {
+  void generateCrossPlatformCode(BuildStepCodeEvent codeEvent) {
     final output = _xplatOutput;
     if (output != null && _vmOutput != null && _webOutput != null) {
-      await _writeCode(output, formatOutput('''
-          $header
-
-          ${_squadron.entryPointTypeName is DynamicType ? '' : 'import \'package:squadron/squadron.dart\';'}
-
-          ${_unimplemented('${_squadron.entryPointTypeName} \$get$serviceActivator()')}
-        '''));
+      if (_squadron.entryPointTypeName is! DynamicType) {
+        codeEvent.import(output, 'package:squadron/squadron.dart');
+      }
+      codeEvent.add(
+          output,
+          _unimplemented(
+              '${_squadron.entryPointTypeName} \$get$serviceActivator()'));
     }
   }
 
-  Future<void> generateVmCode(String? logger) async {
+  void generateVmCode(BuildStepCodeEvent codeEvent, String? logger) {
     final output = _vmOutput;
     if (output != null) {
       final serializationType = _squadron.serializationTypeName.toString();
       final serviceImport = _getRelativePath(_inputId, output);
-      await _writeCode(output, formatOutput('''
-          $header
+      codeEvent.import(output, 'package:squadron/squadron.dart');
+      codeEvent.import(output, serviceImport);
+      codeEvent.add(output, '''
+          /// VM entry point for ${service.name}
+          void _start\$${service.name}($serializationType command) => run($serviceInitializerName, command, $logger);
 
-          import 'package:squadron/squadron.dart';
-          import '$serviceImport';
-
-          // VM entry point
-          void _start($serializationType command) => run($serviceInitializerName, command, $logger);
-
-          ${_squadron.entryPointTypeName} \$get$serviceActivator() => _start;
-        '''));
+          ${_squadron.entryPointTypeName} \$get$serviceActivator() => _start\$${service.name};
+        ''');
     }
   }
 
-  Future<void> generateWebCode(String? logger) async {
+  void generateWebCode(BuildStepCodeEvent codeEvent, String? logger) {
     final output = _webOutput;
     if (output != null) {
       final serviceImport = _getRelativePath(_inputId, output);
       final workerUrl = service.baseUrl.isEmpty
           ? '${output.path}.js'
           : '${service.baseUrl}/${output.pathSegments.last}.js';
-      await _writeCode(output, formatOutput('''
-          $header
-
-          import 'package:squadron/squadron.dart';
-          import '$serviceImport';
-
-          // Web entry point
-          void main() => run($serviceInitializerName, null, $logger);
-
-          ${_squadron.entryPointTypeName} \$get$serviceActivator() => '$workerUrl';
-        '''));
+      codeEvent.import(output, 'package:squadron/squadron.dart');
+      codeEvent.import(output, serviceImport);
+      codeEvent.addWebEntryPoint(output, '''
+          /// Web entry point for ${service.name}
+          run($serviceInitializerName, null, $logger);
+        ''');
+      codeEvent.add(output,
+          '${_squadron.entryPointTypeName} \$get$serviceActivator() => \'$workerUrl\';');
     }
   }
 
-  Future<void> generateActivatorCode() async {
+  void generateActivatorCode(BuildStepCodeEvent codeEvent) {
     final output = _activatorOutput;
     if (output != null) {
       if (_xplatOutput != null && _webOutput != null && _vmOutput != null) {
         final stubImport = _getRelativePath(_xplatOutput!, output);
         final webImport = _getRelativePath(_webOutput!, output);
         final vmImport = _getRelativePath(_vmOutput!, output);
-        await _writeCode(output, formatOutput('''
-          $header
-
-          import '$stubImport'
-            if (dart.library.js) '$webImport'
-            if (dart.library.html) '$webImport'
-            if (dart.library.io) '$vmImport';
-
+        codeEvent.import(output, stubImport, platformSpecific: {
+          'js': webImport,
+          'html': webImport,
+          'io': vmImport
+        });
+        codeEvent.add(output, '''
+          /// Service activator for ${service.name}
           final \$$serviceActivator = \$get$serviceActivator();
-        '''));
+        ''');
       } else if (_vmOutput != null) {
         final vmImport = _getRelativePath(_vmOutput!, output);
-        await _writeCode(output, formatOutput('''
-          $header
-
-          import '$vmImport';
-
+        codeEvent.import(output, vmImport);
+        codeEvent.add(output, '''
+          /// Service activator for ${service.name}
           final \$$serviceActivator = \$get$serviceActivator();
-        '''));
+        ''');
       } else if (_webOutput != null) {
         final webImport = _getRelativePath(_webOutput!, output);
-        await _writeCode(output, formatOutput('''
-          $header
-
-          import '$webImport';
-
+        codeEvent.import(output, webImport);
+        codeEvent.add(output, '''
+          /// Service activator for ${service.name}
           final \$$serviceActivator = \$get$serviceActivator();
-        '''));
+        ''');
       }
     }
   }
@@ -183,21 +167,26 @@ class WorkerAssets {
   }
 
   String _generateOperationMap(List<SquadronMethodAnnotation> commands) => '''
-        // Operations map for ${service.name}
+        /// Operations map for ${service.name}
         mixin $operationsMixinName on WorkerService {
+          Map<int, CommandHandler>? _operations;
+
           @override
-          late final Map<int, CommandHandler> operations = _getOperations(this as ${service.name});
+          Map<int, CommandHandler> get operations {
+            var ops = _operations;
+            if (ops == null) {
+              ops = { ${commands.map(_generateCommandHandler).join(',\n')} };
+              _operations = ops;
+            }
+            return ops;
+          }
 
           ${commands.map(_generateCommandIds).join('\n')}
-
-          static Map<int, CommandHandler> _getOperations(${service.name} svc) => {
-            ${commands.map(_generateCommandHandler).join(',\n')}
-          };
         }
       ''';
 
   String _generateServiceInitializer() => '''
-        // Service initializer
+        /// Service initializer for ${service.name}
         ${service.name} $serviceInitializerName(WorkerRequest startRequest)
             => ${service.name}(${service.parameters.deserialize('startRequest')});
       ''';
@@ -218,9 +207,9 @@ class WorkerAssets {
     }
 
     return '''
-        // Worker for ${service.name}
+        /// Worker for ${service.name}
         class $workerClassName
-          extends Worker with $operationsMixinName
+          extends Worker
           implements ${service.name} {
           
           $workerClassName($params) : super(\$$activationArgs);
@@ -229,12 +218,12 @@ class WorkerAssets {
 
           ${commands.map(_generateWorkerMethod).join('\n\n')}
 
-          @override
-          Map<int, CommandHandler> get operations => WorkerService.noOperations;
-
           ${unimplemented.map(_generateUnimplemented).join('\n\n')}
 
           ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
+
+          @override
+          Map<int, CommandHandler>? _operations;
         }
       ''';
   }
@@ -255,9 +244,9 @@ class WorkerAssets {
     }
 
     return '''
-        // Worker for ${service.name}
+        /// Worker for ${service.name}
         class _$workerClassName
-          extends Worker with $operationsMixinName
+          extends Worker
           implements ${service.name} {
           
           _$workerClassName($params) : super(\$$activationArgs);
@@ -266,17 +255,17 @@ class WorkerAssets {
 
           ${commands.map(_generateWorkerMethod).join('\n\n')}
 
-          @override
-          Map<int, CommandHandler> get operations => WorkerService.noOperations;
-
           ${unimplemented.map(_generateUnimplemented).join('\n\n')}
 
           ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
 
+          @override
+          Map<int, CommandHandler>? _operations;
+
           final Object _detachToken = Object();
         }
 
-        // Finalizable worker wrapper for ${service.name}
+        /// Finalizable worker wrapper for ${service.name}
         class $workerClassName implements _$workerClassName {
           
           $workerClassName(${params.toStringNoFields()}) : _worker = _$workerClassName(${params.arguments()}) {
@@ -298,10 +287,13 @@ class WorkerAssets {
 
           ${commands.map((cmd) => _forwardMethod(cmd, '_worker')).join('\n\n')}
 
-          @override
-          Map<int, CommandHandler> get operations => _worker.operations;
-
           ${unimplemented.map((cmd) => _forwardMethod(cmd, '_worker')).join('\n\n')}
+
+          @override
+          Map<int, CommandHandler>? _operations;
+
+          @override
+          Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
           ${service.accessors.map((acc) => _forwardAccessor(acc, '_worker')).join('\n\n')}
 
@@ -325,27 +317,27 @@ class WorkerAssets {
     }
 
     return '''
-          // Worker pool for ${service.name}
-          class $workerPoolClassName
-            extends WorkerPool<$workerClassName> with $operationsMixinName
-            implements ${service.name} {
+        /// Worker pool for ${service.name}
+        class $workerPoolClassName
+          extends WorkerPool<$workerClassName>
+          implements ${service.name} {
 
-            $workerPoolClassName($poolParams) : super(
-                () => $workerClassName(${serviceParams.arguments()}),
-                ${cs.namedArgument()});
+          $workerPoolClassName($poolParams) : super(
+              () => $workerClassName(${serviceParams.arguments()}),
+              ${cs.namedArgument()});
 
-            ${service.fields.values.map(_generateField).join('\n\n')}
+          ${service.fields.values.map(_generateField).join('\n\n')}
 
-            ${commands.map(_generatePoolMethod).join('\n\n')}
+          ${commands.map(_generatePoolMethod).join('\n\n')}
 
-            @override
-            Map<int, CommandHandler> get operations => WorkerService.noOperations;
+          ${unimplemented.map(_generateUnimplemented).join('\n\n')}
 
-            ${unimplemented.map(_generateUnimplemented).join('\n\n')}
+          ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
 
-            ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
-          }
-        ''';
+          @override
+          Map<int, CommandHandler>? _operations;
+        }
+      ''';
   }
 
   String _generateFinalizableWorkerPool(List<SquadronMethodAnnotation> commands,
@@ -363,30 +355,30 @@ class WorkerAssets {
     }
 
     return '''
-          // Worker pool for ${service.name}
-          class _$workerPoolClassName
-            extends WorkerPool<$workerClassName> with $operationsMixinName
-            implements ${service.name} {
+        /// Worker pool for ${service.name}
+        class _$workerPoolClassName
+          extends WorkerPool<$workerClassName>
+          implements ${service.name} {
 
-            _$workerPoolClassName($poolParams) : super(
-                () => $workerClassName(${serviceParams.arguments()}),
-                ${cs.namedArgument()});
+          _$workerPoolClassName($poolParams) : super(
+              () => $workerClassName(${serviceParams.arguments()}),
+              ${cs.namedArgument()});
 
-            ${service.fields.values.map(_generateField).join('\n\n')}
+          ${service.fields.values.map(_generateField).join('\n\n')}
 
-            ${commands.map(_generatePoolMethod).join('\n\n')}
+          ${commands.map(_generatePoolMethod).join('\n\n')}
 
-            @override
-            Map<int, CommandHandler> get operations => WorkerService.noOperations;
+          ${unimplemented.map(_generateUnimplemented).join('\n\n')}
 
-            ${unimplemented.map(_generateUnimplemented).join('\n\n')}
+          ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
 
-            ${service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
+          @override
+          Map<int, CommandHandler>? _operations;
 
-            final Object _detachToken = Object();
-          }
+          final Object _detachToken = Object();
+        }
 
-        // Finalizable worker pool wrapper for ${service.name}
+        /// Finalizable worker pool wrapper for ${service.name}
         class $workerPoolClassName implements _$workerPoolClassName {
           
           $workerPoolClassName(${poolParams.toStringNoFields()}) : _pool = _$workerPoolClassName(${poolParams.arguments()}) {
@@ -408,10 +400,13 @@ class WorkerAssets {
 
           ${commands.map((cmd) => _forwardMethod(cmd, '_pool')).join('\n\n')}
 
-          @override
-          Map<int, CommandHandler> get operations => _pool.operations;
-
           ${unimplemented.map((cmd) => _forwardMethod(cmd, '_pool')).join('\n\n')}
+
+          @override
+          Map<int, CommandHandler>? _operations;
+
+          @override
+          Map<int, CommandHandler> get operations => WorkerService.noOperations;
 
           ${service.accessors.map((acc) => _forwardAccessor(acc, '_pool')).join('\n\n')}
 
@@ -424,7 +419,8 @@ class WorkerAssets {
       'static const int ${cmd.id} = ${cmd.num};';
 
   String _generateCommandHandler(SquadronMethodAnnotation cmd) {
-    final serviceCall = 'svc.${cmd.name}(${cmd.parameters.deserialize('req')})';
+    final serviceCall =
+        '(this as ${service.name}).${cmd.name}(${cmd.parameters.deserialize('req')})';
     if (cmd.needsSerialization && !cmd.serializedResult.isIdentity) {
       if (cmd.isStream) {
         return '${cmd.id}: (req) => $serviceCall.${cmd.continuation}((\$res) => ${cmd.serializedResult('\$res')})';

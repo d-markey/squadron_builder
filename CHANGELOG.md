@@ -1,7 +1,8 @@
-## 2.2.1
+## 2.3.0
 
 - Properly handle platform worker thread parameter + getter in generated worker/worker pool when `with_finalizers` is enabled (fix for https://github.com/d-markey/squadron_builder/issues/5).
 - Refactored service/method parameter management.
+- Enable code generation for libraries that define several services. This will run as expected on native platforms where worker entrypoints are top-level static methods. It will not work on Web platforms where worker entrypoints are URLs: each worker needs its own URL, hence its own library.
 
 ## 2.2.0
 
