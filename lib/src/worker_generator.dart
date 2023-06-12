@@ -18,7 +18,7 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     _buildStepEventStream.stream.listen(_process);
   }
 
-  static const version = '2.3.0';
+  static const version = '2.3.1';
 
   late final String header = '''
       // GENERATED CODE - DO NOT MODIFY BY HAND
@@ -35,7 +35,7 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
 
   final _results = <BuildStep, BuildStepCodeEvent>{};
 
-  FutureOr<void> _process(BuildStepEvent event) {
+  void _process(BuildStepEvent event) {
     if (event is BuildStepCodeEvent) {
       _registerAssetCode(event);
     } else if (event is BuildStepDoneEvent) {
@@ -54,22 +54,22 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     }
   }
 
-  Future<void> _writeAssetCode(BuildStepDoneEvent done) async {
+  void _writeAssetCode(BuildStepDoneEvent done) {
     final result = _results[done.buildStep];
     if (result != null) {
       _results.remove(done.buildStep);
       final insertHeader = [header].followedBy;
       for (var asset in result.assets) {
+        var code = insertHeader(result.getCode(asset)).join('\n\n');
         try {
-          await result.buildStep.writeAsString(asset,
-              formatOutput(insertHeader(result.getCode(asset)).join('\n\n')));
+          code = formatOutput(code);
         } catch (ex) {
           log.severe(
-              'An exception occurred while generating ${asset.uri}: $ex');
+              'An exception occurred while formatting code for ${asset.uri}: $ex');
         }
+        result.buildStep.writeAsString(asset, code);
       }
     }
-    done.finished();
   }
 
   SquadronLibrary? _squadron;
@@ -77,15 +77,14 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
     // load Squadron main library
-    _squadron = await SquadronLibrary.load(library.element.session);
+    final libElement = library.element;
+    _squadron = await SquadronLibrary.load(libElement.session);
 
     // generate code
     final result = await super.generate(library, buildStep);
 
     // success, trigger code generation for additional assets associated to this libreay
-    final event = BuildStepDoneEvent(buildStep);
-    _buildStepEventStream.add(event);
-    await event.complete;
+    _buildStepEventStream.add(BuildStepDoneEvent(buildStep, libElement));
 
     // return result
     return result;
@@ -97,20 +96,22 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     final classElt = element;
     if (classElt is! ClassElement) return;
 
-    // implementation moved to specific methods to facilitate unit tests
-    final service = SquadronServiceAnnotation.load(classElt)!;
-
-    final assets = WorkerAssets(buildStep, _squadron!, service);
-
-    final codeEvent = BuildStepCodeEvent(buildStep);
-    assets.generateVmCode(codeEvent, service.logger);
-    assets.generateWebCode(codeEvent, service.logger);
-    assets.generateCrossPlatformCode(codeEvent);
-    assets.generateActivatorCode(codeEvent);
-    _buildStepEventStream.add(codeEvent);
-
     try {
-      yield* assets.generateMapWorkerAndPool(withFinalizers);
+      // implementation moved to specific methods to facilitate unit tests
+      final service = SquadronServiceAnnotation.load(classElt)!;
+
+      final assets = WorkerAssets(buildStep, _squadron!, service);
+
+      final codeEvent = BuildStepCodeEvent(buildStep, classElt.library);
+      assets.generateVmCode(codeEvent, service.logger);
+      assets.generateWebCode(codeEvent, service.logger);
+      assets.generateCrossPlatformCode(codeEvent);
+      assets.generateActivatorCode(codeEvent);
+      _buildStepEventStream.add(codeEvent);
+
+      await for (var code in assets.generateMapWorkerAndPool(withFinalizers)) {
+        yield code;
+      }
     } catch (ex, st) {
       print('CAUGHT $ex');
       print(st);

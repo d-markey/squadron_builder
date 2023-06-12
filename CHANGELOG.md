@@ -1,3 +1,7 @@
+## 2.3.1
+
+- Eliminate async code generation for additional assets.
+
 ## 2.3.0
 
 - Properly handle platform worker thread parameter + getter in generated worker/worker pool when `with_finalizers` is enabled (fix for https://github.com/d-markey/squadron_builder/issues/5).

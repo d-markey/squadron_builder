@@ -72,7 +72,7 @@ void displaySummary(Duration resolution, PerfCounters serviceCounters,
 MAX TIMER DELAY (resolution = $resolution aka ${1000 / resolution.inMilliseconds} frames/sec)
     * main thread: ${serviceCounters.maxDeviation} (${percent(resolution, serviceCounters.maxDeviation).toStringAsFixed(2)} %)
     * worker: ${workerCounters.maxDeviation} (${percent(resolution, workerCounters.maxDeviation).toStringAsFixed(2)} %)
-    * worker pool: ${poolCounters.maxDeviation} (${percent(resolution, poolCounters.maxDeviation).toStringAsFixed(2)}) %
+    * worker pool: ${poolCounters.maxDeviation} (${percent(resolution, poolCounters.maxDeviation).toStringAsFixed(2)} %)
 
 MAIN THREAD (baseline): executed in the main event loop.
   * Fib:  ${serviceCounters.fib}

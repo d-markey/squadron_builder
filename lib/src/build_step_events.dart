@@ -1,15 +1,16 @@
-import 'dart:async';
-
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 
 abstract class BuildStepEvent {
-  BuildStepEvent(this.buildStep);
+  BuildStepEvent(this.buildStep, this.library);
 
   final BuildStep buildStep;
+  final LibraryElement library;
 }
 
 class BuildStepCodeEvent extends BuildStepEvent {
-  BuildStepCodeEvent(BuildStep buildStep) : super(buildStep);
+  BuildStepCodeEvent(BuildStep buildStep, LibraryElement library)
+      : super(buildStep, library);
 
   final _assetImports = <AssetId, Map<String, Map<String, String>?>>{};
   final _webEntryPoints = <AssetId, Set<String>>{};
@@ -17,7 +18,7 @@ class BuildStepCodeEvent extends BuildStepEvent {
 
   var _warn = false;
 
-  Future<void> mergeWith(BuildStepCodeEvent other) async {
+  void mergeWith(BuildStepCodeEvent other) {
     var alreadyWarned = _warn;
     for (var entry in other._assetImports.entries) {
       _warn |= entry.key.path.contains('.web.');
@@ -37,7 +38,6 @@ class BuildStepCodeEvent extends BuildStepEvent {
       codeParts.addAll(entry.value);
     }
     if (!alreadyWarned && _warn) {
-      final library = await buildStep.inputLibrary;
       log.warning('Library ${library.librarySource.shortName} defines multiple '
           'services including some targetting Web platforms. This will fail '
           'in production as each Web Worker needs its own URL and its own '
@@ -108,7 +108,7 @@ class BuildStepCodeEvent extends BuildStepEvent {
         }
       }
     }
-    // if a previously imported libraries is also conditionally imported, remove them from the global import
+    // if a previously imported library is also conditionally imported, remove it from imports
     final platformLibraries = platformSpecific?.values ?? [];
     imports.removeWhere((key, value) => platformLibraries.contains(key));
   }
@@ -125,10 +125,6 @@ class BuildStepCodeEvent extends BuildStepEvent {
 }
 
 class BuildStepDoneEvent extends BuildStepEvent {
-  BuildStepDoneEvent(BuildStep buildStep) : super(buildStep);
-
-  void finished() => _completer.complete();
-
-  final _completer = Completer<void>();
-  Future<void> get complete => _completer.future;
+  BuildStepDoneEvent(BuildStep buildStep, LibraryElement library)
+      : super(buildStep, library);
 }

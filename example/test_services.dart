@@ -1,5 +1,6 @@
 // ignore_for_file: unused_field
 
+// ignore: unused_import
 import 'dart:async';
 
 import 'package:squadron/squadron_annotations.dart';
