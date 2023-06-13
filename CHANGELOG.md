@@ -1,6 +1,7 @@
 ## 2.3.1
 
 - Eliminate async code generation for additional assets.
+- Properly resolve Squadron's main library.
 
 ## 2.3.0
 
