@@ -10,17 +10,20 @@ import 'annotations/squadron_service_annotation.dart';
 import 'build_step_events.dart';
 import 'worker_assets.dart';
 
+/// Alias for a code formatting function.
 typedef Formatter = String Function(String source);
 
+/// Code generator for Squadron workers.
 class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
-  WorkerGenerator(
-      {this.formatOutput = _noFormatting, this.withFinalizers = false}) {
+  WorkerGenerator({Formatter? formatOutput, bool withFinalizers = false})
+      : _formatOutput = formatOutput ?? _noFormatting,
+        _withFinalizers = withFinalizers {
     _buildStepEventStream.stream.listen(_process);
   }
 
-  static const version = '2.3.1';
+  static const _version = '2.3.1';
 
-  late final String header = '''
+  late final String _header = '''
       // GENERATED CODE - DO NOT MODIFY BY HAND
       
       // **************************************************************************
@@ -28,8 +31,8 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
       // **************************************************************************
       ''';
 
-  final bool withFinalizers;
-  final Formatter formatOutput;
+  final bool _withFinalizers;
+  final Formatter _formatOutput;
 
   final _buildStepEventStream = StreamController<BuildStepEvent>();
 
@@ -58,11 +61,11 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     final result = _results[done.buildStep];
     if (result != null) {
       _results.remove(done.buildStep);
-      final insertHeader = [header].followedBy;
+      final insertHeader = [_header].followedBy;
       for (var asset in result.assets) {
         var code = insertHeader(result.getCode(asset)).join('\n\n');
         try {
-          code = formatOutput(code);
+          code = _formatOutput(code);
         } catch (ex) {
           log.severe(
               'An exception occurred while formatting code for ${asset.uri}: $ex');
@@ -86,7 +89,7 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     final result = await super.generate(library, buildStep);
 
     // success, trigger code generation for additional assets associated to this libreay
-    _buildStepEventStream.add(BuildStepDoneEvent(buildStep, library.element));
+    _buildStepEventStream.add(BuildStepDoneEvent(buildStep));
 
     // return result
     return result;
@@ -98,31 +101,25 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     final classElt = element;
     if (classElt is! ClassElement) return;
 
-    try {
-      // implementation moved to specific methods to facilitate unit tests
-      final service = SquadronServiceAnnotation.load(classElt)!;
+    // implementation moved to specific methods to facilitate unit tests
+    final service = SquadronServiceAnnotation.load(classElt)!;
 
-      final assets = WorkerAssets(buildStep, _squadron!, service);
+    final assets = WorkerAssets(buildStep, _squadron!, service);
 
-      final codeEvent = BuildStepCodeEvent(buildStep, classElt.library);
-      assets.generateVmCode(codeEvent, service.logger);
-      assets.generateWebCode(codeEvent, service.logger);
-      assets.generateCrossPlatformCode(codeEvent);
-      assets.generateActivatorCode(codeEvent);
-      _buildStepEventStream.add(codeEvent);
+    final codeEvent = BuildStepCodeEvent(buildStep, classElt);
+    assets.generateVmCode(codeEvent, service.logger);
+    assets.generateWebCode(codeEvent, service.logger);
+    assets.generateCrossPlatformCode(codeEvent);
+    assets.generateActivatorCode(codeEvent);
+    _buildStepEventStream.add(codeEvent);
 
-      await for (var code in assets.generateMapWorkerAndPool(withFinalizers)) {
-        yield code;
-      }
-    } catch (ex, st) {
-      print('CAUGHT $ex');
-      print(st);
-      rethrow;
+    await for (var code in assets.generateMapWorkerAndPool(_withFinalizers)) {
+      yield code;
     }
   }
 
   @override
-  String toString() => '$runtimeType $version';
+  String toString() => '$runtimeType $_version';
 }
 
 String _noFormatting(String source) => source;

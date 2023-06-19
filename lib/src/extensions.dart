@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/type.dart';
+import 'package:meta/meta.dart';
 
 bool _notNull(dynamic x) => (x != null);
 
@@ -10,12 +11,14 @@ bool _notEmpty(dynamic x) {
   return true;
 }
 
+@internal
 extension NotNullExt<T> on Iterable<T?> {
   Iterable<T> whereNotNull() => where(_notNull).cast<T>();
   Iterable<T> whereNotEmpty() => where(_notEmpty).cast<T>();
 }
 
-extension BaseNameExt on DartType {
+@internal
+extension BaseTypeNameExt on DartType {
   String get baseName {
     var n = toString();
     while (n.endsWith('?') || n.endsWith('*')) {
