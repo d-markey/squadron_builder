@@ -1,3 +1,7 @@
+## 2.4.1
+
+- Added example/README.md to comply with pub.dev checks.
+
 ## 2.4.0
 
 - Reorganized example folder and updated README.
