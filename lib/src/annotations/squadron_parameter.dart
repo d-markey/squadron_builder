@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 
-import 'marshallers/marshaller.dart';
+import 'marshalers/marshaler.dart';
 
 class SquadronParameter {
   SquadronParameter._(
@@ -14,7 +14,7 @@ class SquadronParameter {
       bool isRequired,
       this.isCancellationToken,
       this.defaultValue,
-      this.marshaller,
+      this.marshaler,
       this.serIdx)
       : required = isRequired ? 'required ' : '';
 
@@ -22,8 +22,8 @@ class SquadronParameter {
       SquadronParameter._(name, null, '$typeName?', null, named, !named, false,
           false, null, null, -1);
 
-  static SquadronParameter from(ParameterElement param, bool isToken,
-      Marshaller? marshaller, int serIdx) {
+  static SquadronParameter from(
+      ParameterElement param, bool isToken, Marshaler? marshaler, int serIdx) {
     var name = param.name;
     var type = param.type;
     FieldElement? field;
@@ -46,7 +46,7 @@ class SquadronParameter {
             param.isRequired,
         isToken,
         param.defaultValueCode,
-        marshaller,
+        marshaler,
         serIdx);
   }
 
@@ -60,7 +60,7 @@ class SquadronParameter {
   final bool isCancellationToken;
   final String? defaultValue;
   final int serIdx;
-  final Marshaller? marshaller;
+  final Marshaler? marshaler;
 
   bool get isPublicField => field != null && !field!.name.startsWith('_');
 
@@ -68,14 +68,12 @@ class SquadronParameter {
 
   String namedArgument() => '$name: $name';
 
-  String serialized() {
-    return marshaller?.serialize(dartType!, name) ?? name;
-  }
+  String serialized() => marshaler?.serialize(dartType!, name) ?? name;
 
   String deserialized(String variableName) {
     final v = isCancellationToken
         ? '$variableName.cancelToken'
-        : (marshaller?.deserialize(dartType!, '$variableName.args[$serIdx]'))!;
+        : (marshaler?.deserialize(dartType!, '$variableName.args[$serIdx]'))!;
     return isNamed ? '$name: $v' : v;
   }
 

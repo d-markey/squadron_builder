@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
 
-import 'marshallers/marshaller.dart';
+import 'marshalers/marshaler.dart';
 import '../extensions.dart';
 import 'squadron_parameter.dart';
 
@@ -48,7 +48,9 @@ class SquadronParameters {
     if (isToken) {
       if (_cancellationToken != null) {
         throw InvalidGenerationSourceError(
-            'Multiple cancellation tokens may not be passed to service methods ($_cancellationToken, ${param.name}). Use a CompositeCancellationToken instead.');
+            'Multiple cancellation tokens may not be passed to service methods '
+            '($_cancellationToken, ${param.name}). You should use a '
+            'CompositeCancellationToken instead.');
       } else {
         _cancellationToken = param.name;
       }
@@ -56,14 +58,13 @@ class SquadronParameters {
     return isToken;
   }
 
-  SquadronParameter register(ParameterElement param, Marshaller? marshaller) {
+  SquadronParameter register(ParameterElement param, Marshaler? marshaler) {
     final isToken = _checkCancellationToken(param);
     int serIdx = -1;
     if (!isToken) {
       serIdx = _params.length - (_cancellationToken != null ? 1 : 0);
     }
-    return _register(
-        SquadronParameter.from(param, isToken, marshaller, serIdx));
+    return _register(SquadronParameter.from(param, isToken, marshaler, serIdx));
   }
 
   SquadronParameter addOptional(String name, String typeName) =>
@@ -74,7 +75,8 @@ class SquadronParameters {
     if ((param.isNamed && _hasOptionalParameters) ||
         (param.isOptional && _hasNamedParameters)) {
       throw InvalidGenerationSourceError(
-          'Cannot register both named and optional parameters. Parameter name: ${param.name}');
+          'Cannot register both named and optional parameters. Parameter name: '
+          '${param.name}');
     }
 
     if (param.isNamed) {
@@ -122,16 +124,16 @@ class SquadronParameters {
   String toStringNoFields() {
     if (_hasPositionalParameters) {
       if (_hasOptionalParameters) {
-        return '${positional.noField().join(', ')}, [${optional.noField().join(', ')}]';
+        return '${positional.toStringNoField().join(', ')}, [${optional.toStringNoField().join(', ')}]';
       } else if (_hasNamedParameters) {
-        return '${positional.noField().join(', ')}, {${named.noField().join(', ')}}';
+        return '${positional.toStringNoField().join(', ')}, {${named.toStringNoField().join(', ')}}';
       } else {
-        return positional.noField().join(', ');
+        return positional.toStringNoField().join(', ');
       }
     } else if (_hasOptionalParameters) {
-      return '[${optional.noField().join(', ')}]';
+      return '[${optional.toStringNoField().join(', ')}]';
     } else if (_hasNamedParameters) {
-      return '{${named.noField().join(', ')}}';
+      return '{${named.toStringNoField().join(', ')}}';
     } else {
       return '';
     }
@@ -139,5 +141,5 @@ class SquadronParameters {
 }
 
 extension _ParamExt on Iterable<SquadronParameter> {
-  Iterable<String> noField() => map((p) => p.toStringNoField());
+  Iterable<String> toStringNoField() => map((p) => p.toStringNoField());
 }

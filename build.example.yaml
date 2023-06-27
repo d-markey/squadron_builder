@@ -8,13 +8,13 @@ targets:
         options:
           build_extensions:
             {
-              "example/{{file}}.dart":
+              "example/{{dir}}/{{file}}.dart":
                 [
-                  "example/generated/{{file}}.worker.g.dart",
-                  "example/generated/{{file}}.vm.g.dart",
-                  "example/generated/{{file}}.web.g.dart",
-                  "example/generated/{{file}}.stub.g.dart",
-                  "example/generated/{{file}}.activator.g.dart",
+                  "example/{{dir}}/generated/{{file}}.worker.g.dart",
+                  "example/{{dir}}/generated/{{file}}.vm.g.dart",
+                  "example/{{dir}}/generated/{{file}}.web.g.dart",
+                  "example/{{dir}}/generated/{{file}}.stub.g.dart",
+                  "example/{{dir}}/generated/{{file}}.activator.g.dart",
                 ],
             }
           with_finalizers: false # 'true' requires Dart SDK >= 2.17.0

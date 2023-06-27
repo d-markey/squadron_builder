@@ -6,8 +6,9 @@ import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron_annotations.dart';
 
 import 'annotations/squadron_library.dart';
-import 'annotations/squadron_service_annotation.dart';
+import 'annotations/squadron_service_reader.dart';
 import 'build_step_events.dart';
+import 'version.dart';
 import 'worker_assets.dart';
 
 /// Alias for a code formatting function.
@@ -20,8 +21,6 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
         _withFinalizers = withFinalizers {
     _buildStepEventStream.stream.listen(_process);
   }
-
-  static const _version = '2.3.1';
 
   late final String _header = '''
       // GENERATED CODE - DO NOT MODIFY BY HAND
@@ -42,7 +41,9 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     if (event is BuildStepCodeEvent) {
       _registerAssetCode(event);
     } else if (event is BuildStepDoneEvent) {
-      return _writeAssetCode(event);
+      _writeAssetCode(event);
+    } else {
+      log.warning('Discarding unknown build step event ${event.runtimeType}');
     }
   }
 
@@ -75,15 +76,17 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     }
   }
 
+  static final _squadronUri = Uri.parse('package:squadron/squadron.dart');
   SquadronLibrary? _squadron;
 
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
-    // load Squadron's main library
-    final squadronAssetId =
-        AssetId.resolve(Uri.parse('package:squadron/squadron.dart'));
-    _squadron ??=
-        SquadronLibrary(await buildStep.resolver.libraryFor(squadronAssetId));
+    // load Squadron main library
+    if (_squadron == null) {
+      final sqAssetId = AssetId.resolve(_squadronUri);
+      final sqLibrary = await buildStep.resolver.libraryFor(sqAssetId);
+      _squadron = SquadronLibrary(sqLibrary);
+    }
 
     // generate code
     final result = await super.generate(library, buildStep);
@@ -91,7 +94,6 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     // success, trigger code generation for additional assets associated to this libreay
     _buildStepEventStream.add(BuildStepDoneEvent(buildStep));
 
-    // return result
     return result;
   }
 
@@ -102,7 +104,7 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     if (classElt is! ClassElement) return;
 
     // implementation moved to specific methods to facilitate unit tests
-    final service = SquadronServiceAnnotation.load(classElt)!;
+    final service = SquadronServiceReader.load(classElt)!;
 
     final assets = WorkerAssets(buildStep, _squadron!, service);
 
@@ -119,7 +121,7 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
   }
 
   @override
-  String toString() => '$runtimeType $_version';
+  String toString() => '$runtimeType $version';
 }
 
 String _noFormatting(String source) => source;

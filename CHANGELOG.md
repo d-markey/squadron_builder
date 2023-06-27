@@ -1,3 +1,9 @@
+## 2.5.0
+
+- Reorganized example folder and updated README.
+- Revised code generation strategy for operations map: previously, the operations map was generated in a mixin class and the (user-developed) service class had to derive from `WorkerService` *and* mix in with the generated mixin class. This is no longer required and the generated code now implements a private service class (deriving from the user's service class) which implements `WorkerService` with the generated operations map. This removes several constraints on service implementation and enables support of "plain old Dart objects" as Squadron services. User-developped service classes must be public and concrete (non-abstract, non-final, non-sealed...) and must provide an unnamed constructor which will be called by the associated generated `WorkerService` class.
+- Service method/constructor parameters whose type implement `marshal()`/`unmarshal()` or `marshall()`/`unmarshall()` methods will be automatically serialized using these methods if no explicit marshaler is provided. `marshal()`/`unmarshal()` have priority over `marshall()`/`unmarshall()`. These methods also have priority over automatic JSON serialization available since version 0.9.0. The marshaling method must be an instance method taking no arguments; the unmarshaling method must be static and accept one argument. `squadron_builder` will not verify parameter or return types of these methods, but obviously if the marshaling method of class `T` returns type `U`, the unmarshaling method must accept a `U` argument and return an instance of `T`. Failure to comply with this contract may lead to Dart compilation errors.
+
 ## 2.3.1
 
 - Eliminate async code generation for additional assets.
@@ -49,7 +55,7 @@
 
 ## 1.0.0
 
-- Marshall data to/from workers according to `SerializeWith` annotations.
+- Marshal data to/from workers according to `SerializeWith` annotations.
 
 ## 0.9.1
 

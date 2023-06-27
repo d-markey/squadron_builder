@@ -5,19 +5,20 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
 
-import 'annotations/marshallers/marshalling_info.dart';
+import 'annotations/marshalers/marshaling_info.dart';
 import 'annotations/squadron_library.dart';
-import 'annotations/squadron_method_annotation.dart';
-import 'annotations/squadron_service_annotation.dart';
+import 'annotations/squadron_method_reader.dart';
+import 'annotations/squadron_service_reader.dart';
 import '_overrides.dart';
 import 'build_step_events.dart';
 
-/// Code generator for operation maps, workers, worker pools, service initializers
+/// Code generator for worker service/operation maps, workers, worker pools, service initializers
 /// and worker activators.
 @internal
 class WorkerAssets {
   WorkerAssets(BuildStep buildStep, this._squadron, this._service)
-      : _workerClassName = '${_service.name}Worker',
+      : _workerServiceClassName = '_\$${_service.name}WorkerService',
+        _workerClassName = '${_service.name}Worker',
         _workerPoolClassName = '${_service.name}WorkerPool',
         _operationsMixinName = '\$${_service.name}Operations',
         _serviceInitializerName = '\$${_service.name}Initializer',
@@ -43,11 +44,13 @@ class WorkerAssets {
   AssetId? _xplatOutput;
   AssetId? _activatorOutput;
 
-  final SquadronServiceAnnotation _service;
+  final SquadronServiceReader _service;
 
   final SquadronLibrary _squadron;
 
-  final String _operationsMixinName;
+  final String _operationsMixinName; // TODO: remove in a future version
+
+  final String _workerServiceClassName;
   final String _workerClassName;
   final String _workerPoolClassName;
   final String _serviceInitializerName;
@@ -139,16 +142,19 @@ class WorkerAssets {
   }
 
   /// Operation map, service initializer, worker and worker pool
-  Stream<String> generateMapWorkerAndPool(bool withFinalizers) async* {
-    final commands = <SquadronMethodAnnotation>[];
-    final unimplemented = <SquadronMethodAnnotation>[];
+  Stream<String> generateMapWorkerAndPool(bool withFinalizers) {
+    final commands = <SquadronMethodReader>[];
+    final unimplemented = <SquadronMethodReader>[];
 
     for (var method in _service.methods) {
       // load command info
-      final command = SquadronMethodAnnotation.load(method);
-      if (method.name.startsWith('_') || command == null) {
+      final command = SquadronMethodReader.load(method);
+      if (command == null) {
+        // ignore this one
+        continue;
+      } else if (command is OtherMethodReader) {
         // not a Squadron command: override as unimplemented in worker / pool
-        unimplemented.add(SquadronMethodAnnotation.unimplemented(method));
+        unimplemented.add(command);
       } else {
         // Squadron command: override to use worker / pool
         commands.add(command);
@@ -160,51 +166,59 @@ class WorkerAssets {
       commands[i].setNum(i + 1);
     }
 
-    yield _generateOperationMap(commands);
-
-    yield _generateServiceInitializer();
-
-    final generators = [
-      withFinalizers ? _generateFinalizableWorker : _generateWorker,
+    return Stream.fromIterable([
+      _generateServiceClass(commands),
+      _generateServiceInitializer(),
+      _generateLegacyMixin(),
+      _generateWorker(commands, unimplemented, finalizable: withFinalizers),
       if (_service.pool)
-        withFinalizers ? _generateFinalizableWorkerPool : _generateWorkerPool,
-    ];
-
-    for (var generator in generators) {
-      yield generator(commands, unimplemented);
-    }
+        _generateWorkerPool(commands, unimplemented,
+            finalizable: withFinalizers)
+    ]);
   }
 
-  /// Operation map
-  String _generateOperationMap(List<SquadronMethodAnnotation> commands) => '''
-        /// Operations map for ${_service.name}
-        mixin $_operationsMixinName on WorkerService {
-          Map<int, CommandHandler>? _operations;
+  String _generateServiceClass(List<SquadronMethodReader> commands) {
+    final params = _service.parameters;
+    return '''
+        /// WorkerService class for ${_service.name}
+        class $_workerServiceClassName extends ${_service.name} implements WorkerService {
+
+          $_workerServiceClassName(${params.toStringNoFields()}): super(${params.arguments()});
 
           @override
-          Map<int, CommandHandler> get operations {
-            var ops = _operations;
-            if (ops == null) {
-              ops = { ${commands.map(_generateCommandHandler).join(',\n')} };
-              _operations = ops;
-            }
-            return ops;
-          }
+          Map<int, CommandHandler> get operations => _operations;
 
-          ${commands.map(_generateCommandIds).join('\n')}
+          late final Map<int, CommandHandler> _operations =
+              { ${commands.map(_commandHandler).join(',\n')} };
+
+          ${commands.map(_commandId).join('\n')}
+        }
+      ''';
+  }
+
+  String _generateLegacyMixin() => '''
+        /// Operations map for ${_service.name}
+        @Deprecated('squadron_builder now supports "plain old Dart objects" as services. '
+          'Services do not need to derive from WorkerService nor do they need to mix in '
+          'with \\$_operationsMixinName anymore.')
+        mixin $_operationsMixinName on WorkerService {
+          @override
+          // not needed anymore, generated for compatibility with previous versions of squadron_builder
+          Map<int, CommandHandler> get operations => WorkerService.noOperations;
         }
       ''';
 
   /// Service initializer
   String _generateServiceInitializer() => '''
         /// Service initializer for ${_service.name}
-        ${_service.name} $_serviceInitializerName(WorkerRequest startRequest)
-            => ${_service.name}(${_service.parameters.deserialize('startRequest')});
+        WorkerService $_serviceInitializerName(WorkerRequest startRequest)
+            => $_workerServiceClassName(${_service.parameters.deserialize('startRequest')});
       ''';
 
-  /// Worker (without finalization code)
-  String _generateWorker(List<SquadronMethodAnnotation> commands,
-      List<SquadronMethodAnnotation> unimplemented) {
+  /// Worker
+  String _generateWorker(List<SquadronMethodReader> commands,
+      List<SquadronMethodReader> unimplemented,
+      {bool finalizable = false}) {
     final serialized = _service.parameters.serialize();
     var activationArgs = serialized.isEmpty
         ? _serviceActivator
@@ -218,78 +232,43 @@ class WorkerAssets {
       activationArgs += ', ${pwh.namedArgument()}';
     }
 
-    return '''
+    final className = finalizable ? '_\$$_workerClassName' : _workerClassName;
+
+    var workerCode = '''
         /// Worker for ${_service.name}
-        class $_workerClassName
+        class $className
           extends Worker
           implements ${_service.name} {
           
-          $_workerClassName($params) : super(\$$activationArgs);
+          $className($params) : super(\$$activationArgs);
 
-          ${_service.fields.values.map(_generateField).join('\n\n')}
+          ${_service.fields.values.map(_field).join('\n\n')}
 
-          ${commands.map(_generateWorkerMethod).join('\n\n')}
+          ${commands.map(_workerMethod).join('\n\n')}
 
-          ${unimplemented.map(_generateUnimplemented).join('\n\n')}
+          ${unimplemented.map(_unimplementedMethod).join('\n\n')}
 
-          ${_service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
+          ${_service.accessors.map(_unimplementedAccessor).join('\n\n')}
 
-          @override
-          Map<int, CommandHandler>? _operations;
+          ${finalizable ? 'final Object _detachToken = Object();' : ''}
         }
       ''';
-  }
 
-  /// Worker (with finalization code)
-  String _generateFinalizableWorker(List<SquadronMethodAnnotation> commands,
-      List<SquadronMethodAnnotation> unimplemented) {
-    final serialized = _service.parameters.serialize();
-    var activationArgs = serialized.isEmpty
-        ? _serviceActivator
-        : '$_serviceActivator, args: [$serialized]';
-
-    var params = _service.parameters;
-    if (_squadron.platformWorkerHookTypeName != null) {
-      params = params.clone();
-      final pwh = params.addOptional(
-          'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
-      activationArgs += ', ${pwh.namedArgument()}';
-    }
-
-    return '''
-        /// Worker for ${_service.name}
-        class _$_workerClassName
-          extends Worker
-          implements ${_service.name} {
-          
-          _$_workerClassName($params) : super(\$$activationArgs);
-
-          ${_service.fields.values.map(_generateField).join('\n\n')}
-
-          ${commands.map(_generateWorkerMethod).join('\n\n')}
-
-          ${unimplemented.map(_generateUnimplemented).join('\n\n')}
-
-          ${_service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
-
-          @override
-          Map<int, CommandHandler>? _operations;
-
-          final Object _detachToken = Object();
-        }
-
+    if (finalizable) {
+      final worker = r'_$w';
+      workerCode += '''
         /// Finalizable worker wrapper for ${_service.name}
-        class $_workerClassName implements _$_workerClassName {
+        class $_workerClassName implements $className {
           
-          $_workerClassName(${params.toStringNoFields()}) : _worker = _$_workerClassName(${params.arguments()}) {
-            _finalizer.attach(this, _worker, detach: _worker._detachToken);
+          $_workerClassName(${params.toStringNoFields()}) : $worker = $className(${params.arguments()}) {
+            _finalizer.attach(this, $worker, detach: $worker._detachToken);
           }
 
-          ${_service.fields.values.map((f) => _forwardField(f, '_worker')).join('\n\n')}
+          ${_service.fields.values.map((f) => _forwardField(f, worker)).join('\n\n')}
 
-          final _$_workerClassName _worker;
+          final $className $worker;
 
-          static final Finalizer<_$_workerClassName> _finalizer = Finalizer<_$_workerClassName>((w) {
+          static final Finalizer<$className> _finalizer = Finalizer<$className>((w) {
             try {
               _finalizer.detach(w._detachToken);
               w.stop();
@@ -298,26 +277,27 @@ class WorkerAssets {
             }
           });
 
-          ${commands.map((cmd) => _forwardMethod(cmd, '_worker')).join('\n\n')}
+          ${commands.map((cmd) => _forwardMethod(cmd, worker)).join('\n\n')}
 
-          ${unimplemented.map((cmd) => _forwardMethod(cmd, '_worker')).join('\n\n')}
+          ${unimplemented.map((cmd) => _forwardMethod(cmd, worker)).join('\n\n')}
 
-          @override
-          Map<int, CommandHandler>? _operations;
+          ${_service.accessors.map((acc) => _forwardAccessor(acc, worker)).join('\n\n')}
+
+          ${workerOverrides.entries.map((e) => _forwardOverride(e.key, worker, e.value)).join('\n\n')}
 
           @override
           Map<int, CommandHandler> get operations => WorkerService.noOperations;
-
-          ${_service.accessors.map((acc) => _forwardAccessor(acc, '_worker')).join('\n\n')}
-
-          ${workerOverrides.entries.map((e) => _forwardOverride(e.key, '_worker', e.value)).join('\n\n')}
         }
       ''';
+    }
+
+    return workerCode;
   }
 
-  /// Worker pool (without finalization code)
-  String _generateWorkerPool(List<SquadronMethodAnnotation> commands,
-      List<SquadronMethodAnnotation> unimplemented) {
+  /// Worker pool
+  String _generateWorkerPool(List<SquadronMethodReader> commands,
+      List<SquadronMethodReader> unimplemented,
+      {bool finalizable = false}) {
     var poolParams = _service.parameters.clone();
     final cs = poolParams.addOptional(
         'concurrencySettings', _squadron.concurrencySettingsTypeName);
@@ -330,81 +310,46 @@ class WorkerAssets {
           'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
     }
 
-    return '''
+    final className =
+        finalizable ? '_\$$_workerPoolClassName' : _workerPoolClassName;
+
+    var workerPoolCode = '''
         /// Worker pool for ${_service.name}
-        class $_workerPoolClassName
+        class $className
           extends WorkerPool<$_workerClassName>
           implements ${_service.name} {
 
-          $_workerPoolClassName($poolParams) : super(
+          $className($poolParams) : super(
               () => $_workerClassName(${serviceParams.arguments()}),
               ${cs.namedArgument()});
 
-          ${_service.fields.values.map(_generateField).join('\n\n')}
+          ${_service.fields.values.map(_field).join('\n\n')}
 
-          ${commands.map(_generatePoolMethod).join('\n\n')}
+          ${commands.map(_poolMethod).join('\n\n')}
 
-          ${unimplemented.map(_generateUnimplemented).join('\n\n')}
+          ${unimplemented.map(_unimplementedMethod).join('\n\n')}
 
-          ${_service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
+          ${_service.accessors.map(_unimplementedAccessor).join('\n\n')}
 
-          @override
-          Map<int, CommandHandler>? _operations;
+          ${finalizable ? 'final Object _detachToken = Object();' : ''}
         }
       ''';
-  }
 
-  /// Worker (with finalization code)
-  String _generateFinalizableWorkerPool(List<SquadronMethodAnnotation> commands,
-      List<SquadronMethodAnnotation> unimplemented) {
-    var poolParams = _service.parameters.clone();
-    var serviceParams = _service.parameters;
-    final cs = poolParams.addOptional(
-        'concurrencySettings', _squadron.concurrencySettingsTypeName);
-    if (_squadron.platformWorkerHookTypeName != null) {
-      poolParams.addOptional(
-          'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
-      serviceParams = serviceParams.clone();
-      serviceParams.addOptional(
-          'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
-    }
-
-    return '''
-        /// Worker pool for ${_service.name}
-        class _$_workerPoolClassName
-          extends WorkerPool<$_workerClassName>
-          implements ${_service.name} {
-
-          _$_workerPoolClassName($poolParams) : super(
-              () => $_workerClassName(${serviceParams.arguments()}),
-              ${cs.namedArgument()});
-
-          ${_service.fields.values.map(_generateField).join('\n\n')}
-
-          ${commands.map(_generatePoolMethod).join('\n\n')}
-
-          ${unimplemented.map(_generateUnimplemented).join('\n\n')}
-
-          ${_service.accessors.map(_generateUnimplementedAcc).join('\n\n')}
-
-          @override
-          Map<int, CommandHandler>? _operations;
-
-          final Object _detachToken = Object();
-        }
-
+    if (finalizable) {
+      final pool = r'_$p';
+      workerPoolCode += '''
         /// Finalizable worker pool wrapper for ${_service.name}
-        class $_workerPoolClassName implements _$_workerPoolClassName {
+        class $_workerPoolClassName implements $className {
           
-          $_workerPoolClassName(${poolParams.toStringNoFields()}) : _pool = _$_workerPoolClassName(${poolParams.arguments()}) {
-            _finalizer.attach(this, _pool, detach: _pool._detachToken);
+          $_workerPoolClassName(${poolParams.toStringNoFields()}) : $pool = $className(${poolParams.arguments()}) {
+            _finalizer.attach(this, $pool, detach: $pool._detachToken);
           }
 
-          ${_service.fields.values.map((f) => _forwardField(f, '_pool')).join('\n\n')}
+          ${_service.fields.values.map((f) => _forwardField(f, pool)).join('\n\n')}
 
-          final _$_workerPoolClassName _pool;
+          final $className $pool;
 
-          static final Finalizer<_$_workerPoolClassName> _finalizer = Finalizer<_$_workerPoolClassName>((p) {
+          static final Finalizer<$className> _finalizer = Finalizer<$className>((p) {
             try {
               _finalizer.detach(p._detachToken);
               p.stop();
@@ -413,138 +358,126 @@ class WorkerAssets {
             }
           });
 
-          ${commands.map((cmd) => _forwardMethod(cmd, '_pool')).join('\n\n')}
+          ${commands.map((cmd) => _forwardMethod(cmd, pool)).join('\n\n')}
 
-          ${unimplemented.map((cmd) => _forwardMethod(cmd, '_pool')).join('\n\n')}
+          ${unimplemented.map((cmd) => _forwardMethod(cmd, pool)).join('\n\n')}
 
-          @override
-          Map<int, CommandHandler>? _operations;
+          ${_service.accessors.map((acc) => _forwardAccessor(acc, pool)).join('\n\n')}
+
+          ${workerPoolOverrides.entries.map((e) => _forwardOverride(e.key, pool, e.value)).join('\n\n')}
 
           @override
           Map<int, CommandHandler> get operations => WorkerService.noOperations;
+        }''';
+    }
 
-          ${_service.accessors.map((acc) => _forwardAccessor(acc, '_pool')).join('\n\n')}
-
-          ${workerPoolOverrides.entries.map((e) => _forwardOverride(e.key, '_pool', e.value)).join('\n\n')}
-        }
-        ''';
+    return workerPoolCode;
   }
 
   /// Command ID
-  String _generateCommandIds(SquadronMethodAnnotation cmd) =>
+  String _commandId(SquadronMethodReader cmd) =>
       'static const int ${cmd.id} = ${cmd.num};';
 
   /// Command handler
-  String _generateCommandHandler(SquadronMethodAnnotation cmd) {
-    final serviceCall =
-        '(this as ${_service.name}).${cmd.name}(${cmd.parameters.deserialize('req')})';
+  String _commandHandler(SquadronMethodReader cmd) {
+    final req = r'$', res = '_';
+    final serviceCall = '${cmd.name}(${cmd.parameters.deserialize(req)})';
     if (cmd.needsSerialization && !cmd.serializedResult.isIdentity) {
       if (cmd.isStream) {
-        return '${cmd.id}: (req) => $serviceCall.${cmd.continuation}((\$res) => ${cmd.serializedResult('\$res')})';
+        return '${cmd.id}: ($req) => $serviceCall.${cmd.continuation}(($res) => ${cmd.serializedResult(res)})';
       } else {
-        return '${cmd.id}: (req) async => ${cmd.serializedResult('(await $serviceCall)')}';
+        return '${cmd.id}: ($req) async => ${cmd.serializedResult('(await $serviceCall)')}';
       }
     } else {
-      return '${cmd.id}: (req) => $serviceCall';
+      return '${cmd.id}: ($req) => $serviceCall';
     }
   }
 
   /// Overridden service field
-  String _generateField(FieldElement field) => '''
+  String _field(FieldElement field) => '''
       @override
       ${field.isFinal ? 'final ' : ''}${field.type} ${field.name};
     ''';
 
   /// Unimplemented member
-  String _unimplemented(String declaration, {bool override = false}) => '''
+  String _unimplemented(String decl, {bool override = false}) => '''
       ${override ? '@override' : ''}
-      $declaration => throw UnimplementedError();
+      $decl => throw UnimplementedError();
     ''';
 
   /// Unimplemented field/method
-  String _generateUnimplemented(SquadronMethodAnnotation cmd) =>
+  String _unimplementedMethod(SquadronMethodReader cmd) =>
       _unimplemented(cmd.declaration, override: true);
 
   /// Unimplemented accessor
-  String _generateUnimplementedAcc(PropertyAccessorElement acc) {
-    final declaration = acc.isGetter
-        ? '${acc.returnType} get ${acc.name}'
-        : 'set ${acc.name.replaceAll('=', '')}(${acc.returnType} value)';
-    return _unimplemented(declaration, override: true);
-  }
+  String _unimplementedAccessor(PropertyAccessorElement acc) => _unimplemented(
+        acc.isGetter
+            ? '${acc.returnType} get ${acc.name}'
+            : 'set ${acc.name.replaceAll('=', '')}(${acc.returnType} value)',
+        override: true,
+      );
 
   /// Service method invocation from worker
-  String _generateWorkerMethod(SquadronMethodAnnotation cmd) {
-    var deserialize = '';
-    if (cmd.needsSerialization && !cmd.deserializedResult.isIdentity) {
-      deserialize =
-          '.${cmd.continuation}((\$res) => ${cmd.deserializedResult('\$res')})';
-    }
+  String _workerMethod(SquadronMethodReader cmd) {
+    final res = '_';
+    final deserialize =
+        (cmd.needsSerialization && !cmd.deserializedResult.isIdentity)
+            ? '.${cmd.continuation}(($res) => ${cmd.deserializedResult(res)})'
+            : '';
+    final args = [
+      '$_workerServiceClassName.${cmd.id}',
+      'args: [ ${cmd.parameters.serialize()} ]',
+      if (cmd.parameters.cancellationToken != null)
+        'token: ${cmd.parameters.cancellationToken}',
+      if (cmd.inspectRequest) 'inspectRequest: true',
+      if (cmd.inspectResponse) 'inspectResponse: true'
+    ].join(', ');
     return '''
       @override
-      ${cmd.declaration} => ${cmd.workerExecutor}(
-            $_operationsMixinName.${cmd.id}, 
-            args: [ ${cmd.parameters.serialize()} ], 
-            ${cmd.parameters.cancellationToken != null ? 'token: ${cmd.parameters.cancellationToken},' : ''}
-            ${cmd.inspectRequest ? 'inspectRequest: true,' : ''}
-            ${cmd.inspectResponse ? 'inspectResponse: true,' : ''}
-          )$deserialize;
+      ${cmd.declaration} => ${cmd.workerExecutor}($args)$deserialize;
     ''';
   }
 
   /// Service method invocation from worker pool
-  String _generatePoolMethod(SquadronMethodAnnotation cmd) => '''
+  String _poolMethod(SquadronMethodReader cmd) => '''
       @override
-      ${cmd.declaration} => ${cmd.poolExecutor}((\$w) => \$w.${cmd.name}(${cmd.parameters.arguments()}));
+      ${cmd.declaration} => ${cmd.poolExecutor}((w) => w.${cmd.name}(${cmd.parameters.arguments()}));
     ''';
 
   /// Proxy for service field
-  String _forwardField(FieldElement field, String target) {
-    if (field.isFinal) {
-      return '''
-          @override
-          ${field.type} get ${field.name} => $target.${field.name};
-        ''';
-    } else {
-      return '''
-          @override
-          ${field.type} get ${field.name} => $target.${field.name};
+  String _forwardField(FieldElement field, String target) => '''
+      @override
+      ${field.type} get ${field.name} => $target.${field.name};
 
-          @override
-          set ${field.name}(${field.type} value) => $target.${field.name} = value;
-        ''';
-    }
-  }
+      ${field.isFinal ? '' : '''
+        @override
+        set ${field.name}(${field.type} value) => $target.${field.name} = value;
+      '''}
+    ''';
 
   /// Proxy for service method
-  String _forwardMethod(SquadronMethodAnnotation cmd, String target) {
-    return '''
+  String _forwardMethod(SquadronMethodReader cmd, String target) => '''
       @override
       ${cmd.declaration} => $target.${cmd.name}(${cmd.parameters.arguments()});
     ''';
-  }
 
   /// Proxy for service accessor
-  String _forwardAccessor(PropertyAccessorElement acc, String target) {
-    return acc.isGetter
-        ? '''
+  String _forwardAccessor(PropertyAccessorElement acc, String target) =>
+      acc.isGetter
+          ? '''
             @override
             ${acc.returnType} get ${acc.name} => $target.${acc.name};
           '''
-        : '''
+          : '''
             @override
             set ${acc.name.replaceAll('=', '')}(${acc.returnType} value) => $target.${acc.name}(value);
           ''';
-  }
 
   /// Proxy for base worker/worker pool method
-  String _forwardOverride(
-      String declaration, String target, String implementation) {
-    return '''
+  String _forwardOverride(String decl, String target, String impl) => '''
       @override
-      ${declaration.replaceAll(r'$workerClassName', _workerClassName)} => $target.$implementation;
+      ${decl.replaceAll(r'$workerClassName', _workerClassName)} => $target.$impl;
     ''';
-  }
 
   /// Get relative path to import [target] from [current]
   static String _getRelativePath(AssetId target, AssetId current) {

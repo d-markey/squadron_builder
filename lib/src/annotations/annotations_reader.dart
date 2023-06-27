@@ -4,7 +4,7 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 
 import '../extensions.dart';
-import 'marshallers/marshaller.dart';
+import 'marshalers/marshaler.dart';
 
 class AnnotationReader<T> {
   AnnotationReader(Element? element)
@@ -33,29 +33,30 @@ class AnnotationReader<T> {
     return false;
   }
 
-  static bool _isSquadronMarshaller(InterfaceType clazz) {
-    final locationComponents = clazz.element.location?.components ?? const [];
-    return locationComponents.any((c) => c.startsWith('package:squadron/')) &&
-        (clazz.baseName.startsWith('SquadronMarshaller'));
-  }
+  static bool _isSquadronMarshaler(InterfaceType clazz) =>
+      (clazz.element.location?.components ?? const [])
+          .any((c) => c.startsWith('package:squadron/')) &&
+      (clazz.baseName.startsWith('SquadronMarshaller') ||
+          clazz.baseName.startsWith('SquadronMarshaler'));
 
-  static Marshaller? getExplicitMarshaller(Element element) {
-    Marshaller? explicit;
+  static Marshaler? getExplicitMarshaler(Element element) {
+    Marshaler? explicit;
     for (var ann in element.metadata) {
       final value = ann.computeConstantValue();
-      final marshaller = value?.getField('marshaller');
-      if (marshaller != null) {
-        final type = marshaller.toTypeValue() ?? marshaller.type;
+      final marshaler =
+          value?.getField('marshaler') ?? value?.getField('marshaller');
+      if (marshaler != null) {
+        final type = marshaler.toTypeValue() ?? marshaler.type;
         final typeElt = (type?.element is ClassElement)
             ? (type?.element as ClassElement)
             : null;
-        final baseMarshaller =
-            typeElt?.allSupertypes.where(_isSquadronMarshaller);
-        if (baseMarshaller == null || baseMarshaller.length != 1) {
+        final baseMarshaler =
+            typeElt?.allSupertypes.where(_isSquadronMarshaler);
+        if (baseMarshaler == null || baseMarshaler.isEmpty) {
           throw InvalidGenerationSourceError(
-              'Invalid marshaller for $element: $marshaller');
+              'Invalid marshaler for $element: $marshaler');
         }
-        explicit = Marshaller.explicit(marshaller, baseMarshaller.first);
+        explicit = Marshaler.explicit(marshaler, baseMarshaler.first);
         break;
       }
     }

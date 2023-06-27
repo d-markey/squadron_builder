@@ -10,7 +10,8 @@ class SquadronLibrary {
     } else if (wr is ClassElement) {
       // Squadron < 5.1.0 implements WorkerRequest.serialize() which returns
       // a Map (< 5.0.0) or a List (>= 5.0.0)
-      serializationTypeName = wr.getMethod('serialize')!.returnType.toString();
+      serializationTypeName =
+          wr.getMethod('serialize')?.returnType.toString() ?? 'Map';
     }
 
     // check availability of EntryPoint typedef
