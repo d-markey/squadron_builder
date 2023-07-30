@@ -22,8 +22,8 @@ class IterableMarshaler extends Marshaler {
     final toList = type.isDartCoreList ? '.toList()' : '';
     final item = '(v) => ${convert('v')}';
     return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? (list) => '$list.map($item})$toList'
-        : (list) => '$list?.map($item})$toList';
+        ? (list) => '$list.map($item)$toList'
+        : (list) => '$list?.map($item)$toList';
   }
 
   @override
