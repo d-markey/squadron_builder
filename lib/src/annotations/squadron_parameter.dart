@@ -42,8 +42,7 @@ class SquadronParameter {
         field,
         param.isNamed,
         param.isOptionalPositional,
-        (param.isOptionalNamed || param.isOptionalPositional) &&
-            param.isRequired,
+        param.isRequiredNamed,
         isToken,
         param.defaultValueCode,
         marshaler,
