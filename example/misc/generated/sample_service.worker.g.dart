@@ -3,7 +3,7 @@
 part of '../sample_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.5.0
+// Generator: WorkerGenerator 2.4.2
 // **************************************************************************
 
 /// WorkerService class for SampleService
@@ -14,10 +14,11 @@ class _$SampleServiceWorkerService extends SampleService
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{
     _$computeId: ($) async =>
-        (await compute(DataIn.unmarshal($.args[0]))).marshall()
-  };
+        (await compute(DataIn.unmarshal($.args[0]))).marshall(),
+  });
 
   static const int _$computeId = 1;
 }

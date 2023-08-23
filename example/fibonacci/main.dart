@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:squadron/squadron.dart';
 
 import 'fib_service.dart';
@@ -7,26 +9,45 @@ void main() async {
   Squadron.setLogger(ConsoleSquadronLogger());
   Squadron.logLevel = SquadronLogLevel.info;
 
+  final monitor = Monitor(const Duration(seconds: 1));
+  await monitor.start();
+
   // compute 9 fibonnaci numbers (starting from 37)
   int count = 9, start = 37;
 
-  print('Computing with FibService (single-threaded, main Isolate)');
+  print('''
+
+Computing with FibService (single-threaded, main Isolate)
+  The main Isolate is busy computing the numbers.
+  The timer won't trigger.
+''');
   final service = FibService();
   await computeWith(service, start, count);
 
-  print('');
-  print('Computing with FibServiceWorker (single-threaded, dedicated Isolate)');
+  print('''
+
+Computing with FibServiceWorker (single-threaded, 1 dedicated Isolate)
+  The main Isolate is available while the worker Isolate is computing numbers.
+  The computation time should be roughly the same as with FibService.
+  The timer triggers periodically.
+''');
   final worker = FibServiceWorker();
   await worker.start();
   await computeWith(worker, start, count);
   print('  * Stats for worker ${worker.workerId}: ${worker.stats.dump()}');
   worker.stop();
 
-  print('');
-  print(
-      'Computing with FibServiceWorkerPool (multi-threaded, dedicated Isolates)');
+  final maxWorkers = count ~/ 2;
+
+  print('''
+
+Computing with FibServiceWorkerPool (multi-threaded, $maxWorkers dedicated Isolate)
+  The main Isolate is available while worker pool Isolates are computing numbers.
+  The computation time should be significantly less compared to FibService and FibServiceWorker.
+  The timer triggers periodically.
+''');
   final concurrency = ConcurrencySettings(
-      minWorkers: 1, maxWorkers: count ~/ 2, maxParallel: 1);
+      minWorkers: 1, maxWorkers: maxWorkers, maxParallel: 1);
   final pool = FibServiceWorkerPool(concurrencySettings: concurrency);
   await pool.start();
   await computeWith(pool, start, count);
@@ -34,6 +55,9 @@ void main() async {
       .map((s) => '  * Stats for pool worker ${s.id}: ${s.dump()}')
       .join('\n'));
   pool.stop();
+
+  print('');
+  await monitor.stop();
 }
 
 Future computeWith(FibService service, int start, int count) async {
@@ -47,6 +71,35 @@ Future computeWith(FibService service, int start, int count) async {
   // display results
   print('  * Results = $results');
   print('  * Total elapsed time: ${sw.elapsed}');
+}
+
+class Monitor {
+  Monitor(this.duration);
+
+  final Duration duration;
+  int _lastTick = 0;
+  Timer? _timer;
+
+  void _tick(Timer t) {
+    final d = t.tick - _lastTick;
+    print((d > 1)
+        ? '  tick #${t.tick} - skipped $d ticks!'
+        : '  tick #${t.tick}...');
+    _lastTick = t.tick;
+  }
+
+  Future<void> start() async {
+    _timer = Timer.periodic(duration, _tick);
+    await Future.delayed(duration);
+    print('Timer started');
+  }
+
+  Future<void> stop() async {
+    await Future.delayed(duration);
+    _timer?.cancel();
+    _timer = null;
+    print('Timer stopped');
+  }
 }
 
 extension DebugStats on WorkerStat {

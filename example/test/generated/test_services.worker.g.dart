@@ -3,542 +3,951 @@
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.5.0
+// Generator: WorkerGenerator 2.4.2
 // **************************************************************************
 
-/// WorkerService class for TestService1
-class _$TestService1WorkerService extends TestService1
+/// WorkerService class for TestParameterLess
+class _$TestParameterLessWorkerService extends TestParameterLess
     implements WorkerService {
-  _$TestService1WorkerService() : super();
+  _$TestParameterLessWorkerService() : super();
 
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {};
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
 }
 
-/// Service initializer for TestService1
-WorkerService $TestService1Initializer(WorkerRequest startRequest) =>
-    _$TestService1WorkerService();
+/// Service initializer for TestParameterLess
+WorkerService $TestParameterLessInitializer(WorkerRequest startRequest) =>
+    _$TestParameterLessWorkerService();
 
-/// Operations map for TestService1
+/// Operations map for TestParameterLess
 @Deprecated(
     'squadron_builder now supports "plain old Dart objects" as services. '
     'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService1Operations anymore.')
-mixin $TestService1Operations on WorkerService {
+    'with \$TestParameterLessOperations anymore.')
+mixin $TestParameterLessOperations on WorkerService {
   @override
   // not needed anymore, generated for compatibility with previous versions of squadron_builder
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 }
 
-/// Worker for TestService1
-class TestService1Worker extends Worker implements TestService1 {
-  TestService1Worker({PlatformWorkerHook? platformWorkerHook})
-      : super($TestService1Activator, platformWorkerHook: platformWorkerHook);
+/// Worker for TestParameterLess
+class TestParameterLessWorker extends Worker implements TestParameterLess {
+  TestParameterLessWorker({PlatformWorkerHook? platformWorkerHook})
+      : super($TestParameterLessActivator,
+            platformWorkerHook: platformWorkerHook);
 }
 
-/// Worker pool for TestService1
-class TestService1WorkerPool extends WorkerPool<TestService1Worker>
-    implements TestService1 {
-  TestService1WorkerPool(
-      {ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook})
-      : super(() => TestService1Worker(platformWorkerHook: platformWorkerHook),
-            concurrencySettings: concurrencySettings);
-}
-
-/// WorkerService class for TestService2
-class _$TestService2WorkerService extends TestService2
-    implements WorkerService {
-  _$TestService2WorkerService(int arg1) : super(arg1);
-
-  @override
-  Map<int, CommandHandler> get operations => _operations;
-
-  late final Map<int, CommandHandler> _operations = {};
-}
-
-/// Service initializer for TestService2
-WorkerService $TestService2Initializer(WorkerRequest startRequest) =>
-    _$TestService2WorkerService(startRequest.args[0]);
-
-/// Operations map for TestService2
-@Deprecated(
-    'squadron_builder now supports "plain old Dart objects" as services. '
-    'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService2Operations anymore.')
-mixin $TestService2Operations on WorkerService {
-  @override
-  // not needed anymore, generated for compatibility with previous versions of squadron_builder
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-}
-
-/// Worker for TestService2
-class TestService2Worker extends Worker implements TestService2 {
-  TestService2Worker(int arg1, {PlatformWorkerHook? platformWorkerHook})
-      : super($TestService2Activator,
-            args: [arg1], platformWorkerHook: platformWorkerHook);
-}
-
-/// Worker pool for TestService2
-class TestService2WorkerPool extends WorkerPool<TestService2Worker>
-    implements TestService2 {
-  TestService2WorkerPool(int arg1,
+/// Worker pool for TestParameterLess
+class TestParameterLessWorkerPool extends WorkerPool<TestParameterLessWorker>
+    implements TestParameterLess {
+  TestParameterLessWorkerPool(
       {ConcurrencySettings? concurrencySettings,
       PlatformWorkerHook? platformWorkerHook})
       : super(
-            () => TestService2Worker(arg1,
+            () =>
+                TestParameterLessWorker(platformWorkerHook: platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+}
+
+/// WorkerService class for TestReqPositional
+class _$TestReqPositionalWorkerService extends TestReqPositional
+    implements WorkerService {
+  _$TestReqPositionalWorkerService(int arg1) : super(arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestReqPositional
+WorkerService $TestReqPositionalInitializer(WorkerRequest startRequest) =>
+    _$TestReqPositionalWorkerService(startRequest.args[0]);
+
+/// Operations map for TestReqPositional
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestReqPositionalOperations anymore.')
+mixin $TestReqPositionalOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestReqPositional
+class TestReqPositionalWorker extends Worker implements TestReqPositional {
+  TestReqPositionalWorker(int arg1, {PlatformWorkerHook? platformWorkerHook})
+      : super($TestReqPositionalActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+}
+
+/// Worker pool for TestReqPositional
+class TestReqPositionalWorkerPool extends WorkerPool<TestReqPositionalWorker>
+    implements TestReqPositional {
+  TestReqPositionalWorkerPool(int arg1,
+      {ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook})
+      : super(
+            () => TestReqPositionalWorker(arg1,
                 platformWorkerHook: platformWorkerHook),
             concurrencySettings: concurrencySettings);
 }
 
-/// WorkerService class for TestService3
-class _$TestService3WorkerService extends TestService3
+/// WorkerService class for TestOptNullPositional
+class _$TestOptNullPositionalWorkerService extends TestOptNullPositional
     implements WorkerService {
-  _$TestService3WorkerService([int arg1 = 0]) : super(arg1);
+  _$TestOptNullPositionalWorkerService([int? arg1]) : super(arg1);
 
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {};
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
 }
 
-/// Service initializer for TestService3
-WorkerService $TestService3Initializer(WorkerRequest startRequest) =>
-    _$TestService3WorkerService(startRequest.args[0]);
+/// Service initializer for TestOptNullPositional
+WorkerService $TestOptNullPositionalInitializer(WorkerRequest startRequest) =>
+    _$TestOptNullPositionalWorkerService(startRequest.args[0]);
 
-/// Operations map for TestService3
+/// Operations map for TestOptNullPositional
 @Deprecated(
     'squadron_builder now supports "plain old Dart objects" as services. '
     'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService3Operations anymore.')
-mixin $TestService3Operations on WorkerService {
+    'with \$TestOptNullPositionalOperations anymore.')
+mixin $TestOptNullPositionalOperations on WorkerService {
   @override
   // not needed anymore, generated for compatibility with previous versions of squadron_builder
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 }
 
-/// Worker for TestService3
-class TestService3Worker extends Worker implements TestService3 {
-  TestService3Worker([int arg1 = 0, PlatformWorkerHook? platformWorkerHook])
-      : super($TestService3Activator,
+/// Worker for TestOptNullPositional
+class TestOptNullPositionalWorker extends Worker
+    implements TestOptNullPositional {
+  TestOptNullPositionalWorker(
+      [int? arg1, PlatformWorkerHook? platformWorkerHook])
+      : super($TestOptNullPositionalActivator,
             args: [arg1], platformWorkerHook: platformWorkerHook);
 }
 
-/// Worker pool for TestService3
-class TestService3WorkerPool extends WorkerPool<TestService3Worker>
-    implements TestService3 {
-  TestService3WorkerPool(
-      [int arg1 = 0,
+/// Worker pool for TestOptNullPositional
+class TestOptNullPositionalWorkerPool
+    extends WorkerPool<TestOptNullPositionalWorker>
+    implements TestOptNullPositional {
+  TestOptNullPositionalWorkerPool(
+      [int? arg1,
       ConcurrencySettings? concurrencySettings,
       PlatformWorkerHook? platformWorkerHook])
-      : super(() => TestService3Worker(arg1, platformWorkerHook),
+      : super(() => TestOptNullPositionalWorker(arg1, platformWorkerHook),
             concurrencySettings: concurrencySettings);
 }
 
-/// WorkerService class for TestService4
-class _$TestService4WorkerService extends TestService4
+/// WorkerService class for TestOptDefPositional
+class _$TestOptDefPositionalWorkerService extends TestOptDefPositional
     implements WorkerService {
-  _$TestService4WorkerService({int arg1 = 0}) : super(arg1: arg1);
+  _$TestOptDefPositionalWorkerService([int arg1 = 0]) : super(arg1);
 
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {};
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
 }
 
-/// Service initializer for TestService4
-WorkerService $TestService4Initializer(WorkerRequest startRequest) =>
-    _$TestService4WorkerService(arg1: startRequest.args[0]);
+/// Service initializer for TestOptDefPositional
+WorkerService $TestOptDefPositionalInitializer(WorkerRequest startRequest) =>
+    _$TestOptDefPositionalWorkerService(startRequest.args[0]);
 
-/// Operations map for TestService4
+/// Operations map for TestOptDefPositional
 @Deprecated(
     'squadron_builder now supports "plain old Dart objects" as services. '
     'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService4Operations anymore.')
-mixin $TestService4Operations on WorkerService {
+    'with \$TestOptDefPositionalOperations anymore.')
+mixin $TestOptDefPositionalOperations on WorkerService {
   @override
   // not needed anymore, generated for compatibility with previous versions of squadron_builder
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 }
 
-/// Worker for TestService4
-class TestService4Worker extends Worker implements TestService4 {
-  TestService4Worker({int arg1 = 0, PlatformWorkerHook? platformWorkerHook})
-      : super($TestService4Activator,
+/// Worker for TestOptDefPositional
+class TestOptDefPositionalWorker extends Worker
+    implements TestOptDefPositional {
+  TestOptDefPositionalWorker(
+      [int arg1 = 0, PlatformWorkerHook? platformWorkerHook])
+      : super($TestOptDefPositionalActivator,
             args: [arg1], platformWorkerHook: platformWorkerHook);
 }
 
-/// Worker pool for TestService4
-class TestService4WorkerPool extends WorkerPool<TestService4Worker>
-    implements TestService4 {
-  TestService4WorkerPool(
+/// Worker pool for TestOptDefPositional
+class TestOptDefPositionalWorkerPool
+    extends WorkerPool<TestOptDefPositionalWorker>
+    implements TestOptDefPositional {
+  TestOptDefPositionalWorkerPool(
+      [int arg1 = 0,
+      ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook])
+      : super(() => TestOptDefPositionalWorker(arg1, platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+}
+
+/// WorkerService class for TestOptNullDefPositional
+class _$TestOptNullDefPositionalWorkerService extends TestOptNullDefPositional
+    implements WorkerService {
+  _$TestOptNullDefPositionalWorkerService([int? arg1 = 0]) : super(arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestOptNullDefPositional
+WorkerService $TestOptNullDefPositionalInitializer(
+        WorkerRequest startRequest) =>
+    _$TestOptNullDefPositionalWorkerService(startRequest.args[0]);
+
+/// Operations map for TestOptNullDefPositional
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestOptNullDefPositionalOperations anymore.')
+mixin $TestOptNullDefPositionalOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestOptNullDefPositional
+class TestOptNullDefPositionalWorker extends Worker
+    implements TestOptNullDefPositional {
+  TestOptNullDefPositionalWorker(
+      [int? arg1 = 0, PlatformWorkerHook? platformWorkerHook])
+      : super($TestOptNullDefPositionalActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+}
+
+/// Worker pool for TestOptNullDefPositional
+class TestOptNullDefPositionalWorkerPool
+    extends WorkerPool<TestOptNullDefPositionalWorker>
+    implements TestOptNullDefPositional {
+  TestOptNullDefPositionalWorkerPool(
+      [int? arg1 = 0,
+      ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook])
+      : super(() => TestOptNullDefPositionalWorker(arg1, platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+}
+
+/// WorkerService class for TestReqPositionalField
+class _$TestReqPositionalFieldWorkerService extends TestReqPositionalField
+    implements WorkerService {
+  _$TestReqPositionalFieldWorkerService(int arg1) : super(arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestReqPositionalField
+WorkerService $TestReqPositionalFieldInitializer(WorkerRequest startRequest) =>
+    _$TestReqPositionalFieldWorkerService(startRequest.args[0]);
+
+/// Operations map for TestReqPositionalField
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestReqPositionalFieldOperations anymore.')
+mixin $TestReqPositionalFieldOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestReqPositionalField
+class TestReqPositionalFieldWorker extends Worker
+    implements TestReqPositionalField {
+  TestReqPositionalFieldWorker(this.arg1,
+      {PlatformWorkerHook? platformWorkerHook})
+      : super($TestReqPositionalFieldActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+
+  @override
+  final int arg1;
+}
+
+/// Worker pool for TestReqPositionalField
+class TestReqPositionalFieldWorkerPool
+    extends WorkerPool<TestReqPositionalFieldWorker>
+    implements TestReqPositionalField {
+  TestReqPositionalFieldWorkerPool(this.arg1,
+      {ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook})
+      : super(
+            () => TestReqPositionalFieldWorker(arg1,
+                platformWorkerHook: platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  final int arg1;
+}
+
+/// WorkerService class for TestOptNullPositionalField
+class _$TestOptNullPositionalFieldWorkerService
+    extends TestOptNullPositionalField implements WorkerService {
+  _$TestOptNullPositionalFieldWorkerService([int? arg1]) : super(arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestOptNullPositionalField
+WorkerService $TestOptNullPositionalFieldInitializer(
+        WorkerRequest startRequest) =>
+    _$TestOptNullPositionalFieldWorkerService(startRequest.args[0]);
+
+/// Operations map for TestOptNullPositionalField
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestOptNullPositionalFieldOperations anymore.')
+mixin $TestOptNullPositionalFieldOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestOptNullPositionalField
+class TestOptNullPositionalFieldWorker extends Worker
+    implements TestOptNullPositionalField {
+  TestOptNullPositionalFieldWorker(
+      [this.arg1, PlatformWorkerHook? platformWorkerHook])
+      : super($TestOptNullPositionalFieldActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+
+  @override
+  final int? arg1;
+}
+
+/// Worker pool for TestOptNullPositionalField
+class TestOptNullPositionalFieldWorkerPool
+    extends WorkerPool<TestOptNullPositionalFieldWorker>
+    implements TestOptNullPositionalField {
+  TestOptNullPositionalFieldWorkerPool(
+      [this.arg1,
+      ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook])
+      : super(() => TestOptNullPositionalFieldWorker(arg1, platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  final int? arg1;
+}
+
+/// WorkerService class for TestOptDefPositionalField
+class _$TestOptDefPositionalFieldWorkerService extends TestOptDefPositionalField
+    implements WorkerService {
+  _$TestOptDefPositionalFieldWorkerService([int arg1 = 0]) : super(arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestOptDefPositionalField
+WorkerService $TestOptDefPositionalFieldInitializer(
+        WorkerRequest startRequest) =>
+    _$TestOptDefPositionalFieldWorkerService(startRequest.args[0]);
+
+/// Operations map for TestOptDefPositionalField
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestOptDefPositionalFieldOperations anymore.')
+mixin $TestOptDefPositionalFieldOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestOptDefPositionalField
+class TestOptDefPositionalFieldWorker extends Worker
+    implements TestOptDefPositionalField {
+  TestOptDefPositionalFieldWorker(
+      [this.arg1 = 0, PlatformWorkerHook? platformWorkerHook])
+      : super($TestOptDefPositionalFieldActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+
+  @override
+  final int arg1;
+}
+
+/// Worker pool for TestOptDefPositionalField
+class TestOptDefPositionalFieldWorkerPool
+    extends WorkerPool<TestOptDefPositionalFieldWorker>
+    implements TestOptDefPositionalField {
+  TestOptDefPositionalFieldWorkerPool(
+      [this.arg1 = 0,
+      ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook])
+      : super(() => TestOptDefPositionalFieldWorker(arg1, platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  final int arg1;
+}
+
+/// WorkerService class for TestOptNullDefPositionalField
+class _$TestOptNullDefPositionalFieldWorkerService
+    extends TestOptNullDefPositionalField implements WorkerService {
+  _$TestOptNullDefPositionalFieldWorkerService([int? arg1 = 0]) : super(arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestOptNullDefPositionalField
+WorkerService $TestOptNullDefPositionalFieldInitializer(
+        WorkerRequest startRequest) =>
+    _$TestOptNullDefPositionalFieldWorkerService(startRequest.args[0]);
+
+/// Operations map for TestOptNullDefPositionalField
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestOptNullDefPositionalFieldOperations anymore.')
+mixin $TestOptNullDefPositionalFieldOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestOptNullDefPositionalField
+class TestOptNullDefPositionalFieldWorker extends Worker
+    implements TestOptNullDefPositionalField {
+  TestOptNullDefPositionalFieldWorker(
+      [this.arg1 = 0, PlatformWorkerHook? platformWorkerHook])
+      : super($TestOptNullDefPositionalFieldActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+
+  @override
+  final int? arg1;
+}
+
+/// Worker pool for TestOptNullDefPositionalField
+class TestOptNullDefPositionalFieldWorkerPool
+    extends WorkerPool<TestOptNullDefPositionalFieldWorker>
+    implements TestOptNullDefPositionalField {
+  TestOptNullDefPositionalFieldWorkerPool(
+      [this.arg1 = 0,
+      ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook])
+      : super(
+            () => TestOptNullDefPositionalFieldWorker(arg1, platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  final int? arg1;
+}
+
+/// WorkerService class for TestReqPositionalPrivateField
+class _$TestReqPositionalPrivateFieldWorkerService
+    extends TestReqPositionalPrivateField implements WorkerService {
+  _$TestReqPositionalPrivateFieldWorkerService(int arg1) : super(arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestReqPositionalPrivateField
+WorkerService $TestReqPositionalPrivateFieldInitializer(
+        WorkerRequest startRequest) =>
+    _$TestReqPositionalPrivateFieldWorkerService(startRequest.args[0]);
+
+/// Operations map for TestReqPositionalPrivateField
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestReqPositionalPrivateFieldOperations anymore.')
+mixin $TestReqPositionalPrivateFieldOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestReqPositionalPrivateField
+class TestReqPositionalPrivateFieldWorker extends Worker
+    implements TestReqPositionalPrivateField {
+  TestReqPositionalPrivateFieldWorker(int arg1,
+      {PlatformWorkerHook? platformWorkerHook})
+      : super($TestReqPositionalPrivateFieldActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+
+  @override
+  // ignore: unused_element
+  int get _arg1 => throw UnimplementedError();
+}
+
+/// Worker pool for TestReqPositionalPrivateField
+class TestReqPositionalPrivateFieldWorkerPool
+    extends WorkerPool<TestReqPositionalPrivateFieldWorker>
+    implements TestReqPositionalPrivateField {
+  TestReqPositionalPrivateFieldWorkerPool(int arg1,
+      {ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook})
+      : super(
+            () => TestReqPositionalPrivateFieldWorker(arg1,
+                platformWorkerHook: platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  // ignore: unused_element
+  int get _arg1 => throw UnimplementedError();
+}
+
+/// WorkerService class for TestOptNullPositionalPrivateField
+class _$TestOptNullPositionalPrivateFieldWorkerService
+    extends TestOptNullPositionalPrivateField implements WorkerService {
+  _$TestOptNullPositionalPrivateFieldWorkerService([int? arg1]) : super(arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestOptNullPositionalPrivateField
+WorkerService $TestOptNullPositionalPrivateFieldInitializer(
+        WorkerRequest startRequest) =>
+    _$TestOptNullPositionalPrivateFieldWorkerService(startRequest.args[0]);
+
+/// Operations map for TestOptNullPositionalPrivateField
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestOptNullPositionalPrivateFieldOperations anymore.')
+mixin $TestOptNullPositionalPrivateFieldOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestOptNullPositionalPrivateField
+class TestOptNullPositionalPrivateFieldWorker extends Worker
+    implements TestOptNullPositionalPrivateField {
+  TestOptNullPositionalPrivateFieldWorker(
+      [int? arg1, PlatformWorkerHook? platformWorkerHook])
+      : super($TestOptNullPositionalPrivateFieldActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+
+  @override
+  // ignore: unused_element
+  int? get _arg1 => throw UnimplementedError();
+}
+
+/// Worker pool for TestOptNullPositionalPrivateField
+class TestOptNullPositionalPrivateFieldWorkerPool
+    extends WorkerPool<TestOptNullPositionalPrivateFieldWorker>
+    implements TestOptNullPositionalPrivateField {
+  TestOptNullPositionalPrivateFieldWorkerPool(
+      [int? arg1,
+      ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook])
+      : super(
+            () => TestOptNullPositionalPrivateFieldWorker(
+                arg1, platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  // ignore: unused_element
+  int? get _arg1 => throw UnimplementedError();
+}
+
+/// WorkerService class for TestOptDefPositionalPrivateField
+class _$TestOptDefPositionalPrivateFieldWorkerService
+    extends TestOptDefPositionalPrivateField implements WorkerService {
+  _$TestOptDefPositionalPrivateFieldWorkerService([int arg1 = 0]) : super(arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestOptDefPositionalPrivateField
+WorkerService $TestOptDefPositionalPrivateFieldInitializer(
+        WorkerRequest startRequest) =>
+    _$TestOptDefPositionalPrivateFieldWorkerService(startRequest.args[0]);
+
+/// Operations map for TestOptDefPositionalPrivateField
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestOptDefPositionalPrivateFieldOperations anymore.')
+mixin $TestOptDefPositionalPrivateFieldOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestOptDefPositionalPrivateField
+class TestOptDefPositionalPrivateFieldWorker extends Worker
+    implements TestOptDefPositionalPrivateField {
+  TestOptDefPositionalPrivateFieldWorker(
+      [int arg1 = 0, PlatformWorkerHook? platformWorkerHook])
+      : super($TestOptDefPositionalPrivateFieldActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+
+  @override
+  // ignore: unused_element
+  int get _arg1 => throw UnimplementedError();
+}
+
+/// Worker pool for TestOptDefPositionalPrivateField
+class TestOptDefPositionalPrivateFieldWorkerPool
+    extends WorkerPool<TestOptDefPositionalPrivateFieldWorker>
+    implements TestOptDefPositionalPrivateField {
+  TestOptDefPositionalPrivateFieldWorkerPool(
+      [int arg1 = 0,
+      ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook])
+      : super(
+            () => TestOptDefPositionalPrivateFieldWorker(
+                arg1, platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  // ignore: unused_element
+  int get _arg1 => throw UnimplementedError();
+}
+
+/// WorkerService class for TestOptNullDefPositionalPrivateField
+class _$TestOptNullDefPositionalPrivateFieldWorkerService
+    extends TestOptNullDefPositionalPrivateField implements WorkerService {
+  _$TestOptNullDefPositionalPrivateFieldWorkerService([int? arg1 = 0])
+      : super(arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestOptNullDefPositionalPrivateField
+WorkerService $TestOptNullDefPositionalPrivateFieldInitializer(
+        WorkerRequest startRequest) =>
+    _$TestOptNullDefPositionalPrivateFieldWorkerService(startRequest.args[0]);
+
+/// Operations map for TestOptNullDefPositionalPrivateField
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestOptNullDefPositionalPrivateFieldOperations anymore.')
+mixin $TestOptNullDefPositionalPrivateFieldOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestOptNullDefPositionalPrivateField
+class TestOptNullDefPositionalPrivateFieldWorker extends Worker
+    implements TestOptNullDefPositionalPrivateField {
+  TestOptNullDefPositionalPrivateFieldWorker(
+      [int? arg1 = 0, PlatformWorkerHook? platformWorkerHook])
+      : super($TestOptNullDefPositionalPrivateFieldActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+
+  @override
+  // ignore: unused_element
+  int? get _arg1 => throw UnimplementedError();
+}
+
+/// Worker pool for TestOptNullDefPositionalPrivateField
+class TestOptNullDefPositionalPrivateFieldWorkerPool
+    extends WorkerPool<TestOptNullDefPositionalPrivateFieldWorker>
+    implements TestOptNullDefPositionalPrivateField {
+  TestOptNullDefPositionalPrivateFieldWorkerPool(
+      [int? arg1 = 0,
+      ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook])
+      : super(
+            () => TestOptNullDefPositionalPrivateFieldWorker(
+                arg1, platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  // ignore: unused_element
+  int? get _arg1 => throw UnimplementedError();
+}
+
+/// WorkerService class for TestOptNullNamed
+class _$TestOptNullNamedWorkerService extends TestOptNullNamed
+    implements WorkerService {
+  _$TestOptNullNamedWorkerService({int? arg1}) : super(arg1: arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestOptNullNamed
+WorkerService $TestOptNullNamedInitializer(WorkerRequest startRequest) =>
+    _$TestOptNullNamedWorkerService(arg1: startRequest.args[0]);
+
+/// Operations map for TestOptNullNamed
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestOptNullNamedOperations anymore.')
+mixin $TestOptNullNamedOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestOptNullNamed
+class TestOptNullNamedWorker extends Worker implements TestOptNullNamed {
+  TestOptNullNamedWorker({int? arg1, PlatformWorkerHook? platformWorkerHook})
+      : super($TestOptNullNamedActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+}
+
+/// Worker pool for TestOptNullNamed
+class TestOptNullNamedWorkerPool extends WorkerPool<TestOptNullNamedWorker>
+    implements TestOptNullNamed {
+  TestOptNullNamedWorkerPool(
+      {int? arg1,
+      ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook})
+      : super(
+            () => TestOptNullNamedWorker(
+                arg1: arg1, platformWorkerHook: platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+}
+
+/// WorkerService class for TestOptDefNamed
+class _$TestOptDefNamedWorkerService extends TestOptDefNamed
+    implements WorkerService {
+  _$TestOptDefNamedWorkerService({int arg1 = 0}) : super(arg1: arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestOptDefNamed
+WorkerService $TestOptDefNamedInitializer(WorkerRequest startRequest) =>
+    _$TestOptDefNamedWorkerService(arg1: startRequest.args[0]);
+
+/// Operations map for TestOptDefNamed
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestOptDefNamedOperations anymore.')
+mixin $TestOptDefNamedOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestOptDefNamed
+class TestOptDefNamedWorker extends Worker implements TestOptDefNamed {
+  TestOptDefNamedWorker({int arg1 = 0, PlatformWorkerHook? platformWorkerHook})
+      : super($TestOptDefNamedActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+}
+
+/// Worker pool for TestOptDefNamed
+class TestOptDefNamedWorkerPool extends WorkerPool<TestOptDefNamedWorker>
+    implements TestOptDefNamed {
+  TestOptDefNamedWorkerPool(
       {int arg1 = 0,
       ConcurrencySettings? concurrencySettings,
       PlatformWorkerHook? platformWorkerHook})
       : super(
-            () => TestService4Worker(
+            () => TestOptDefNamedWorker(
                 arg1: arg1, platformWorkerHook: platformWorkerHook),
             concurrencySettings: concurrencySettings);
 }
 
-/// WorkerService class for TestService5
-class _$TestService5WorkerService extends TestService5
+/// WorkerService class for TestOptNullDefNamed
+class _$TestOptNullDefNamedWorkerService extends TestOptNullDefNamed
     implements WorkerService {
-  _$TestService5WorkerService(int arg1, {int? arg2}) : super(arg1, arg2: arg2);
+  _$TestOptNullDefNamedWorkerService({int? arg1 = 0}) : super(arg1: arg1);
 
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {};
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
 }
 
-/// Service initializer for TestService5
-WorkerService $TestService5Initializer(WorkerRequest startRequest) =>
-    _$TestService5WorkerService(startRequest.args[0],
-        arg2: startRequest.args[1]);
+/// Service initializer for TestOptNullDefNamed
+WorkerService $TestOptNullDefNamedInitializer(WorkerRequest startRequest) =>
+    _$TestOptNullDefNamedWorkerService(arg1: startRequest.args[0]);
 
-/// Operations map for TestService5
+/// Operations map for TestOptNullDefNamed
 @Deprecated(
     'squadron_builder now supports "plain old Dart objects" as services. '
     'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService5Operations anymore.')
-mixin $TestService5Operations on WorkerService {
+    'with \$TestOptNullDefNamedOperations anymore.')
+mixin $TestOptNullDefNamedOperations on WorkerService {
   @override
   // not needed anymore, generated for compatibility with previous versions of squadron_builder
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 }
 
-/// Worker for TestService5
-class TestService5Worker extends Worker implements TestService5 {
-  TestService5Worker(int arg1,
-      {int? arg2, PlatformWorkerHook? platformWorkerHook})
-      : super($TestService5Activator,
-            args: [arg1, arg2], platformWorkerHook: platformWorkerHook);
-}
-
-/// Worker pool for TestService5
-class TestService5WorkerPool extends WorkerPool<TestService5Worker>
-    implements TestService5 {
-  TestService5WorkerPool(int arg1,
-      {int? arg2,
-      ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook})
-      : super(
-            () => TestService5Worker(arg1,
-                arg2: arg2, platformWorkerHook: platformWorkerHook),
-            concurrencySettings: concurrencySettings);
-}
-
-/// WorkerService class for TestService6
-class _$TestService6WorkerService extends TestService6
-    implements WorkerService {
-  _$TestService6WorkerService(int arg1, [int? arg2]) : super(arg1, arg2);
-
-  @override
-  Map<int, CommandHandler> get operations => _operations;
-
-  late final Map<int, CommandHandler> _operations = {};
-}
-
-/// Service initializer for TestService6
-WorkerService $TestService6Initializer(WorkerRequest startRequest) =>
-    _$TestService6WorkerService(startRequest.args[0], startRequest.args[1]);
-
-/// Operations map for TestService6
-@Deprecated(
-    'squadron_builder now supports "plain old Dart objects" as services. '
-    'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService6Operations anymore.')
-mixin $TestService6Operations on WorkerService {
-  @override
-  // not needed anymore, generated for compatibility with previous versions of squadron_builder
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-}
-
-/// Worker for TestService6
-class TestService6Worker extends Worker implements TestService6 {
-  TestService6Worker(int arg1,
-      [int? arg2, PlatformWorkerHook? platformWorkerHook])
-      : super($TestService6Activator,
-            args: [arg1, arg2], platformWorkerHook: platformWorkerHook);
-}
-
-/// Worker pool for TestService6
-class TestService6WorkerPool extends WorkerPool<TestService6Worker>
-    implements TestService6 {
-  TestService6WorkerPool(int arg1,
-      [int? arg2,
-      ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook])
-      : super(() => TestService6Worker(arg1, arg2, platformWorkerHook),
-            concurrencySettings: concurrencySettings);
-}
-
-/// WorkerService class for TestService7
-class _$TestService7WorkerService extends TestService7
-    implements WorkerService {
-  _$TestService7WorkerService(int arg1) : super(arg1);
-
-  @override
-  Map<int, CommandHandler> get operations => _operations;
-
-  late final Map<int, CommandHandler> _operations = {};
-}
-
-/// Service initializer for TestService7
-WorkerService $TestService7Initializer(WorkerRequest startRequest) =>
-    _$TestService7WorkerService(startRequest.args[0]);
-
-/// Operations map for TestService7
-@Deprecated(
-    'squadron_builder now supports "plain old Dart objects" as services. '
-    'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService7Operations anymore.')
-mixin $TestService7Operations on WorkerService {
-  @override
-  // not needed anymore, generated for compatibility with previous versions of squadron_builder
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-}
-
-/// Worker for TestService7
-class TestService7Worker extends Worker implements TestService7 {
-  TestService7Worker(this.arg1, {PlatformWorkerHook? platformWorkerHook})
-      : super($TestService7Activator,
+/// Worker for TestOptNullDefNamed
+class TestOptNullDefNamedWorker extends Worker implements TestOptNullDefNamed {
+  TestOptNullDefNamedWorker(
+      {int? arg1 = 0, PlatformWorkerHook? platformWorkerHook})
+      : super($TestOptNullDefNamedActivator,
             args: [arg1], platformWorkerHook: platformWorkerHook);
-
-  @override
-  final int arg1;
 }
 
-/// Worker pool for TestService7
-class TestService7WorkerPool extends WorkerPool<TestService7Worker>
-    implements TestService7 {
-  TestService7WorkerPool(this.arg1,
-      {ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook})
-      : super(
-            () => TestService7Worker(arg1,
-                platformWorkerHook: platformWorkerHook),
-            concurrencySettings: concurrencySettings);
-
-  @override
-  final int arg1;
-}
-
-/// WorkerService class for TestService8
-class _$TestService8WorkerService extends TestService8
-    implements WorkerService {
-  _$TestService8WorkerService(int arg1, [int? arg2]) : super(arg1, arg2);
-
-  @override
-  Map<int, CommandHandler> get operations => _operations;
-
-  late final Map<int, CommandHandler> _operations = {};
-}
-
-/// Service initializer for TestService8
-WorkerService $TestService8Initializer(WorkerRequest startRequest) =>
-    _$TestService8WorkerService(startRequest.args[0], startRequest.args[1]);
-
-/// Operations map for TestService8
-@Deprecated(
-    'squadron_builder now supports "plain old Dart objects" as services. '
-    'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService8Operations anymore.')
-mixin $TestService8Operations on WorkerService {
-  @override
-  // not needed anymore, generated for compatibility with previous versions of squadron_builder
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-}
-
-/// Worker for TestService8
-class TestService8Worker extends Worker implements TestService8 {
-  TestService8Worker(this.arg1,
-      [this.arg2, PlatformWorkerHook? platformWorkerHook])
-      : super($TestService8Activator,
-            args: [arg1, arg2], platformWorkerHook: platformWorkerHook);
-
-  @override
-  final int arg1;
-
-  @override
-  final int? arg2;
-}
-
-/// Worker pool for TestService8
-class TestService8WorkerPool extends WorkerPool<TestService8Worker>
-    implements TestService8 {
-  TestService8WorkerPool(this.arg1,
-      [this.arg2,
-      ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook])
-      : super(() => TestService8Worker(arg1, arg2, platformWorkerHook),
-            concurrencySettings: concurrencySettings);
-
-  @override
-  final int arg1;
-
-  @override
-  final int? arg2;
-}
-
-/// WorkerService class for TestService9
-class _$TestService9WorkerService extends TestService9
-    implements WorkerService {
-  _$TestService9WorkerService(int arg1, {int? arg2}) : super(arg1, arg2: arg2);
-
-  @override
-  Map<int, CommandHandler> get operations => _operations;
-
-  late final Map<int, CommandHandler> _operations = {};
-}
-
-/// Service initializer for TestService9
-WorkerService $TestService9Initializer(WorkerRequest startRequest) =>
-    _$TestService9WorkerService(startRequest.args[0],
-        arg2: startRequest.args[1]);
-
-/// Operations map for TestService9
-@Deprecated(
-    'squadron_builder now supports "plain old Dart objects" as services. '
-    'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService9Operations anymore.')
-mixin $TestService9Operations on WorkerService {
-  @override
-  // not needed anymore, generated for compatibility with previous versions of squadron_builder
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-}
-
-/// Worker for TestService9
-class TestService9Worker extends Worker implements TestService9 {
-  TestService9Worker(this.arg1,
-      {this.arg2, PlatformWorkerHook? platformWorkerHook})
-      : super($TestService9Activator,
-            args: [arg1, arg2], platformWorkerHook: platformWorkerHook);
-
-  @override
-  final int arg1;
-
-  @override
-  final int? arg2;
-}
-
-/// Worker pool for TestService9
-class TestService9WorkerPool extends WorkerPool<TestService9Worker>
-    implements TestService9 {
-  TestService9WorkerPool(this.arg1,
-      {this.arg2,
+/// Worker pool for TestOptNullDefNamed
+class TestOptNullDefNamedWorkerPool
+    extends WorkerPool<TestOptNullDefNamedWorker>
+    implements TestOptNullDefNamed {
+  TestOptNullDefNamedWorkerPool(
+      {int? arg1 = 0,
       ConcurrencySettings? concurrencySettings,
       PlatformWorkerHook? platformWorkerHook})
       : super(
-            () => TestService9Worker(arg1,
-                arg2: arg2, platformWorkerHook: platformWorkerHook),
+            () => TestOptNullDefNamedWorker(
+                arg1: arg1, platformWorkerHook: platformWorkerHook),
             concurrencySettings: concurrencySettings);
-
-  @override
-  final int arg1;
-
-  @override
-  final int? arg2;
 }
 
-/// WorkerService class for TestService10
-class _$TestService10WorkerService extends TestService10
+/// WorkerService class for TestOptNullNamedField
+class _$TestOptNullNamedFieldWorkerService extends TestOptNullNamedField
     implements WorkerService {
-  _$TestService10WorkerService([int? arg1]) : super(arg1);
+  _$TestOptNullNamedFieldWorkerService({int? arg1}) : super(arg1: arg1);
 
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {};
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
 }
 
-/// Service initializer for TestService10
-WorkerService $TestService10Initializer(WorkerRequest startRequest) =>
-    _$TestService10WorkerService(startRequest.args[0]);
+/// Service initializer for TestOptNullNamedField
+WorkerService $TestOptNullNamedFieldInitializer(WorkerRequest startRequest) =>
+    _$TestOptNullNamedFieldWorkerService(arg1: startRequest.args[0]);
 
-/// Operations map for TestService10
+/// Operations map for TestOptNullNamedField
 @Deprecated(
     'squadron_builder now supports "plain old Dart objects" as services. '
     'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService10Operations anymore.')
-mixin $TestService10Operations on WorkerService {
+    'with \$TestOptNullNamedFieldOperations anymore.')
+mixin $TestOptNullNamedFieldOperations on WorkerService {
   @override
   // not needed anymore, generated for compatibility with previous versions of squadron_builder
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 }
 
-/// Worker for TestService10
-class TestService10Worker extends Worker implements TestService10 {
-  TestService10Worker([this.arg1, PlatformWorkerHook? platformWorkerHook])
-      : super($TestService10Activator,
+/// Worker for TestOptNullNamedField
+class TestOptNullNamedFieldWorker extends Worker
+    implements TestOptNullNamedField {
+  TestOptNullNamedFieldWorker(
+      {this.arg1, PlatformWorkerHook? platformWorkerHook})
+      : super($TestOptNullNamedFieldActivator,
             args: [arg1], platformWorkerHook: platformWorkerHook);
 
   @override
   final int? arg1;
 }
 
-/// Worker pool for TestService10
-class TestService10WorkerPool extends WorkerPool<TestService10Worker>
-    implements TestService10 {
-  TestService10WorkerPool(
-      [this.arg1,
+/// Worker pool for TestOptNullNamedField
+class TestOptNullNamedFieldWorkerPool
+    extends WorkerPool<TestOptNullNamedFieldWorker>
+    implements TestOptNullNamedField {
+  TestOptNullNamedFieldWorkerPool(
+      {this.arg1,
       ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook])
-      : super(() => TestService10Worker(arg1, platformWorkerHook),
+      PlatformWorkerHook? platformWorkerHook})
+      : super(
+            () => TestOptNullNamedFieldWorker(
+                arg1: arg1, platformWorkerHook: platformWorkerHook),
             concurrencySettings: concurrencySettings);
 
   @override
   final int? arg1;
 }
 
-/// WorkerService class for TestService11
-class _$TestService11WorkerService extends TestService11
+/// WorkerService class for TestOptDefNamedField
+class _$TestOptDefNamedFieldWorkerService extends TestOptDefNamedField
     implements WorkerService {
-  _$TestService11WorkerService({int arg1 = 0}) : super(arg1: arg1);
+  _$TestOptDefNamedFieldWorkerService({int arg1 = 0}) : super(arg1: arg1);
 
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {};
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
 }
 
-/// Service initializer for TestService11
-WorkerService $TestService11Initializer(WorkerRequest startRequest) =>
-    _$TestService11WorkerService(arg1: startRequest.args[0]);
+/// Service initializer for TestOptDefNamedField
+WorkerService $TestOptDefNamedFieldInitializer(WorkerRequest startRequest) =>
+    _$TestOptDefNamedFieldWorkerService(arg1: startRequest.args[0]);
 
-/// Operations map for TestService11
+/// Operations map for TestOptDefNamedField
 @Deprecated(
     'squadron_builder now supports "plain old Dart objects" as services. '
     'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService11Operations anymore.')
-mixin $TestService11Operations on WorkerService {
+    'with \$TestOptDefNamedFieldOperations anymore.')
+mixin $TestOptDefNamedFieldOperations on WorkerService {
   @override
   // not needed anymore, generated for compatibility with previous versions of squadron_builder
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 }
 
-/// Worker for TestService11
-class TestService11Worker extends Worker implements TestService11 {
-  TestService11Worker({this.arg1 = 0, PlatformWorkerHook? platformWorkerHook})
-      : super($TestService11Activator,
+/// Worker for TestOptDefNamedField
+class TestOptDefNamedFieldWorker extends Worker
+    implements TestOptDefNamedField {
+  TestOptDefNamedFieldWorker(
+      {this.arg1 = 0, PlatformWorkerHook? platformWorkerHook})
+      : super($TestOptDefNamedFieldActivator,
             args: [arg1], platformWorkerHook: platformWorkerHook);
 
   @override
   final int arg1;
 }
 
-/// Worker pool for TestService11
-class TestService11WorkerPool extends WorkerPool<TestService11Worker>
-    implements TestService11 {
-  TestService11WorkerPool(
+/// Worker pool for TestOptDefNamedField
+class TestOptDefNamedFieldWorkerPool
+    extends WorkerPool<TestOptDefNamedFieldWorker>
+    implements TestOptDefNamedField {
+  TestOptDefNamedFieldWorkerPool(
       {this.arg1 = 0,
       ConcurrencySettings? concurrencySettings,
       PlatformWorkerHook? platformWorkerHook})
       : super(
-            () => TestService11Worker(
+            () => TestOptDefNamedFieldWorker(
                 arg1: arg1, platformWorkerHook: platformWorkerHook),
             concurrencySettings: concurrencySettings);
 
@@ -546,153 +955,301 @@ class TestService11WorkerPool extends WorkerPool<TestService11Worker>
   final int arg1;
 }
 
-/// WorkerService class for TestService12
-class _$TestService12WorkerService extends TestService12
+/// WorkerService class for TestOptNullDefNamedField
+class _$TestOptNullDefNamedFieldWorkerService extends TestOptNullDefNamedField
     implements WorkerService {
-  _$TestService12WorkerService(int arg1) : super(arg1);
+  _$TestOptNullDefNamedFieldWorkerService({int? arg1 = 0}) : super(arg1: arg1);
 
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {};
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
 }
 
-/// Service initializer for TestService12
-WorkerService $TestService12Initializer(WorkerRequest startRequest) =>
-    _$TestService12WorkerService(startRequest.args[0]);
+/// Service initializer for TestOptNullDefNamedField
+WorkerService $TestOptNullDefNamedFieldInitializer(
+        WorkerRequest startRequest) =>
+    _$TestOptNullDefNamedFieldWorkerService(arg1: startRequest.args[0]);
 
-/// Operations map for TestService12
+/// Operations map for TestOptNullDefNamedField
 @Deprecated(
     'squadron_builder now supports "plain old Dart objects" as services. '
     'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService12Operations anymore.')
-mixin $TestService12Operations on WorkerService {
+    'with \$TestOptNullDefNamedFieldOperations anymore.')
+mixin $TestOptNullDefNamedFieldOperations on WorkerService {
   @override
   // not needed anymore, generated for compatibility with previous versions of squadron_builder
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 }
 
-/// Worker for TestService12
-class TestService12Worker extends Worker implements TestService12 {
-  TestService12Worker(int arg1, {PlatformWorkerHook? platformWorkerHook})
-      : super($TestService12Activator,
+/// Worker for TestOptNullDefNamedField
+class TestOptNullDefNamedFieldWorker extends Worker
+    implements TestOptNullDefNamedField {
+  TestOptNullDefNamedFieldWorker(
+      {this.arg1 = 0, PlatformWorkerHook? platformWorkerHook})
+      : super($TestOptNullDefNamedFieldActivator,
             args: [arg1], platformWorkerHook: platformWorkerHook);
 
   @override
-  int get _arg1 => throw UnimplementedError();
+  final int? arg1;
 }
 
-/// Worker pool for TestService12
-class TestService12WorkerPool extends WorkerPool<TestService12Worker>
-    implements TestService12 {
-  TestService12WorkerPool(int arg1,
-      {ConcurrencySettings? concurrencySettings,
+/// Worker pool for TestOptNullDefNamedField
+class TestOptNullDefNamedFieldWorkerPool
+    extends WorkerPool<TestOptNullDefNamedFieldWorker>
+    implements TestOptNullDefNamedField {
+  TestOptNullDefNamedFieldWorkerPool(
+      {this.arg1 = 0,
+      ConcurrencySettings? concurrencySettings,
       PlatformWorkerHook? platformWorkerHook})
       : super(
-            () => TestService12Worker(arg1,
-                platformWorkerHook: platformWorkerHook),
+            () => TestOptNullDefNamedFieldWorker(
+                arg1: arg1, platformWorkerHook: platformWorkerHook),
             concurrencySettings: concurrencySettings);
 
   @override
+  final int? arg1;
+}
+
+/// WorkerService class for TestOptNullNamedPrivateField
+class _$TestOptNullNamedPrivateFieldWorkerService
+    extends TestOptNullNamedPrivateField implements WorkerService {
+  _$TestOptNullNamedPrivateFieldWorkerService({int? arg1}) : super(arg1: arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestOptNullNamedPrivateField
+WorkerService $TestOptNullNamedPrivateFieldInitializer(
+        WorkerRequest startRequest) =>
+    _$TestOptNullNamedPrivateFieldWorkerService(arg1: startRequest.args[0]);
+
+/// Operations map for TestOptNullNamedPrivateField
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestOptNullNamedPrivateFieldOperations anymore.')
+mixin $TestOptNullNamedPrivateFieldOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestOptNullNamedPrivateField
+class TestOptNullNamedPrivateFieldWorker extends Worker
+    implements TestOptNullNamedPrivateField {
+  TestOptNullNamedPrivateFieldWorker(
+      {int? arg1, PlatformWorkerHook? platformWorkerHook})
+      : super($TestOptNullNamedPrivateFieldActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+
+  @override
+  // ignore: unused_element
+  int? get _arg1 => throw UnimplementedError();
+}
+
+/// Worker pool for TestOptNullNamedPrivateField
+class TestOptNullNamedPrivateFieldWorkerPool
+    extends WorkerPool<TestOptNullNamedPrivateFieldWorker>
+    implements TestOptNullNamedPrivateField {
+  TestOptNullNamedPrivateFieldWorkerPool(
+      {int? arg1,
+      ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook})
+      : super(
+            () => TestOptNullNamedPrivateFieldWorker(
+                arg1: arg1, platformWorkerHook: platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  // ignore: unused_element
+  int? get _arg1 => throw UnimplementedError();
+}
+
+/// WorkerService class for TestOptDefNamedPrivateField
+class _$TestOptDefNamedPrivateFieldWorkerService
+    extends TestOptDefNamedPrivateField implements WorkerService {
+  _$TestOptDefNamedPrivateFieldWorkerService({int arg1 = 0})
+      : super(arg1: arg1);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestOptDefNamedPrivateField
+WorkerService $TestOptDefNamedPrivateFieldInitializer(
+        WorkerRequest startRequest) =>
+    _$TestOptDefNamedPrivateFieldWorkerService(arg1: startRequest.args[0]);
+
+/// Operations map for TestOptDefNamedPrivateField
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestOptDefNamedPrivateFieldOperations anymore.')
+mixin $TestOptDefNamedPrivateFieldOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestOptDefNamedPrivateField
+class TestOptDefNamedPrivateFieldWorker extends Worker
+    implements TestOptDefNamedPrivateField {
+  TestOptDefNamedPrivateFieldWorker(
+      {int arg1 = 0, PlatformWorkerHook? platformWorkerHook})
+      : super($TestOptDefNamedPrivateFieldActivator,
+            args: [arg1], platformWorkerHook: platformWorkerHook);
+
+  @override
+  // ignore: unused_element
   int get _arg1 => throw UnimplementedError();
 }
 
-/// WorkerService class for TestService13
-class _$TestService13WorkerService extends TestService13
-    implements WorkerService {
-  _$TestService13WorkerService([int? arg1]) : super(arg1);
+/// Worker pool for TestOptDefNamedPrivateField
+class TestOptDefNamedPrivateFieldWorkerPool
+    extends WorkerPool<TestOptDefNamedPrivateFieldWorker>
+    implements TestOptDefNamedPrivateField {
+  TestOptDefNamedPrivateFieldWorkerPool(
+      {int arg1 = 0,
+      ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook})
+      : super(
+            () => TestOptDefNamedPrivateFieldWorker(
+                arg1: arg1, platformWorkerHook: platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  // ignore: unused_element
+  int get _arg1 => throw UnimplementedError();
+}
+
+/// WorkerService class for TestOptNullDefNamedPrivateField
+class _$TestOptNullDefNamedPrivateFieldWorkerService
+    extends TestOptNullDefNamedPrivateField implements WorkerService {
+  _$TestOptNullDefNamedPrivateFieldWorkerService({int? arg1 = 0})
+      : super(arg1: arg1);
 
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {};
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
 }
 
-/// Service initializer for TestService13
-WorkerService $TestService13Initializer(WorkerRequest startRequest) =>
-    _$TestService13WorkerService(startRequest.args[0]);
+/// Service initializer for TestOptNullDefNamedPrivateField
+WorkerService $TestOptNullDefNamedPrivateFieldInitializer(
+        WorkerRequest startRequest) =>
+    _$TestOptNullDefNamedPrivateFieldWorkerService(arg1: startRequest.args[0]);
 
-/// Operations map for TestService13
+/// Operations map for TestOptNullDefNamedPrivateField
 @Deprecated(
     'squadron_builder now supports "plain old Dart objects" as services. '
     'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService13Operations anymore.')
-mixin $TestService13Operations on WorkerService {
+    'with \$TestOptNullDefNamedPrivateFieldOperations anymore.')
+mixin $TestOptNullDefNamedPrivateFieldOperations on WorkerService {
   @override
   // not needed anymore, generated for compatibility with previous versions of squadron_builder
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 }
 
-/// Worker for TestService13
-class TestService13Worker extends Worker implements TestService13 {
-  TestService13Worker([int? arg1, PlatformWorkerHook? platformWorkerHook])
-      : super($TestService13Activator,
+/// Worker for TestOptNullDefNamedPrivateField
+class TestOptNullDefNamedPrivateFieldWorker extends Worker
+    implements TestOptNullDefNamedPrivateField {
+  TestOptNullDefNamedPrivateFieldWorker(
+      {int? arg1 = 0, PlatformWorkerHook? platformWorkerHook})
+      : super($TestOptNullDefNamedPrivateFieldActivator,
             args: [arg1], platformWorkerHook: platformWorkerHook);
 
   @override
+  // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
 }
 
-/// Worker pool for TestService13
-class TestService13WorkerPool extends WorkerPool<TestService13Worker>
-    implements TestService13 {
-  TestService13WorkerPool(
-      [int? arg1,
+/// Worker pool for TestOptNullDefNamedPrivateField
+class TestOptNullDefNamedPrivateFieldWorkerPool
+    extends WorkerPool<TestOptNullDefNamedPrivateFieldWorker>
+    implements TestOptNullDefNamedPrivateField {
+  TestOptNullDefNamedPrivateFieldWorkerPool(
+      {int? arg1 = 0,
       ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook])
-      : super(() => TestService13Worker(arg1, platformWorkerHook),
+      PlatformWorkerHook? platformWorkerHook})
+      : super(
+            () => TestOptNullDefNamedPrivateFieldWorker(
+                arg1: arg1, platformWorkerHook: platformWorkerHook),
             concurrencySettings: concurrencySettings);
 
   @override
+  // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
 }
 
-/// WorkerService class for TestService14
-class _$TestService14WorkerService extends TestService14
-    implements WorkerService {
-  _$TestService14WorkerService([int? arg1]) : super(arg1);
+/// WorkerService class for TestOptNullDefNamedPrivateNonFinalField
+class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService
+    extends TestOptNullDefNamedPrivateNonFinalField implements WorkerService {
+  _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService({int? state = 0})
+      : super(state: state);
 
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {};
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{
+    _$getStateId: ($) => getState(),
+    _$setStateId: ($) => setState($.args[0]),
+  });
+
+  static const int _$getStateId = 1;
+  static const int _$setStateId = 2;
 }
 
-/// Service initializer for TestService14
-WorkerService $TestService14Initializer(WorkerRequest startRequest) =>
-    _$TestService14WorkerService(startRequest.args[0]);
+/// Service initializer for TestOptNullDefNamedPrivateNonFinalField
+WorkerService $TestOptNullDefNamedPrivateNonFinalFieldInitializer(
+        WorkerRequest startRequest) =>
+    _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService(
+        state: startRequest.args[0]);
 
-/// Operations map for TestService14
+/// Operations map for TestOptNullDefNamedPrivateNonFinalField
 @Deprecated(
     'squadron_builder now supports "plain old Dart objects" as services. '
     'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$TestService14Operations anymore.')
-mixin $TestService14Operations on WorkerService {
+    'with \$TestOptNullDefNamedPrivateNonFinalFieldOperations anymore.')
+mixin $TestOptNullDefNamedPrivateNonFinalFieldOperations on WorkerService {
   @override
   // not needed anymore, generated for compatibility with previous versions of squadron_builder
   Map<int, CommandHandler> get operations => WorkerService.noOperations;
 }
 
-/// Worker for TestService14
-class TestService14Worker extends Worker implements TestService14 {
-  TestService14Worker([int? arg1, PlatformWorkerHook? platformWorkerHook])
-      : super($TestService14Activator,
-            args: [arg1], platformWorkerHook: platformWorkerHook);
+/// Worker for TestOptNullDefNamedPrivateNonFinalField
+class TestOptNullDefNamedPrivateNonFinalFieldWorker extends Worker
+    implements TestOptNullDefNamedPrivateNonFinalField {
+  TestOptNullDefNamedPrivateNonFinalFieldWorker(
+      {int? state = 0, PlatformWorkerHook? platformWorkerHook})
+      : super($TestOptNullDefNamedPrivateNonFinalFieldActivator,
+            args: [state], platformWorkerHook: platformWorkerHook);
 
   @override
-  int? get __arg1 => throw UnimplementedError();
-}
-
-/// Worker pool for TestService14
-class TestService14WorkerPool extends WorkerPool<TestService14Worker>
-    implements TestService14 {
-  TestService14WorkerPool(
-      [int? arg1,
-      ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook])
-      : super(() => TestService14Worker(arg1, platformWorkerHook),
-            concurrencySettings: concurrencySettings);
+  Future<int?> getState() =>
+      send(_$TestOptNullDefNamedPrivateNonFinalFieldWorkerService._$getStateId,
+          args: []);
 
   @override
-  int? get __arg1 => throw UnimplementedError();
+  Future<void> setState(int? state) =>
+      send(_$TestOptNullDefNamedPrivateNonFinalFieldWorkerService._$setStateId,
+          args: [state]);
+
+  @override
+  // ignore: unused_element
+  int? get _state => throw UnimplementedError();
+
+  @override
+  // ignore: unused_element
+  set _state(void value) => throw UnimplementedError();
 }

@@ -189,8 +189,7 @@ Future<instr.PerfCounters> runPools(DeviationMonitor monitor, bool trace,
   final echoPool = EchoServiceWorkerPool(trace, workloadDelay, concurrency,
       (w) => platformWorkerHook<EchoServiceWorkerPool>(w));
 
-  await Future.wait(
-      [fibonacciPool.start().toFuture(), echoPool.start().toFuture()]);
+  await Future.wait([fibonacciPool.start().future, echoPool.start().future]);
 
   var counters = await testWith(monitor, fibonacciPool, echoPool);
   for (var i = 1; i < runs; i++) {
@@ -244,8 +243,8 @@ Future<void> testFibWith(FibonacciService fibonacciService) async {
   final futures = <Future>[];
 
   for (var i = 0; i < 10; i++) {
-    futures.add(fibonacciService.fibonacci(20 + i).toFuture().then((res) =>
-        Squadron.fine(() =>
+    futures.add(fibonacciService.fibonacci(20 + i).then((res) => Squadron.fine(
+        () =>
             '[${fibonacciService.runtimeType}] fibonacci(${20 + i}) = $res')));
   }
   await Future.wait(futures);
@@ -254,8 +253,8 @@ Future<void> testFibWith(FibonacciService fibonacciService) async {
   await Future.delayed(Duration.zero);
 
   for (var i = 0; i < 10; i++) {
-    futures.add(fibonacciService.fibonacciList0(20 + i, 30 + i).toFuture().then(
-        (res) => Squadron.fine(() =>
+    futures.add(fibonacciService.fibonacciList0(20 + i, 30 + i).then((res) =>
+        Squadron.fine(() =>
             '[${fibonacciService.runtimeType}] fibonacciList0(${20 + i}, ${30 + i}) = $res')));
   }
   await Future.wait(futures);
@@ -264,8 +263,8 @@ Future<void> testFibWith(FibonacciService fibonacciService) async {
   await Future.delayed(Duration.zero);
 
   for (var i = 0; i < 10; i++) {
-    futures.add(fibonacciService.fibonacciList1(20 + i, 30 + i).toFuture().then(
-        (res) => Squadron.fine(() =>
+    futures.add(fibonacciService.fibonacciList1(20 + i, 30 + i).then((res) =>
+        Squadron.fine(() =>
             '[${fibonacciService.runtimeType}] fibonacciList1(${20 + i}, ${30 + i}) = $res')));
   }
   await Future.wait(futures);
@@ -274,8 +273,8 @@ Future<void> testFibWith(FibonacciService fibonacciService) async {
   await Future.delayed(Duration.zero);
 
   for (var i = 0; i < 10; i++) {
-    futures.add(fibonacciService.fibonacciList2(20 + i, 30 + i).toFuture().then(
-        (res) => Squadron.fine(() =>
+    futures.add(fibonacciService.fibonacciList2(20 + i, 30 + i).then((res) =>
+        Squadron.fine(() =>
             '[${fibonacciService.runtimeType}] fibonacciList2(${20 + i}, ${30 + i}) = $res')));
   }
   await Future.wait(futures);
@@ -304,7 +303,6 @@ Future<void> testEchoWith(EchoService echoService) async {
   for (var i = 0; i < loops; i++) {
     futures.add(echoService
         .jsonEchoWithJsonResult(ServiceRequest('echo $i'))
-        .toFuture()
         .then((res) => Squadron.fine(() =>
             '[${echoService.runtimeType}] jsonEchoWithJsonResult(\'echo $i\') = ${res?.toJson()}')));
   }
@@ -314,7 +312,6 @@ Future<void> testEchoWith(EchoService echoService) async {
   for (var i = 0; i < loops; i++) {
     futures.add(echoService
         .jsonEchoWithExplicitResult(ServiceRequest('echo $i'))
-        .toFuture()
         .then((res) => Squadron.fine(() =>
             '[${echoService.runtimeType}] jsonEchoWithExplicitResult(\'echo $i\') = ${res.toJson()}')));
   }
@@ -324,7 +321,6 @@ Future<void> testEchoWith(EchoService echoService) async {
   for (var i = 0; i < loops; i++) {
     futures.add(echoService
         .explicitEchoWithJsonResult(ServiceRequest('echo $i'))
-        .toFuture()
         .then((res) => Squadron.fine(() =>
             '[${echoService.runtimeType}] explicitEchoWithJsonResult(\'echo $i\') = ${res.toJson()}')));
   }
@@ -334,7 +330,6 @@ Future<void> testEchoWith(EchoService echoService) async {
   for (var i = 0; i < loops; i++) {
     futures.add(echoService
         .explicitEchoWithExplicitResult(ServiceRequest('echo $i'))
-        .toFuture()
         .then((res) => Squadron.fine(() =>
             '[${echoService.runtimeType}] explicitEchoWithExplicitResult(\'echo $i\') = ${res.toJson()}')));
   }
@@ -349,7 +344,7 @@ Future<void> perfTestEchoWith(EchoService echoService) async {
   final jsonSw = Stopwatch()..start();
   for (var i = 0; i < perfLoops; i++) {
     final req = ServiceRequest('echo $i');
-    futures.add(echoService.jsonEchoWithJsonResult(req).toFuture());
+    futures.add(echoService.jsonEchoWithJsonResult(req).future);
   }
   await Future.wait(futures);
   jsonSw.stop();
@@ -358,7 +353,7 @@ Future<void> perfTestEchoWith(EchoService echoService) async {
   final explicitSw = Stopwatch()..start();
   for (var i = 0; i < perfLoops; i++) {
     final req = ServiceRequest('echo $i');
-    futures.add(echoService.explicitEchoWithExplicitResult(req).toFuture());
+    futures.add(echoService.explicitEchoWithExplicitResult(req).future);
   }
   await Future.wait(futures);
   explicitSw.stop();
@@ -372,7 +367,7 @@ Future<void> perfTestJsonEchoWith(EchoService echoService) async {
   final jsonSw = Stopwatch()..start();
   for (var i = 0; i < perfLoops; i++) {
     final req = ServiceRequest('echo $i');
-    futures.add(echoService.jsonEchoWithJsonResult(req).toFuture());
+    futures.add(echoService.jsonEchoWithJsonResult(req).future);
   }
   await Future.wait(futures);
   jsonSw.stop();
@@ -381,7 +376,7 @@ Future<void> perfTestJsonEchoWith(EchoService echoService) async {
   final jsonEncodeSw = Stopwatch()..start();
   for (var i = 0; i < perfLoops; i++) {
     final req = ServiceRequest('echo $i');
-    futures.add(echoService.jsonEncodeEcho(req).toFuture());
+    futures.add(echoService.jsonEncodeEcho(req).future);
   }
   await Future.wait(futures);
   jsonEncodeSw.stop();
@@ -391,8 +386,13 @@ Future<void> perfTestJsonEchoWith(EchoService echoService) async {
 }
 
 extension Futurizer<X> on FutureOr<X> {
-  Future<X> toFuture() {
+  Future<X> get future {
     final value = this;
     return (value is X) ? Future.value(value) : value;
+  }
+
+  Future<Y> then<Y>(FutureOr<Y> Function(X) action) {
+    final value = this;
+    return (value is X) ? action(value).future : value.then(action);
   }
 }

@@ -1,35 +1,66 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.5.0
+// Generator: WorkerGenerator 2.4.2
 // **************************************************************************
 
 import 'package:squadron/squadron.dart';
 
-EntryPoint $getTestService1Activator() => throw UnimplementedError();
+EntryPoint $getTestParameterLessActivator() => throw UnimplementedError();
 
-EntryPoint $getTestService2Activator() => throw UnimplementedError();
+EntryPoint $getTestReqPositionalActivator() => throw UnimplementedError();
 
-EntryPoint $getTestService3Activator() => throw UnimplementedError();
+EntryPoint $getTestOptNullPositionalActivator() => throw UnimplementedError();
 
-EntryPoint $getTestService4Activator() => throw UnimplementedError();
+EntryPoint $getTestOptDefPositionalActivator() => throw UnimplementedError();
 
-EntryPoint $getTestService5Activator() => throw UnimplementedError();
+EntryPoint $getTestOptNullDefPositionalActivator() =>
+    throw UnimplementedError();
 
-EntryPoint $getTestService6Activator() => throw UnimplementedError();
+EntryPoint $getTestReqPositionalFieldActivator() => throw UnimplementedError();
 
-EntryPoint $getTestService7Activator() => throw UnimplementedError();
+EntryPoint $getTestOptNullPositionalFieldActivator() =>
+    throw UnimplementedError();
 
-EntryPoint $getTestService8Activator() => throw UnimplementedError();
+EntryPoint $getTestOptDefPositionalFieldActivator() =>
+    throw UnimplementedError();
 
-EntryPoint $getTestService9Activator() => throw UnimplementedError();
+EntryPoint $getTestOptNullDefPositionalFieldActivator() =>
+    throw UnimplementedError();
 
-EntryPoint $getTestService10Activator() => throw UnimplementedError();
+EntryPoint $getTestReqPositionalPrivateFieldActivator() =>
+    throw UnimplementedError();
 
-EntryPoint $getTestService11Activator() => throw UnimplementedError();
+EntryPoint $getTestOptNullPositionalPrivateFieldActivator() =>
+    throw UnimplementedError();
 
-EntryPoint $getTestService12Activator() => throw UnimplementedError();
+EntryPoint $getTestOptDefPositionalPrivateFieldActivator() =>
+    throw UnimplementedError();
 
-EntryPoint $getTestService13Activator() => throw UnimplementedError();
+EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator() =>
+    throw UnimplementedError();
 
-EntryPoint $getTestService14Activator() => throw UnimplementedError();
+EntryPoint $getTestOptNullNamedActivator() => throw UnimplementedError();
+
+EntryPoint $getTestOptDefNamedActivator() => throw UnimplementedError();
+
+EntryPoint $getTestOptNullDefNamedActivator() => throw UnimplementedError();
+
+EntryPoint $getTestOptNullNamedFieldActivator() => throw UnimplementedError();
+
+EntryPoint $getTestOptDefNamedFieldActivator() => throw UnimplementedError();
+
+EntryPoint $getTestOptNullDefNamedFieldActivator() =>
+    throw UnimplementedError();
+
+EntryPoint $getTestOptNullNamedPrivateFieldActivator() =>
+    throw UnimplementedError();
+
+EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
+    throw UnimplementedError();
+
+EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
+    throw UnimplementedError();
+
+EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
+    throw UnimplementedError();

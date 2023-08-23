@@ -68,7 +68,7 @@ class MarshalingManager extends SimpleElementVisitor {
   }
 
   Marshaler getMarshaler(DartType type, {Marshaler? explicit}) {
-    if (type is DynamicType) {
+    if (type is DynamicType || type is VoidType) {
       return Marshaler.identity;
     }
 

@@ -1,3 +1,12 @@
+## 2.4.2
+
+- Fix bug when service method returns `FutureOr<void>` or `Future<void>`.
+- Make the generated operations map unmodifiable.
+- [PR #7](https://github.com/d-markey/squadron_builder/pull/7) by [guid-empty](https://github.com/guid-empty): Minor changes to support required fields and fix to have Iterable parameters
+- [PR #8](https://github.com/d-markey/squadron_builder/pull/8) by [techouse](https://github.com/techouse): Allow usage of analyzer v6
+- Updated examples.
+- Added topics and funding information to pubspec.
+
 ## 2.4.1
 
 - Added example/README.md to comply with pub.dev checks.

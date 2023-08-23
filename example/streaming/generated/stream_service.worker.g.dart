@@ -3,7 +3,7 @@
 part of '../stream_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.5.0
+// Generator: WorkerGenerator 2.4.2
 // **************************************************************************
 
 /// WorkerService class for StreamService
@@ -14,9 +14,10 @@ class _$StreamServiceWorkerService extends StreamService
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {
-    _$clockId: ($) => clock(frequency: $.args[0], token: $.cancelToken)
-  };
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{
+    _$clockId: ($) => clock(frequency: $.args[0], token: $.cancelToken),
+  });
 
   static const int _$clockId = 1;
 }

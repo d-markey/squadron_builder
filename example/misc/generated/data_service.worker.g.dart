@@ -3,7 +3,7 @@
 part of '../data_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.5.0
+// Generator: WorkerGenerator 2.4.2
 // **************************************************************************
 
 /// WorkerService class for DataService
@@ -13,10 +13,11 @@ class _$DataServiceWorkerService extends DataService implements WorkerService {
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{
     _$doSomethingId: ($) async =>
-        (await doSomething(Data.unmarshall($.args[0]))).marshall()
-  };
+        (await doSomething(Data.unmarshall($.args[0]))).marshall(),
+  });
 
   static const int _$doSomethingId = 1;
 }

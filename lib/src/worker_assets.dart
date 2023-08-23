@@ -189,7 +189,9 @@ class WorkerAssets {
           Map<int, CommandHandler> get operations => _operations;
 
           late final Map<int, CommandHandler> _operations =
-              { ${commands.map(_commandHandler).join(',\n')} };
+              Map.unmodifiable(<int, CommandHandler>{
+                ${commands.map(_commandHandler).followedBy(['']).join(',\n')}
+              });
 
           ${commands.map(_commandId).join('\n')}
         }
@@ -400,8 +402,11 @@ class WorkerAssets {
     ''';
 
   /// Unimplemented member
-  String _unimplemented(String decl, {bool override = false}) => '''
+  String _unimplemented(String decl,
+          {bool override = false, bool unused = false}) =>
+      '''
       ${override ? '@override' : ''}
+      ${unused ? '// ignore: unused_element' : ''}
       $decl => throw UnimplementedError();
     ''';
 
@@ -415,6 +420,7 @@ class WorkerAssets {
             ? '${acc.returnType} get ${acc.name}'
             : 'set ${acc.name.replaceAll('=', '')}(${acc.returnType} value)',
         override: true,
+        unused: true,
       );
 
   /// Service method invocation from worker

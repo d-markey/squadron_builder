@@ -8,17 +8,14 @@ import 'generated/hello_world.activator.g.dart';
 
 part 'generated/hello_world.worker.g.dart';
 
-@UseLogger(ConsoleSquadronLogger)
+@UseLogger(ParentSquadronLogger)
 @SquadronService(web: false)
 class HelloWorld {
   @SquadronMethod()
   Future<String> hello([String? name]) async {
-    displayThreadId('hello(${name ?? ''})');
-    name = name?.trim();
-    if (name == null || name.isEmpty) {
-      return 'Hello, World!';
-    } else {
-      return 'Hello, $name!';
-    }
+    name = name?.trim() ?? '';
+    return name.isEmpty
+        ? 'Hello, World! from $workerId'
+        : 'Hello, $name! from $workerId';
   }
 }

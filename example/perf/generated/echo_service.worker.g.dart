@@ -3,7 +3,7 @@
 part of '../echo_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.5.0
+// Generator: WorkerGenerator 2.4.2
 // **************************************************************************
 
 /// WorkerService class for EchoService
@@ -15,7 +15,8 @@ class _$EchoServiceWorkerService extends EchoService implements WorkerService {
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{
     _$explicitEchoWithExplicitResultId: ($) async =>
         ServiceResponseOfStringToByteBuffer.instance.marshal(
             (await explicitEchoWithExplicitResult(
@@ -35,8 +36,8 @@ class _$EchoServiceWorkerService extends EchoService implements WorkerService {
     _$jsonEncodeEchoId: ($) async => (const ServiceResponseToJson()).marshal(
         (await jsonEncodeEcho(
             ServiceRequestToString.instance.unmarshal($.args[0]),
-            $.cancelToken)))
-  };
+            $.cancelToken))),
+  });
 
   static const int _$explicitEchoWithExplicitResultId = 1;
   static const int _$explicitEchoWithJsonResultId = 2;
@@ -118,9 +119,11 @@ class EchoServiceWorker extends Worker implements EchoService {
   void _simulateWorkload() => throw UnimplementedError();
 
   @override
+  // ignore: unused_element
   bool get _trace => throw UnimplementedError();
 
   @override
+  // ignore: unused_element
   Duration get _delay => throw UnimplementedError();
 }
 
@@ -165,8 +168,10 @@ class EchoServiceWorkerPool extends WorkerPool<EchoServiceWorker>
   void _simulateWorkload() => throw UnimplementedError();
 
   @override
+  // ignore: unused_element
   bool get _trace => throw UnimplementedError();
 
   @override
+  // ignore: unused_element
   Duration get _delay => throw UnimplementedError();
 }

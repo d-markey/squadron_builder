@@ -3,7 +3,7 @@
 part of '../fib_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.5.0
+// Generator: WorkerGenerator 2.4.2
 // **************************************************************************
 
 /// WorkerService class for FibService
@@ -13,9 +13,10 @@ class _$FibServiceWorkerService extends FibService implements WorkerService {
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {
-    _$fibonacciId: ($) => fibonacci($.args[0])
-  };
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{
+    _$fibonacciId: ($) => fibonacci($.args[0]),
+  });
 
   static const int _$fibonacciId = 1;
 }

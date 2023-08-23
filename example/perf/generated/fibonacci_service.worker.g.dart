@@ -3,7 +3,7 @@
 part of '../fibonacci_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.5.0
+// Generator: WorkerGenerator 2.4.2
 // **************************************************************************
 
 /// WorkerService class for FibonacciService
@@ -14,7 +14,8 @@ class _$FibonacciServiceWorkerService extends FibonacciService
   @override
   Map<int, CommandHandler> get operations => _operations;
 
-  late final Map<int, CommandHandler> _operations = {
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{
     _$fibonacciId: ($) => fibonacci($.args[0]),
     _$fibonacciList0Id: ($) async =>
         (await fibonacciList0($.args[0], $.args[1])).cast<int>(),
@@ -23,8 +24,8 @@ class _$FibonacciServiceWorkerService extends FibonacciService
     _$fibonacciList2Id: ($) async =>
         listIntMarshaler.marshal((await fibonacciList2($.args[0], $.args[1]))),
     _$fibonacciStreamId: ($) =>
-        fibonacciStream($.args[0], end: $.args[1], token: $.cancelToken)
-  };
+        fibonacciStream($.args[0], end: $.args[1], token: $.cancelToken),
+  });
 
   static const int _$fibonacciId = 1;
   static const int _$fibonacciList0Id = 2;
