@@ -81,20 +81,26 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
 
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
-    // load Squadron main library
-    if (_squadron == null) {
-      final sqAssetId = AssetId.resolve(_squadronUri);
-      final sqLibrary = await buildStep.resolver.libraryFor(sqAssetId);
-      _squadron = SquadronLibrary(sqLibrary);
+    try {
+      // load Squadron main library
+      if (_squadron == null) {
+        final sqAssetId = AssetId.resolve(_squadronUri);
+        final sqLibrary = await buildStep.resolver.libraryFor(sqAssetId);
+        _squadron = SquadronLibrary(sqLibrary);
+      }
+
+      // generate code
+      final result = await super.generate(library, buildStep);
+
+      // success, trigger code generation for additional assets associated to this libreay
+      _buildStepEventStream.add(BuildStepDoneEvent(buildStep));
+
+      return result;
+    } catch (ex, st) {
+      log.severe(ex);
+      log.severe(st);
+      rethrow;
     }
-
-    // generate code
-    final result = await super.generate(library, buildStep);
-
-    // success, trigger code generation for additional assets associated to this libreay
-    _buildStepEventStream.add(BuildStepDoneEvent(buildStep));
-
-    return result;
   }
 
   @override

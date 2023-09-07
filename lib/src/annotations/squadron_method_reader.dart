@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart' as gen;
@@ -42,6 +44,7 @@ class SquadronMethodReader {
   }
 
   final String name;
+  final _typeParameters = <String>[];
 
   final bool inspectRequest;
   final bool inspectResponse;
@@ -59,7 +62,9 @@ class SquadronMethodReader {
   final DartType valueType;
   final bool isStream;
 
-  String get declaration => '$returnType $name($parameters)';
+  String get declaration => _typeParameters.isEmpty
+      ? '$returnType $name($parameters)'
+      : '$returnType $name<${_typeParameters.join(', ')}>($parameters)';
 
   String get workerExecutor => isStream ? 'stream' : 'send';
   String get poolExecutor => isStream ? 'stream' : 'execute';
@@ -86,6 +91,16 @@ class SquadronMethodReader {
             '${method.librarySource.fullName}: public service method '
             '\'${method.enclosingElement.displayName}.${method.name}\' must '
             'return a Future, a FutureOr, or a Stream.');
+      }
+
+      stdout.writeln('''
+=== method.name = ${method.name}
+    method.typeParameters = ${method.typeParameters}
+    method.hasOptionalTypeArgs = ${method.hasOptionalTypeArgs}
+===''');
+
+      if (method.typeParameters.isNotEmpty) {
+        _typeParameters.addAll(method.typeParameters.map((e) => e.toString()));
       }
 
       final resultMarshaler = AnnotationReader.getExplicitMarshaler(method);

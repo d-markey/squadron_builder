@@ -94,10 +94,16 @@ class MarshalingManager extends SimpleElementVisitor {
       return Marshaler.map(type, explicit);
     }
 
-    type.element!.visitChildren(this);
-    final element = type.element?.declaration;
-    return (element == null)
+    final elt = type.element;
+    if (elt == null) {
+      // type has no associated element
+      return Marshaler.identity;
+    }
+
+    elt.visitChildren(this);
+    final decl = elt.declaration;
+    return (decl == null)
         ? Marshaler.identity
-        : _getOrAddMarshalingInfo(type, element).marshaler;
+        : _getOrAddMarshalingInfo(type, decl).marshaler;
   }
 }

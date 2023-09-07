@@ -6,10 +6,10 @@
 
 import 'package:squadron/squadron.dart';
 
-import '../hello_world.dart';
+import '../json_service.dart';
 
-/// VM entry point for HelloWorld
-void _start$HelloWorld(List<dynamic> command) =>
-    run($HelloWorldInitializer, command, ParentSquadronLogger());
+/// VM entry point for JsonService
+void _start$JsonService(List<dynamic> command) =>
+    run($JsonServiceInitializer, command, ConsoleSquadronLogger());
 
-EntryPoint $getHelloWorldActivator() => _start$HelloWorld;
+EntryPoint $getJsonServiceActivator() => _start$JsonService;

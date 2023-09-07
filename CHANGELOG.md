@@ -1,3 +1,10 @@
+## 2.4.3
+
+- Fix bug when generating code for generic service methods -- type arguments were lost in the process.
+- Fix bug when a service method argument has no associated element per Dart's analyzer -- such arguments will always be marshalled as-is.
+- These two corrections fix https://github.com/d-markey/squadron/issues/26.
+- Added example `json`.
+
 ## 2.4.2
 
 - Fix bug when service method returns `FutureOr<void>` or `Future<void>`.

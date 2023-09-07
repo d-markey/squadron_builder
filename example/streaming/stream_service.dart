@@ -24,4 +24,19 @@ class StreamService {
       await Future.delayed(delay);
     }
   }
+
+  @SquadronMethod()
+  Stream<int> infiniteClock({int frequency = 1 /* Hz */}) async* {
+    var n = 0;
+    final ms = 1000 ~/ frequency;
+    if (ms == 0) {
+      throw Exception('Frequency is too high!');
+    }
+    final delay = Duration(milliseconds: ms);
+    while (true) {
+      yield n;
+      n += 1;
+      await Future.delayed(delay);
+    }
+  }
 }

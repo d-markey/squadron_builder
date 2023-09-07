@@ -1,11 +1,15 @@
+import 'package:squadron/squadron.dart';
+
 import 'stream_service.dart';
 
 void main() async {
+  Squadron.logLevel = SquadronLogLevel.all;
+  Squadron.setLogger(ConsoleSquadronLogger());
   // start worker
   final worker = StreamServiceWorker();
   await worker.start();
   // start streaming from clock service
-  final stream = worker.clock(frequency: 2);
+  final stream = worker.infiniteClock(frequency: 2);
   final sub = stream.listen((event) {
     print('${DateTime.now()} - received $event');
   }, onError: (err) {
