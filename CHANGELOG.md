@@ -1,3 +1,7 @@
+## 2.4.3+1
+
+- Remove debug output leftovers.
+
 ## 2.4.3
 
 - Fix bug when generating code for generic service methods -- type arguments were lost in the process.

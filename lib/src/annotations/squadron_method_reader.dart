@@ -93,12 +93,6 @@ class SquadronMethodReader {
             'return a Future, a FutureOr, or a Stream.');
       }
 
-      stdout.writeln('''
-=== method.name = ${method.name}
-    method.typeParameters = ${method.typeParameters}
-    method.hasOptionalTypeArgs = ${method.hasOptionalTypeArgs}
-===''');
-
       if (method.typeParameters.isNotEmpty) {
         _typeParameters.addAll(method.typeParameters.map((e) => e.toString()));
       }
