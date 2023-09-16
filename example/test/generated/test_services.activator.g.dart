@@ -90,3 +90,6 @@ final $TestOptNullDefNamedPrivateFieldActivator =
 /// Service activator for TestOptNullDefNamedPrivateNonFinalField
 final $TestOptNullDefNamedPrivateNonFinalFieldActivator =
     $getTestOptNullDefNamedPrivateNonFinalFieldActivator();
+
+/// Service activator for TestInstallable
+final $TestInstallableActivator = $getTestInstallableActivator();

@@ -64,3 +64,5 @@ EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
 
 EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
     throw UnimplementedError();
+
+EntryPoint $getTestInstallableActivator() => throw UnimplementedError();

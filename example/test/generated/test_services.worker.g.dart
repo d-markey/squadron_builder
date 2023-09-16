@@ -1253,3 +1253,69 @@ class TestOptNullDefNamedPrivateNonFinalFieldWorker extends Worker
   // ignore: unused_element
   set _state(void value) => throw UnimplementedError();
 }
+
+/// WorkerService class for TestInstallable
+class _$TestInstallableWorkerService extends TestInstallable
+    implements WorkerService {
+  _$TestInstallableWorkerService(int delay) : super(delay);
+
+  @override
+  Map<int, CommandHandler> get operations => _operations;
+
+  late final Map<int, CommandHandler> _operations =
+      Map.unmodifiable(<int, CommandHandler>{});
+}
+
+/// Service initializer for TestInstallable
+WorkerService $TestInstallableInitializer(WorkerRequest startRequest) =>
+    _$TestInstallableWorkerService(startRequest.args[0]);
+
+/// Operations map for TestInstallable
+@Deprecated(
+    'squadron_builder now supports "plain old Dart objects" as services. '
+    'Services do not need to derive from WorkerService nor do they need to mix in '
+    'with \$TestInstallableOperations anymore.')
+mixin $TestInstallableOperations on WorkerService {
+  @override
+  // not needed anymore, generated for compatibility with previous versions of squadron_builder
+  Map<int, CommandHandler> get operations => WorkerService.noOperations;
+}
+
+/// Worker for TestInstallable
+class TestInstallableWorker extends Worker implements TestInstallable {
+  TestInstallableWorker(int delay, {PlatformWorkerHook? platformWorkerHook})
+      : super($TestInstallableActivator,
+            args: [delay], platformWorkerHook: platformWorkerHook);
+
+  @override
+  FutureOr<void> install() => throw UnimplementedError();
+
+  @override
+  FutureOr<void> uninstall() => throw UnimplementedError();
+
+  @override
+  // ignore: unused_element
+  int get _delay => throw UnimplementedError();
+}
+
+/// Worker pool for TestInstallable
+class TestInstallableWorkerPool extends WorkerPool<TestInstallableWorker>
+    implements TestInstallable {
+  TestInstallableWorkerPool(int delay,
+      {ConcurrencySettings? concurrencySettings,
+      PlatformWorkerHook? platformWorkerHook})
+      : super(
+            () => TestInstallableWorker(delay,
+                platformWorkerHook: platformWorkerHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  FutureOr<void> install() => throw UnimplementedError();
+
+  @override
+  FutureOr<void> uninstall() => throw UnimplementedError();
+
+  @override
+  // ignore: unused_element
+  int get _delay => throw UnimplementedError();
+}

@@ -184,3 +184,24 @@ class TestOptNullDefNamedPrivateNonFinalField {
   @SquadronMethod()
   FutureOr<void> setState(int? state) => _state = state;
 }
+
+@SquadronService()
+class TestInstallable extends ServiceInstaller {
+  TestInstallable(this._delay);
+
+  final int _delay;
+
+  @override
+  FutureOr<void> install() {
+    if (_delay > 0) {
+      return Future.delayed(Duration(milliseconds: _delay));
+    }
+  }
+
+  @override
+  FutureOr<void> uninstall() {
+    if (_delay > 0) {
+      return Future.delayed(Duration(milliseconds: _delay));
+    }
+  }
+}

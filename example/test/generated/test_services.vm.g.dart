@@ -159,3 +159,9 @@ void _start$TestOptNullDefNamedPrivateNonFinalField(List<dynamic> command) =>
 
 EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
     _start$TestOptNullDefNamedPrivateNonFinalField;
+
+/// VM entry point for TestInstallable
+void _start$TestInstallable(List<dynamic> command) =>
+    run($TestInstallableInitializer, command, null);
+
+EntryPoint $getTestInstallableActivator() => _start$TestInstallable;

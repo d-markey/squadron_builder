@@ -77,6 +77,9 @@ void main() {
 
   /// Web entry point for TestOptNullDefNamedPrivateNonFinalField
   run($TestOptNullDefNamedPrivateNonFinalFieldInitializer, null, null);
+
+  /// Web entry point for TestInstallable
+  run($TestInstallableInitializer, null, null);
 }
 
 EntryPoint $getTestParameterLessActivator() =>
@@ -146,4 +149,7 @@ EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
 EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
+    'example/test/generated/test_services.web.g.dart.js';
+
+EntryPoint $getTestInstallableActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
