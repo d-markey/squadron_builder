@@ -5,11 +5,11 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
 
+import '_overrides.dart';
 import 'annotations/marshalers/marshaling_info.dart';
 import 'annotations/squadron_library.dart';
 import 'annotations/squadron_method_reader.dart';
 import 'annotations/squadron_service_reader.dart';
-import '_overrides.dart';
 import 'build_step_events.dart';
 
 /// Code generator for worker service/operation maps, workers, worker pools, service initializers
@@ -388,7 +388,8 @@ class WorkerAssets {
       if (cmd.isStream) {
         return '${cmd.id}: ($req) => $serviceCall.${cmd.continuation}(($res) => ${cmd.serializedResult(res)})';
       } else {
-        return '${cmd.id}: ($req) async => ${cmd.serializedResult('(await $serviceCall)')}';
+        final result = '\$r';
+        return '${cmd.id}: ($req) async { final $result = await $serviceCall; return ${cmd.serializedResult(result)}; }';
       }
     } else {
       return '${cmd.id}: ($req) => $serviceCall';
