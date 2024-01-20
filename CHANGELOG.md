@@ -1,6 +1,6 @@
 ## 2.4.5
 
-- Fix bug for async service method decorated with a marshaler: the service method was called twice!
+- Fix bug for async service method decorated with a marshaler: the service method was called twice if the return value is nullable!
 
 ## 2.4.4
 
