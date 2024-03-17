@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.4.2
+// Generator: WorkerGenerator 6.0.0
 // **************************************************************************
 
 import 'package:squadron/squadron.dart';
@@ -10,6 +10,6 @@ import '../echo_service.dart';
 
 /// VM entry point for EchoService
 void _start$EchoService(List<dynamic> command) =>
-    run($EchoServiceInitializer, command, ParentSquadronLogger());
+    run($EchoServiceInitializer, command);
 
 EntryPoint $getEchoServiceActivator() => _start$EchoService;

@@ -1,22 +1,24 @@
 part of 'marshaler.dart';
 
 class _JsonMarshaler extends Marshaler {
-  _JsonMarshaler(DartType type) : _typeName = type.baseName;
+  _JsonMarshaler(ManagedType type)
+      : _typeName = type.getTypeName(NullabilitySuffix.none);
 
   final String _typeName;
 
   @override
-  bool targets(DartType type) => type.baseName == _typeName;
+  bool targets(ManagedType type) =>
+      type.getTypeName(NullabilitySuffix.none) == _typeName;
 
   @override
-  Adapter getSerializer(DartType type) =>
+  Adapter getSerializer(ManagedType type) =>
       (type.nullabilitySuffix == NullabilitySuffix.none)
           ? (v) => '$v.toJson()'
           : (v) => '$v?.toJson()';
 
   @override
-  Adapter getDeserializer(DartType type) {
-    final typeName = type.baseName;
+  Adapter getDeserializer(ManagedType type) {
+    final typeName = type.getTypeName(NullabilitySuffix.none);
     return (type.nullabilitySuffix == NullabilitySuffix.none)
         ? (v) => '$typeName.fromJson($v)'
         : (v) => '($v == null) ? null : $typeName.fromJson($v)';

@@ -1,10 +1,6 @@
-import 'package:squadron/squadron.dart';
-
 import 'stream_service.dart';
 
 void main() async {
-  Squadron.logLevel = SquadronLogLevel.all;
-  Squadron.setLogger(ConsoleSquadronLogger());
   // start worker
   final worker = StreamServiceWorker();
   await worker.start();

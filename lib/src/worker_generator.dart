@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:squadron/squadron_annotations.dart';
+import 'package:squadron/squadron.dart';
+import 'package:squadron_builder/src/types/type_manager.dart';
 
-import 'annotations/squadron_library.dart';
-import 'annotations/squadron_service_reader.dart';
 import 'build_step_events.dart';
+import 'readers/squadron_service_reader.dart';
 import 'version.dart';
 import 'worker_assets.dart';
 
@@ -76,19 +76,9 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     }
   }
 
-  static final _squadronUri = Uri.parse('package:squadron/squadron.dart');
-  SquadronLibrary? _squadron;
-
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
     try {
-      // load Squadron main library
-      if (_squadron == null) {
-        final sqAssetId = AssetId.resolve(_squadronUri);
-        final sqLibrary = await buildStep.resolver.libraryFor(sqAssetId);
-        _squadron = SquadronLibrary(sqLibrary);
-      }
-
       // generate code
       final result = await super.generate(library, buildStep);
 
@@ -109,21 +99,21 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     final classElt = element;
     if (classElt is! ClassElement) return;
 
-    // implementation moved to specific methods to facilitate unit tests
-    final service = SquadronServiceReader.load(classElt)!;
+    final typeManager = TypeManager(classElt.library);
 
-    final assets = WorkerAssets(buildStep, _squadron!, service);
+    // implementation moved to specific methods to facilitate unit tests
+    final service = SquadronServiceReader.load(classElt, typeManager)!;
+
+    final assets = WorkerAssets(buildStep, service);
 
     final codeEvent = BuildStepCodeEvent(buildStep, classElt);
-    assets.generateVmCode(codeEvent, service.logger);
-    assets.generateWebCode(codeEvent, service.logger);
+    assets.generateVmCode(codeEvent);
+    assets.generateWebCode(codeEvent);
     assets.generateCrossPlatformCode(codeEvent);
     assets.generateActivatorCode(codeEvent);
     _buildStepEventStream.add(codeEvent);
 
-    await for (var code in assets.generateMapWorkerAndPool(_withFinalizers)) {
-      yield code;
-    }
+    yield* assets.generateWorkerAndPool(_withFinalizers);
   }
 
   @override

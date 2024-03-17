@@ -1,26 +1,24 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
+import 'package:squadron_builder/src/types/type_manager.dart';
 
 import '_overrides.dart';
-import 'annotations/marshalers/marshaling_info.dart';
-import 'annotations/squadron_library.dart';
-import 'annotations/squadron_method_reader.dart';
-import 'annotations/squadron_service_reader.dart';
 import 'build_step_events.dart';
+import 'marshalers/marshaling_info.dart';
+import 'readers/dart_method_reader.dart';
+import 'readers/squadron_service_reader.dart';
 
 /// Code generator for worker service/operation maps, workers, worker pools, service initializers
 /// and worker activators.
 @internal
 class WorkerAssets {
-  WorkerAssets(BuildStep buildStep, this._squadron, this._service)
+  WorkerAssets(BuildStep buildStep, this._service)
       : _workerServiceClassName = '_\$${_service.name}WorkerService',
         _workerClassName = '${_service.name}Worker',
         _workerPoolClassName = '${_service.name}WorkerPool',
-        _operationsMixinName = '\$${_service.name}Operations',
         _serviceInitializerName = '\$${_service.name}Initializer',
         _serviceActivator = '${_service.name}Activator',
         _inputId = buildStep.inputId {
@@ -46,9 +44,7 @@ class WorkerAssets {
 
   final SquadronServiceReader _service;
 
-  final SquadronLibrary _squadron;
-
-  final String _operationsMixinName; // TODO: remove in a future version
+  TypeManager get _typeManager => _service.typeManager;
 
   final String _workerServiceClassName;
   final String _workerClassName;
@@ -60,49 +56,71 @@ class WorkerAssets {
   void generateCrossPlatformCode(BuildStepCodeEvent codeEvent) {
     final output = _xplatOutput;
     if (output != null && _vmOutput != null && _webOutput != null) {
-      if (_squadron.entryPointTypeName is! DynamicType) {
-        codeEvent.import(output, 'package:squadron/squadron.dart');
-      }
+      codeEvent.import(
+        output,
+        'package:squadron/squadron.dart',
+        prefix: _typeManager.squadronPrefix,
+      );
       codeEvent.add(
-          output,
-          _unimplemented(
-              '${_squadron.entryPointTypeName} \$get$_serviceActivator()'));
+        output,
+        _unimplemented(
+            '${_typeManager.entryPointType} \$get$_serviceActivator()'),
+      );
     }
   }
 
   /// Service activator (native platforms)
-  void generateVmCode(BuildStepCodeEvent codeEvent, String? logger) {
+  void generateVmCode(BuildStepCodeEvent codeEvent) {
     final output = _vmOutput;
     if (output != null) {
-      final serializationType = _squadron.serializationTypeName.toString();
-      final serviceImport = _getRelativePath(_inputId, output);
-      codeEvent.import(output, 'package:squadron/squadron.dart');
-      codeEvent.import(output, serviceImport);
-      codeEvent.add(output, '''
-          /// VM entry point for ${_service.name}
-          void _start\$${_service.name}($serializationType command) => run($_serviceInitializerName, command, $logger);
+      codeEvent.import(output, 'package:squadron/squadron.dart',
+          prefix: _typeManager.squadronPrefix);
+      codeEvent.import(output, _getRelativePath(_inputId, output));
 
-          ${_squadron.entryPointTypeName} \$get$_serviceActivator() => _start\$${_service.name};
-        ''');
+      final run = _typeManager.squadronPrefix.isEmpty
+          ? 'run'
+          : '${_typeManager.squadronPrefix}.run';
+
+      codeEvent.add(
+        output,
+        '''/// VM entry point for ${_service.name}
+           void _start\$${_service.name}(${_typeManager.listType} command) => $run($_serviceInitializerName, command);
+
+           ${_typeManager.entryPointType} \$get$_serviceActivator() => _start\$${_service.name};
+        ''',
+      );
     }
   }
 
   /// Service activator (Web platforms)
-  void generateWebCode(BuildStepCodeEvent codeEvent, String? logger) {
+  void generateWebCode(BuildStepCodeEvent codeEvent) {
     final output = _webOutput;
     if (output != null) {
-      final serviceImport = _getRelativePath(_inputId, output);
+      codeEvent.import(
+        output,
+        'package:squadron/squadron.dart',
+        prefix: _typeManager.squadronPrefix,
+      );
+      codeEvent.import(output, _getRelativePath(_inputId, output));
+
+      final run = _typeManager.squadronPrefix.isEmpty
+          ? 'run'
+          : '${_typeManager.squadronPrefix}.run';
+
+      codeEvent.addWebEntryPoint(
+        output,
+        '''/// Web entry point for ${_service.name}
+           $run($_serviceInitializerName);
+        ''',
+      );
+
       final workerUrl = _service.baseUrl.isEmpty
           ? '${output.path}.js'
           : '${_service.baseUrl}/${output.pathSegments.last}.js';
-      codeEvent.import(output, 'package:squadron/squadron.dart');
-      codeEvent.import(output, serviceImport);
-      codeEvent.addWebEntryPoint(output, '''
-          /// Web entry point for ${_service.name}
-          run($_serviceInitializerName, null, $logger);
-        ''');
-      codeEvent.add(output,
-          '${_squadron.entryPointTypeName} \$get$_serviceActivator() => \'$workerUrl\';');
+      codeEvent.add(
+        output,
+        '${_typeManager.entryPointType} \$get$_serviceActivator() => \'$workerUrl\';',
+      );
     }
   }
 
@@ -111,53 +129,44 @@ class WorkerAssets {
     final output = _activatorOutput;
     if (output != null) {
       if (_xplatOutput != null && _webOutput != null && _vmOutput != null) {
-        final stubImport = _getRelativePath(_xplatOutput!, output);
-        final webImport = _getRelativePath(_webOutput!, output);
-        final vmImport = _getRelativePath(_vmOutput!, output);
-        codeEvent.import(output, stubImport, platformSpecific: {
-          'js': webImport,
-          'html': webImport,
-          'io': vmImport
-        });
-        codeEvent.add(output, '''
-          /// Service activator for ${_service.name}
-          final \$$_serviceActivator = \$get$_serviceActivator();
-        ''');
+        codeEvent.import(
+          output,
+          _getRelativePath(_xplatOutput!, output),
+          platformSpecific: {
+            'js': _getRelativePath(_webOutput!, output),
+            'html': _getRelativePath(_webOutput!, output),
+            'io': _getRelativePath(_vmOutput!, output),
+          },
+        );
       } else if (_vmOutput != null) {
-        final vmImport = _getRelativePath(_vmOutput!, output);
-        codeEvent.import(output, vmImport);
-        codeEvent.add(output, '''
-          /// Service activator for ${_service.name}
-          final \$$_serviceActivator = \$get$_serviceActivator();
-        ''');
+        codeEvent.import(output, _getRelativePath(_vmOutput!, output));
       } else if (_webOutput != null) {
-        final webImport = _getRelativePath(_webOutput!, output);
-        codeEvent.import(output, webImport);
-        codeEvent.add(output, '''
-          /// Service activator for ${_service.name}
+        codeEvent.import(output, _getRelativePath(_webOutput!, output));
+      }
+
+      codeEvent.add(output, '''/// Service activator for ${_service.name}
           final \$$_serviceActivator = \$get$_serviceActivator();
         ''');
-      }
     }
   }
 
-  /// Operation map, service initializer, worker and worker pool
-  Stream<String> generateMapWorkerAndPool(bool withFinalizers) {
+  /// Worker and worker pool (including operation map and service initializer)
+  Stream<String> generateWorkerAndPool(bool withFinalizers) {
     final commands = <SquadronMethodReader>[];
-    final unimplemented = <SquadronMethodReader>[];
+    final unimplemented = <DartMethodReader>[];
 
     for (var method in _service.methods) {
       // load command info
-      final command = SquadronMethodReader.load(method);
+      final command = DartMethodReader.load(method, _service.typeManager);
       if (command == null) {
         // ignore this one
         continue;
-      } else if (command is OtherMethodReader) {
-        // not a Squadron command: override as unimplemented in worker / pool
-        unimplemented.add(command);
-      } else {
+      } else if (command is SquadronMethodReader) {
         // Squadron command: override to use worker / pool
         commands.add(command);
+      } else {
+        // not a Squadron command: override as unimplemented in worker / pool
+        unimplemented.add(command);
       }
     }
 
@@ -169,7 +178,6 @@ class WorkerAssets {
     return Stream.fromIterable([
       _generateServiceClass(commands),
       _generateServiceInitializer(),
-      _generateLegacyMixin(),
       _generateWorker(commands, unimplemented, finalizable: withFinalizers),
       if (_service.pool)
         _generateWorkerPool(commands, unimplemented,
@@ -181,15 +189,15 @@ class WorkerAssets {
     final params = _service.parameters;
     return '''
         /// WorkerService class for ${_service.name}
-        class $_workerServiceClassName extends ${_service.name} implements WorkerService {
+        class $_workerServiceClassName extends ${_service.name} implements ${_typeManager.workerServiceType} {
 
           $_workerServiceClassName(${params.toStringNoFields()}): super(${params.arguments()});
 
           @override
-          Map<int, CommandHandler> get operations => _operations;
+          Map<int, ${_typeManager.commandHandlerType}> get operations => _operations;
 
-          late final Map<int, CommandHandler> _operations =
-              Map.unmodifiable(<int, CommandHandler>{
+          late final Map<int, ${_typeManager.commandHandlerType}> _operations =
+              Map.unmodifiable(<int, ${_typeManager.commandHandlerType}>{
                 ${commands.map(_commandHandler).followedBy(['']).join(',\n')}
               });
 
@@ -198,28 +206,16 @@ class WorkerAssets {
       ''';
   }
 
-  String _generateLegacyMixin() => '''
-        /// Operations map for ${_service.name}
-        @Deprecated('squadron_builder now supports "plain old Dart objects" as services. '
-          'Services do not need to derive from WorkerService nor do they need to mix in '
-          'with \\$_operationsMixinName anymore.')
-        mixin $_operationsMixinName on WorkerService {
-          @override
-          // not needed anymore, generated for compatibility with previous versions of squadron_builder
-          Map<int, CommandHandler> get operations => WorkerService.noOperations;
-        }
-      ''';
-
   /// Service initializer
   String _generateServiceInitializer() => '''
         /// Service initializer for ${_service.name}
-        WorkerService $_serviceInitializerName(WorkerRequest startRequest)
+        ${_typeManager.workerServiceType} $_serviceInitializerName(${_typeManager.workerRequestType} startRequest)
             => $_workerServiceClassName(${_service.parameters.deserialize('startRequest')});
       ''';
 
   /// Worker
-  String _generateWorker(List<SquadronMethodReader> commands,
-      List<SquadronMethodReader> unimplemented,
+  String _generateWorker(
+      List<SquadronMethodReader> commands, List<DartMethodReader> unimplemented,
       {bool finalizable = false}) {
     final serialized = _service.parameters.serialize();
     var activationArgs = serialized.isEmpty
@@ -227,19 +223,17 @@ class WorkerAssets {
         : '$_serviceActivator, args: [$serialized]';
 
     var params = _service.parameters;
-    if (_squadron.platformWorkerHookTypeName != null) {
-      params = params.clone();
-      final pwh = params.addOptional(
-          'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
-      activationArgs += ', ${pwh.namedArgument()}';
-    }
+    params = params.clone();
+    final threadHook =
+        params.addOptional('threadHook', _typeManager.platformThreadHookType);
+    activationArgs += ', ${threadHook.namedArgument()}';
 
     final className = finalizable ? '_\$$_workerClassName' : _workerClassName;
 
     var workerCode = '''
         /// Worker for ${_service.name}
         class $className
-          extends Worker
+          extends ${_typeManager.workerType}
           implements ${_service.name} {
           
           $className($params) : super(\$$activationArgs);
@@ -285,10 +279,10 @@ class WorkerAssets {
 
           ${_service.accessors.map((acc) => _forwardAccessor(acc, worker)).join('\n\n')}
 
-          ${workerOverrides.entries.map((e) => _forwardOverride(e.key, worker, e.value)).join('\n\n')}
+          ${getWorkerOverrides(_typeManager).entries.map((e) => _forwardOverride(e.key, worker, e.value)).join('\n\n')}
 
           @override
-          Map<int, CommandHandler> get operations => WorkerService.noOperations;
+          Map<int, ${_typeManager.commandHandlerType}> get operations => ${_typeManager.workerServiceType}.noOperations;
         }
       ''';
     }
@@ -297,20 +291,17 @@ class WorkerAssets {
   }
 
   /// Worker pool
-  String _generateWorkerPool(List<SquadronMethodReader> commands,
-      List<SquadronMethodReader> unimplemented,
+  String _generateWorkerPool(
+      List<SquadronMethodReader> commands, List<DartMethodReader> unimplemented,
       {bool finalizable = false}) {
     var poolParams = _service.parameters.clone();
     final cs = poolParams.addOptional(
-        'concurrencySettings', _squadron.concurrencySettingsTypeName);
+        'concurrencySettings', _typeManager.concurrencySettingsType);
     var serviceParams = _service.parameters;
-    if (_squadron.platformWorkerHookTypeName != null) {
-      poolParams.addOptional(
-          'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
-      serviceParams = serviceParams.clone();
-      serviceParams.addOptional(
-          'platformWorkerHook', _squadron.platformWorkerHookTypeName!);
-    }
+    poolParams.addOptional('threadHook', _typeManager.platformThreadHookType);
+    serviceParams = serviceParams.clone();
+    serviceParams.addOptional(
+        'threadHook', _typeManager.platformThreadHookType);
 
     final className =
         finalizable ? '_\$$_workerPoolClassName' : _workerPoolClassName;
@@ -318,7 +309,7 @@ class WorkerAssets {
     var workerPoolCode = '''
         /// Worker pool for ${_service.name}
         class $className
-          extends WorkerPool<$_workerClassName>
+          extends ${_typeManager.workerPoolType}<$_workerClassName>
           implements ${_service.name} {
 
           $className($poolParams) : super(
@@ -366,10 +357,10 @@ class WorkerAssets {
 
           ${_service.accessors.map((acc) => _forwardAccessor(acc, pool)).join('\n\n')}
 
-          ${workerPoolOverrides.entries.map((e) => _forwardOverride(e.key, pool, e.value)).join('\n\n')}
+          ${getWorkerPoolOverrides(_typeManager).entries.map((e) => _forwardOverride(e.key, pool, e.value)).join('\n\n')}
 
           @override
-          Map<int, CommandHandler> get operations => WorkerService.noOperations;
+          Map<int, ${_typeManager.commandHandlerType}> get operations => ${_typeManager.workerServiceType}.noOperations;
         }''';
     }
 
@@ -412,7 +403,7 @@ class WorkerAssets {
     ''';
 
   /// Unimplemented field/method
-  String _unimplementedMethod(SquadronMethodReader cmd) =>
+  String _unimplementedMethod(DartMethodReader cmd) =>
       _unimplemented(cmd.declaration, override: true);
 
   /// Unimplemented accessor
@@ -434,8 +425,8 @@ class WorkerAssets {
     final args = [
       '$_workerServiceClassName.${cmd.id}',
       'args: [ ${cmd.parameters.serialize()} ]',
-      if (cmd.parameters.cancellationToken != null)
-        'token: ${cmd.parameters.cancellationToken}',
+      if (cmd.parameters.cancelationToken != null)
+        'token: ${cmd.parameters.cancelationToken}',
       if (cmd.inspectRequest) 'inspectRequest: true',
       if (cmd.inspectResponse) 'inspectResponse: true'
     ].join(', ');
@@ -463,7 +454,7 @@ class WorkerAssets {
     ''';
 
   /// Proxy for service method
-  String _forwardMethod(SquadronMethodReader cmd, String target) => '''
+  String _forwardMethod(DartMethodReader cmd, String target) => '''
       @override
       ${cmd.declaration} => $target.${cmd.name}(${cmd.parameters.arguments()});
     ''';

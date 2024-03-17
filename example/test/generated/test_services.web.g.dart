@@ -1,155 +1,155 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.4.2
+// Generator: WorkerGenerator 6.0.0
 // **************************************************************************
 
-import 'package:squadron/squadron.dart';
+import 'package:squadron/squadron.dart' as sq;
 
 import '../test_services.dart';
 
 void main() {
   /// Web entry point for TestParameterLess
-  run($TestParameterLessInitializer, null, null);
+  sq.run($TestParameterLessInitializer);
 
   /// Web entry point for TestReqPositional
-  run($TestReqPositionalInitializer, null, null);
+  sq.run($TestReqPositionalInitializer);
 
   /// Web entry point for TestOptNullPositional
-  run($TestOptNullPositionalInitializer, null, null);
+  sq.run($TestOptNullPositionalInitializer);
 
   /// Web entry point for TestOptDefPositional
-  run($TestOptDefPositionalInitializer, null, null);
+  sq.run($TestOptDefPositionalInitializer);
 
   /// Web entry point for TestOptNullDefPositional
-  run($TestOptNullDefPositionalInitializer, null, null);
+  sq.run($TestOptNullDefPositionalInitializer);
 
   /// Web entry point for TestReqPositionalField
-  run($TestReqPositionalFieldInitializer, null, null);
+  sq.run($TestReqPositionalFieldInitializer);
 
   /// Web entry point for TestOptNullPositionalField
-  run($TestOptNullPositionalFieldInitializer, null, null);
+  sq.run($TestOptNullPositionalFieldInitializer);
 
   /// Web entry point for TestOptDefPositionalField
-  run($TestOptDefPositionalFieldInitializer, null, null);
+  sq.run($TestOptDefPositionalFieldInitializer);
 
   /// Web entry point for TestOptNullDefPositionalField
-  run($TestOptNullDefPositionalFieldInitializer, null, null);
+  sq.run($TestOptNullDefPositionalFieldInitializer);
 
   /// Web entry point for TestReqPositionalPrivateField
-  run($TestReqPositionalPrivateFieldInitializer, null, null);
+  sq.run($TestReqPositionalPrivateFieldInitializer);
 
   /// Web entry point for TestOptNullPositionalPrivateField
-  run($TestOptNullPositionalPrivateFieldInitializer, null, null);
+  sq.run($TestOptNullPositionalPrivateFieldInitializer);
 
   /// Web entry point for TestOptDefPositionalPrivateField
-  run($TestOptDefPositionalPrivateFieldInitializer, null, null);
+  sq.run($TestOptDefPositionalPrivateFieldInitializer);
 
   /// Web entry point for TestOptNullDefPositionalPrivateField
-  run($TestOptNullDefPositionalPrivateFieldInitializer, null, null);
+  sq.run($TestOptNullDefPositionalPrivateFieldInitializer);
 
   /// Web entry point for TestOptNullNamed
-  run($TestOptNullNamedInitializer, null, null);
+  sq.run($TestOptNullNamedInitializer);
 
   /// Web entry point for TestOptDefNamed
-  run($TestOptDefNamedInitializer, null, null);
+  sq.run($TestOptDefNamedInitializer);
 
   /// Web entry point for TestOptNullDefNamed
-  run($TestOptNullDefNamedInitializer, null, null);
+  sq.run($TestOptNullDefNamedInitializer);
 
   /// Web entry point for TestOptNullNamedField
-  run($TestOptNullNamedFieldInitializer, null, null);
+  sq.run($TestOptNullNamedFieldInitializer);
 
   /// Web entry point for TestOptDefNamedField
-  run($TestOptDefNamedFieldInitializer, null, null);
+  sq.run($TestOptDefNamedFieldInitializer);
 
   /// Web entry point for TestOptNullDefNamedField
-  run($TestOptNullDefNamedFieldInitializer, null, null);
+  sq.run($TestOptNullDefNamedFieldInitializer);
 
   /// Web entry point for TestOptNullNamedPrivateField
-  run($TestOptNullNamedPrivateFieldInitializer, null, null);
+  sq.run($TestOptNullNamedPrivateFieldInitializer);
 
   /// Web entry point for TestOptDefNamedPrivateField
-  run($TestOptDefNamedPrivateFieldInitializer, null, null);
+  sq.run($TestOptDefNamedPrivateFieldInitializer);
 
   /// Web entry point for TestOptNullDefNamedPrivateField
-  run($TestOptNullDefNamedPrivateFieldInitializer, null, null);
+  sq.run($TestOptNullDefNamedPrivateFieldInitializer);
 
   /// Web entry point for TestOptNullDefNamedPrivateNonFinalField
-  run($TestOptNullDefNamedPrivateNonFinalFieldInitializer, null, null);
+  sq.run($TestOptNullDefNamedPrivateNonFinalFieldInitializer);
 
   /// Web entry point for TestInstallable
-  run($TestInstallableInitializer, null, null);
+  sq.run($TestInstallableInitializer);
 }
 
-EntryPoint $getTestParameterLessActivator() =>
+sq.EntryPoint $getTestParameterLessActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestReqPositionalActivator() =>
+sq.EntryPoint $getTestReqPositionalActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullPositionalActivator() =>
+sq.EntryPoint $getTestOptNullPositionalActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptDefPositionalActivator() =>
+sq.EntryPoint $getTestOptDefPositionalActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullDefPositionalActivator() =>
+sq.EntryPoint $getTestOptNullDefPositionalActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestReqPositionalFieldActivator() =>
+sq.EntryPoint $getTestReqPositionalFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullPositionalFieldActivator() =>
+sq.EntryPoint $getTestOptNullPositionalFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptDefPositionalFieldActivator() =>
+sq.EntryPoint $getTestOptDefPositionalFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullDefPositionalFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefPositionalFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestReqPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestReqPositionalPrivateFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullPositionalPrivateFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptDefPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptDefPositionalPrivateFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullNamedActivator() =>
+sq.EntryPoint $getTestOptNullNamedActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptDefNamedActivator() =>
+sq.EntryPoint $getTestOptDefNamedActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullDefNamedActivator() =>
+sq.EntryPoint $getTestOptNullDefNamedActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullNamedFieldActivator() =>
+sq.EntryPoint $getTestOptNullNamedFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptDefNamedFieldActivator() =>
+sq.EntryPoint $getTestOptDefNamedFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullDefNamedFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefNamedFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullNamedPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullNamedPrivateFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
-EntryPoint $getTestInstallableActivator() =>
+sq.EntryPoint $getTestInstallableActivator() =>
     'example/test/generated/test_services.web.g.dart.js';

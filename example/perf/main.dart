@@ -1,17 +1,23 @@
 import 'dart:async';
 
+import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
 
+import 'deviation_monitor.dart';
 import 'echo_service.dart';
 import 'fibonacci_service.dart';
+import 'perf_counters.dart' as instr;
 import 'service_config.dart';
 import 'service_request.dart';
-import 'perf_counters.dart' as instr;
-import 'deviation_monitor.dart';
+
+final logger = Logger(
+  filter: ProductionFilter(),
+  output: ConsoleOutput(),
+  printer: SimplePrinter(),
+  level: Level.info,
+);
 
 void main() async {
-  setupSquadron();
-
   // start a periodic timer to measure timer deviation while executing the different scenarios.
   final resolution = Duration(milliseconds: 20);
   final deviationMonitor = await installDeviationMonitor(resolution);
@@ -33,15 +39,8 @@ void main() async {
   displaySummaries(resolution, serviceCounters, workerCounters, poolCounters);
 }
 
-void setupSquadron() {
-  Squadron.setId('MAIN');
-  Squadron.setLogger(ConsoleSquadronLogger());
-  Squadron.debugMode = false;
-  Squadron.logLevel = SquadronLogLevel.info;
-}
-
 Future<DeviationMonitor> installDeviationMonitor(Duration resolution) async {
-  final deviationMonitor = DeviationMonitor(resolution);
+  final deviationMonitor = DeviationMonitor(resolution, logger);
 
   // test timer deviation monitor
   deviationMonitor.start();
@@ -108,7 +107,7 @@ const int runs = 1;
 
 Future<instr.PerfCounters> runServices(DeviationMonitor monitor, bool trace,
     ServiceConfig<int> workloadDelay) async {
-  Squadron.info('''
+  logger.i('''
 ----------------------------------------------------------
 1. Computing with services (single-threaded)
 ----------------------------------------------------------
@@ -126,29 +125,27 @@ Future<instr.PerfCounters> runServices(DeviationMonitor monitor, bool trace,
   return counters / runs;
 }
 
-void platformWorkerHook<T extends WorkerService>(PlatformWorker w) {
-  Squadron.info(
-      'Worker ready for $T (platform worker type = ${w.runtimeType})');
+void workerHook<T extends WorkerService>(PlatformThread w) {
+  logger.i('Worker ready for $T (platform worker type = ${w.runtimeType})');
 }
 
 void displayStats(WorkerStat stats) {
-  Squadron.info(
-      '${stats.workerType} ${stats.id} (${stats.status}): totalWorkload=${stats.totalWorkload}, upTime=${stats.upTime}, idleTime=${stats.idleTime}');
+  logger.i(
+      '${stats.workerType} ${stats.workerHashCode} (${stats.status}): totalWorkload=${stats.totalWorkload}, upTime=${stats.upTime}, idleTime=${stats.idleTime}');
 }
 
 Future<instr.PerfCounters> runWorkers(DeviationMonitor monitor, bool trace,
     ServiceConfig<int> workloadDelay) async {
-  Squadron.info('''
+  logger.i('''
 ----------------------------------------------------------
 2. Computing with single service workers (one thread each)
 ----------------------------------------------------------
 ''');
 
   final fibonacciWorker = FibonacciServiceWorker(
-      trace: trace,
-      platformWorkerHook: (w) => platformWorkerHook<FibonacciServiceWorker>(w));
+      trace: trace, threadHook: (w) => workerHook<FibonacciServiceWorker>(w));
   final echoWorker = EchoServiceWorker(
-      trace, workloadDelay, (w) => platformWorkerHook<EchoServiceWorker>(w));
+      trace, workloadDelay, (w) => workerHook<EchoServiceWorker>(w));
 
   await Future.wait([fibonacciWorker.start(), echoWorker.start()]);
 
@@ -170,7 +167,7 @@ Future<instr.PerfCounters> runWorkers(DeviationMonitor monitor, bool trace,
 
 Future<instr.PerfCounters> runPools(DeviationMonitor monitor, bool trace,
     ServiceConfig<int> workloadDelay) async {
-  Squadron.info('''
+  logger.i('''
 ----------------------------------------------------------
 3. Computing with service worker pools (multithreaded)
 ----------------------------------------------------------
@@ -184,10 +181,9 @@ Future<instr.PerfCounters> runPools(DeviationMonitor monitor, bool trace,
   final fibonacciPool = FibonacciServiceWorkerPool(
       trace: trace,
       concurrencySettings: concurrency,
-      platformWorkerHook: (w) =>
-          platformWorkerHook<FibonacciServiceWorkerPool>(w));
+      threadHook: (w) => workerHook<FibonacciServiceWorkerPool>(w));
   final echoPool = EchoServiceWorkerPool(trace, workloadDelay, concurrency,
-      (w) => platformWorkerHook<EchoServiceWorkerPool>(w));
+      (w) => workerHook<EchoServiceWorkerPool>(w));
 
   await Future.wait([fibonacciPool.start().future, echoPool.start().future]);
 
@@ -219,14 +215,14 @@ Future<instr.PerfCounters> testWith(DeviationMonitor monitor,
   await testFibWith(fibonacciService);
   final fib = (await monitor.takeSnapshot()) - start;
   monitor.stop();
-  Squadron.info('  --> ELAPSED(fib) = ${fib.duration}');
+  logger.i('  --> ELAPSED(fib) = ${fib.duration}');
 
   monitor.start();
   start = await monitor.takeSnapshot();
   await testEchoWith(echoService);
   final echo = (await monitor.takeSnapshot()) - start;
   monitor.stop();
-  Squadron.info('  --> ELAPSED(echo) = ${echo.duration}');
+  logger.i('  --> ELAPSED(echo) = ${echo.duration}');
 
   monitor.start();
   start = await monitor.takeSnapshot();
@@ -234,7 +230,7 @@ Future<instr.PerfCounters> testWith(DeviationMonitor monitor,
   await perfTestJsonEchoWith(echoService);
   final perf = (await monitor.takeSnapshot()) - start;
   monitor.stop();
-  Squadron.info('  --> ELAPSED(perf) = ${perf.duration}');
+  logger.i('  --> ELAPSED(perf) = ${perf.duration}');
 
   return instr.PerfCounters(fib, echo, perf);
 }
@@ -243,9 +239,8 @@ Future<void> testFibWith(FibonacciService fibonacciService) async {
   final futures = <Future>[];
 
   for (var i = 0; i < 10; i++) {
-    futures.add(fibonacciService.fibonacci(20 + i).then((res) => Squadron.fine(
-        () =>
-            '[${fibonacciService.runtimeType}] fibonacci(${20 + i}) = $res')));
+    futures.add(fibonacciService.fibonacci(20 + i).then((res) => logger.t(() =>
+        '[${fibonacciService.runtimeType}] fibonacci(${20 + i}) = $res')));
   }
   await Future.wait(futures);
   futures.clear();
@@ -254,7 +249,7 @@ Future<void> testFibWith(FibonacciService fibonacciService) async {
 
   for (var i = 0; i < 10; i++) {
     futures.add(fibonacciService.fibonacciList0(20 + i, 30 + i).then((res) =>
-        Squadron.fine(() =>
+        logger.t(() =>
             '[${fibonacciService.runtimeType}] fibonacciList0(${20 + i}, ${30 + i}) = $res')));
   }
   await Future.wait(futures);
@@ -264,7 +259,7 @@ Future<void> testFibWith(FibonacciService fibonacciService) async {
 
   for (var i = 0; i < 10; i++) {
     futures.add(fibonacciService.fibonacciList1(20 + i, 30 + i).then((res) =>
-        Squadron.fine(() =>
+        logger.t(() =>
             '[${fibonacciService.runtimeType}] fibonacciList1(${20 + i}, ${30 + i}) = $res')));
   }
   await Future.wait(futures);
@@ -274,7 +269,7 @@ Future<void> testFibWith(FibonacciService fibonacciService) async {
 
   for (var i = 0; i < 10; i++) {
     futures.add(fibonacciService.fibonacciList2(20 + i, 30 + i).then((res) =>
-        Squadron.fine(() =>
+        logger.t(() =>
             '[${fibonacciService.runtimeType}] fibonacciList2(${20 + i}, ${30 + i}) = $res')));
   }
   await Future.wait(futures);
@@ -286,7 +281,7 @@ Future<void> testFibWith(FibonacciService fibonacciService) async {
     futures.add(fibonacciService
         .fibonacciStream(20 + i, end: 30 + i)
         .toList()
-        .then((res) => Squadron.fine(() =>
+        .then((res) => logger.t(() =>
             '[${fibonacciService.runtimeType}] fibonacciStream(${20 + i}, ${30 + i}) = $res')));
   }
   await Future.wait(futures);
@@ -303,7 +298,7 @@ Future<void> testEchoWith(EchoService echoService) async {
   for (var i = 0; i < loops; i++) {
     futures.add(echoService
         .jsonEchoWithJsonResult(ServiceRequest('echo $i'))
-        .then((res) => Squadron.fine(() =>
+        .then((res) => logger.t(() =>
             '[${echoService.runtimeType}] jsonEchoWithJsonResult(\'echo $i\') = ${res?.toJson()}')));
   }
   await Future.wait(futures);
@@ -312,7 +307,7 @@ Future<void> testEchoWith(EchoService echoService) async {
   for (var i = 0; i < loops; i++) {
     futures.add(echoService
         .jsonEchoWithExplicitResult(ServiceRequest('echo $i'))
-        .then((res) => Squadron.fine(() =>
+        .then((res) => logger.t(() =>
             '[${echoService.runtimeType}] jsonEchoWithExplicitResult(\'echo $i\') = ${res.toJson()}')));
   }
   await Future.wait(futures);
@@ -321,7 +316,7 @@ Future<void> testEchoWith(EchoService echoService) async {
   for (var i = 0; i < loops; i++) {
     futures.add(echoService
         .explicitEchoWithJsonResult(ServiceRequest('echo $i'))
-        .then((res) => Squadron.fine(() =>
+        .then((res) => logger.t(() =>
             '[${echoService.runtimeType}] explicitEchoWithJsonResult(\'echo $i\') = ${res.toJson()}')));
   }
   await Future.wait(futures);
@@ -330,7 +325,7 @@ Future<void> testEchoWith(EchoService echoService) async {
   for (var i = 0; i < loops; i++) {
     futures.add(echoService
         .explicitEchoWithExplicitResult(ServiceRequest('echo $i'))
-        .then((res) => Squadron.fine(() =>
+        .then((res) => logger.t(() =>
             '[${echoService.runtimeType}] explicitEchoWithExplicitResult(\'echo $i\') = ${res.toJson()}')));
   }
   await Future.wait(futures);
@@ -358,7 +353,7 @@ Future<void> perfTestEchoWith(EchoService echoService) async {
   await Future.wait(futures);
   explicitSw.stop();
 
-  Squadron.fine(() =>
+  logger.i(() =>
       '[${echoService.runtimeType}] json = ${jsonSw.elapsed} / explicit = ${explicitSw.elapsed}');
 }
 
@@ -381,7 +376,7 @@ Future<void> perfTestJsonEchoWith(EchoService echoService) async {
   await Future.wait(futures);
   jsonEncodeSw.stop();
 
-  Squadron.fine(() =>
+  logger.i(() =>
       '[${echoService.runtimeType}] json = ${jsonSw.elapsed} / json encode = ${jsonEncodeSw.elapsed}');
 }
 

@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
 
+import '../types/managed_type.dart';
 import 'marshaler.dart';
 
 typedef Adapter = String Function(String);
@@ -15,7 +15,7 @@ String identity(String expr) => expr;
 class MarshalingInfo {
   MarshalingInfo(this._type, this._marshaler);
 
-  final DartType _type;
+  final ManagedType _type;
   final Set<ExecutableElement> _methods = {};
 
   bool get _hasToJson => _methods.any((m) =>
@@ -61,35 +61,12 @@ class MarshalingInfo {
           c.name == 'unmarshal' &&
           c.parameters.length == 1));
 
-  bool get _hasMarshall => _methods.any((m) =>
-      m is MethodElement &&
-      !m.isPrivate &&
-      !m.isAbstract &&
-      m.name == 'marshall' &&
-      m.parameters.isEmpty);
-
-  bool get _hasUnmarshall => _methods.any((c) =>
-      (c is ConstructorElement &&
-          !c.isPrivate &&
-          !c.isAbstract &&
-          c.name == 'unmarshall' &&
-          c.parameters.length == 1) ||
-      (c is MethodElement &&
-          !c.isPrivate &&
-          !c.isAbstract &&
-          c.isStatic &&
-          c.name == 'unmarshall' &&
-          c.parameters.length == 1));
-
   final Marshaler? _marshaler;
   Marshaler? _defaultMarshaler;
 
   Marshaler get marshaler {
     if (_defaultMarshaler == null && _hasMarshal && _hasUnmarshal) {
-      _defaultMarshaler = Marshaler.instance(_type, 'marshal', 'unmarshal');
-    }
-    if (_defaultMarshaler == null && _hasMarshall && _hasUnmarshall) {
-      _defaultMarshaler = Marshaler.instance(_type, 'marshall', 'unmarshall');
+      _defaultMarshaler = Marshaler.instance(_type);
     }
     if (_defaultMarshaler == null && _hasToJson && _hasFromJson) {
       _defaultMarshaler = Marshaler.json(_type);

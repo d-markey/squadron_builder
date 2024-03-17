@@ -1,14 +1,8 @@
 part of 'marshaler.dart';
 
 class _ExplicitMarshaler extends Marshaler {
-  _ExplicitMarshaler(this._marshaler, this._marshalerType)
-      : _marshal = (_marshalerType.getMethod('marshal') != null)
-            ? 'marshal'
-            : 'marshall',
-        _unmarshal = (_marshalerType.getMethod('unmarshal') != null)
-            ? 'unmarshal'
-            : 'unmarshall' {
-    _itemTypeName = _marshalerType.typeArguments.first.baseName;
+  _ExplicitMarshaler(this._marshaler, this._marshalerType) {
+    _itemTypeName = _marshalerType.typeArguments.first.getTypeName();
     final variable = _marshaler.variable;
     if (variable != null) {
       if (variable.enclosingElement is ClassElement) {
@@ -26,24 +20,21 @@ class _ExplicitMarshaler extends Marshaler {
   }
 
   final DartObject _marshaler;
-  final InterfaceType _marshalerType;
+  final ManagedType _marshalerType;
   late final String _instance;
   late final String _itemTypeName;
 
-  final String _marshal;
-  final String _unmarshal;
-
   @override
-  bool targets(DartType type) => type.baseName == _itemTypeName;
+  bool targets(ManagedType type) => type.getTypeName() == _itemTypeName;
 
-  Adapter _convert(String method, DartType type) =>
+  Adapter _convert(String method, ManagedType type) =>
       (type.nullabilitySuffix == NullabilitySuffix.none)
           ? (v) => '$_instance.$method($v)'
           : (v) => '($v == null) ? null : $_instance.$method($v)';
 
   @override
-  Adapter getSerializer(DartType type) => _convert(_marshal, type);
+  Adapter getSerializer(ManagedType type) => _convert('marshal', type);
 
   @override
-  Adapter getDeserializer(DartType type) => _convert(_unmarshal, type);
+  Adapter getDeserializer(ManagedType type) => _convert('unmarshal', type);
 }

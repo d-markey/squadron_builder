@@ -3,7 +3,7 @@
 part of '../hello_world.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.4.2
+// Generator: WorkerGenerator 6.0.0
 // **************************************************************************
 
 /// WorkerService class for HelloWorld
@@ -25,21 +25,10 @@ class _$HelloWorldWorkerService extends HelloWorld implements WorkerService {
 WorkerService $HelloWorldInitializer(WorkerRequest startRequest) =>
     _$HelloWorldWorkerService();
 
-/// Operations map for HelloWorld
-@Deprecated(
-    'squadron_builder now supports "plain old Dart objects" as services. '
-    'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$HelloWorldOperations anymore.')
-mixin $HelloWorldOperations on WorkerService {
-  @override
-  // not needed anymore, generated for compatibility with previous versions of squadron_builder
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-}
-
 /// Worker for HelloWorld
 class HelloWorldWorker extends Worker implements HelloWorld {
-  HelloWorldWorker({PlatformWorkerHook? platformWorkerHook})
-      : super($HelloWorldActivator, platformWorkerHook: platformWorkerHook);
+  HelloWorldWorker({PlatformThreadHook? threadHook})
+      : super($HelloWorldActivator, threadHook: threadHook);
 
   @override
   Future<String> hello([String? name]) =>
@@ -51,8 +40,8 @@ class HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
     implements HelloWorld {
   HelloWorldWorkerPool(
       {ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook})
-      : super(() => HelloWorldWorker(platformWorkerHook: platformWorkerHook),
+      PlatformThreadHook? threadHook})
+      : super(() => HelloWorldWorker(threadHook: threadHook),
             concurrencySettings: concurrencySettings);
 
   @override

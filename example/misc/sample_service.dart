@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:squadron/squadron.dart';
-import 'package:squadron/squadron_annotations.dart';
 
 import 'generated/sample_service.activator.g.dart';
 
@@ -9,7 +8,7 @@ part 'generated/sample_service.worker.g.dart';
 
 @SquadronService()
 class SampleService {
-  @SquadronMethod()
+  @squadronMethod
   Future<DataOut> compute(DataIn input) async {
     return DataOut(input.payload);
   }
@@ -30,10 +29,6 @@ class DataIn {
 
   DataIn.unmarshal(SomeTransferable transferable) : this(transferable.data);
 
-  SomeTransferable marshall() => SomeTransferable(payload);
-
-  DataIn.unmarshall(SomeTransferable transferable) : this(transferable.data);
-
   Map toJson() => {'pld': payload};
 
   static DataIn fromJson(Map data) => DataIn(data['pld']);
@@ -50,5 +45,5 @@ class DataOut {
 
   Map toJson() => {'pld': payload};
 
-  static DataIn fromJson(Map data) => DataIn(data['pld']);
+  static DataOut fromJson(Map data) => DataOut(data['pld']);
 }

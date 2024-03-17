@@ -3,13 +3,13 @@
 part of '../echo_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.4.2
+// Generator: WorkerGenerator 6.0.0
 // **************************************************************************
 
 /// WorkerService class for EchoService
 class _$EchoServiceWorkerService extends EchoService implements WorkerService {
   _$EchoServiceWorkerService(
-      [bool trace = false, ServiceConfig<int>? workloadDelay])
+      [bool trace = false, cfg.ServiceConfig<int>? workloadDelay])
       : super(trace, workloadDelay);
 
   @override
@@ -17,26 +17,32 @@ class _$EchoServiceWorkerService extends EchoService implements WorkerService {
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$explicitEchoWithExplicitResultId: ($) async =>
-        ServiceResponseOfStringToByteBuffer.instance.marshal(
-            (await explicitEchoWithExplicitResult(
-                ServiceRequestGenericToString.instance.unmarshal($.args[0]),
-                token: $.cancelToken))),
-    _$explicitEchoWithJsonResultId: ($) async =>
-        (await explicitEchoWithJsonResult(
-                (const ServiceRequestToString()).unmarshal($.args[0])))
-            .toJson(),
-    _$jsonEchoWithExplicitResultId: ($) async =>
-        (const ServiceResponseOfStringToByteBuffer()).marshal(
-            (await jsonEchoWithExplicitResult(
-                ServiceRequest.fromJson($.args[0])))),
-    _$jsonEchoWithJsonResultId: ($) async =>
-        (await jsonEchoWithJsonResult(ServiceRequest.fromJson($.args[0])))
-            ?.toJson(),
-    _$jsonEncodeEchoId: ($) async => (const ServiceResponseToJson()).marshal(
-        (await jsonEncodeEcho(
-            ServiceRequestToString.instance.unmarshal($.args[0]),
-            $.cancelToken))),
+    _$explicitEchoWithExplicitResultId: ($) async {
+      final $r = await explicitEchoWithExplicitResult(
+          ServiceRequestGenericToString.instance.unmarshal($.args[0]),
+          token: $.args[1]);
+      return ServiceResponseOfStringToByteBuffer.instance.marshal($r);
+    },
+    _$explicitEchoWithJsonResultId: ($) async {
+      final $r = await explicitEchoWithJsonResult(
+          (const ServiceRequestToString()).unmarshal($.args[0]));
+      return $r.toJson();
+    },
+    _$jsonEchoWithExplicitResultId: ($) async {
+      final $r = await jsonEchoWithExplicitResult(
+          srv.ServiceRequest.fromJson($.args[0]));
+      return (const ServiceResponseOfStringToByteBuffer()).marshal($r);
+    },
+    _$jsonEchoWithJsonResultId: ($) async {
+      final $r =
+          await jsonEchoWithJsonResult(srv.ServiceRequest.fromJson($.args[0]));
+      return $r?.toJson();
+    },
+    _$jsonEncodeEchoId: ($) async {
+      final $r = await jsonEncodeEcho(
+          ServiceRequestToString.instance.unmarshal($.args[0]), $.args[1]);
+      return (const ServiceResponseToJson()).marshal($r);
+    },
   });
 
   static const int _$explicitEchoWithExplicitResultId = 1;
@@ -52,67 +58,56 @@ WorkerService $EchoServiceInitializer(WorkerRequest startRequest) =>
         startRequest.args[0],
         (startRequest.args[1] == null)
             ? null
-            : ServiceConfig<int>.fromJson(startRequest.args[1]));
-
-/// Operations map for EchoService
-@Deprecated(
-    'squadron_builder now supports "plain old Dart objects" as services. '
-    'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$EchoServiceOperations anymore.')
-mixin $EchoServiceOperations on WorkerService {
-  @override
-  // not needed anymore, generated for compatibility with previous versions of squadron_builder
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-}
+            : cfg.ServiceConfig<int>.fromJson(startRequest.args[1]));
 
 /// Worker for EchoService
 class EchoServiceWorker extends Worker implements EchoService {
   EchoServiceWorker(
       [bool trace = false,
-      ServiceConfig<int>? workloadDelay,
-      PlatformWorkerHook? platformWorkerHook])
+      cfg.ServiceConfig<int>? workloadDelay,
+      PlatformThreadHook? threadHook])
       : super($EchoServiceActivator,
-            args: [trace, workloadDelay?.toJson()],
-            platformWorkerHook: platformWorkerHook);
+            args: [trace, workloadDelay?.toJson()], threadHook: threadHook);
 
   @override
-  Future<ServiceResponse<String>> explicitEchoWithExplicitResult(
-          ServiceRequest request,
-          {CancellationToken? token}) =>
+  Future<srv.ServiceResponse<String>> explicitEchoWithExplicitResult(
+          srv.ServiceRequest request,
+          {CancelationToken? token}) =>
       send(_$EchoServiceWorkerService._$explicitEchoWithExplicitResultId,
-              args: [ServiceRequestGenericToString.instance.marshal(request)],
-              token: token)
-          .then(
-              (_) => ServiceResponseOfStringToByteBuffer.instance.unmarshal(_));
+          args: [
+            ServiceRequestGenericToString.instance.marshal(request),
+            token
+          ]).then(
+          (_) => ServiceResponseOfStringToByteBuffer.instance.unmarshal(_));
 
   @override
-  Future<ServiceResponse<String>> explicitEchoWithJsonResult(
-          ServiceRequest request) =>
+  Future<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
+          srv.ServiceRequest request) =>
       send(_$EchoServiceWorkerService._$explicitEchoWithJsonResultId,
               args: [(const ServiceRequestToString()).marshal(request)])
-          .then((_) => ServiceResponse<String>.fromJson(_));
+          .then((_) => srv.ServiceResponse<String>.fromJson(_));
 
   @override
-  Future<ServiceResponse<String>> jsonEchoWithExplicitResult(
-          ServiceRequest request) =>
+  Future<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
+          srv.ServiceRequest request) =>
       send(_$EchoServiceWorkerService._$jsonEchoWithExplicitResultId, args: [
         request.toJson()
       ]).then(
           (_) => (const ServiceResponseOfStringToByteBuffer()).unmarshal(_));
 
   @override
-  Future<ServiceResponse<String>?> jsonEchoWithJsonResult(
-          ServiceRequest request) =>
+  Future<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
+          srv.ServiceRequest request) =>
       send(_$EchoServiceWorkerService._$jsonEchoWithJsonResultId, args: [
         request.toJson()
-      ]).then((_) => (_ == null) ? null : ServiceResponse<String>.fromJson(_));
+      ]).then(
+          (_) => (_ == null) ? null : srv.ServiceResponse<String>.fromJson(_));
 
   @override
-  Future<ServiceResponse<String>> jsonEncodeEcho(ServiceRequest request,
-          [CancellationToken? token]) =>
+  Future<srv.ServiceResponse<String>> jsonEncodeEcho(srv.ServiceRequest request,
+          [CancelationToken? token]) =>
       send(_$EchoServiceWorkerService._$jsonEncodeEchoId,
-              args: [ServiceRequestToString.instance.marshal(request)],
-              token: token)
+              args: [ServiceRequestToString.instance.marshal(request), token])
           .then((_) => (const ServiceResponseToJson()).unmarshal(_));
 
   @override
@@ -120,7 +115,7 @@ class EchoServiceWorker extends Worker implements EchoService {
 
   @override
   // ignore: unused_element
-  bool get _trace => throw UnimplementedError();
+  Logger? get _logger => throw UnimplementedError();
 
   @override
   // ignore: unused_element
@@ -132,36 +127,36 @@ class EchoServiceWorkerPool extends WorkerPool<EchoServiceWorker>
     implements EchoService {
   EchoServiceWorkerPool(
       [bool trace = false,
-      ServiceConfig<int>? workloadDelay,
+      cfg.ServiceConfig<int>? workloadDelay,
       ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook])
-      : super(() => EchoServiceWorker(trace, workloadDelay, platformWorkerHook),
+      PlatformThreadHook? threadHook])
+      : super(() => EchoServiceWorker(trace, workloadDelay, threadHook),
             concurrencySettings: concurrencySettings);
 
   @override
-  Future<ServiceResponse<String>> explicitEchoWithExplicitResult(
-          ServiceRequest request,
-          {CancellationToken? token}) =>
+  Future<srv.ServiceResponse<String>> explicitEchoWithExplicitResult(
+          srv.ServiceRequest request,
+          {CancelationToken? token}) =>
       execute((w) => w.explicitEchoWithExplicitResult(request, token: token));
 
   @override
-  Future<ServiceResponse<String>> explicitEchoWithJsonResult(
-          ServiceRequest request) =>
+  Future<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
+          srv.ServiceRequest request) =>
       execute((w) => w.explicitEchoWithJsonResult(request));
 
   @override
-  Future<ServiceResponse<String>> jsonEchoWithExplicitResult(
-          ServiceRequest request) =>
+  Future<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
+          srv.ServiceRequest request) =>
       execute((w) => w.jsonEchoWithExplicitResult(request));
 
   @override
-  Future<ServiceResponse<String>?> jsonEchoWithJsonResult(
-          ServiceRequest request) =>
+  Future<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
+          srv.ServiceRequest request) =>
       execute((w) => w.jsonEchoWithJsonResult(request));
 
   @override
-  Future<ServiceResponse<String>> jsonEncodeEcho(ServiceRequest request,
-          [CancellationToken? token]) =>
+  Future<srv.ServiceResponse<String>> jsonEncodeEcho(srv.ServiceRequest request,
+          [CancelationToken? token]) =>
       execute((w) => w.jsonEncodeEcho(request, token));
 
   @override
@@ -169,7 +164,7 @@ class EchoServiceWorkerPool extends WorkerPool<EchoServiceWorker>
 
   @override
   // ignore: unused_element
-  bool get _trace => throw UnimplementedError();
+  Logger? get _logger => throw UnimplementedError();
 
   @override
   // ignore: unused_element

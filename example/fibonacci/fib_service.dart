@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:squadron/squadron_annotations.dart';
 import 'package:squadron/squadron.dart';
 
 import 'generated/fib_service.activator.g.dart';
@@ -9,7 +8,7 @@ part 'generated/fib_service.worker.g.dart';
 
 @SquadronService(baseUrl: '/workers')
 class FibService {
-  @SquadronMethod()
+  @squadronMethod
   Future<int> fibonacci(int i) async => _fib(i);
 
   // naive & inefficient implementation of the Fibonacci sequence

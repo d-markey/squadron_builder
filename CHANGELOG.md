@@ -1,3 +1,12 @@
+## 6.0.0
+
+- squadron_builder for Squadron version >= 6.0. Please note there are no versions 3.x-5.x in order to align squadron_builder version numbers with that of Squadron.
+- Removed support for 'useLogger' annotations.
+
+## 3.x-5.x
+
+- Intentionaly missing versions (fastforward to 6.0 to match Squadron versions).
+
 ## 2.4.5
 
 - Fix bug for async service method decorated with a marshaler: the service method was called twice if the return value is nullable!

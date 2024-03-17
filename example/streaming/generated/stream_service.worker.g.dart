@@ -3,7 +3,7 @@
 part of '../stream_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.4.2
+// Generator: WorkerGenerator 6.0.0
 // **************************************************************************
 
 /// WorkerService class for StreamService
@@ -16,7 +16,7 @@ class _$StreamServiceWorkerService extends StreamService
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$clockId: ($) => clock(frequency: $.args[0], token: $.cancelToken),
+    _$clockId: ($) => clock(frequency: $.args[0], token: $.args[1]),
     _$infiniteClockId: ($) => infiniteClock(frequency: $.args[0]),
   });
 
@@ -28,26 +28,14 @@ class _$StreamServiceWorkerService extends StreamService
 WorkerService $StreamServiceInitializer(WorkerRequest startRequest) =>
     _$StreamServiceWorkerService();
 
-/// Operations map for StreamService
-@Deprecated(
-    'squadron_builder now supports "plain old Dart objects" as services. '
-    'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$StreamServiceOperations anymore.')
-mixin $StreamServiceOperations on WorkerService {
-  @override
-  // not needed anymore, generated for compatibility with previous versions of squadron_builder
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-}
-
 /// Worker for StreamService
 class StreamServiceWorker extends Worker implements StreamService {
-  StreamServiceWorker({PlatformWorkerHook? platformWorkerHook})
-      : super($StreamServiceActivator, platformWorkerHook: platformWorkerHook);
+  StreamServiceWorker({PlatformThreadHook? threadHook})
+      : super($StreamServiceActivator, threadHook: threadHook);
 
   @override
-  Stream<int> clock({int frequency = 1, CancellationToken? token}) =>
-      stream(_$StreamServiceWorkerService._$clockId,
-          args: [frequency], token: token);
+  Stream<int> clock({int frequency = 1, CancelationToken? token}) =>
+      stream(_$StreamServiceWorkerService._$clockId, args: [frequency, token]);
 
   @override
   Stream<int> infiniteClock({int frequency = 1}) =>
@@ -59,12 +47,12 @@ class StreamServiceWorkerPool extends WorkerPool<StreamServiceWorker>
     implements StreamService {
   StreamServiceWorkerPool(
       {ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook})
-      : super(() => StreamServiceWorker(platformWorkerHook: platformWorkerHook),
+      PlatformThreadHook? threadHook})
+      : super(() => StreamServiceWorker(threadHook: threadHook),
             concurrencySettings: concurrencySettings);
 
   @override
-  Stream<int> clock({int frequency = 1, CancellationToken? token}) =>
+  Stream<int> clock({int frequency = 1, CancelationToken? token}) =>
       stream((w) => w.clock(frequency: frequency, token: token));
 
   @override

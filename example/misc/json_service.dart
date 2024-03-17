@@ -1,15 +1,14 @@
 import 'dart:async';
 import 'dart:convert' show jsonDecode;
 
-import 'package:squadron/squadron.dart';
-import 'package:squadron/squadron_annotations.dart';
+import 'package:squadron/squadron.dart' as sq;
 
 import 'generated/json_service.activator.g.dart';
 
 part 'generated/json_service.worker.g.dart';
 
-@SquadronService()
+@sq.SquadronService()
 class JsonService {
-  @SquadronMethod()
+  @sq.squadronMethod
   Future<dynamic> decode(String source) async => jsonDecode(source);
 }

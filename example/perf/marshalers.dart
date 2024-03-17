@@ -62,13 +62,11 @@ class ServiceResponseOfStringToByteBuffer
   ByteBuffer marshal(ServiceResponse<String> x) {
     var resbytes = utf8.encode(x.result);
     var reslen = resbytes.length;
-    var sqidbytes = utf8.encode(x.sqId);
-    var sqidlen = sqidbytes.length;
-    final totallen = 4 + reslen + sqidlen;
+    final totallen = 4 + reslen + 4;
     final bytes = Uint8List(totallen);
     _writeInt(bytes, 0, reslen);
     bytes.setRange(4, 4 + reslen, resbytes);
-    bytes.setRange(4 + reslen, totallen, sqidbytes);
+    _writeInt(bytes, 4 + reslen, x.sqId);
     return bytes.buffer;
   }
 
@@ -83,7 +81,7 @@ class ServiceResponseOfStringToByteBuffer
     final bytes = Uint8List.view(x);
     final reslen = _readInt(bytes, 0);
     final res = utf8.decode(bytes.sublist(4, 4 + reslen));
-    final sqid = utf8.decode(bytes.sublist(4 + reslen, bytes.length));
+    final sqid = _readInt(bytes, 4 + reslen);
     return ServiceResponse.hydrate(res, sqid);
   }
 

@@ -1,33 +1,35 @@
 import 'dart:async';
 
-import 'package:squadron/squadron_annotations.dart';
+import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
 
-import 'marshalers.dart';
 import 'generated/fibonacci_service.activator.g.dart';
+import 'marshalers.dart';
 
 part 'generated/fibonacci_service.worker.g.dart';
 
 @SquadronService(web: false)
-@UseLogger(ParentSquadronLogger)
 class FibonacciService {
-  FibonacciService({this.trace = false});
+  FibonacciService({bool trace = false})
+      : _logger = trace
+            ? Logger(
+                filter: ProductionFilter(),
+                output: ConsoleOutput(),
+                printer: SimplePrinter(),
+              )
+            : null;
 
-  final bool trace;
+  final Logger? _logger;
 
-  @SquadronMethod()
+  @squadronMethod
   FutureOr<int> fibonacci(int i) {
-    if (trace) {
-      Squadron.finer('fibonacci($i)');
-    }
+    _logger?.i('fibonacci($i)');
     return _fib(i);
   }
 
-  @SquadronMethod()
+  @squadronMethod
   FutureOr<Iterable<int>> fibonacciList0(int s, int e) {
-    if (trace) {
-      Squadron.finer('fibonacciList0($s, $e)');
-    }
+    _logger?.i('fibonacciList0($s, $e)');
     var res = <int>[];
     for (var i = s; i < e; i++) {
       res.add(_fib(i));
@@ -35,12 +37,10 @@ class FibonacciService {
     return res.map((v) => v);
   }
 
-  @SquadronMethod()
+  @squadronMethod
   @SerializeWith(ListIntMarshaler())
   FutureOr<List<int>> fibonacciList1(int s, int e) {
-    if (trace) {
-      Squadron.finer('fibonacciList1($s, $e)');
-    }
+    _logger?.i('fibonacciList1($s, $e)');
     var res = <int>[];
     for (var i = s; i < e; i++) {
       res.add(_fib(i));
@@ -48,12 +48,10 @@ class FibonacciService {
     return res;
   }
 
-  @SquadronMethod()
+  @squadronMethod
   @SerializeWith(listIntMarshaler)
   FutureOr<List<int>> fibonacciList2(int s, int e) {
-    if (trace) {
-      Squadron.finer('fibonacciList2($s, $e)');
-    }
+    _logger?.i('fibonacciList2($s, $e)');
     var res = <int>[];
     for (var i = s; i < e; i++) {
       res.add(_fib(i));
@@ -61,19 +59,17 @@ class FibonacciService {
     return res;
   }
 
-  @SquadronMethod()
+  @squadronMethod
   Stream<int> fibonacciStream(int start,
-      {int? end, CancellationToken? token}) async* {
-    if (trace) {
-      Squadron.finer('fibonacciStream($start, end: $end)');
-    }
+      {int? end, CancelationToken? token}) async* {
+    _logger?.i('fibonacciStream($start, end: $end)');
     if (end == null) {
       if (token == null) {
         throw Exception(
             'A cancellation token is required if no upper bound is provided.');
       }
       var i = start;
-      while (!token.cancelled) {
+      while (!token.isCanceled) {
         yield _fib(i);
       }
     } else {

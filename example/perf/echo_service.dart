@@ -1,85 +1,80 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:squadron/squadron_annotations.dart';
+import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
 
-import 'marshalers.dart';
 import 'generated/echo_service.activator.g.dart';
-import 'service_config.dart';
-import 'service_request.dart';
-import 'service_response.dart';
+import 'marshalers.dart';
+import 'service_config.dart' as cfg;
+import 'service_request.dart' as srv;
+import 'service_response.dart' as srv;
 
 part 'generated/echo_service.worker.g.dart';
 
 @SquadronService(web: false)
-@UseLogger(ParentSquadronLogger)
 class EchoService {
-  EchoService([this._trace = false, ServiceConfig<int>? workloadDelay])
-      : _delay = Duration(microseconds: workloadDelay?.value ?? 50);
+  EchoService([bool trace = false, cfg.ServiceConfig<int>? workloadDelay])
+      : _delay = Duration(microseconds: workloadDelay?.value ?? 50),
+        _logger = trace
+            ? Logger(
+                filter: ProductionFilter(),
+                output: ConsoleOutput(),
+                printer: SimplePrinter(),
+              )
+            : null;
 
-  final bool _trace;
+  final Logger? _logger;
 
   final Duration _delay;
 
-  @SquadronMethod()
-  FutureOr<ServiceResponse<String>?> jsonEchoWithJsonResult(
-      ServiceRequest request) {
-    if (_trace) {
-      Squadron.finer('jsonEchoWithJsonResult(${jsonEncode(request.toJson())})');
-    }
+  @squadronMethod
+  FutureOr<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
+      srv.ServiceRequest request) {
+    _logger?.t('jsonEchoWithJsonResult(${jsonEncode(request.toJson())})');
     _simulateWorkload();
-    return ServiceResponse('${request.payload} done');
+    return srv.ServiceResponse('${request.payload} done');
   }
 
-  @SquadronMethod()
-  FutureOr<ServiceResponse<String>> explicitEchoWithJsonResult(
-      @SerializeWith(ServiceRequestToString) ServiceRequest request) {
-    if (_trace) {
-      Squadron.finer(
-          'explicitEchoWithJsonResult(${jsonEncode(request.toJson())})');
-    }
+  @squadronMethod
+  FutureOr<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
+      @SerializeWith(ServiceRequestToString) srv.ServiceRequest request) {
+    _logger?.t('explicitEchoWithJsonResult(${jsonEncode(request.toJson())})');
     _simulateWorkload();
-    return ServiceResponse('${request.payload} done');
+    return srv.ServiceResponse('${request.payload} done');
   }
 
-  @SquadronMethod()
+  @squadronMethod
   @SerializeWith(ServiceResponseOfStringToByteBuffer)
-  FutureOr<ServiceResponse<String>> jsonEchoWithExplicitResult(
-      ServiceRequest request) {
-    if (_trace) {
-      Squadron.finer(
-          'jsonEchoWithExplicitResult(${jsonEncode(request.toJson())})');
-    }
+  FutureOr<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
+      srv.ServiceRequest request) {
+    _logger?.t('jsonEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     _simulateWorkload();
-    return ServiceResponse('${request.payload} done');
+    return srv.ServiceResponse('${request.payload} done');
   }
 
-  @SquadronMethod()
+  @squadronMethod
   @SerializeWith(ServiceResponseOfStringToByteBuffer.instance)
-  FutureOr<ServiceResponse<String>> explicitEchoWithExplicitResult(
+  FutureOr<srv.ServiceResponse<String>> explicitEchoWithExplicitResult(
       @SerializeWith(ServiceRequestGenericToString.instance)
-      ServiceRequest request,
-      {CancellationToken? token}) {
-    if (_trace) {
-      Squadron.finer(
-          'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
-    }
+      srv.ServiceRequest request,
+      {CancelationToken? token}) {
+    _logger
+        ?.t('explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     _simulateWorkload();
-    return ServiceResponse('${request.payload} done');
+    return srv.ServiceResponse('${request.payload} done');
   }
 
-  @SquadronMethod()
+  @squadronMethod
   @SerializeWith(ServiceResponseToJson)
-  FutureOr<ServiceResponse<String>> jsonEncodeEcho(
-      @SerializeWith(ServiceRequestToString.instance) ServiceRequest request,
-      [CancellationToken? token]) {
-    if (_trace) {
-      Squadron.finer(
-          'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
-    }
+  FutureOr<srv.ServiceResponse<String>> jsonEncodeEcho(
+      @SerializeWith(ServiceRequestToString.instance)
+      srv.ServiceRequest request,
+      [CancelationToken? token]) {
+    _logger
+        ?.t('explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     _simulateWorkload();
-    return ServiceResponse('${request.payload} done');
+    return srv.ServiceResponse('${request.payload} done');
   }
 
   void _simulateWorkload() {

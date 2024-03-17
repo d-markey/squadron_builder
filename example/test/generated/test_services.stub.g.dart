@@ -1,68 +1,71 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.4.2
+// Generator: WorkerGenerator 6.0.0
 // **************************************************************************
 
-import 'package:squadron/squadron.dart';
+import 'package:squadron/squadron.dart' as sq;
 
-EntryPoint $getTestParameterLessActivator() => throw UnimplementedError();
+sq.EntryPoint $getTestParameterLessActivator() => throw UnimplementedError();
 
-EntryPoint $getTestReqPositionalActivator() => throw UnimplementedError();
+sq.EntryPoint $getTestReqPositionalActivator() => throw UnimplementedError();
 
-EntryPoint $getTestOptNullPositionalActivator() => throw UnimplementedError();
-
-EntryPoint $getTestOptDefPositionalActivator() => throw UnimplementedError();
-
-EntryPoint $getTestOptNullDefPositionalActivator() =>
+sq.EntryPoint $getTestOptNullPositionalActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestReqPositionalFieldActivator() => throw UnimplementedError();
+sq.EntryPoint $getTestOptDefPositionalActivator() => throw UnimplementedError();
 
-EntryPoint $getTestOptNullPositionalFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefPositionalActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestOptDefPositionalFieldActivator() =>
+sq.EntryPoint $getTestReqPositionalFieldActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestOptNullDefPositionalFieldActivator() =>
+sq.EntryPoint $getTestOptNullPositionalFieldActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestReqPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptDefPositionalFieldActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestOptNullPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefPositionalFieldActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestOptDefPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestReqPositionalPrivateFieldActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullPositionalPrivateFieldActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestOptNullNamedActivator() => throw UnimplementedError();
-
-EntryPoint $getTestOptDefNamedActivator() => throw UnimplementedError();
-
-EntryPoint $getTestOptNullDefNamedActivator() => throw UnimplementedError();
-
-EntryPoint $getTestOptNullNamedFieldActivator() => throw UnimplementedError();
-
-EntryPoint $getTestOptDefNamedFieldActivator() => throw UnimplementedError();
-
-EntryPoint $getTestOptNullDefNamedFieldActivator() =>
+sq.EntryPoint $getTestOptDefPositionalPrivateFieldActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestOptNullNamedPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullNamedActivator() => throw UnimplementedError();
+
+sq.EntryPoint $getTestOptDefNamedActivator() => throw UnimplementedError();
+
+sq.EntryPoint $getTestOptNullDefNamedActivator() => throw UnimplementedError();
+
+sq.EntryPoint $getTestOptNullNamedFieldActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptDefNamedFieldActivator() => throw UnimplementedError();
+
+sq.EntryPoint $getTestOptNullDefNamedFieldActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
+sq.EntryPoint $getTestOptNullNamedPrivateFieldActivator() =>
     throw UnimplementedError();
 
-EntryPoint $getTestInstallableActivator() => throw UnimplementedError();
+sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
+    throw UnimplementedError();
+
+sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
+    throw UnimplementedError();
+
+sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
+    throw UnimplementedError();
+
+sq.EntryPoint $getTestInstallableActivator() => throw UnimplementedError();

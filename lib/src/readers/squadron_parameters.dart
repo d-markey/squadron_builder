@@ -1,25 +1,31 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:squadron_builder/src/types/managed_type.dart';
+import 'package:squadron_builder/src/types/type_manager.dart';
 
-import 'marshalers/marshaler.dart';
-import '../extensions.dart';
+import '../marshalers/marshaler.dart';
+import '../types/extensions.dart';
 import 'squadron_parameter.dart';
 
 class SquadronParameters {
+  SquadronParameters(this.typeManager);
+
   SquadronParameters clone() {
-    final params = SquadronParameters();
+    final params = SquadronParameters(typeManager);
     params._params.addAll(_params);
-    params._cancellationToken = _cancellationToken;
+    params._cancelationToken = _cancelationToken;
     params._hasPositionalParameters = _hasPositionalParameters;
     params._hasNamedParameters = _hasNamedParameters;
     params._hasOptionalParameters = _hasOptionalParameters;
     return params;
   }
 
+  final TypeManager typeManager;
+
   final _params = <SquadronParameter>[];
 
-  String? _cancellationToken;
-  String? get cancellationToken => _cancellationToken;
+  String? _cancelationToken;
+  String? get cancelationToken => _cancelationToken;
 
   bool _hasPositionalParameters = false;
   bool _hasNamedParameters = false;
@@ -37,39 +43,35 @@ class SquadronParameters {
   static bool _named(SquadronParameter p) => p.isNamed;
   Iterable<SquadronParameter> get named => _params.where(_named);
 
-  bool _checkCancellationToken(ParameterElement param) {
-    if (param.type.baseName != 'CancellationToken') {
+  bool _checkCancelationToken(ParameterElement param) {
+    if (param.type.implementedTypes(typeManager.cancelationTokenType).isEmpty) {
+      // not a cancelation token
       return false;
     }
-    final locationComponents =
-        param.type.element?.location?.components ?? const [];
-    final isToken =
-        locationComponents.any((c) => c.startsWith('package:squadron/'));
-    if (isToken) {
-      if (_cancellationToken != null) {
-        throw InvalidGenerationSourceError(
-            'Multiple cancellation tokens may not be passed to service methods '
-            '($_cancellationToken, ${param.name}). You should use a '
-            'CompositeCancellationToken instead.');
-      } else {
-        _cancellationToken = param.name;
-      }
+    if (_cancelationToken != null) {
+      throw InvalidGenerationSourceError(
+          'Multiple cancelation tokens may not be passed to service methods '
+          '($_cancelationToken, ${param.name}). You should use a '
+          'CompositeCancelationToken instead.');
+    } else {
+      _cancelationToken = param.name;
+      return true;
     }
-    return isToken;
   }
 
   SquadronParameter register(ParameterElement param, Marshaler? marshaler) {
-    final isToken = _checkCancellationToken(param);
+    final isToken = _checkCancelationToken(param);
     int serIdx = -1;
     if (!isToken) {
-      serIdx = _params.length - (_cancellationToken != null ? 1 : 0);
+      serIdx = _params.length - (_cancelationToken != null ? 1 : 0);
     }
-    return _register(SquadronParameter.from(param, isToken, marshaler, serIdx));
+    return _register(
+        SquadronParameter.from(param, isToken, marshaler, serIdx, typeManager));
   }
 
-  SquadronParameter addOptional(String name, String typeName) =>
+  SquadronParameter addOptional(String name, ManagedType managedType) =>
       _register(SquadronParameter.opt(
-          name, typeName, _hasNamedParameters || !_hasOptionalParameters));
+          name, managedType, _hasNamedParameters || !_hasOptionalParameters));
 
   SquadronParameter _register(SquadronParameter param) {
     if ((param.isNamed && _hasOptionalParameters) ||
@@ -94,8 +96,8 @@ class SquadronParameters {
   String arguments() => _params.map((p) => p.argument()).join(', ');
 
   String serialize() => _params
-      // cancellation token is passed separately when invoking the worker
-      .where((p) => !p.isCancellationToken)
+      // cancelation token is passed separately when invoking the worker
+      .where((p) => !p.isCancelationToken)
       .map((p) => p.serialized())
       .join(', ');
 

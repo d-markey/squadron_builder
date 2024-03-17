@@ -1,21 +1,26 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
+import 'package:squadron_builder/src/types/managed_type.dart';
 
+import '../marshalers/marshaler.dart';
+import '../marshalers/marshaling_info.dart';
+import '../types/type_manager.dart';
 import 'annotations_reader.dart';
-import 'marshalers/marshaler.dart';
-import 'marshalers/marshaling_info.dart';
 
 class MarshalingManager extends SimpleElementVisitor {
-  MarshalingManager();
+  MarshalingManager(this._typeManager);
+
+  final TypeManager _typeManager;
 
   final _cache = <Element, MarshalingInfo>{};
 
   MarshalingInfo _getOrAddMarshalingInfo(DartType type, Element clazz) {
     var entry = _cache[clazz];
     if (entry == null) {
-      final marshaler = AnnotationReader.getExplicitMarshaler(clazz);
-      entry = MarshalingInfo(type, marshaler);
+      final marshaler =
+          AnnotationReader.getExplicitMarshaler(clazz, _typeManager);
+      entry = MarshalingInfo(_typeManager.handleDartType(type), marshaler);
       _cache[clazz] = entry;
     }
     return entry;
@@ -30,8 +35,8 @@ class MarshalingManager extends SimpleElementVisitor {
       // only interested in constructor 'fromJson()'
       info.registerMethod(element);
     }
-    if (element.name == 'unmarshall' || element.name == 'unmarshal') {
-      // only interested in constructors 'unmarshall()' / 'unmarshal()'
+    if (element.name == 'unmarshal') {
+      // only interested in constructor 'unmarshal()'
       info.registerMethod(element);
     }
   }
@@ -49,26 +54,27 @@ class MarshalingManager extends SimpleElementVisitor {
       // only interested in instance method 'toJson()' or static method 'fromJson()'
       info.registerMethod(element);
     }
-    if ((!element.isStatic &&
-            (element.name == 'marshall' || element.name == 'marshal')) ||
-        (element.isStatic &&
-            (element.name == 'unmarshall' || element.name == 'unmarshal'))) {
-      // only interested in instance method 'marshall()' / 'marshal()' or static method
-      // 'unmarshall()' / 'unmarshal()'
+    if ((!element.isStatic && element.name == 'marshal') ||
+        (element.isStatic && element.name == 'unmarshal')) {
+      // only interested in instance method 'marshal()' or static method 'unmarshal()'
       info.registerMethod(element);
     }
   }
 
   Marshaler getMarshalerFor(ParameterElement param) {
-    final explicitMarshaler = AnnotationReader.getExplicitMarshaler(param);
+    final explicitMarshaler =
+        AnnotationReader.getExplicitMarshaler(param, _typeManager);
     final type = (param is FieldFormalParameterElement && param.field != null)
         ? param.field!.type
         : param.type;
-    return getMarshaler(type, explicit: explicitMarshaler);
+    return getMarshaler(_typeManager.handleDartType(type),
+        explicit: explicitMarshaler);
   }
 
-  Marshaler getMarshaler(DartType type, {Marshaler? explicit}) {
-    if (type is DynamicType || type is VoidType) {
+  Marshaler getMarshaler(ManagedType type, {Marshaler? explicit}) {
+    if (type is ManagedDynamicType ||
+        type is ManagedVoidType ||
+        type.dartType == null) {
       return Marshaler.identity;
     }
 
@@ -76,8 +82,8 @@ class MarshalingManager extends SimpleElementVisitor {
       return explicit;
     }
 
-    if (type.isDartCoreList || type.isDartCoreIterable) {
-      final itemType = (type as ParameterizedType).typeArguments.first;
+    if (type.dartType!.isDartCoreList || type.dartType!.isDartCoreIterable) {
+      final itemType = type.typeArguments.first;
       if (explicit != null && explicit.targets(itemType)) {
         return Marshaler.iterable(type, explicit);
       }
@@ -85,8 +91,8 @@ class MarshalingManager extends SimpleElementVisitor {
       return Marshaler.iterable(type, explicit);
     }
 
-    if (type.isDartCoreMap) {
-      final itemType = (type as ParameterizedType).typeArguments.last;
+    if (type.dartType!.isDartCoreMap) {
+      final itemType = type.typeArguments.last;
       if (explicit != null && explicit.targets(itemType)) {
         return Marshaler.map(type, explicit);
       }
@@ -94,7 +100,7 @@ class MarshalingManager extends SimpleElementVisitor {
       return Marshaler.map(type, explicit);
     }
 
-    final elt = type.element;
+    final elt = type.dartType!.element;
     if (elt == null) {
       // type has no associated element
       return Marshaler.identity;
@@ -104,6 +110,6 @@ class MarshalingManager extends SimpleElementVisitor {
     final decl = elt.declaration;
     return (decl == null)
         ? Marshaler.identity
-        : _getOrAddMarshalingInfo(type, decl).marshaler;
+        : _getOrAddMarshalingInfo(type.dartType!, decl).marshaler;
   }
 }

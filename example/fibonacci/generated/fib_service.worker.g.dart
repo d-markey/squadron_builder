@@ -3,7 +3,7 @@
 part of '../fib_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.4.2
+// Generator: WorkerGenerator 6.0.0
 // **************************************************************************
 
 /// WorkerService class for FibService
@@ -25,21 +25,10 @@ class _$FibServiceWorkerService extends FibService implements WorkerService {
 WorkerService $FibServiceInitializer(WorkerRequest startRequest) =>
     _$FibServiceWorkerService();
 
-/// Operations map for FibService
-@Deprecated(
-    'squadron_builder now supports "plain old Dart objects" as services. '
-    'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$FibServiceOperations anymore.')
-mixin $FibServiceOperations on WorkerService {
-  @override
-  // not needed anymore, generated for compatibility with previous versions of squadron_builder
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-}
-
 /// Worker for FibService
 class FibServiceWorker extends Worker implements FibService {
-  FibServiceWorker({PlatformWorkerHook? platformWorkerHook})
-      : super($FibServiceActivator, platformWorkerHook: platformWorkerHook);
+  FibServiceWorker({PlatformThreadHook? threadHook})
+      : super($FibServiceActivator, threadHook: threadHook);
 
   @override
   Future<int> fibonacci(int i) =>
@@ -51,8 +40,8 @@ class FibServiceWorkerPool extends WorkerPool<FibServiceWorker>
     implements FibService {
   FibServiceWorkerPool(
       {ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook})
-      : super(() => FibServiceWorker(platformWorkerHook: platformWorkerHook),
+      PlatformThreadHook? threadHook})
+      : super(() => FibServiceWorker(threadHook: threadHook),
             concurrencySettings: concurrencySettings);
 
   @override

@@ -1,26 +1,29 @@
 import 'dart:convert';
 
-import 'package:squadron/squadron.dart';
+import 'package:logger/logger.dart';
 
 import 'json_service.dart';
 
 void main() async {
-  Squadron.setId('DEMO-JSON');
-  Squadron.logLevel = SquadronLogLevel.all;
-  Squadron.setLogger(ConsoleSquadronLogger());
+  final logger = Logger(
+    filter: ProductionFilter(),
+    output: ConsoleOutput(),
+    printer: SimplePrinter(),
+  );
+
   // start worker
   final worker = JsonServiceWorker();
   await worker.start();
 
   final json = User(1, 'DMA', 'admin', 5).toJson();
-  Squadron.info('source = $json');
+  logger.i('source = $json');
 
   final output = await worker.loadJson<User>(
     data: jsonEncode(json),
-    fromJson: (json) => User.fromJson(json),
+    fromJson: User.fromJson,
   );
 
-  Squadron.info('output = ${output.toJson()}');
+  logger.i('output = ${output.toJson()}');
 
   worker.stop();
 }

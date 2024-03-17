@@ -1,17 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.4.2
+// Generator: WorkerGenerator 6.0.0
 // **************************************************************************
 
-import 'package:squadron/squadron.dart';
+import 'package:squadron/squadron.dart' as sq;
 
 import '../json_service.dart';
 
 void main() {
   /// Web entry point for JsonService
-  run($JsonServiceInitializer, null, null);
+  sq.run($JsonServiceInitializer);
 }
 
-EntryPoint $getJsonServiceActivator() =>
+sq.EntryPoint $getJsonServiceActivator() =>
     'example/misc/generated/json_service.web.g.dart.js';

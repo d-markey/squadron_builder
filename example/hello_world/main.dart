@@ -1,25 +1,29 @@
-import 'dart:io';
+import 'dart:isolate';
 
+import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
 
-import 'display_thread_id.dart';
 import 'hello_world.dart';
 
 void main() async {
-  Squadron.setId('HELLO_WORLD');
-  Squadron.logLevel = SquadronLogLevel.config;
-  Squadron.setLogger(StdoutLogger());
+  final logger = Logger(
+    filter: ProductionFilter(),
+    output: ConsoleOutput(),
+    printer: SimplePrinter(),
+  );
 
-  Squadron.info('main() running in $workerId');
+  logger.i('main() running in Isolate ${Isolate.current.hashCode}');
 
   final names = [null, 'Mary', 'John', 'Joe', 'Rick', 'Bill', 'Henry'];
 
+  final futures = <Future>[];
   final worker = HelloWorldWorker();
   for (var name in names) {
-    Squadron.info(await worker.hello(name));
+    futures.add(worker.hello(name).then(logger.i));
   }
+  await Future.wait(futures);
   worker.stop();
-  print('  * Stats for worker ${worker.workerId}: ${worker.stats.dump()}');
+  print('  * Stats for worker ${worker.hashCode}: ${worker.stats.dump()}');
 
   print('');
 
@@ -30,18 +34,15 @@ void main() async {
   );
   final pool = HelloWorldWorkerPool(concurrencySettings: concurrency);
   await pool.start();
+  futures.clear();
   for (var name in names) {
-    Squadron.info(await pool.hello(name));
+    futures.add(pool.hello(name).then(logger.i));
   }
+  await Future.wait(futures);
   print(pool.fullStats
-      .map((s) => '  * Stats for pool worker ${s.id}: ${s.dump()}')
+      .map((s) => '  * Stats for pool worker ${s.workerHashCode}: ${s.dump()}')
       .join('\n'));
   pool.stop();
-}
-
-class StdoutLogger extends ConsoleSquadronLogger {
-  @override
-  void log(String message) => stdout.write('$message\n');
 }
 
 extension DebugStats on WorkerStat {

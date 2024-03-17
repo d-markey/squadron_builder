@@ -3,7 +3,7 @@
 part of '../data_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.4.2
+// Generator: WorkerGenerator 6.0.0
 // **************************************************************************
 
 /// WorkerService class for DataService
@@ -15,8 +15,7 @@ class _$DataServiceWorkerService extends DataService implements WorkerService {
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$doSomethingId: ($) async =>
-        (await doSomething(Data.unmarshall($.args[0]))).marshall(),
+    _$doSomethingId: ($) => doSomething($.args[0]),
   });
 
   static const int _$doSomethingId = 1;
@@ -26,26 +25,14 @@ class _$DataServiceWorkerService extends DataService implements WorkerService {
 WorkerService $DataServiceInitializer(WorkerRequest startRequest) =>
     _$DataServiceWorkerService();
 
-/// Operations map for DataService
-@Deprecated(
-    'squadron_builder now supports "plain old Dart objects" as services. '
-    'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$DataServiceOperations anymore.')
-mixin $DataServiceOperations on WorkerService {
-  @override
-  // not needed anymore, generated for compatibility with previous versions of squadron_builder
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-}
-
 /// Worker for DataService
 class DataServiceWorker extends Worker implements DataService {
-  DataServiceWorker({PlatformWorkerHook? platformWorkerHook})
-      : super($DataServiceActivator, platformWorkerHook: platformWorkerHook);
+  DataServiceWorker({PlatformThreadHook? threadHook})
+      : super($DataServiceActivator, threadHook: threadHook);
 
   @override
   Future<Data> doSomething(Data input) =>
-      send(_$DataServiceWorkerService._$doSomethingId, args: [input.marshall()])
-          .then((_) => Data.unmarshall(_));
+      send(_$DataServiceWorkerService._$doSomethingId, args: [input]);
 }
 
 /// Worker pool for DataService
@@ -53,8 +40,8 @@ class DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
     implements DataService {
   DataServiceWorkerPool(
       {ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook})
-      : super(() => DataServiceWorker(platformWorkerHook: platformWorkerHook),
+      PlatformThreadHook? threadHook})
+      : super(() => DataServiceWorker(threadHook: threadHook),
             concurrencySettings: concurrencySettings);
 
   @override

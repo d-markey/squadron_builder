@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:squadron/squadron.dart';
+import 'package:logger/logger.dart';
 
 import 'perf_counters.dart' as instr;
 
 class DeviationMonitor {
-  DeviationMonitor(this.resolution);
+  DeviationMonitor(this.resolution, this.logger);
 
   void start() {
     if (_timer == null) {
@@ -28,6 +28,7 @@ class DeviationMonitor {
   }
 
   final Duration resolution;
+  final Logger? logger;
   bool noisy = true;
   Timer? _timer;
 
@@ -65,10 +66,10 @@ class DeviationMonitor {
     _last = DateTime.now();
     if (noisy) {
       if (delta > 0) {
-        Squadron.info(() =>
+        logger?.w(() =>
             '!! timer deviation = ${instr.percent(deviation)} (elapsed = $diff, delta = $delta, skipped = $_skippedTicks)');
       } else {
-        Squadron.fine(() =>
+        logger?.w(() =>
             '!! timer deviation = ${instr.percent(deviation)} (elapsed = $diff, delta = $delta, skipped = $_skippedTicks)');
       }
     }

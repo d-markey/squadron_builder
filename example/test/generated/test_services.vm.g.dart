@@ -1,167 +1,171 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.4.2
+// Generator: WorkerGenerator 6.0.0
 // **************************************************************************
 
-import 'package:squadron/squadron.dart';
+import 'package:squadron/squadron.dart' as sq;
 
 import '../test_services.dart';
 
 /// VM entry point for TestParameterLess
 void _start$TestParameterLess(List<dynamic> command) =>
-    run($TestParameterLessInitializer, command, null);
+    sq.run($TestParameterLessInitializer, command);
 
-EntryPoint $getTestParameterLessActivator() => _start$TestParameterLess;
+sq.EntryPoint $getTestParameterLessActivator() => _start$TestParameterLess;
 
 /// VM entry point for TestReqPositional
 void _start$TestReqPositional(List<dynamic> command) =>
-    run($TestReqPositionalInitializer, command, null);
+    sq.run($TestReqPositionalInitializer, command);
 
-EntryPoint $getTestReqPositionalActivator() => _start$TestReqPositional;
+sq.EntryPoint $getTestReqPositionalActivator() => _start$TestReqPositional;
 
 /// VM entry point for TestOptNullPositional
 void _start$TestOptNullPositional(List<dynamic> command) =>
-    run($TestOptNullPositionalInitializer, command, null);
+    sq.run($TestOptNullPositionalInitializer, command);
 
-EntryPoint $getTestOptNullPositionalActivator() => _start$TestOptNullPositional;
+sq.EntryPoint $getTestOptNullPositionalActivator() =>
+    _start$TestOptNullPositional;
 
 /// VM entry point for TestOptDefPositional
 void _start$TestOptDefPositional(List<dynamic> command) =>
-    run($TestOptDefPositionalInitializer, command, null);
+    sq.run($TestOptDefPositionalInitializer, command);
 
-EntryPoint $getTestOptDefPositionalActivator() => _start$TestOptDefPositional;
+sq.EntryPoint $getTestOptDefPositionalActivator() =>
+    _start$TestOptDefPositional;
 
 /// VM entry point for TestOptNullDefPositional
 void _start$TestOptNullDefPositional(List<dynamic> command) =>
-    run($TestOptNullDefPositionalInitializer, command, null);
+    sq.run($TestOptNullDefPositionalInitializer, command);
 
-EntryPoint $getTestOptNullDefPositionalActivator() =>
+sq.EntryPoint $getTestOptNullDefPositionalActivator() =>
     _start$TestOptNullDefPositional;
 
 /// VM entry point for TestReqPositionalField
 void _start$TestReqPositionalField(List<dynamic> command) =>
-    run($TestReqPositionalFieldInitializer, command, null);
+    sq.run($TestReqPositionalFieldInitializer, command);
 
-EntryPoint $getTestReqPositionalFieldActivator() =>
+sq.EntryPoint $getTestReqPositionalFieldActivator() =>
     _start$TestReqPositionalField;
 
 /// VM entry point for TestOptNullPositionalField
 void _start$TestOptNullPositionalField(List<dynamic> command) =>
-    run($TestOptNullPositionalFieldInitializer, command, null);
+    sq.run($TestOptNullPositionalFieldInitializer, command);
 
-EntryPoint $getTestOptNullPositionalFieldActivator() =>
+sq.EntryPoint $getTestOptNullPositionalFieldActivator() =>
     _start$TestOptNullPositionalField;
 
 /// VM entry point for TestOptDefPositionalField
 void _start$TestOptDefPositionalField(List<dynamic> command) =>
-    run($TestOptDefPositionalFieldInitializer, command, null);
+    sq.run($TestOptDefPositionalFieldInitializer, command);
 
-EntryPoint $getTestOptDefPositionalFieldActivator() =>
+sq.EntryPoint $getTestOptDefPositionalFieldActivator() =>
     _start$TestOptDefPositionalField;
 
 /// VM entry point for TestOptNullDefPositionalField
 void _start$TestOptNullDefPositionalField(List<dynamic> command) =>
-    run($TestOptNullDefPositionalFieldInitializer, command, null);
+    sq.run($TestOptNullDefPositionalFieldInitializer, command);
 
-EntryPoint $getTestOptNullDefPositionalFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefPositionalFieldActivator() =>
     _start$TestOptNullDefPositionalField;
 
 /// VM entry point for TestReqPositionalPrivateField
 void _start$TestReqPositionalPrivateField(List<dynamic> command) =>
-    run($TestReqPositionalPrivateFieldInitializer, command, null);
+    sq.run($TestReqPositionalPrivateFieldInitializer, command);
 
-EntryPoint $getTestReqPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestReqPositionalPrivateFieldActivator() =>
     _start$TestReqPositionalPrivateField;
 
 /// VM entry point for TestOptNullPositionalPrivateField
 void _start$TestOptNullPositionalPrivateField(List<dynamic> command) =>
-    run($TestOptNullPositionalPrivateFieldInitializer, command, null);
+    sq.run($TestOptNullPositionalPrivateFieldInitializer, command);
 
-EntryPoint $getTestOptNullPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullPositionalPrivateFieldActivator() =>
     _start$TestOptNullPositionalPrivateField;
 
 /// VM entry point for TestOptDefPositionalPrivateField
 void _start$TestOptDefPositionalPrivateField(List<dynamic> command) =>
-    run($TestOptDefPositionalPrivateFieldInitializer, command, null);
+    sq.run($TestOptDefPositionalPrivateFieldInitializer, command);
 
-EntryPoint $getTestOptDefPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptDefPositionalPrivateFieldActivator() =>
     _start$TestOptDefPositionalPrivateField;
 
 /// VM entry point for TestOptNullDefPositionalPrivateField
 void _start$TestOptNullDefPositionalPrivateField(List<dynamic> command) =>
-    run($TestOptNullDefPositionalPrivateFieldInitializer, command, null);
+    sq.run($TestOptNullDefPositionalPrivateFieldInitializer, command);
 
-EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator() =>
     _start$TestOptNullDefPositionalPrivateField;
 
 /// VM entry point for TestOptNullNamed
 void _start$TestOptNullNamed(List<dynamic> command) =>
-    run($TestOptNullNamedInitializer, command, null);
+    sq.run($TestOptNullNamedInitializer, command);
 
-EntryPoint $getTestOptNullNamedActivator() => _start$TestOptNullNamed;
+sq.EntryPoint $getTestOptNullNamedActivator() => _start$TestOptNullNamed;
 
 /// VM entry point for TestOptDefNamed
 void _start$TestOptDefNamed(List<dynamic> command) =>
-    run($TestOptDefNamedInitializer, command, null);
+    sq.run($TestOptDefNamedInitializer, command);
 
-EntryPoint $getTestOptDefNamedActivator() => _start$TestOptDefNamed;
+sq.EntryPoint $getTestOptDefNamedActivator() => _start$TestOptDefNamed;
 
 /// VM entry point for TestOptNullDefNamed
 void _start$TestOptNullDefNamed(List<dynamic> command) =>
-    run($TestOptNullDefNamedInitializer, command, null);
+    sq.run($TestOptNullDefNamedInitializer, command);
 
-EntryPoint $getTestOptNullDefNamedActivator() => _start$TestOptNullDefNamed;
+sq.EntryPoint $getTestOptNullDefNamedActivator() => _start$TestOptNullDefNamed;
 
 /// VM entry point for TestOptNullNamedField
 void _start$TestOptNullNamedField(List<dynamic> command) =>
-    run($TestOptNullNamedFieldInitializer, command, null);
+    sq.run($TestOptNullNamedFieldInitializer, command);
 
-EntryPoint $getTestOptNullNamedFieldActivator() => _start$TestOptNullNamedField;
+sq.EntryPoint $getTestOptNullNamedFieldActivator() =>
+    _start$TestOptNullNamedField;
 
 /// VM entry point for TestOptDefNamedField
 void _start$TestOptDefNamedField(List<dynamic> command) =>
-    run($TestOptDefNamedFieldInitializer, command, null);
+    sq.run($TestOptDefNamedFieldInitializer, command);
 
-EntryPoint $getTestOptDefNamedFieldActivator() => _start$TestOptDefNamedField;
+sq.EntryPoint $getTestOptDefNamedFieldActivator() =>
+    _start$TestOptDefNamedField;
 
 /// VM entry point for TestOptNullDefNamedField
 void _start$TestOptNullDefNamedField(List<dynamic> command) =>
-    run($TestOptNullDefNamedFieldInitializer, command, null);
+    sq.run($TestOptNullDefNamedFieldInitializer, command);
 
-EntryPoint $getTestOptNullDefNamedFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefNamedFieldActivator() =>
     _start$TestOptNullDefNamedField;
 
 /// VM entry point for TestOptNullNamedPrivateField
 void _start$TestOptNullNamedPrivateField(List<dynamic> command) =>
-    run($TestOptNullNamedPrivateFieldInitializer, command, null);
+    sq.run($TestOptNullNamedPrivateFieldInitializer, command);
 
-EntryPoint $getTestOptNullNamedPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullNamedPrivateFieldActivator() =>
     _start$TestOptNullNamedPrivateField;
 
 /// VM entry point for TestOptDefNamedPrivateField
 void _start$TestOptDefNamedPrivateField(List<dynamic> command) =>
-    run($TestOptDefNamedPrivateFieldInitializer, command, null);
+    sq.run($TestOptDefNamedPrivateFieldInitializer, command);
 
-EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
     _start$TestOptDefNamedPrivateField;
 
 /// VM entry point for TestOptNullDefNamedPrivateField
 void _start$TestOptNullDefNamedPrivateField(List<dynamic> command) =>
-    run($TestOptNullDefNamedPrivateFieldInitializer, command, null);
+    sq.run($TestOptNullDefNamedPrivateFieldInitializer, command);
 
-EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
     _start$TestOptNullDefNamedPrivateField;
 
 /// VM entry point for TestOptNullDefNamedPrivateNonFinalField
 void _start$TestOptNullDefNamedPrivateNonFinalField(List<dynamic> command) =>
-    run($TestOptNullDefNamedPrivateNonFinalFieldInitializer, command, null);
+    sq.run($TestOptNullDefNamedPrivateNonFinalFieldInitializer, command);
 
-EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
     _start$TestOptNullDefNamedPrivateNonFinalField;
 
 /// VM entry point for TestInstallable
 void _start$TestInstallable(List<dynamic> command) =>
-    run($TestInstallableInitializer, command, null);
+    sq.run($TestInstallableInitializer, command);
 
-EntryPoint $getTestInstallableActivator() => _start$TestInstallable;
+sq.EntryPoint $getTestInstallableActivator() => _start$TestInstallable;

@@ -3,7 +3,7 @@
 part of '../json_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 2.4.2
+// Generator: WorkerGenerator 6.0.0
 // **************************************************************************
 
 /// WorkerService class for JsonService
@@ -25,27 +25,20 @@ class _$JsonServiceWorkerService extends JsonService implements WorkerService {
 WorkerService $JsonServiceInitializer(WorkerRequest startRequest) =>
     _$JsonServiceWorkerService();
 
-/// Operations map for JsonService
-@Deprecated(
-    'squadron_builder now supports "plain old Dart objects" as services. '
-    'Services do not need to derive from WorkerService nor do they need to mix in '
-    'with \$JsonServiceOperations anymore.')
-mixin $JsonServiceOperations on WorkerService {
-  @override
-  // not needed anymore, generated for compatibility with previous versions of squadron_builder
-  Map<int, CommandHandler> get operations => WorkerService.noOperations;
-}
-
 /// Worker for JsonService
 class JsonServiceWorker extends Worker implements JsonService {
-  JsonServiceWorker({PlatformWorkerHook? platformWorkerHook})
-      : super($JsonServiceActivator, platformWorkerHook: platformWorkerHook);
+  JsonServiceWorker({PlatformThreadHook? threadHook})
+      : super($JsonServiceActivator, threadHook: threadHook);
 
   @override
   Future<T> loadJson<T>(
           {required String data,
-          required T Function(Map<String, Object?>) fromJson}) =>
+          required T Function(Map<String, dynamic>) fromJson}) =>
       send(_$JsonServiceWorkerService._$loadJsonId, args: [data, fromJson]);
+
+  @override
+  // ignore: unused_element
+  Logger get _logger => throw UnimplementedError();
 }
 
 /// Worker pool for JsonService
@@ -53,13 +46,17 @@ class JsonServiceWorkerPool extends WorkerPool<JsonServiceWorker>
     implements JsonService {
   JsonServiceWorkerPool(
       {ConcurrencySettings? concurrencySettings,
-      PlatformWorkerHook? platformWorkerHook})
-      : super(() => JsonServiceWorker(platformWorkerHook: platformWorkerHook),
+      PlatformThreadHook? threadHook})
+      : super(() => JsonServiceWorker(threadHook: threadHook),
             concurrencySettings: concurrencySettings);
 
   @override
   Future<T> loadJson<T>(
           {required String data,
-          required T Function(Map<String, Object?>) fromJson}) =>
+          required T Function(Map<String, dynamic>) fromJson}) =>
       execute((w) => w.loadJson(data: data, fromJson: fromJson));
+
+  @override
+  // ignore: unused_element
+  Logger get _logger => throw UnimplementedError();
 }

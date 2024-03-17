@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:squadron/squadron.dart';
-import 'package:squadron/squadron_annotations.dart';
 
 import 'generated/data_service.activator.g.dart';
 
@@ -11,7 +10,7 @@ part 'generated/data_service.worker.g.dart';
 
 @SquadronService()
 class DataService {
-  @SquadronMethod()
+  @squadronMethod
   FutureOr<Data> doSomething(Data input) =>
       Data(input.a + 1, !input.b, '(was $input)');
 }
