@@ -2,9 +2,9 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
-import 'package:squadron_builder/src/types/managed_type.dart';
 
 import '../extensions.dart';
+import '../types/managed_type.dart';
 
 @internal
 extension DartTypeExt on DartType {
@@ -19,10 +19,10 @@ extension DartTypeExt on DartType {
   Iterable<DartType> implementedTypes(ManagedType knownType,
       {bool includeSelf = false}) sync* {
     final isMatch = _TypeFilter(knownType).isMatch;
-    final typeElt = element.safeCast<ClassElement>();
     if (includeSelf && isMatch(this)) {
       yield this;
     }
+    final typeElt = element.safeCast<ClassElement>();
     if (typeElt != null) {
       yield* typeElt.allSupertypes.where(isMatch);
     }

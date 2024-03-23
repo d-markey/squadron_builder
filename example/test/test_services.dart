@@ -204,3 +204,23 @@ class TestInstallable extends sq.ServiceInstaller {
     }
   }
 }
+
+@sq.SquadronService()
+class TestRecordTypes {
+  TestRecordTypes();
+
+  @sq.squadronMethod
+  FutureOr<(int, List)> unnamed() {
+    return (0, []);
+  }
+
+  @sq.squadronMethod
+  FutureOr<({int count, List items})> named() {
+    return (count: 0, items: []);
+  }
+
+  @sq.squadronMethod
+  FutureOr<(int, {List items})> both() {
+    return (0, items: []);
+  }
+}

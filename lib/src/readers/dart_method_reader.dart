@@ -2,11 +2,11 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart';
-import 'package:squadron_builder/src/types/managed_type.dart';
-import 'package:squadron_builder/src/types/type_manager.dart';
 
 import '../marshalers/marshaler.dart';
 import '../marshalers/marshaling_info.dart';
+import '../types/managed_type.dart';
+import '../types/type_manager.dart';
 import 'annotations_reader.dart';
 import 'marshaling_manager.dart';
 import 'squadron_parameters.dart';

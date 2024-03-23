@@ -1029,3 +1029,77 @@ class TestInstallableWorkerPool extends sq.WorkerPool<TestInstallableWorker>
   // ignore: unused_element
   int get _delay => throw UnimplementedError();
 }
+
+/// WorkerService class for TestRecordTypes
+class _$TestRecordTypesWorkerService extends TestRecordTypes
+    implements sq.WorkerService {
+  _$TestRecordTypesWorkerService() : super();
+
+  @override
+  Map<int, sq.CommandHandler> get operations => _operations;
+
+  late final Map<int, sq.CommandHandler> _operations =
+      Map.unmodifiable(<int, sq.CommandHandler>{
+    _$bothId: ($) async {
+      final $r = await both();
+      return [$r.$1, $r.items];
+    },
+    _$namedId: ($) async {
+      final $r = await named();
+      return [$r.count, $r.items];
+    },
+    _$unnamedId: ($) async {
+      final $r = await unnamed();
+      return [$r.$1, $r.$2];
+    },
+  });
+
+  static const int _$bothId = 1;
+  static const int _$namedId = 2;
+  static const int _$unnamedId = 3;
+}
+
+/// Service initializer for TestRecordTypes
+sq.WorkerService $TestRecordTypesInitializer(sq.WorkerRequest startRequest) =>
+    _$TestRecordTypesWorkerService();
+
+/// Worker for TestRecordTypes
+class TestRecordTypesWorker extends sq.Worker implements TestRecordTypes {
+  TestRecordTypesWorker({sq.PlatformThreadHook? threadHook})
+      : super($TestRecordTypesActivator, threadHook: threadHook);
+
+  @override
+  Future<(int, {List<dynamic> items})> both() =>
+      send(_$TestRecordTypesWorkerService._$bothId, args: [])
+          .then((_) => (_[0] as int, items: _[1] as List<dynamic>));
+
+  @override
+  Future<({int count, List<dynamic> items})> named() =>
+      send(_$TestRecordTypesWorkerService._$namedId, args: [])
+          .then((_) => (count: _[0] as int, items: _[1] as List<dynamic>));
+
+  @override
+  Future<(int, List<dynamic>)> unnamed() =>
+      send(_$TestRecordTypesWorkerService._$unnamedId, args: [])
+          .then((_) => (_[0] as int, _[1] as List<dynamic>));
+}
+
+/// Worker pool for TestRecordTypes
+class TestRecordTypesWorkerPool extends sq.WorkerPool<TestRecordTypesWorker>
+    implements TestRecordTypes {
+  TestRecordTypesWorkerPool(
+      {sq.ConcurrencySettings? concurrencySettings,
+      sq.PlatformThreadHook? threadHook})
+      : super(() => TestRecordTypesWorker(threadHook: threadHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  Future<(int, {List<dynamic> items})> both() => execute((w) => w.both());
+
+  @override
+  Future<({int count, List<dynamic> items})> named() =>
+      execute((w) => w.named());
+
+  @override
+  Future<(int, List<dynamic>)> unnamed() => execute((w) => w.unnamed());
+}

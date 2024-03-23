@@ -1,8 +1,9 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
-import 'package:squadron_builder/src/types/managed_type.dart';
 
+import '../types/extensions.dart';
+import '../types/managed_type.dart';
 import 'marshaling_info.dart';
 
 part 'explicit_marshaler.dart';
@@ -11,6 +12,7 @@ part 'instance_marshaler.dart';
 part 'iterable_marshaler.dart';
 part 'json_marshaler.dart';
 part 'map_marshaler.dart';
+part 'record_marshaler.dart';
 
 abstract class Marshaler {
   const Marshaler();
@@ -18,7 +20,7 @@ abstract class Marshaler {
   bool targets(ManagedType type);
 
   Adapter getSerializer(ManagedType type);
-  Adapter getDeserializer(ManagedType type);
+  Adapter getDeserializer(ManagedType type, {bool forceCast = false});
 
   String serialize(ManagedType type, String expr) => getSerializer(type)(expr);
   String deserialize(ManagedType type, String expr) =>
@@ -40,4 +42,8 @@ abstract class Marshaler {
 
   factory Marshaler.map(ManagedType type, Marshaler itemMarshaler) =>
       MapMarshaler(type, itemMarshaler);
+
+  factory Marshaler.record(
+          ManagedRecordType type, List<Marshaler> fieldMarshalers) =>
+      RecordMarshaler(type, fieldMarshalers);
 }

@@ -17,7 +17,7 @@ class _JsonMarshaler extends Marshaler {
           : (v) => '$v?.toJson()';
 
   @override
-  Adapter getDeserializer(ManagedType type) {
+  Adapter getDeserializer(ManagedType type, {bool forceCast = false}) {
     final typeName = type.getTypeName(NullabilitySuffix.none);
     return (type.nullabilitySuffix == NullabilitySuffix.none)
         ? (v) => '$typeName.fromJson($v)'

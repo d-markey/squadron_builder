@@ -14,29 +14,36 @@ class IterableMarshaler extends Marshaler {
       (type.dartType!.isDartCoreList || type.dartType!.isDartCoreIterable) &&
       type.typeArguments.first == _itemType;
 
-  Adapter _cast(ManagedType type) =>
-      (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? (list) => '$list.cast<$_itemType>()'
-          : (list) => '$list?.cast<$_itemType>()';
-
-  Adapter _map(Adapter convert, ManagedType type) {
-    final toList = type.dartType!.isDartCoreList ? '.toList()' : '';
-    final item = '(v) => ${convert('v')}';
+  Adapter _cast(ManagedType type, bool forceCast) {
+    final cast = '.cast<$_itemType>()';
     return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? (list) => '$list.map($item)$toList'
-        : (list) => '$list?.map($item)$toList';
+        ? (list) => '($list is List ? $list : $list.toList())$cast'
+        : (list) => '($list is List ? $list : $list?.toList())?$cast';
+  }
+
+  Adapter _map(Adapter converter, ManagedType type, bool forceCast) {
+    final cast = forceCast ? '.cast<$_itemType>()' : '';
+    final toList = type.dartType!.isDartCoreList ? '.toList()' : '';
+    final item = '(v) => ${converter('v')}';
+    return (type.nullabilitySuffix == NullabilitySuffix.none)
+        ? (list) => '($list as Iterable).map($item)$toList$cast'
+        : (list) => '($list as Iterable?)?.map($item)$toList$cast';
   }
 
   @override
   Adapter getSerializer(ManagedType type) {
     final serialize = _itemMarshaler.getSerializer(type.typeArguments.first);
-    return serialize.isIdentity ? _cast(type) : _map(serialize, type);
+    return serialize.isIdentity
+        ? _cast(type, false)
+        : _map(serialize, type, false);
   }
 
   @override
-  Adapter getDeserializer(ManagedType type) {
+  Adapter getDeserializer(ManagedType type, {bool forceCast = false}) {
     final deserialize =
         _itemMarshaler.getDeserializer(type.typeArguments.first);
-    return deserialize.isIdentity ? _cast(type) : _map(deserialize, type);
+    return deserialize.isIdentity
+        ? _cast(type, forceCast)
+        : _map(deserialize, type, forceCast);
   }
 }

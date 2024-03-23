@@ -17,7 +17,7 @@ class _InstanceMarshaler extends Marshaler {
           : (v) => '$v?.marshal()';
 
   @override
-  Adapter getDeserializer(ManagedType type) {
+  Adapter getDeserializer(ManagedType type, {bool forceCast = false}) {
     final typeName = type.getTypeName();
     return (type.nullabilitySuffix == NullabilitySuffix.none)
         ? (v) => '$typeName.unmarshal($v)'

@@ -169,3 +169,9 @@ void _start$TestInstallable(List<dynamic> command) =>
     sq.run($TestInstallableInitializer, command);
 
 sq.EntryPoint $getTestInstallableActivator() => _start$TestInstallable;
+
+/// VM entry point for TestRecordTypes
+void _start$TestRecordTypes(List<dynamic> command) =>
+    sq.run($TestRecordTypesInitializer, command);
+
+sq.EntryPoint $getTestRecordTypesActivator() => _start$TestRecordTypes;

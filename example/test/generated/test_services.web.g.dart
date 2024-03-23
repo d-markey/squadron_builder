@@ -80,6 +80,9 @@ void main() {
 
   /// Web entry point for TestInstallable
   sq.run($TestInstallableInitializer);
+
+  /// Web entry point for TestRecordTypes
+  sq.run($TestRecordTypesInitializer);
 }
 
 sq.EntryPoint $getTestParameterLessActivator() =>
@@ -152,4 +155,7 @@ sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
     'example/test/generated/test_services.web.g.dart.js';
 
 sq.EntryPoint $getTestInstallableActivator() =>
+    'example/test/generated/test_services.web.g.dart.js';
+
+sq.EntryPoint $getTestRecordTypesActivator() =>
     'example/test/generated/test_services.web.g.dart.js';

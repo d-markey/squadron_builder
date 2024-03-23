@@ -1,12 +1,11 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
-import 'package:squadron_builder/src/types/managed_type.dart';
 
 import '../marshalers/marshaler.dart';
 import '../marshalers/marshaling_info.dart';
+import '../types/managed_type.dart';
 import '../types/type_manager.dart';
-import 'annotations_reader.dart';
 
 class MarshalingManager extends SimpleElementVisitor {
   MarshalingManager(this._typeManager);
@@ -18,8 +17,7 @@ class MarshalingManager extends SimpleElementVisitor {
   MarshalingInfo _getOrAddMarshalingInfo(DartType type, Element clazz) {
     var entry = _cache[clazz];
     if (entry == null) {
-      final marshaler =
-          AnnotationReader.getExplicitMarshaler(clazz, _typeManager);
+      final marshaler = _typeManager.getExplicitMarshaler(clazz);
       entry = MarshalingInfo(_typeManager.handleDartType(type), marshaler);
       _cache[clazz] = entry;
     }
@@ -62,8 +60,7 @@ class MarshalingManager extends SimpleElementVisitor {
   }
 
   Marshaler getMarshalerFor(ParameterElement param) {
-    final explicitMarshaler =
-        AnnotationReader.getExplicitMarshaler(param, _typeManager);
+    final explicitMarshaler = _typeManager.getExplicitMarshaler(param);
     final type = (param is FieldFormalParameterElement && param.field != null)
         ? param.field!.type
         : param.type;
@@ -98,6 +95,14 @@ class MarshalingManager extends SimpleElementVisitor {
       }
       explicit = getMarshaler(itemType, explicit: explicit);
       return Marshaler.map(type, explicit);
+    }
+
+    if (type is ManagedRecordType) {
+      final marshalers = type.positional
+          .followedBy(type.named.values)
+          .map(getMarshaler)
+          .toList();
+      return Marshaler.record(type, marshalers);
     }
 
     final elt = type.dartType!.element;

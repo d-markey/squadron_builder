@@ -1,10 +1,10 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:squadron_builder/src/types/managed_type.dart';
-import 'package:squadron_builder/src/types/type_manager.dart';
 
 import '../marshalers/marshaler.dart';
 import '../types/extensions.dart';
+import '../types/managed_type.dart';
+import '../types/type_manager.dart';
 import 'squadron_parameter.dart';
 
 class SquadronParameters {

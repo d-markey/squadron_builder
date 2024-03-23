@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 
+import '../marshalers/marshaler.dart';
 import 'extensions.dart';
 
 abstract class ManagedType {
@@ -162,4 +163,51 @@ class ManagedParameter {
         ? '$required${type.getTypeName(forcedNullabilitySuffix)} $name'
         : '$required${type.getTypeName(forcedNullabilitySuffix)} $name = $defaultValueCode';
   }
+}
+
+class MarshaledManagedType extends ManagedType {
+  MarshaledManagedType._(this.managedType, this.marshaler) : super._('');
+
+  final ManagedType managedType;
+  final Marshaler marshaler;
+
+  @override
+  DartType? get dartType => managedType.dartType;
+
+  @override
+  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) =>
+      managedType.getTypeName(forcedNullabilitySuffix);
+
+  @override
+  NullabilitySuffix get nullabilitySuffix => managedType.nullabilitySuffix;
+}
+
+class ManagedRecordType extends ManagedType {
+  ManagedRecordType(this.dartType, this.positional, this.named) : super._('');
+
+  @override
+  final DartType? dartType;
+
+  final List<ManagedType> positional;
+  final Map<String, ManagedType> named;
+
+  @override
+  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
+    final suffix = (forcedNullabilitySuffix ?? nullabilitySuffix).suffix;
+    final p = positional.map((t) => t.getTypeName()).join(', ');
+    final n = named.entries
+        .map((t) => '${t.value.getTypeName()} ${t.key}')
+        .join(', ');
+    if (p.isEmpty) {
+      return '({$n})$suffix';
+    } else if (n.isEmpty) {
+      return '($p)$suffix';
+    } else {
+      return '($p, {$n})$suffix';
+    }
+  }
+
+  @override
+  NullabilitySuffix get nullabilitySuffix =>
+      dartType?.nullabilitySuffix ?? NullabilitySuffix.none;
 }

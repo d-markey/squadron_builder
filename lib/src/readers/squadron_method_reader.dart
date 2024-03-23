@@ -81,8 +81,7 @@ class SquadronMethodReader extends DartMethodReader {
       _typeParameters.addAll(method.typeParameters.map((e) => e.toString()));
     }
 
-    final resultMarshaler =
-        AnnotationReader.getExplicitMarshaler(method, typeManager);
+    final resultMarshaler = typeManager.getExplicitMarshaler(method);
     if (resultMarshaler != null) {
       _resultMarshaler =
           _marshaling.getMarshaler(valueType, explicit: resultMarshaler);

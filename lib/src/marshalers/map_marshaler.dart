@@ -19,28 +19,35 @@ class MapMarshaler extends Marshaler {
       type.typeArguments.last.getTypeName(NullabilitySuffix.none) ==
           _itemTypeName;
 
-  Adapter _cast(ManagedType type) =>
-      (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? (map) => '$map.cast<$_keyType, $_itemType>()'
-          : (map) => '$map?.cast<$_keyType, $_itemType>()';
+  Adapter _cast(ManagedType type, bool forceCast) {
+    final cast = '.cast<$_keyType, $_itemType>()';
+    return (type.nullabilitySuffix == NullabilitySuffix.none)
+        ? (map) => '($map as Map)$cast'
+        : (map) => '($map as Map?)?$cast';
+  }
 
-  Adapter _convert(Adapter converter, ManagedType type) {
+  Adapter _convert(Adapter converter, ManagedType type, bool forceCast) {
+    final cast = '.cast<$_keyType, $_itemType>()';
     final entry = '(e) => MapEntry(e.key, ${converter('e.value')})';
     return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? (map) => 'Map.fromEntries($map.entries.map($entry))'
+        ? (map) => 'Map.fromEntries($map.entries.map($entry))$cast'
         : (map) =>
-            '($map == null) ? null : Map.fromEntries($map.entries.map($entry))';
+            '($map == null) ? null : Map.fromEntries($map.entries.map($entry))$cast';
   }
 
   @override
   Adapter getSerializer(ManagedType type) {
     final serialize = _itemMarshaler.getSerializer(type.typeArguments.last);
-    return serialize.isIdentity ? _cast(type) : _convert(serialize, type);
+    return serialize.isIdentity
+        ? _cast(type, false)
+        : _convert(serialize, type, false);
   }
 
   @override
-  Adapter getDeserializer(ManagedType type) {
+  Adapter getDeserializer(ManagedType type, {bool forceCast = false}) {
     final deserialize = _itemMarshaler.getDeserializer(type.typeArguments.last);
-    return deserialize.isIdentity ? _cast(type) : _convert(deserialize, type);
+    return deserialize.isIdentity
+        ? _cast(type, forceCast)
+        : _convert(deserialize, type, forceCast);
   }
 }

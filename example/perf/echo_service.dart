@@ -38,14 +38,14 @@ class EchoService {
 
   @squadronMethod
   FutureOr<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
-      @SerializeWith(ServiceRequestToString) srv.ServiceRequest request) {
+      @ServiceRequestToString() srv.ServiceRequest request) {
     _logger?.t('explicitEchoWithJsonResult(${jsonEncode(request.toJson())})');
     _simulateWorkload();
     return srv.ServiceResponse('${request.payload} done');
   }
 
   @squadronMethod
-  @SerializeWith(ServiceResponseOfStringToByteBuffer)
+  @ServiceResponseOfStringToByteBuffer()
   FutureOr<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
       srv.ServiceRequest request) {
     _logger?.t('jsonEchoWithExplicitResult(${jsonEncode(request.toJson())})');
@@ -54,10 +54,9 @@ class EchoService {
   }
 
   @squadronMethod
-  @SerializeWith(ServiceResponseOfStringToByteBuffer.instance)
+  @ServiceResponseOfStringToByteBuffer.instance
   FutureOr<srv.ServiceResponse<String>> explicitEchoWithExplicitResult(
-      @SerializeWith(ServiceRequestGenericToString.instance)
-      srv.ServiceRequest request,
+      @ServiceRequestGenericToString.instance srv.ServiceRequest request,
       {CancelationToken? token}) {
     _logger
         ?.t('explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
@@ -66,10 +65,9 @@ class EchoService {
   }
 
   @squadronMethod
-  @SerializeWith(ServiceResponseToJson)
+  @ServiceResponseToJson()
   FutureOr<srv.ServiceResponse<String>> jsonEncodeEcho(
-      @SerializeWith(ServiceRequestToString.instance)
-      srv.ServiceRequest request,
+      @ServiceRequestToString.instance srv.ServiceRequest request,
       [CancelationToken? token]) {
     _logger
         ?.t('explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');

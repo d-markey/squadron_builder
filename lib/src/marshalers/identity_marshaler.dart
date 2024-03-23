@@ -10,5 +10,12 @@ class _IdentityMarshaler extends Marshaler {
   Adapter getSerializer(ManagedType type) => identity;
 
   @override
-  Adapter getDeserializer(ManagedType type) => identity;
+  Adapter getDeserializer(ManagedType type, {bool forceCast = false}) {
+    if (forceCast) {
+      final cast = ' as $type${type.nullabilitySuffix.suffix}';
+      return (v) => '${identity(v)}$cast';
+    } else {
+      return identity;
+    }
+  }
 }

@@ -6,7 +6,7 @@ import 'marshaler.dart';
 typedef Adapter = String Function(String);
 
 extension IdentityCheckerExt on Adapter {
-  bool get isIdentity => (this == identity) || (this('_dummy_') == '_dummy_');
+  bool get isIdentity => (this == identity) || (this('@!?') == '@!?');
 }
 
 // identity is an Adapter

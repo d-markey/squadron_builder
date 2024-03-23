@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
-import 'package:squadron_builder/src/types/type_manager.dart';
 
 import '_overrides.dart';
 import 'build_step_events.dart';
 import 'marshalers/marshaling_info.dart';
 import 'readers/dart_method_reader.dart';
 import 'readers/squadron_service_reader.dart';
+import 'types/type_manager.dart';
 
 /// Code generator for worker service/operation maps, workers, worker pools, service initializers
 /// and worker activators.
@@ -176,6 +176,7 @@ class WorkerAssets {
     }
 
     return Stream.fromIterable([
+      _generateLints(),
       _generateServiceClass(commands),
       _generateServiceInitializer(),
       _generateWorker(commands, unimplemented, finalizable: withFinalizers),
@@ -184,6 +185,10 @@ class WorkerAssets {
             finalizable: withFinalizers)
     ]);
   }
+
+  String _generateLints() => '''
+// ignore_for_file: unnecessary_cast
+''';
 
   String _generateServiceClass(List<SquadronMethodReader> commands) {
     final params = _service.parameters;

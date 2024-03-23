@@ -4,10 +4,10 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart';
-import 'package:squadron_builder/src/types/type_manager.dart';
 
 import 'build_step_events.dart';
 import 'readers/squadron_service_reader.dart';
+import 'types/type_manager.dart';
 import 'version.dart';
 import 'worker_assets.dart';
 

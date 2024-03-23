@@ -38,7 +38,7 @@ class FibonacciService {
   }
 
   @squadronMethod
-  @SerializeWith(ListIntMarshaler())
+  @ListIntMarshaler()
   FutureOr<List<int>> fibonacciList1(int s, int e) {
     _logger?.i('fibonacciList1($s, $e)');
     var res = <int>[];
@@ -49,7 +49,7 @@ class FibonacciService {
   }
 
   @squadronMethod
-  @SerializeWith(listIntMarshaler)
+  @listIntMarshaler
   FutureOr<List<int>> fibonacciList2(int s, int e) {
     _logger?.i('fibonacciList2($s, $e)');
     var res = <int>[];

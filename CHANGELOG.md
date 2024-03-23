@@ -1,7 +1,8 @@
 ## 6.0.0
 
 - squadron_builder for Squadron version >= 6.0. Please note there are no versions 3.x-5.x in order to align squadron_builder version numbers with that of Squadron.
-- Removed support for 'useLogger' annotations.
+- Removed support for 'useLogger' and 'SerializeWith' annotations.
+- Added support for record types.
 
 ## 3.x-5.x
 

@@ -1,1 +1,2 @@
-call dart run build_runner build -c example_with_finalizers
+call dart run build_runner clean
+call dart run build_runner build -d -c example_with_finalizers

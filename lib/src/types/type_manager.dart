@@ -1,8 +1,11 @@
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:squadron_builder/src/types/extensions.dart';
+import 'package:source_gen/source_gen.dart';
 
-import '../extensions.dart';
+import '../marshalers/marshaler.dart';
+import '../readers/annotations_reader.dart';
+import 'extensions.dart';
 import 'managed_type.dart';
 
 class TypeManager {
@@ -14,7 +17,7 @@ class TypeManager {
     final prefix = _prefixes
             .where((p) =>
                 p.imports.any((i) => i.isFromPackage('package:squadron/')))
-            .getFirstOrNull()
+            .firstOrNull
             ?.name ??
         '';
 
@@ -80,14 +83,50 @@ class TypeManager {
   late final ManagedType cancelationTokenType;
   late final ManagedType loggerType;
 
-  ManagedType handleDartType(DartType type) {
+  bool isMarshaler(DartObject obj) =>
+      obj.type?.isA(squadronMarshalerType) ?? false;
+
+  Marshaler? getExplicitMarshaler(Element element) {
+    Marshaler? explicit;
+    for (var marshaler in element.getAnnotations().where(isMarshaler)) {
+      final type = marshaler.toTypeValue() ?? marshaler.type;
+      final baseMarshaler = type?.implementedTypes(squadronMarshalerType);
+      if (baseMarshaler == null || baseMarshaler.isEmpty) {
+        throw InvalidGenerationSourceError(
+            'Invalid marshaler for $element: $marshaler');
+      }
+      explicit =
+          Marshaler.explicit(marshaler, handleDartType(baseMarshaler.single));
+      break;
+    }
+
+    return explicit;
+  }
+
+  ManagedType handleDartType(DartType type) => (type is RecordType)
+      ? _handleRecordDartType(type)
+      : _handlePlainDartType(type);
+
+  ManagedType _handleRecordDartType(RecordType type) {
+    return ManagedRecordType(
+      type,
+      List.from(
+        type.positionalFields.map((t) => handleDartType(t.type)),
+      ),
+      Map.fromEntries(type.namedFields.map(
+        (t) => MapEntry(t.name, handleDartType(t.type)),
+      )),
+    );
+  }
+
+  ManagedType _handlePlainDartType(DartType type) {
     String? prefix;
 
     final typeLib = type.element?.library;
     if (typeLib != null) {
       prefix = _prefixes
           .where((p) => p.imports.any((i) => i.importedLibrary == typeLib))
-          .getFirstOrNull()
+          .firstOrNull
           ?.name;
     }
 
