@@ -28,7 +28,7 @@ dev_dependencies:
 
 dependency_overrides:
   squadron:
-    path: ../squadron
+    git: https://github.com/d-markey/squadron
 
 topics:
   - codegen
