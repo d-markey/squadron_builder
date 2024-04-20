@@ -13,14 +13,15 @@ class _InstanceMarshaler extends Marshaler {
   @override
   Adapter getSerializer(ManagedType type) =>
       (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? (v) => '$v.marshal()'
-          : (v) => '$v?.marshal()';
+          ? (v, {bool forceCast = false}) => '$v.marshal()'
+          : (v, {bool forceCast = false}) => '$v?.marshal()';
 
   @override
-  Adapter getDeserializer(ManagedType type, {bool forceCast = false}) {
+  Adapter getDeserializer(ManagedType type) {
     final typeName = type.getTypeName();
     return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? (v) => '$typeName.unmarshal($v)'
-        : (v) => '($v == null) ? null : $typeName.unmarshal($v)';
+        ? (v, {bool forceCast = false}) => '$typeName.unmarshal($v)'
+        : (v, {bool forceCast = false}) =>
+            '($v == null) ? null : $typeName.unmarshal($v)';
   }
 }

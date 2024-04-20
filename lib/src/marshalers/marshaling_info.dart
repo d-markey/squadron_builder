@@ -3,14 +3,14 @@ import 'package:analyzer/dart/element/element.dart';
 import '../types/managed_type.dart';
 import 'marshaler.dart';
 
-typedef Adapter = String Function(String);
+typedef Adapter = String Function(String, {bool forceCast});
 
 extension IdentityCheckerExt on Adapter {
   bool get isIdentity => (this == identity) || (this('@!?') == '@!?');
 }
 
 // identity is an Adapter
-String identity(String expr) => expr;
+String identity(String expr, {bool forceCast = false}) => expr;
 
 class MarshalingInfo {
   MarshalingInfo(this._type, this._marshaler);

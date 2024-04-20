@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
@@ -20,11 +22,11 @@ abstract class Marshaler {
   bool targets(ManagedType type);
 
   Adapter getSerializer(ManagedType type);
-  Adapter getDeserializer(ManagedType type, {bool forceCast = false});
+  Adapter getDeserializer(ManagedType type);
 
   String serialize(ManagedType type, String expr) => getSerializer(type)(expr);
-  String deserialize(ManagedType type, String expr) =>
-      getDeserializer(type)(expr);
+  String deserialize(ManagedType type, String expr, {bool forceCast = false}) =>
+      getDeserializer(type)(expr, forceCast: forceCast);
 
   static const Marshaler identity = _IdentityMarshaler();
 

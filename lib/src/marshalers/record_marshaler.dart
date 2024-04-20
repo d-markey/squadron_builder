@@ -23,8 +23,10 @@ class RecordMarshaler extends Marshaler {
       fldSerializers.add(_serialize(type, name, marshaler));
       fldDererializers.add(_deserializeNamed(type, idx - 1, name, marshaler));
     }
-    _serializer = (v) => fldSerializers.map((a) => a(v)).join(', ');
-    _deserializer = (v) => fldDererializers.map((a) => a(v)).join(', ');
+    _serializer = (v, {bool forceCast = false}) =>
+        fldSerializers.map((a) => a(v, forceCast: forceCast)).join(', ');
+    _deserializer = (v, {bool forceCast = false}) =>
+        fldDererializers.map((a) => a(v, forceCast: forceCast)).join(', ');
   }
 
   final ManagedRecordType _managedType;
@@ -37,26 +39,31 @@ class RecordMarshaler extends Marshaler {
 
   static Adapter _serialize(
           ManagedType type, String field, Marshaler marshaler) =>
-      (v) => marshaler.getSerializer(type)('$v.$field');
+      (v, {bool forceCast = false}) =>
+          marshaler.getSerializer(type)('$v.$field');
 
   static Adapter _deserializePositional(
           ManagedType type, int idx, Marshaler marshaler) =>
-      (v) => marshaler.getDeserializer(type, forceCast: true)('$v[$idx]');
+      (v, {bool forceCast = false}) =>
+          marshaler.getDeserializer(type)('$v[$idx]', forceCast: forceCast);
 
   static Adapter _deserializeNamed(
           ManagedType type, int idx, String name, Marshaler marshaler) =>
-      (v) =>
-          '$name: ${marshaler.getDeserializer(type, forceCast: true)('$v[$idx]')}';
+      (v, {bool forceCast = false}) =>
+          '$name: ${marshaler.getDeserializer(type)('$v[$idx]', forceCast: forceCast)}';
 
   @override
   Adapter getSerializer(ManagedType type) =>
       (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? (v) => '[${_serializer(v)}]'
-          : (v) => '($v == null) ? null : [${_serializer(v)}]';
+          ? (v, {bool forceCast = false}) => '[${_serializer(v)}]'
+          : (v, {bool forceCast = false}) =>
+              '($v == null) ? null : [${_serializer(v)}]';
 
   @override
-  Adapter getDeserializer(ManagedType type, {bool forceCast = false}) =>
-      (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? (v) => '(${_deserializer(v)})'
-          : (v) => '($v == null) ? null : (${_deserializer(v)})';
+  Adapter getDeserializer(ManagedType type) => (type.nullabilitySuffix ==
+          NullabilitySuffix.none)
+      ? (v, {bool forceCast = false}) =>
+          '(${_deserializer(v, forceCast: forceCast)})'
+      : (v, {bool forceCast = false}) =>
+          '($v == null) ? null : (${_deserializer(v, forceCast: forceCast)})';
 }

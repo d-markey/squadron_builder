@@ -71,7 +71,9 @@ class SquadronParameter {
   String deserialized(String variableName) {
     final v = isCancelationToken
         ? '$variableName.cancelToken'
-        : (marshaler?.deserialize(managedType, '$variableName.args[$serIdx]'))!;
+        : ((marshaler?.deserialize(managedType, '$variableName.args[$serIdx]',
+                forceCast: true)) ??
+            '$variableName.args[$serIdx]');
     return isNamed ? '$name: $v' : v;
   }
 

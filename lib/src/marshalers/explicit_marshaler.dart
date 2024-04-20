@@ -30,17 +30,20 @@ class _ExplicitMarshaler extends Marshaler {
   @override
   Adapter getSerializer(ManagedType type) =>
       (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? (v) => '$_instance.marshal($v)'
-          : (v) => '($v == null) ? null : $_instance.marshal($v)';
+          ? (v, {bool forceCast = false}) => '$_instance.marshal($v)'
+          : (v, {bool forceCast = false}) =>
+              '($v == null) ? null : $_instance.marshal($v)';
 
   @override
-  Adapter getDeserializer(ManagedType type, {bool forceCast = false}) {
-    final cast = (forceCast ||
-            (type.dartType?.implementedTypes(_itemType).isNotEmpty ?? false))
-        ? ' as $type${type.nullabilitySuffix.suffix}'
-        : '';
+  Adapter getDeserializer(ManagedType type) {
+    final cast =
+        (type.dartType?.implementedTypes(_itemType).isNotEmpty ?? false)
+            ? ' as $type'
+            : '';
     return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? (v) => '$_instance.unmarshal($v)$cast'
-        : (v) => '($v == null) ? null : $_instance.unmarshal($v)$cast';
+        ? (v, {bool forceCast = false}) =>
+            '$_instance.unmarshal($v)${forceCast ? cast : ''}'
+        : (v, {bool forceCast = false}) =>
+            '($v == null) ? null : $_instance.unmarshal($v)${forceCast ? cast : ''}';
   }
 }

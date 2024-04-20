@@ -19,35 +19,36 @@ class MapMarshaler extends Marshaler {
       type.typeArguments.last.getTypeName(NullabilitySuffix.none) ==
           _itemTypeName;
 
-  Adapter _cast(ManagedType type, bool forceCast) {
+  Adapter _cast(ManagedType type) {
     final cast = '.cast<$_keyType, $_itemType>()';
     return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? (map) => '($map as Map)$cast'
-        : (map) => '($map as Map?)?$cast';
+        ? (map, {bool forceCast = false}) =>
+            '($map as Map)${forceCast ? cast : ''}'
+        : (map, {bool forceCast = false}) =>
+            '($map as Map?)?${forceCast ? cast : ''}';
   }
 
-  Adapter _convert(Adapter converter, ManagedType type, bool forceCast) {
+  Adapter _convert(Adapter converter, ManagedType type) {
     final cast = '.cast<$_keyType, $_itemType>()';
-    final entry = '(e) => MapEntry(e.key, ${converter('e.value')})';
+    final mappedEntries = converter.isIdentity
+        ? ''
+        : '.map((e) => MapEntry(e.key, ${converter('e.value')}))';
     return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? (map) => 'Map.fromEntries($map.entries.map($entry))$cast'
-        : (map) =>
-            '($map == null) ? null : Map.fromEntries($map.entries.map($entry))$cast';
+        ? (map, {bool forceCast = false}) =>
+            'Map.fromEntries($map.entries$mappedEntries)${forceCast ? cast : ''}'
+        : (map, {bool forceCast = false}) =>
+            '($map == null) ? null : Map.fromEntries($map.entries$mappedEntries)${forceCast ? cast : ''}';
   }
 
   @override
   Adapter getSerializer(ManagedType type) {
     final serialize = _itemMarshaler.getSerializer(type.typeArguments.last);
-    return serialize.isIdentity
-        ? _cast(type, false)
-        : _convert(serialize, type, false);
+    return serialize.isIdentity ? _cast(type) : _convert(serialize, type);
   }
 
   @override
-  Adapter getDeserializer(ManagedType type, {bool forceCast = false}) {
+  Adapter getDeserializer(ManagedType type) {
     final deserialize = _itemMarshaler.getDeserializer(type.typeArguments.last);
-    return deserialize.isIdentity
-        ? _cast(type, forceCast)
-        : _convert(deserialize, type, forceCast);
+    return deserialize.isIdentity ? _cast(type) : _convert(deserialize, type);
   }
 }

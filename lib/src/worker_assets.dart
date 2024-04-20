@@ -214,8 +214,8 @@ class WorkerAssets {
   /// Service initializer
   String _generateServiceInitializer() => '''
         /// Service initializer for ${_service.name}
-        ${_typeManager.workerServiceType} $_serviceInitializerName(${_typeManager.workerRequestType} startRequest)
-            => $_workerServiceClassName(${_service.parameters.deserialize('startRequest')});
+        ${_typeManager.workerServiceType} $_serviceInitializerName(${_typeManager.workerRequestType} \$req)
+            => $_workerServiceClassName(${_service.parameters.deserialize('\$req')});
       ''';
 
   /// Worker
@@ -378,14 +378,13 @@ class WorkerAssets {
 
   /// Command handler
   String _commandHandler(SquadronMethodReader cmd) {
-    final req = r'$', res = '_';
+    final req = r'$req', res = r'$res';
     final serviceCall = '${cmd.name}(${cmd.parameters.deserialize(req)})';
     if (cmd.needsSerialization && !cmd.serializedResult.isIdentity) {
       if (cmd.isStream) {
         return '${cmd.id}: ($req) => $serviceCall.${cmd.continuation}(($res) => ${cmd.serializedResult(res)})';
       } else {
-        final result = '\$r';
-        return '${cmd.id}: ($req) async { final $result = await $serviceCall; return ${cmd.serializedResult(result)}; }';
+        return '${cmd.id}: ($req) async { final $res = await $serviceCall; return ${cmd.serializedResult(res)}; }';
       }
     } else {
       return '${cmd.id}: ($req) => $serviceCall';
@@ -423,10 +422,10 @@ class WorkerAssets {
   /// Service method invocation from worker
   String _workerMethod(SquadronMethodReader cmd) {
     final res = '_';
-    final deserialize =
-        (cmd.needsSerialization && !cmd.deserializedResult.isIdentity)
-            ? '.${cmd.continuation}(($res) => ${cmd.deserializedResult(res)})'
-            : '';
+    final deserialize = (cmd.needsSerialization &&
+            !cmd.deserializedResult.isIdentity)
+        ? '.${cmd.continuation}(($res) => ${cmd.deserializedResult(res, forceCast: true)})'
+        : '';
     final args = [
       '$_workerServiceClassName.${cmd.id}',
       'args: [ ${cmd.parameters.serialize()} ]',

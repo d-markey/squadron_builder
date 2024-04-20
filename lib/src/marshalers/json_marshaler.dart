@@ -13,14 +13,15 @@ class _JsonMarshaler extends Marshaler {
   @override
   Adapter getSerializer(ManagedType type) =>
       (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? (v) => '$v.toJson()'
-          : (v) => '$v?.toJson()';
+          ? (v, {bool forceCast = false}) => '$v.toJson()'
+          : (v, {bool forceCast = false}) => '$v?.toJson()';
 
   @override
-  Adapter getDeserializer(ManagedType type, {bool forceCast = false}) {
+  Adapter getDeserializer(ManagedType type) {
     final typeName = type.getTypeName(NullabilitySuffix.none);
     return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? (v) => '$typeName.fromJson($v)'
-        : (v) => '($v == null) ? null : $typeName.fromJson($v)';
+        ? (v, {bool forceCast = false}) => '$typeName.fromJson($v)'
+        : (v, {bool forceCast = false}) =>
+            '($v == null) ? null : $typeName.fromJson($v)';
   }
 }

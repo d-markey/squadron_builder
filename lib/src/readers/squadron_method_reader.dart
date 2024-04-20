@@ -58,10 +58,12 @@ class SquadronMethodReader extends DartMethodReader {
 
   Marshaler _resultMarshaler = Marshaler.identity;
 
-  late Adapter serializedResult = _resultMarshaler.getSerializer(valueType);
+  Adapter get serializedResult => _resultMarshaler.getSerializer(valueType);
+
   bool get needsSerialization => _resultMarshaler != Marshaler.identity;
 
-  late Adapter deserializedResult = _resultMarshaler.getDeserializer(valueType);
+  Adapter get deserializedResult => _resultMarshaler.getDeserializer(valueType);
+
   bool get needsDeserialization => _resultMarshaler != Marshaler.identity;
 
   late final MarshalingManager _marshaling;
