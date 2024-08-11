@@ -9,7 +9,7 @@ import 'package:squadron/squadron.dart';
 import '../json_service.dart';
 
 /// VM entry point for JsonService
-void _start$JsonService(List<dynamic> command) =>
+void _start$JsonService(WorkerRequest command) =>
     run($JsonServiceInitializer, command);
 
 EntryPoint $getJsonServiceActivator() => _start$JsonService;

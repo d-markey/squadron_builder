@@ -9,28 +9,32 @@ part of '../fibonacci_service.dart';
 /// WorkerService class for FibonacciService
 class _$FibonacciServiceWorkerService extends FibonacciService
     implements WorkerService {
-  _$FibonacciServiceWorkerService({bool trace = false}) : super(trace: trace);
+  _$FibonacciServiceWorkerService({super.trace}) : super();
 
   @override
   Map<int, CommandHandler> get operations => _operations;
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$fibonacciId: ($) => fibonacci($.args[0]),
-    _$fibonacciList0Id: ($) async {
-      final $r = await fibonacciList0($.args[0], $.args[1]);
-      return $r.cast<int>();
+    _$fibonacciId: ($in) => fibonacci(Cast.toInt($in.args[0])),
+    _$fibonacciList0Id: ($in) async {
+      final $out = await fibonacciList0(
+          Cast.toInt($in.args[0]), Cast.toInt($in.args[1]));
+      return ($out is List ? $out : $out.toList());
     },
-    _$fibonacciList1Id: ($) async {
-      final $r = await fibonacciList1($.args[0], $.args[1]);
-      return (const ListIntMarshaler()).marshal($r);
+    _$fibonacciList1Id: ($in) async {
+      final $out = await fibonacciList1(
+          Cast.toInt($in.args[0]), Cast.toInt($in.args[1]));
+      return (const ListIntMarshaler()).marshal($out);
     },
-    _$fibonacciList2Id: ($) async {
-      final $r = await fibonacciList2($.args[0], $.args[1]);
-      return listIntMarshaler.marshal($r);
+    _$fibonacciList2Id: ($in) async {
+      final $out = await fibonacciList2(
+          Cast.toInt($in.args[0]), Cast.toInt($in.args[1]));
+      return listIntMarshaler.marshal($out);
     },
-    _$fibonacciStreamId: ($) =>
-        fibonacciStream($.args[0], end: $.args[1], token: $.args[2]),
+    _$fibonacciStreamId: ($in) => fibonacciStream(Cast.toInt($in.args[0]),
+        end: Cast.toNullableInt($in.args[1]),
+        token: $in.args[2] as CancelationToken?),
   });
 
   static const int _$fibonacciId = 1;
@@ -41,8 +45,8 @@ class _$FibonacciServiceWorkerService extends FibonacciService
 }
 
 /// Service initializer for FibonacciService
-WorkerService $FibonacciServiceInitializer(WorkerRequest startRequest) =>
-    _$FibonacciServiceWorkerService(trace: startRequest.args[0]);
+WorkerService $FibonacciServiceInitializer(WorkerRequest $in) =>
+    _$FibonacciServiceWorkerService(trace: $in.args[0] as bool);
 
 /// Worker for FibonacciService
 class FibonacciServiceWorker extends Worker implements FibonacciService {
@@ -57,17 +61,17 @@ class FibonacciServiceWorker extends Worker implements FibonacciService {
   @override
   Future<Iterable<int>> fibonacciList0(int s, int e) =>
       send(_$FibonacciServiceWorkerService._$fibonacciList0Id, args: [s, e])
-          .then((_) => _.cast<int>());
+          .then(($x) => ($x is List ? $x : $x.toList()).cast<int>());
 
   @override
   Future<List<int>> fibonacciList1(int s, int e) =>
       send(_$FibonacciServiceWorkerService._$fibonacciList1Id, args: [s, e])
-          .then((_) => (const ListIntMarshaler()).unmarshal(_));
+          .then(($x) => (const ListIntMarshaler()).unmarshal($x));
 
   @override
   Future<List<int>> fibonacciList2(int s, int e) =>
       send(_$FibonacciServiceWorkerService._$fibonacciList2Id, args: [s, e])
-          .then((_) => listIntMarshaler.unmarshal(_));
+          .then(($x) => listIntMarshaler.unmarshal($x));
 
   @override
   Stream<int> fibonacciStream(int start, {int? end, CancelationToken? token}) =>

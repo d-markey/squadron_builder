@@ -39,9 +39,9 @@ class DataOut {
 
   final dynamic payload;
 
-  SomeTransferable marshall() => SomeTransferable(payload);
+  SomeTransferable marshal() => SomeTransferable(payload);
 
-  DataOut.unmarshall(SomeTransferable transferable) : this(transferable.data);
+  DataOut.unmarshal(SomeTransferable transferable) : this(transferable.data);
 
   Map toJson() => {'pld': payload};
 

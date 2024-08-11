@@ -6,10 +6,4 @@
 
 import 'package:squadron/squadron.dart';
 
-import '../data_service.dart';
-
-/// VM entry point for DataService
-void _start$DataService(WorkerRequest command) =>
-    run($DataServiceInitializer, command);
-
-EntryPoint $getDataServiceActivator() => _start$DataService;
+EntryPoint $getHelloWorldActivator() => throw UnimplementedError();

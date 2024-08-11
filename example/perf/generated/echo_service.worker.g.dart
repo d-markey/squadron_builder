@@ -8,40 +8,39 @@ part of '../echo_service.dart';
 
 /// WorkerService class for EchoService
 class _$EchoServiceWorkerService extends EchoService implements WorkerService {
-  _$EchoServiceWorkerService(
-      [bool trace = false, cfg.ServiceConfig<int>? workloadDelay])
-      : super(trace, workloadDelay);
+  _$EchoServiceWorkerService([super.trace, super.workloadDelay]) : super();
 
   @override
   Map<int, CommandHandler> get operations => _operations;
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$explicitEchoWithExplicitResultId: ($) async {
-      final $r = await explicitEchoWithExplicitResult(
-          srv.ServiceRequest.fromJson($.args[0]),
-          token: $.args[1]);
-      return $r.toJson();
+    _$explicitEchoWithExplicitResultId: ($in) async {
+      final $out = await explicitEchoWithExplicitResult(
+          srv.ServiceRequest.fromJson($in.args[0]),
+          token: $in.args[1] as CancelationToken?);
+      return $out.toJson();
     },
-    _$explicitEchoWithJsonResultId: ($) async {
-      final $r = await explicitEchoWithJsonResult(
-          srv.ServiceRequest.fromJson($.args[0]));
-      return $r.toJson();
+    _$explicitEchoWithJsonResultId: ($in) async {
+      final $out = await explicitEchoWithJsonResult(
+          srv.ServiceRequest.fromJson($in.args[0]));
+      return $out.toJson();
     },
-    _$jsonEchoWithExplicitResultId: ($) async {
-      final $r = await jsonEchoWithExplicitResult(
-          srv.ServiceRequest.fromJson($.args[0]));
-      return $r.toJson();
+    _$jsonEchoWithExplicitResultId: ($in) async {
+      final $out = await jsonEchoWithExplicitResult(
+          srv.ServiceRequest.fromJson($in.args[0]));
+      return $out.toJson();
     },
-    _$jsonEchoWithJsonResultId: ($) async {
-      final $r =
-          await jsonEchoWithJsonResult(srv.ServiceRequest.fromJson($.args[0]));
-      return $r?.toJson();
+    _$jsonEchoWithJsonResultId: ($in) async {
+      final $out = await jsonEchoWithJsonResult(
+          srv.ServiceRequest.fromJson($in.args[0]));
+      return $out?.toJson();
     },
-    _$jsonEncodeEchoId: ($) async {
-      final $r = await jsonEncodeEcho(
-          srv.ServiceRequest.fromJson($.args[0]), $.args[1]);
-      return $r.toJson();
+    _$jsonEncodeEchoId: ($in) async {
+      final $out = await jsonEncodeEcho(
+          srv.ServiceRequest.fromJson($in.args[0]),
+          $in.args[1] as CancelationToken?);
+      return $out.toJson();
     },
   });
 
@@ -53,12 +52,12 @@ class _$EchoServiceWorkerService extends EchoService implements WorkerService {
 }
 
 /// Service initializer for EchoService
-WorkerService $EchoServiceInitializer(WorkerRequest startRequest) =>
+WorkerService $EchoServiceInitializer(WorkerRequest $in) =>
     _$EchoServiceWorkerService(
-        startRequest.args[0],
-        (startRequest.args[1] == null)
+        $in.args[0] as bool,
+        ($in.args[1] == null)
             ? null
-            : cfg.ServiceConfig<int>.fromJson(startRequest.args[1]));
+            : cfg.ServiceConfig<int>.fromJson($in.args[1]));
 
 /// Worker for EchoService
 class EchoServiceWorker extends Worker implements EchoService {
@@ -75,36 +74,36 @@ class EchoServiceWorker extends Worker implements EchoService {
           {CancelationToken? token}) =>
       send(_$EchoServiceWorkerService._$explicitEchoWithExplicitResultId,
               args: [request.toJson(), token])
-          .then((_) => srv.ServiceResponse<String>.fromJson(_));
+          .then(($x) => srv.ServiceResponse<String>.fromJson($x));
 
   @override
   Future<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
           srv.ServiceRequest request) =>
       send(_$EchoServiceWorkerService._$explicitEchoWithJsonResultId,
               args: [request.toJson()])
-          .then((_) => srv.ServiceResponse<String>.fromJson(_));
+          .then(($x) => srv.ServiceResponse<String>.fromJson($x));
 
   @override
   Future<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
           srv.ServiceRequest request) =>
       send(_$EchoServiceWorkerService._$jsonEchoWithExplicitResultId,
               args: [request.toJson()])
-          .then((_) => srv.ServiceResponse<String>.fromJson(_));
+          .then(($x) => srv.ServiceResponse<String>.fromJson($x));
 
   @override
   Future<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
           srv.ServiceRequest request) =>
-      send(_$EchoServiceWorkerService._$jsonEchoWithJsonResultId, args: [
-        request.toJson()
-      ]).then(
-          (_) => (_ == null) ? null : srv.ServiceResponse<String>.fromJson(_));
+      send(_$EchoServiceWorkerService._$jsonEchoWithJsonResultId,
+              args: [request.toJson()])
+          .then(($x) =>
+              ($x == null) ? null : srv.ServiceResponse<String>.fromJson($x));
 
   @override
   Future<srv.ServiceResponse<String>> jsonEncodeEcho(srv.ServiceRequest request,
           [CancelationToken? token]) =>
       send(_$EchoServiceWorkerService._$jsonEncodeEchoId,
               args: [request.toJson(), token])
-          .then((_) => srv.ServiceResponse<String>.fromJson(_));
+          .then(($x) => srv.ServiceResponse<String>.fromJson($x));
 
   @override
   void _simulateWorkload() => throw UnimplementedError();

@@ -15,14 +15,17 @@ class _$DataServiceWorkerService extends DataService implements WorkerService {
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$doSomethingId: ($) => doSomething($.args[0]),
+    _$doSomethingId: ($in) async {
+      final $out = await doSomething(Data.unmarshal($in.args[0]));
+      return $out.marshal();
+    },
   });
 
   static const int _$doSomethingId = 1;
 }
 
 /// Service initializer for DataService
-WorkerService $DataServiceInitializer(WorkerRequest startRequest) =>
+WorkerService $DataServiceInitializer(WorkerRequest $in) =>
     _$DataServiceWorkerService();
 
 /// Worker for DataService
@@ -32,7 +35,8 @@ class DataServiceWorker extends Worker implements DataService {
 
   @override
   Future<Data> doSomething(Data input) =>
-      send(_$DataServiceWorkerService._$doSomethingId, args: [input]);
+      send(_$DataServiceWorkerService._$doSomethingId, args: [input.marshal()])
+          .then(($x) => Data.unmarshal($x));
 }
 
 /// Worker pool for DataService

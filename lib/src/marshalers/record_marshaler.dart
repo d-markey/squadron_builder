@@ -9,7 +9,7 @@ class RecordMarshaler extends Marshaler {
       idx++;
       final name = '\$$idx';
       final marshaler =
-          fieldMarshalers.where((_) => _.targets(type)).firstOrNull ??
+          fieldMarshalers.where((m) => m.targets(type)).firstOrNull ??
               Marshaler.identity;
       fldSerializers.add(_serialize(type, name, marshaler));
       fldDererializers.add(_deserializePositional(type, idx - 1, marshaler));
@@ -18,7 +18,7 @@ class RecordMarshaler extends Marshaler {
       idx++;
       final name = named.key, type = named.value;
       var marshaler =
-          fieldMarshalers.where((_) => _.targets(type)).firstOrNull ??
+          fieldMarshalers.where((m) => m.targets(type)).firstOrNull ??
               Marshaler.identity;
       fldSerializers.add(_serialize(type, name, marshaler));
       fldDererializers.add(_deserializeNamed(type, idx - 1, name, marshaler));

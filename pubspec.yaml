@@ -5,7 +5,7 @@ homepage: https://github.com/d-markey/squadron_builder
 repository: https://github.com/d-markey/squadron_builder
 
 environment:
-  sdk: ^3.0.0
+  sdk: ^3.4.0
 
 platforms:
   linux:
@@ -14,17 +14,17 @@ platforms:
 
 dependencies:
   squadron: ^6.0.0
-  build: ^2.3.1
-  source_gen: ^1.3.1
-  analyzer: ">=5.11.1 <7.0.0"
-  meta: ^1.8.0
+  build:
+  source_gen:
+  analyzer:
+  meta:
 
 dev_dependencies:
-  lints: ^3.0.0
-  test: ^1.24.2
-  build_runner: ^2.3.3
-  logger: ^2.1.0
-  cancelation_token: ^1.1.0
+  lints:
+  test:
+  build_runner:
+  logger:
+  cancelation_token:
 
 dependency_overrides:
   squadron:

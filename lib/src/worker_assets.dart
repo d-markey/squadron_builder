@@ -59,7 +59,7 @@ class WorkerAssets {
       codeEvent.import(
         output,
         'package:squadron/squadron.dart',
-        prefix: _typeManager.squadronPrefix,
+        prefix: _typeManager.squadronAlias,
       );
       codeEvent.add(
         output,
@@ -74,17 +74,17 @@ class WorkerAssets {
     final output = _vmOutput;
     if (output != null) {
       codeEvent.import(output, 'package:squadron/squadron.dart',
-          prefix: _typeManager.squadronPrefix);
+          prefix: _typeManager.squadronAlias);
       codeEvent.import(output, _getRelativePath(_inputId, output));
 
-      final run = _typeManager.squadronPrefix.isEmpty
+      final run = _typeManager.squadronAlias.isEmpty
           ? 'run'
-          : '${_typeManager.squadronPrefix}.run';
+          : '${_typeManager.squadronAlias}.run';
 
       codeEvent.add(
         output,
         '''/// VM entry point for ${_service.name}
-           void _start\$${_service.name}(${_typeManager.listType} command) => $run($_serviceInitializerName, command);
+           void _start\$${_service.name}(${_typeManager.workerRequestType} command) => $run($_serviceInitializerName, command);
 
            ${_typeManager.entryPointType} \$get$_serviceActivator() => _start\$${_service.name};
         ''',
@@ -99,13 +99,13 @@ class WorkerAssets {
       codeEvent.import(
         output,
         'package:squadron/squadron.dart',
-        prefix: _typeManager.squadronPrefix,
+        prefix: _typeManager.squadronAlias,
       );
       codeEvent.import(output, _getRelativePath(_inputId, output));
 
-      final run = _typeManager.squadronPrefix.isEmpty
+      final run = _typeManager.squadronAlias.isEmpty
           ? 'run'
-          : '${_typeManager.squadronPrefix}.run';
+          : '${_typeManager.squadronAlias}.run';
 
       codeEvent.addWebEntryPoint(
         output,
@@ -135,6 +135,7 @@ class WorkerAssets {
           platformSpecific: {
             'js': _getRelativePath(_webOutput!, output),
             'html': _getRelativePath(_webOutput!, output),
+            'web': _getRelativePath(_webOutput!, output),
             'io': _getRelativePath(_vmOutput!, output),
           },
         );
@@ -186,9 +187,10 @@ class WorkerAssets {
     ]);
   }
 
-  String _generateLints() => '''
+  String _generateLints() =>
+      ''; /*'''
 // ignore_for_file: unnecessary_cast
-''';
+''';*/
 
   String _generateServiceClass(List<SquadronMethodReader> commands) {
     final params = _service.parameters;
@@ -196,7 +198,7 @@ class WorkerAssets {
         /// WorkerService class for ${_service.name}
         class $_workerServiceClassName extends ${_service.name} implements ${_typeManager.workerServiceType} {
 
-          $_workerServiceClassName(${params.toStringNoFields()}): super(${params.arguments()});
+          $_workerServiceClassName(${params.toSuperParams() /*toStringNoFields()*/}): super(${params.nonSuperArguments() /*arguments()*/});
 
           @override
           Map<int, ${_typeManager.commandHandlerType}> get operations => _operations;
@@ -214,8 +216,8 @@ class WorkerAssets {
   /// Service initializer
   String _generateServiceInitializer() => '''
         /// Service initializer for ${_service.name}
-        ${_typeManager.workerServiceType} $_serviceInitializerName(${_typeManager.workerRequestType} \$req)
-            => $_workerServiceClassName(${_service.parameters.deserialize('\$req')});
+        ${_typeManager.workerServiceType} $_serviceInitializerName(${_typeManager.workerRequestType} \$in)
+            => $_workerServiceClassName(${_service.parameters.deserialize('\$in')});
       ''';
 
   /// Worker
@@ -378,7 +380,7 @@ class WorkerAssets {
 
   /// Command handler
   String _commandHandler(SquadronMethodReader cmd) {
-    final req = r'$req', res = r'$res';
+    final req = r'$in', res = r'$out';
     final serviceCall = '${cmd.name}(${cmd.parameters.deserialize(req)})';
     if (cmd.needsSerialization && !cmd.serializedResult.isIdentity) {
       if (cmd.isStream) {
@@ -421,7 +423,7 @@ class WorkerAssets {
 
   /// Service method invocation from worker
   String _workerMethod(SquadronMethodReader cmd) {
-    final res = '_';
+    final res = r'$x';
     final deserialize = (cmd.needsSerialization &&
             !cmd.deserializedResult.isIdentity)
         ? '.${cmd.continuation}(($res) => ${cmd.deserializedResult(res, forceCast: true)})'

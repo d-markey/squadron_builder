@@ -9,7 +9,7 @@ import 'package:squadron/squadron.dart';
 import '../hello_world.dart';
 
 /// VM entry point for HelloWorld
-void _start$HelloWorld(List<dynamic> command) =>
+void _start$HelloWorld(WorkerRequest command) =>
     run($HelloWorldInitializer, command);
 
 EntryPoint $getHelloWorldActivator() => _start$HelloWorld;

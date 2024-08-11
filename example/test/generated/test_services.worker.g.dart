@@ -19,7 +19,7 @@ class _$TestParameterLessWorkerService extends TestParameterLess
 }
 
 /// Service initializer for TestParameterLess
-sq.WorkerService $TestParameterLessInitializer(sq.WorkerRequest startRequest) =>
+sq.WorkerService $TestParameterLessInitializer(sq.WorkerRequest $in) =>
     _$TestParameterLessWorkerService();
 
 /// Worker for TestParameterLess
@@ -41,7 +41,7 @@ class TestParameterLessWorkerPool extends sq.WorkerPool<TestParameterLessWorker>
 /// WorkerService class for TestReqPositional
 class _$TestReqPositionalWorkerService extends TestReqPositional
     implements sq.WorkerService {
-  _$TestReqPositionalWorkerService(int arg1) : super(arg1);
+  _$TestReqPositionalWorkerService(super.arg1) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -51,8 +51,8 @@ class _$TestReqPositionalWorkerService extends TestReqPositional
 }
 
 /// Service initializer for TestReqPositional
-sq.WorkerService $TestReqPositionalInitializer(sq.WorkerRequest startRequest) =>
-    _$TestReqPositionalWorkerService(startRequest.args[0]);
+sq.WorkerService $TestReqPositionalInitializer(sq.WorkerRequest $in) =>
+    _$TestReqPositionalWorkerService(sq.Cast.toInt($in.args[0]));
 
 /// Worker for TestReqPositional
 class TestReqPositionalWorker extends sq.Worker implements TestReqPositional {
@@ -74,7 +74,7 @@ class TestReqPositionalWorkerPool extends sq.WorkerPool<TestReqPositionalWorker>
 /// WorkerService class for TestOptNullPositional
 class _$TestOptNullPositionalWorkerService extends TestOptNullPositional
     implements sq.WorkerService {
-  _$TestOptNullPositionalWorkerService([int? arg1]) : super(arg1);
+  _$TestOptNullPositionalWorkerService([super.arg1]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -84,9 +84,8 @@ class _$TestOptNullPositionalWorkerService extends TestOptNullPositional
 }
 
 /// Service initializer for TestOptNullPositional
-sq.WorkerService $TestOptNullPositionalInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptNullPositionalWorkerService(startRequest.args[0]);
+sq.WorkerService $TestOptNullPositionalInitializer(sq.WorkerRequest $in) =>
+    _$TestOptNullPositionalWorkerService(sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullPositional
 class TestOptNullPositionalWorker extends sq.Worker
@@ -110,7 +109,7 @@ class TestOptNullPositionalWorkerPool extends sq
 /// WorkerService class for TestOptDefPositional
 class _$TestOptDefPositionalWorkerService extends TestOptDefPositional
     implements sq.WorkerService {
-  _$TestOptDefPositionalWorkerService([int arg1 = 0]) : super(arg1);
+  _$TestOptDefPositionalWorkerService([super.arg1]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -120,9 +119,8 @@ class _$TestOptDefPositionalWorkerService extends TestOptDefPositional
 }
 
 /// Service initializer for TestOptDefPositional
-sq.WorkerService $TestOptDefPositionalInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptDefPositionalWorkerService(startRequest.args[0]);
+sq.WorkerService $TestOptDefPositionalInitializer(sq.WorkerRequest $in) =>
+    _$TestOptDefPositionalWorkerService(sq.Cast.toInt($in.args[0]));
 
 /// Worker for TestOptDefPositional
 class TestOptDefPositionalWorker extends sq.Worker
@@ -146,7 +144,7 @@ class TestOptDefPositionalWorkerPool extends sq
 /// WorkerService class for TestOptNullDefPositional
 class _$TestOptNullDefPositionalWorkerService extends TestOptNullDefPositional
     implements sq.WorkerService {
-  _$TestOptNullDefPositionalWorkerService([int? arg1 = 0]) : super(arg1);
+  _$TestOptNullDefPositionalWorkerService([super.arg1]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -156,9 +154,8 @@ class _$TestOptNullDefPositionalWorkerService extends TestOptNullDefPositional
 }
 
 /// Service initializer for TestOptNullDefPositional
-sq.WorkerService $TestOptNullDefPositionalInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptNullDefPositionalWorkerService(startRequest.args[0]);
+sq.WorkerService $TestOptNullDefPositionalInitializer(sq.WorkerRequest $in) =>
+    _$TestOptNullDefPositionalWorkerService(sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullDefPositional
 class TestOptNullDefPositionalWorker extends sq.Worker
@@ -184,7 +181,7 @@ class TestOptNullDefPositionalWorkerPool
 /// WorkerService class for TestReqPositionalField
 class _$TestReqPositionalFieldWorkerService extends TestReqPositionalField
     implements sq.WorkerService {
-  _$TestReqPositionalFieldWorkerService(int arg1) : super(arg1);
+  _$TestReqPositionalFieldWorkerService(super.arg1) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -194,9 +191,8 @@ class _$TestReqPositionalFieldWorkerService extends TestReqPositionalField
 }
 
 /// Service initializer for TestReqPositionalField
-sq.WorkerService $TestReqPositionalFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestReqPositionalFieldWorkerService(startRequest.args[0]);
+sq.WorkerService $TestReqPositionalFieldInitializer(sq.WorkerRequest $in) =>
+    _$TestReqPositionalFieldWorkerService(sq.Cast.toInt($in.args[0]));
 
 /// Worker for TestReqPositionalField
 class TestReqPositionalFieldWorker extends sq.Worker
@@ -226,7 +222,7 @@ class TestReqPositionalFieldWorkerPool
 /// WorkerService class for TestOptNullPositionalField
 class _$TestOptNullPositionalFieldWorkerService
     extends TestOptNullPositionalField implements sq.WorkerService {
-  _$TestOptNullPositionalFieldWorkerService([int? arg1]) : super(arg1);
+  _$TestOptNullPositionalFieldWorkerService([super.arg1]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -236,9 +232,9 @@ class _$TestOptNullPositionalFieldWorkerService
 }
 
 /// Service initializer for TestOptNullPositionalField
-sq.WorkerService $TestOptNullPositionalFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptNullPositionalFieldWorkerService(startRequest.args[0]);
+sq.WorkerService $TestOptNullPositionalFieldInitializer(sq.WorkerRequest $in) =>
+    _$TestOptNullPositionalFieldWorkerService(
+        sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullPositionalField
 class TestOptNullPositionalFieldWorker extends sq.Worker
@@ -270,7 +266,7 @@ class TestOptNullPositionalFieldWorkerPool
 /// WorkerService class for TestOptDefPositionalField
 class _$TestOptDefPositionalFieldWorkerService extends TestOptDefPositionalField
     implements sq.WorkerService {
-  _$TestOptDefPositionalFieldWorkerService([int arg1 = 0]) : super(arg1);
+  _$TestOptDefPositionalFieldWorkerService([super.arg1]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -280,9 +276,8 @@ class _$TestOptDefPositionalFieldWorkerService extends TestOptDefPositionalField
 }
 
 /// Service initializer for TestOptDefPositionalField
-sq.WorkerService $TestOptDefPositionalFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptDefPositionalFieldWorkerService(startRequest.args[0]);
+sq.WorkerService $TestOptDefPositionalFieldInitializer(sq.WorkerRequest $in) =>
+    _$TestOptDefPositionalFieldWorkerService(sq.Cast.toInt($in.args[0]));
 
 /// Worker for TestOptDefPositionalField
 class TestOptDefPositionalFieldWorker extends sq.Worker
@@ -314,7 +309,7 @@ class TestOptDefPositionalFieldWorkerPool
 /// WorkerService class for TestOptNullDefPositionalField
 class _$TestOptNullDefPositionalFieldWorkerService
     extends TestOptNullDefPositionalField implements sq.WorkerService {
-  _$TestOptNullDefPositionalFieldWorkerService([int? arg1 = 0]) : super(arg1);
+  _$TestOptNullDefPositionalFieldWorkerService([super.arg1]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -325,8 +320,9 @@ class _$TestOptNullDefPositionalFieldWorkerService
 
 /// Service initializer for TestOptNullDefPositionalField
 sq.WorkerService $TestOptNullDefPositionalFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptNullDefPositionalFieldWorkerService(startRequest.args[0]);
+        sq.WorkerRequest $in) =>
+    _$TestOptNullDefPositionalFieldWorkerService(
+        sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullDefPositionalField
 class TestOptNullDefPositionalFieldWorker extends sq.Worker
@@ -358,7 +354,7 @@ class TestOptNullDefPositionalFieldWorkerPool
 /// WorkerService class for TestReqPositionalPrivateField
 class _$TestReqPositionalPrivateFieldWorkerService
     extends TestReqPositionalPrivateField implements sq.WorkerService {
-  _$TestReqPositionalPrivateFieldWorkerService(int arg1) : super(arg1);
+  _$TestReqPositionalPrivateFieldWorkerService(super.arg1) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -369,8 +365,8 @@ class _$TestReqPositionalPrivateFieldWorkerService
 
 /// Service initializer for TestReqPositionalPrivateField
 sq.WorkerService $TestReqPositionalPrivateFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestReqPositionalPrivateFieldWorkerService(startRequest.args[0]);
+        sq.WorkerRequest $in) =>
+    _$TestReqPositionalPrivateFieldWorkerService(sq.Cast.toInt($in.args[0]));
 
 /// Worker for TestReqPositionalPrivateField
 class TestReqPositionalPrivateFieldWorker extends sq.Worker
@@ -405,7 +401,7 @@ class TestReqPositionalPrivateFieldWorkerPool
 /// WorkerService class for TestOptNullPositionalPrivateField
 class _$TestOptNullPositionalPrivateFieldWorkerService
     extends TestOptNullPositionalPrivateField implements sq.WorkerService {
-  _$TestOptNullPositionalPrivateFieldWorkerService([int? arg1]) : super(arg1);
+  _$TestOptNullPositionalPrivateFieldWorkerService([super.arg1]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -416,8 +412,9 @@ class _$TestOptNullPositionalPrivateFieldWorkerService
 
 /// Service initializer for TestOptNullPositionalPrivateField
 sq.WorkerService $TestOptNullPositionalPrivateFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptNullPositionalPrivateFieldWorkerService(startRequest.args[0]);
+        sq.WorkerRequest $in) =>
+    _$TestOptNullPositionalPrivateFieldWorkerService(
+        sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullPositionalPrivateField
 class TestOptNullPositionalPrivateFieldWorker extends sq.Worker
@@ -451,7 +448,7 @@ class TestOptNullPositionalPrivateFieldWorkerPool
 /// WorkerService class for TestOptDefPositionalPrivateField
 class _$TestOptDefPositionalPrivateFieldWorkerService
     extends TestOptDefPositionalPrivateField implements sq.WorkerService {
-  _$TestOptDefPositionalPrivateFieldWorkerService([int arg1 = 0]) : super(arg1);
+  _$TestOptDefPositionalPrivateFieldWorkerService([super.arg1]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -462,8 +459,8 @@ class _$TestOptDefPositionalPrivateFieldWorkerService
 
 /// Service initializer for TestOptDefPositionalPrivateField
 sq.WorkerService $TestOptDefPositionalPrivateFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptDefPositionalPrivateFieldWorkerService(startRequest.args[0]);
+        sq.WorkerRequest $in) =>
+    _$TestOptDefPositionalPrivateFieldWorkerService(sq.Cast.toInt($in.args[0]));
 
 /// Worker for TestOptDefPositionalPrivateField
 class TestOptDefPositionalPrivateFieldWorker extends sq.Worker
@@ -497,8 +494,7 @@ class TestOptDefPositionalPrivateFieldWorkerPool
 /// WorkerService class for TestOptNullDefPositionalPrivateField
 class _$TestOptNullDefPositionalPrivateFieldWorkerService
     extends TestOptNullDefPositionalPrivateField implements sq.WorkerService {
-  _$TestOptNullDefPositionalPrivateFieldWorkerService([int? arg1 = 0])
-      : super(arg1);
+  _$TestOptNullDefPositionalPrivateFieldWorkerService([super.arg1]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -509,8 +505,9 @@ class _$TestOptNullDefPositionalPrivateFieldWorkerService
 
 /// Service initializer for TestOptNullDefPositionalPrivateField
 sq.WorkerService $TestOptNullDefPositionalPrivateFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptNullDefPositionalPrivateFieldWorkerService(startRequest.args[0]);
+        sq.WorkerRequest $in) =>
+    _$TestOptNullDefPositionalPrivateFieldWorkerService(
+        sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullDefPositionalPrivateField
 class TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
@@ -545,7 +542,7 @@ class TestOptNullDefPositionalPrivateFieldWorkerPool
 /// WorkerService class for TestOptNullNamed
 class _$TestOptNullNamedWorkerService extends TestOptNullNamed
     implements sq.WorkerService {
-  _$TestOptNullNamedWorkerService({int? arg1}) : super(arg1: arg1);
+  _$TestOptNullNamedWorkerService({super.arg1}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -555,8 +552,8 @@ class _$TestOptNullNamedWorkerService extends TestOptNullNamed
 }
 
 /// Service initializer for TestOptNullNamed
-sq.WorkerService $TestOptNullNamedInitializer(sq.WorkerRequest startRequest) =>
-    _$TestOptNullNamedWorkerService(arg1: startRequest.args[0]);
+sq.WorkerService $TestOptNullNamedInitializer(sq.WorkerRequest $in) =>
+    _$TestOptNullNamedWorkerService(arg1: sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullNamed
 class TestOptNullNamedWorker extends sq.Worker implements TestOptNullNamed {
@@ -578,7 +575,7 @@ class TestOptNullNamedWorkerPool extends sq.WorkerPool<TestOptNullNamedWorker>
 /// WorkerService class for TestOptDefNamed
 class _$TestOptDefNamedWorkerService extends TestOptDefNamed
     implements sq.WorkerService {
-  _$TestOptDefNamedWorkerService({int arg1 = 0}) : super(arg1: arg1);
+  _$TestOptDefNamedWorkerService({super.arg1}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -588,8 +585,8 @@ class _$TestOptDefNamedWorkerService extends TestOptDefNamed
 }
 
 /// Service initializer for TestOptDefNamed
-sq.WorkerService $TestOptDefNamedInitializer(sq.WorkerRequest startRequest) =>
-    _$TestOptDefNamedWorkerService(arg1: startRequest.args[0]);
+sq.WorkerService $TestOptDefNamedInitializer(sq.WorkerRequest $in) =>
+    _$TestOptDefNamedWorkerService(arg1: sq.Cast.toInt($in.args[0]));
 
 /// Worker for TestOptDefNamed
 class TestOptDefNamedWorker extends sq.Worker implements TestOptDefNamed {
@@ -611,7 +608,7 @@ class TestOptDefNamedWorkerPool extends sq.WorkerPool<TestOptDefNamedWorker>
 /// WorkerService class for TestOptNullDefNamed
 class _$TestOptNullDefNamedWorkerService extends TestOptNullDefNamed
     implements sq.WorkerService {
-  _$TestOptNullDefNamedWorkerService({int? arg1 = 0}) : super(arg1: arg1);
+  _$TestOptNullDefNamedWorkerService({super.arg1}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -621,9 +618,9 @@ class _$TestOptNullDefNamedWorkerService extends TestOptNullDefNamed
 }
 
 /// Service initializer for TestOptNullDefNamed
-sq.WorkerService $TestOptNullDefNamedInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptNullDefNamedWorkerService(arg1: startRequest.args[0]);
+sq.WorkerService $TestOptNullDefNamedInitializer(sq.WorkerRequest $in) =>
+    _$TestOptNullDefNamedWorkerService(
+        arg1: sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullDefNamed
 class TestOptNullDefNamedWorker extends sq.Worker
@@ -648,7 +645,7 @@ class TestOptNullDefNamedWorkerPool extends sq
 /// WorkerService class for TestOptNullNamedField
 class _$TestOptNullNamedFieldWorkerService extends TestOptNullNamedField
     implements sq.WorkerService {
-  _$TestOptNullNamedFieldWorkerService({int? arg1}) : super(arg1: arg1);
+  _$TestOptNullNamedFieldWorkerService({super.arg1}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -658,9 +655,9 @@ class _$TestOptNullNamedFieldWorkerService extends TestOptNullNamedField
 }
 
 /// Service initializer for TestOptNullNamedField
-sq.WorkerService $TestOptNullNamedFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptNullNamedFieldWorkerService(arg1: startRequest.args[0]);
+sq.WorkerService $TestOptNullNamedFieldInitializer(sq.WorkerRequest $in) =>
+    _$TestOptNullNamedFieldWorkerService(
+        arg1: sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullNamedField
 class TestOptNullNamedFieldWorker extends sq.Worker
@@ -692,7 +689,7 @@ class TestOptNullNamedFieldWorkerPool extends sq
 /// WorkerService class for TestOptDefNamedField
 class _$TestOptDefNamedFieldWorkerService extends TestOptDefNamedField
     implements sq.WorkerService {
-  _$TestOptDefNamedFieldWorkerService({int arg1 = 0}) : super(arg1: arg1);
+  _$TestOptDefNamedFieldWorkerService({super.arg1}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -702,9 +699,8 @@ class _$TestOptDefNamedFieldWorkerService extends TestOptDefNamedField
 }
 
 /// Service initializer for TestOptDefNamedField
-sq.WorkerService $TestOptDefNamedFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptDefNamedFieldWorkerService(arg1: startRequest.args[0]);
+sq.WorkerService $TestOptDefNamedFieldInitializer(sq.WorkerRequest $in) =>
+    _$TestOptDefNamedFieldWorkerService(arg1: sq.Cast.toInt($in.args[0]));
 
 /// Worker for TestOptDefNamedField
 class TestOptDefNamedFieldWorker extends sq.Worker
@@ -736,7 +732,7 @@ class TestOptDefNamedFieldWorkerPool extends sq
 /// WorkerService class for TestOptNullDefNamedField
 class _$TestOptNullDefNamedFieldWorkerService extends TestOptNullDefNamedField
     implements sq.WorkerService {
-  _$TestOptNullDefNamedFieldWorkerService({int? arg1 = 0}) : super(arg1: arg1);
+  _$TestOptNullDefNamedFieldWorkerService({super.arg1}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -746,9 +742,9 @@ class _$TestOptNullDefNamedFieldWorkerService extends TestOptNullDefNamedField
 }
 
 /// Service initializer for TestOptNullDefNamedField
-sq.WorkerService $TestOptNullDefNamedFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptNullDefNamedFieldWorkerService(arg1: startRequest.args[0]);
+sq.WorkerService $TestOptNullDefNamedFieldInitializer(sq.WorkerRequest $in) =>
+    _$TestOptNullDefNamedFieldWorkerService(
+        arg1: sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullDefNamedField
 class TestOptNullDefNamedFieldWorker extends sq.Worker
@@ -782,7 +778,7 @@ class TestOptNullDefNamedFieldWorkerPool
 /// WorkerService class for TestOptNullNamedPrivateField
 class _$TestOptNullNamedPrivateFieldWorkerService
     extends TestOptNullNamedPrivateField implements sq.WorkerService {
-  _$TestOptNullNamedPrivateFieldWorkerService({int? arg1}) : super(arg1: arg1);
+  _$TestOptNullNamedPrivateFieldWorkerService({super.arg1}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -793,8 +789,9 @@ class _$TestOptNullNamedPrivateFieldWorkerService
 
 /// Service initializer for TestOptNullNamedPrivateField
 sq.WorkerService $TestOptNullNamedPrivateFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptNullNamedPrivateFieldWorkerService(arg1: startRequest.args[0]);
+        sq.WorkerRequest $in) =>
+    _$TestOptNullNamedPrivateFieldWorkerService(
+        arg1: sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullNamedPrivateField
 class TestOptNullNamedPrivateFieldWorker extends sq.Worker
@@ -830,8 +827,7 @@ class TestOptNullNamedPrivateFieldWorkerPool
 /// WorkerService class for TestOptDefNamedPrivateField
 class _$TestOptDefNamedPrivateFieldWorkerService
     extends TestOptDefNamedPrivateField implements sq.WorkerService {
-  _$TestOptDefNamedPrivateFieldWorkerService({int arg1 = 0})
-      : super(arg1: arg1);
+  _$TestOptDefNamedPrivateFieldWorkerService({super.arg1}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -842,8 +838,9 @@ class _$TestOptDefNamedPrivateFieldWorkerService
 
 /// Service initializer for TestOptDefNamedPrivateField
 sq.WorkerService $TestOptDefNamedPrivateFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptDefNamedPrivateFieldWorkerService(arg1: startRequest.args[0]);
+        sq.WorkerRequest $in) =>
+    _$TestOptDefNamedPrivateFieldWorkerService(
+        arg1: sq.Cast.toInt($in.args[0]));
 
 /// Worker for TestOptDefNamedPrivateField
 class TestOptDefNamedPrivateFieldWorker extends sq.Worker
@@ -879,8 +876,7 @@ class TestOptDefNamedPrivateFieldWorkerPool
 /// WorkerService class for TestOptNullDefNamedPrivateField
 class _$TestOptNullDefNamedPrivateFieldWorkerService
     extends TestOptNullDefNamedPrivateField implements sq.WorkerService {
-  _$TestOptNullDefNamedPrivateFieldWorkerService({int? arg1 = 0})
-      : super(arg1: arg1);
+  _$TestOptNullDefNamedPrivateFieldWorkerService({super.arg1}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -891,8 +887,9 @@ class _$TestOptNullDefNamedPrivateFieldWorkerService
 
 /// Service initializer for TestOptNullDefNamedPrivateField
 sq.WorkerService $TestOptNullDefNamedPrivateFieldInitializer(
-        sq.WorkerRequest startRequest) =>
-    _$TestOptNullDefNamedPrivateFieldWorkerService(arg1: startRequest.args[0]);
+        sq.WorkerRequest $in) =>
+    _$TestOptNullDefNamedPrivateFieldWorkerService(
+        arg1: sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullDefNamedPrivateField
 class TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
@@ -929,16 +926,16 @@ class TestOptNullDefNamedPrivateFieldWorkerPool
 class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService
     extends TestOptNullDefNamedPrivateNonFinalField
     implements sq.WorkerService {
-  _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService({int? state = 0})
-      : super(state: state);
+  _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService({super.state})
+      : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
 
   late final Map<int, sq.CommandHandler> _operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$getStateId: ($) => getState(),
-    _$setStateId: ($) => setState($.args[0]),
+    _$getStateId: ($in) => getState(),
+    _$setStateId: ($in) => setState(sq.Cast.toNullableInt($in.args[0])),
   });
 
   static const int _$getStateId = 1;
@@ -947,9 +944,9 @@ class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService
 
 /// Service initializer for TestOptNullDefNamedPrivateNonFinalField
 sq.WorkerService $TestOptNullDefNamedPrivateNonFinalFieldInitializer(
-        sq.WorkerRequest startRequest) =>
+        sq.WorkerRequest $in) =>
     _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService(
-        state: startRequest.args[0]);
+        state: sq.Cast.toNullableInt($in.args[0]));
 
 /// Worker for TestOptNullDefNamedPrivateNonFinalField
 class TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
@@ -981,7 +978,7 @@ class TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
 /// WorkerService class for TestInstallable
 class _$TestInstallableWorkerService extends TestInstallable
     implements sq.WorkerService {
-  _$TestInstallableWorkerService(int delay) : super(delay);
+  _$TestInstallableWorkerService(super.delay) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -991,8 +988,8 @@ class _$TestInstallableWorkerService extends TestInstallable
 }
 
 /// Service initializer for TestInstallable
-sq.WorkerService $TestInstallableInitializer(sq.WorkerRequest startRequest) =>
-    _$TestInstallableWorkerService(startRequest.args[0]);
+sq.WorkerService $TestInstallableInitializer(sq.WorkerRequest $in) =>
+    _$TestInstallableWorkerService(sq.Cast.toInt($in.args[0]));
 
 /// Worker for TestInstallable
 class TestInstallableWorker extends sq.Worker implements TestInstallable {
@@ -1040,17 +1037,17 @@ class _$TestRecordTypesWorkerService extends TestRecordTypes
 
   late final Map<int, sq.CommandHandler> _operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$bothId: ($) async {
-      final $r = await both();
-      return [$r.$1, $r.items];
+    _$bothId: ($in) async {
+      final $out = await both();
+      return [$out.$1, $out.items];
     },
-    _$namedId: ($) async {
-      final $r = await named();
-      return [$r.count, $r.items];
+    _$namedId: ($in) async {
+      final $out = await named();
+      return [$out.count, $out.items];
     },
-    _$unnamedId: ($) async {
-      final $r = await unnamed();
-      return [$r.$1, $r.$2];
+    _$unnamedId: ($in) async {
+      final $out = await unnamed();
+      return [$out.$1, $out.$2];
     },
   });
 
@@ -1060,7 +1057,7 @@ class _$TestRecordTypesWorkerService extends TestRecordTypes
 }
 
 /// Service initializer for TestRecordTypes
-sq.WorkerService $TestRecordTypesInitializer(sq.WorkerRequest startRequest) =>
+sq.WorkerService $TestRecordTypesInitializer(sq.WorkerRequest $in) =>
     _$TestRecordTypesWorkerService();
 
 /// Worker for TestRecordTypes
@@ -1071,17 +1068,17 @@ class TestRecordTypesWorker extends sq.Worker implements TestRecordTypes {
   @override
   Future<(int, {List<dynamic> items})> both() =>
       send(_$TestRecordTypesWorkerService._$bothId, args: [])
-          .then((_) => (_[0] as int, items: _[1] as List<dynamic>));
+          .then(($x) => (sq.Cast.toInt($x[0]), items: $x[1] as List<dynamic>));
 
   @override
   Future<({int count, List<dynamic> items})> named() =>
-      send(_$TestRecordTypesWorkerService._$namedId, args: [])
-          .then((_) => (count: _[0] as int, items: _[1] as List<dynamic>));
+      send(_$TestRecordTypesWorkerService._$namedId, args: []).then(
+          ($x) => (count: sq.Cast.toInt($x[0]), items: $x[1] as List<dynamic>));
 
   @override
   Future<(int, List<dynamic>)> unnamed() =>
       send(_$TestRecordTypesWorkerService._$unnamedId, args: [])
-          .then((_) => (_[0] as int, _[1] as List<dynamic>));
+          .then(($x) => (sq.Cast.toInt($x[0]), $x[1] as List<dynamic>));
 }
 
 /// Worker pool for TestRecordTypes

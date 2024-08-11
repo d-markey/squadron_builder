@@ -15,14 +15,14 @@ class _$HelloWorldWorkerService extends HelloWorld implements WorkerService {
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$helloId: ($) => hello($.args[0]),
+    _$helloId: ($in) => hello($in.args[0] as String?),
   });
 
   static const int _$helloId = 1;
 }
 
 /// Service initializer for HelloWorld
-WorkerService $HelloWorldInitializer(WorkerRequest startRequest) =>
+WorkerService $HelloWorldInitializer(WorkerRequest $in) =>
     _$HelloWorldWorkerService();
 
 /// Worker for HelloWorld

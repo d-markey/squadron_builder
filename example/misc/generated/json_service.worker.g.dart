@@ -16,14 +16,14 @@ class _$JsonServiceWorkerService extends JsonService
 
   late final Map<int, sq.CommandHandler> _operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$decodeId: ($) => decode($.args[0]),
+    _$decodeId: ($in) => decode($in.args[0] as String),
   });
 
   static const int _$decodeId = 1;
 }
 
 /// Service initializer for JsonService
-sq.WorkerService $JsonServiceInitializer(sq.WorkerRequest startRequest) =>
+sq.WorkerService $JsonServiceInitializer(sq.WorkerRequest $in) =>
     _$JsonServiceWorkerService();
 
 /// Worker for JsonService

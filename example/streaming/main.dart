@@ -5,16 +5,19 @@ void main() async {
   final worker = StreamServiceWorker();
   await worker.start();
   // start streaming from clock service
-  final stream = worker.infiniteClock(frequency: 2);
+  final stream = worker.infiniteClock(frequency: 3 /*Hz*/);
   final sub = stream.listen((event) {
     print('${DateTime.now()} - received $event');
   }, onError: (err) {
     print('${DateTime.now()} - Unexpected error: $err.');
+  }, onDone: () {
+    print('${DateTime.now()} - Done.');
   });
   // cancel subscription in 7 seconds
-  Future.delayed(Duration(seconds: 7), () {
-    sub.cancel();
-    print('${DateTime.now()} - subscription cancelled.');
+  Future.delayed(Duration(seconds: 7), () async {
+    print('${DateTime.now()} - cancelling subscription...');
+    await sub.cancel();
+    print('${DateTime.now()} - subscription effectively cancelled.');
   });
   // stop worker
   worker.stop();

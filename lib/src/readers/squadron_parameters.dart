@@ -95,6 +95,9 @@ class SquadronParameters {
 
   String arguments() => _params.map((p) => p.argument()).join(', ');
 
+  String nonSuperArguments() =>
+      _params.where((p) => !p.isSuperParam).map((p) => p.argument()).join(', ');
+
   String serialize() => _params
       // cancelation token is passed separately when invoking the worker
       .where((p) => !p.isCancelationToken)
@@ -140,8 +143,28 @@ class SquadronParameters {
       return '';
     }
   }
+
+  String toSuperParams() {
+    if (_hasPositionalParameters) {
+      if (_hasOptionalParameters) {
+        return '${positional.toSuperParam().join(', ')}, [${optional.toSuperParam().join(', ')}]';
+      } else if (_hasNamedParameters) {
+        return '${positional.toSuperParam().join(', ')}, {${named.toSuperParam().join(', ')}}';
+      } else {
+        return positional.toSuperParam().join(', ');
+      }
+    } else if (_hasOptionalParameters) {
+      return '[${optional.toSuperParam().join(', ')}]';
+    } else if (_hasNamedParameters) {
+      return '{${named.toSuperParam().join(', ')}}';
+    } else {
+      return '';
+    }
+  }
 }
 
 extension _ParamExt on Iterable<SquadronParameter> {
   Iterable<String> toStringNoField() => map((p) => p.toStringNoField());
+
+  Iterable<String> toSuperParam() => map((p) => p.toSuperParam());
 }

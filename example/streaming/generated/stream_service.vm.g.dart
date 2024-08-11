@@ -9,7 +9,7 @@ import 'package:squadron/squadron.dart';
 import '../stream_service.dart';
 
 /// VM entry point for StreamService
-void _start$StreamService(List<dynamic> command) =>
+void _start$StreamService(WorkerRequest command) =>
     run($StreamServiceInitializer, command);
 
 EntryPoint $getStreamServiceActivator() => _start$StreamService;

@@ -35,8 +35,7 @@ extension AnnotationExt on Element {
 
   Iterable<DartObject> findAnnotations<T>() {
     final targetAnnotationName = T.toString();
-    return getAnnotations().where((v) =>
-        v.type?.getDisplayString(withNullability: false) ==
-        targetAnnotationName);
+    return getAnnotations()
+        .where((v) => v.type?.getDisplayString() == targetAnnotationName);
   }
 }

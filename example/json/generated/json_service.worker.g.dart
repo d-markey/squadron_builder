@@ -15,14 +15,16 @@ class _$JsonServiceWorkerService extends JsonService implements WorkerService {
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$loadJsonId: ($) => loadJson(data: $.args[0], fromJson: $.args[1]),
+    _$loadJsonId: ($in) => loadJson(
+        data: $in.args[0] as String,
+        fromJson: $in.args[1] as T Function(Map<String, dynamic>)),
   });
 
   static const int _$loadJsonId = 1;
 }
 
 /// Service initializer for JsonService
-WorkerService $JsonServiceInitializer(WorkerRequest startRequest) =>
+WorkerService $JsonServiceInitializer(WorkerRequest $in) =>
     _$JsonServiceWorkerService();
 
 /// Worker for JsonService

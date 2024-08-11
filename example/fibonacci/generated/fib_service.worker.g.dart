@@ -15,14 +15,14 @@ class _$FibServiceWorkerService extends FibService implements WorkerService {
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$fibonacciId: ($) => fibonacci($.args[0]),
+    _$fibonacciId: ($in) => fibonacci(Cast.toInt($in.args[0])),
   });
 
   static const int _$fibonacciId = 1;
 }
 
 /// Service initializer for FibService
-WorkerService $FibServiceInitializer(WorkerRequest startRequest) =>
+WorkerService $FibServiceInitializer(WorkerRequest $in) =>
     _$FibServiceWorkerService();
 
 /// Worker for FibService

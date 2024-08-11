@@ -11,8 +11,6 @@ import 'managed_type.dart';
 class TypeManager {
   TypeManager(LibraryElement library) : _prefixes = library.prefixes {
     final provider = library.typeProvider;
-    listType = handleDartType(provider.listType(provider.dynamicType));
-    functionType = provider.functionType;
 
     final prefix = _prefixes
             .where((p) =>
@@ -21,7 +19,10 @@ class TypeManager {
             ?.name ??
         '';
 
-    squadronPrefix = prefix;
+    squadronAlias = prefix;
+
+    listType = handleDartType(provider.listType(provider.dynamicType));
+    functionType = provider.functionType;
 
     entryPointType = ManagedType.knownType(prefix, 'squadron', 'EntryPoint');
     channelType = ManagedType.knownType(prefix, 'squadron', 'Channel');
@@ -55,9 +56,9 @@ class TypeManager {
 
   final List<PrefixElement> _prefixes;
 
-  late final String squadronPrefix;
+  late final String squadronAlias;
 
-  String get squadronAlias => squadronPrefix.isEmpty ? '' : '$squadronPrefix.';
+  String get squadronPrefix => squadronAlias.isEmpty ? '' : '$squadronAlias.';
 
   late final DartType functionType;
 
@@ -131,7 +132,7 @@ class TypeManager {
     }
 
     if (type is DynamicType || type is VoidType) {
-      return ManagedType(prefix, type);
+      return ManagedType(squadronPrefix, prefix, type);
     } else if (type is FunctionType) {
       final returnType = handleDartType(type.returnType);
       final parameters = type.parameters.map(
@@ -143,12 +144,13 @@ class TypeManager {
           isOptionalPositional: e.isOptionalPositional,
         ),
       );
-      return ManagedType.function(prefix, functionType, returnType, parameters);
+      return ManagedType.function(
+          squadronPrefix, prefix, functionType, returnType, parameters);
     } else if (type is ParameterizedType) {
       final typeArgs = type.typeArguments.map(handleDartType);
-      return ManagedType(prefix, type, typeArgs);
+      return ManagedType(squadronPrefix, prefix, type, typeArgs);
     } else {
-      return ManagedType(prefix, type);
+      return ManagedType(squadronPrefix, prefix, type);
     }
   }
 }

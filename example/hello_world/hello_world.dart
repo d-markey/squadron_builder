@@ -7,7 +7,7 @@ import 'generated/hello_world.activator.g.dart';
 
 part 'generated/hello_world.worker.g.dart';
 
-@SquadronService(web: false)
+@SquadronService()
 class HelloWorld {
   @squadronMethod
   Future<String> hello([String? name]) async {

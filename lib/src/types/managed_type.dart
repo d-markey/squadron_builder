@@ -11,12 +11,16 @@ abstract class ManagedType {
             ? const []
             : typeArguments.toList();
 
-  factory ManagedType(String? prefix, DartType dartType,
+  factory ManagedType(String squadronPrefix, String? prefix, DartType dartType,
       [Iterable<ManagedType>? typeArguments]) {
     if (dartType is DynamicType) {
       return ManagedDynamicType._(prefix, dartType);
     } else if (dartType is VoidType) {
       return ManagedVoidType._(prefix, dartType);
+    } else if (dartType.isDartCoreInt) {
+      return ManagedIntType._(squadronPrefix, prefix, dartType);
+    } else if (dartType.isDartCoreDouble) {
+      return ManagedDoubleType._(squadronPrefix, prefix, dartType);
     } else if (dartType is FunctionType) {
       throw ArgumentError('ManagedType cannot handle ${dartType.runtimeType}');
     } else if (dartType.element == null) {
@@ -32,8 +36,13 @@ abstract class ManagedType {
           [Iterable<ManagedType>? typeArguments]) =>
       KnownType._(prefix, packageName, baseName, typeArguments);
 
-  factory ManagedType.function(String? prefix, DartType functionType,
-          ManagedType returnType, Iterable<ManagedParameter>? parameters) =>
+  factory ManagedType.function(
+    String squadronPrefix,
+    String? prefix,
+    DartType functionType,
+    ManagedType returnType,
+    Iterable<ManagedParameter>? parameters,
+  ) =>
       ManagedFunctionType._(prefix, functionType, returnType, parameters);
 
   final String prefix;
@@ -117,6 +126,32 @@ class ManagedVoidType extends _ManagedType {
   String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
     final s = (forcedNullabilitySuffix ?? dartType.nullabilitySuffix).suffix;
     return prefix.isEmpty ? 'void$s' : '$prefix.void$s';
+  }
+}
+
+class ManagedIntType extends _ManagedType {
+  ManagedIntType._(this.squadronPrefix, super.prefix, super.dartType)
+      : super._();
+
+  final String squadronPrefix;
+
+  @override
+  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
+    final s = (forcedNullabilitySuffix ?? dartType.nullabilitySuffix).suffix;
+    return prefix.isEmpty ? 'int$s' : '$prefix.int$s';
+  }
+}
+
+class ManagedDoubleType extends _ManagedType {
+  ManagedDoubleType._(this.squadronPrefix, super.prefix, super.dartType)
+      : super._();
+
+  final String squadronPrefix;
+
+  @override
+  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
+    final s = (forcedNullabilitySuffix ?? dartType.nullabilitySuffix).suffix;
+    return prefix.isEmpty ? 'double$s' : '$prefix.double$s';
   }
 }
 

@@ -103,4 +103,20 @@ class SquadronParameter {
     final typeName = managedType.getTypeName(nullabilitySuffix);
     return '$required$typeName $name${defaultValue == null ? '' : ' = $defaultValue'}';
   }
+
+  bool get isSuperParam => serIdx >= 0;
+
+  String toSuperParam() {
+    if (isSuperParam) {
+      // this is a super parameter
+      return 'super.$name';
+    }
+    // programmatically added: may be null
+    NullabilitySuffix? nullabilitySuffix;
+    if ((isOptional || (isNamed && required.isEmpty)) && defaultValue == null) {
+      nullabilitySuffix = NullabilitySuffix.question;
+    }
+    final typeName = managedType.getTypeName(nullabilitySuffix);
+    return '$required$typeName $name${defaultValue == null ? '' : ' = $defaultValue'}';
+  }
 }

@@ -9,7 +9,7 @@ import 'package:squadron/squadron.dart';
 import '../fibonacci_service.dart';
 
 /// VM entry point for FibonacciService
-void _start$FibonacciService(List<dynamic> command) =>
+void _start$FibonacciService(WorkerRequest command) =>
     run($FibonacciServiceInitializer, command);
 
 EntryPoint $getFibonacciServiceActivator() => _start$FibonacciService;

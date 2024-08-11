@@ -6,10 +6,12 @@
 
 import 'package:squadron/squadron.dart';
 
-import '../data_service.dart';
+import '../hello_world.dart';
 
-/// VM entry point for DataService
-void _start$DataService(WorkerRequest command) =>
-    run($DataServiceInitializer, command);
+void main() {
+  /// Web entry point for HelloWorld
+  run($HelloWorldInitializer);
+}
 
-EntryPoint $getDataServiceActivator() => _start$DataService;
+EntryPoint $getHelloWorldActivator() =>
+    'example/hello_world/generated/hello_world.web.g.dart.js';

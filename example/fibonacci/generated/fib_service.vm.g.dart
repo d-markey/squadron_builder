@@ -9,7 +9,7 @@ import 'package:squadron/squadron.dart';
 import '../fib_service.dart';
 
 /// VM entry point for FibService
-void _start$FibService(List<dynamic> command) =>
+void _start$FibService(WorkerRequest command) =>
     run($FibServiceInitializer, command);
 
 EntryPoint $getFibServiceActivator() => _start$FibService;

@@ -25,7 +25,7 @@ class Data {
   @override
   String toString() => 'a=$a, b=$b, c=$c';
 
-  Uint8List marshall() {
+  Uint8List marshal() {
     final str = utf8.encode(c);
     final buffer = Uint8List(4 + 1 + str.length);
     _writeInt(buffer, 0, a);
@@ -34,10 +34,10 @@ class Data {
     return buffer;
   }
 
-  Data.unmarshall(Uint8List buffer)
+  Data.unmarshal(Uint8List buffer)
       : a = _readInt(buffer, 0),
         b = (buffer[4] != 0),
-        c = utf8.decode(buffer.skip(5).toList());
+        c = utf8.decode(buffer.sublist(5));
 
   static void _writeInt(Uint8List buffer, int pos, int value) {
     buffer[pos] = (value & 0xFF000000) >> 24;

@@ -16,9 +16,9 @@ class _$SampleServiceWorkerService extends SampleService
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$computeId: ($) async {
-      final $r = await compute(DataIn.unmarshal($.args[0]));
-      return $r.toJson();
+    _$computeId: ($in) async {
+      final $out = await compute(DataIn.unmarshal($in.args[0]));
+      return $out.marshal();
     },
   });
 
@@ -26,7 +26,7 @@ class _$SampleServiceWorkerService extends SampleService
 }
 
 /// Service initializer for SampleService
-WorkerService $SampleServiceInitializer(WorkerRequest startRequest) =>
+WorkerService $SampleServiceInitializer(WorkerRequest $in) =>
     _$SampleServiceWorkerService();
 
 /// Worker for SampleService
@@ -37,7 +37,7 @@ class SampleServiceWorker extends Worker implements SampleService {
   @override
   Future<DataOut> compute(DataIn input) =>
       send(_$SampleServiceWorkerService._$computeId, args: [input.marshal()])
-          .then((_) => DataOut.fromJson(_));
+          .then(($x) => DataOut.unmarshal($x));
 }
 
 /// Worker pool for SampleService
