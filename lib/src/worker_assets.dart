@@ -135,7 +135,7 @@ class WorkerAssets {
           platformSpecific: {
             'js': _getRelativePath(_webOutput!, output),
             'html': _getRelativePath(_webOutput!, output),
-            'web': _getRelativePath(_webOutput!, output),
+            'js_interop': _getRelativePath(_webOutput!, output),
             'io': _getRelativePath(_vmOutput!, output),
           },
         );

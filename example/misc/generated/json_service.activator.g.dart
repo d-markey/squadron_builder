@@ -8,6 +8,7 @@ import 'json_service.stub.g.dart'
     if (dart.library.js) 'json_service.web.g.dart'
     if (dart.library.html) 'json_service.web.g.dart'
     if (dart.library.web) 'json_service.web.g.dart'
+    if (dart.library.js_interop) 'json_service.web.g.dart'
     if (dart.library.io) 'json_service.vm.g.dart';
 
 /// Service activator for JsonService

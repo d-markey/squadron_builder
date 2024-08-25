@@ -8,6 +8,7 @@ import 'test_services.stub.g.dart'
     if (dart.library.js) 'test_services.web.g.dart'
     if (dart.library.html) 'test_services.web.g.dart'
     if (dart.library.web) 'test_services.web.g.dart'
+    if (dart.library.js_interop) 'test_services.web.g.dart'
     if (dart.library.io) 'test_services.vm.g.dart';
 
 /// Service activator for TestParameterLess
