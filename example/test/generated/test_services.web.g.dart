@@ -86,76 +86,76 @@ void main() {
 }
 
 sq.EntryPoint $getTestParameterLessActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestReqPositionalActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullPositionalActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptDefPositionalActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullDefPositionalActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestReqPositionalFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullPositionalFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptDefPositionalFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullDefPositionalFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestReqPositionalPrivateFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullPositionalPrivateFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptDefPositionalPrivateFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullNamedActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptDefNamedActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullDefNamedActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullNamedFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptDefNamedFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullDefNamedFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullNamedPrivateFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestInstallableActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestRecordTypesActivator() =>
-    'example/test/generated/test_services.web.g.dart.js';
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');

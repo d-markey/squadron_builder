@@ -14,4 +14,4 @@ void main() {
 }
 
 EntryPoint $getSampleServiceActivator() =>
-    'example/misc/generated/sample_service.web.g.dart.js';
+    Uri.parse('example/misc/generated/sample_service.web.g.dart.js');

@@ -14,4 +14,4 @@ void main() {
 }
 
 EntryPoint $getStreamServiceActivator() =>
-    'example/streaming/generated/stream_service.web.g.dart.js';
+    Uri.parse('example/streaming/generated/stream_service.web.g.dart.js');

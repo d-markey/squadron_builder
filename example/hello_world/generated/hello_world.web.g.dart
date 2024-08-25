@@ -14,4 +14,4 @@ void main() {
 }
 
 EntryPoint $getHelloWorldActivator() =>
-    'example/hello_world/generated/hello_world.web.g.dart.js';
+    Uri.parse('example/hello_world/generated/hello_world.web.g.dart.js');

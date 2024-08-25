@@ -119,7 +119,7 @@ class WorkerAssets {
           : '${_service.baseUrl}/${output.pathSegments.last}.js';
       codeEvent.add(
         output,
-        '${_typeManager.entryPointType} \$get$_serviceActivator() => \'$workerUrl\';',
+        '${_typeManager.entryPointType} \$get$_serviceActivator() => Uri.parse(\'$workerUrl\');',
       );
     }
   }

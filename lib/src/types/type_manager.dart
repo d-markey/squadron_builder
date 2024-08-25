@@ -21,8 +21,9 @@ class TypeManager {
 
     squadronAlias = prefix;
 
-    listType = handleDartType(provider.listType(provider.dynamicType));
     functionType = provider.functionType;
+
+    listType = handleDartType(provider.listType(provider.dynamicType));
 
     entryPointType = ManagedType.knownType(prefix, 'squadron', 'EntryPoint');
     channelType = ManagedType.knownType(prefix, 'squadron', 'Channel');

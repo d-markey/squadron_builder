@@ -14,4 +14,4 @@ void main() {
 }
 
 sq.EntryPoint $getJsonServiceActivator() =>
-    'example/misc/generated/json_service.web.g.dart.js';
+    Uri.parse('example/misc/generated/json_service.web.g.dart.js');

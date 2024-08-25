@@ -13,4 +13,5 @@ void main() {
   run($FibServiceInitializer);
 }
 
-EntryPoint $getFibServiceActivator() => '/workers/fib_service.web.g.dart.js';
+EntryPoint $getFibServiceActivator() =>
+    Uri.parse('/workers/fib_service.web.g.dart.js');

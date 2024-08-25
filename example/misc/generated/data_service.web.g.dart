@@ -14,4 +14,4 @@ void main() {
 }
 
 EntryPoint $getDataServiceActivator() =>
-    'example/misc/generated/data_service.web.g.dart.js';
+    Uri.parse('example/misc/generated/data_service.web.g.dart.js');
