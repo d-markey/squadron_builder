@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
 
@@ -393,10 +394,13 @@ class WorkerAssets {
     }
   }
 
+  String _getTypeName(DartType type) =>
+      _typeManager.handleDartType(type).getTypeName(type.nullabilitySuffix);
+
   /// Overridden service field
   String _field(FieldElement field) => '''
       @override
-      ${field.isFinal ? 'final ' : ''}${field.type} ${field.name};
+      ${field.isFinal ? 'final ' : ''}${_getTypeName(field.type)} ${field.name};
     ''';
 
   /// Unimplemented member
@@ -415,8 +419,8 @@ class WorkerAssets {
   /// Unimplemented accessor
   String _unimplementedAccessor(PropertyAccessorElement acc) => _unimplemented(
         acc.isGetter
-            ? '${acc.returnType} get ${acc.name}'
-            : 'set ${acc.name.replaceAll('=', '')}(${acc.returnType} value)',
+            ? '${_getTypeName(acc.returnType)} get ${acc.name}'
+            : 'set ${acc.name.replaceAll('=', '')}(${_getTypeName(acc.returnType)} value)',
         override: true,
         unused: true,
       );
@@ -451,11 +455,11 @@ class WorkerAssets {
   /// Proxy for service field
   String _forwardField(FieldElement field, String target) => '''
       @override
-      ${field.type} get ${field.name} => $target.${field.name};
+      ${_getTypeName(field.type)} get ${field.name} => $target.${field.name};
 
       ${field.isFinal ? '' : '''
         @override
-        set ${field.name}(${field.type} value) => $target.${field.name} = value;
+        set ${field.name}(${_getTypeName(field.type)} value) => $target.${field.name} = value;
       '''}
     ''';
 
@@ -470,11 +474,11 @@ class WorkerAssets {
       acc.isGetter
           ? '''
             @override
-            ${acc.returnType} get ${acc.name} => $target.${acc.name};
+            ${_getTypeName(acc.returnType)} get ${acc.name} => $target.${acc.name};
           '''
           : '''
             @override
-            set ${acc.name.replaceAll('=', '')}(${acc.returnType} value) => $target.${acc.name}(value);
+            set ${acc.name.replaceAll('=', '')}(${_getTypeName(acc.returnType)} value) => $target.${acc.name}(value);
           ''';
 
   /// Proxy for base worker/worker pool method

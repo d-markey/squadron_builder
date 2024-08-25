@@ -65,6 +65,9 @@ sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
 sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
     throw UnimplementedError();
 
+sq.EntryPoint $getTestPrefixedImportTypeActivator() =>
+    throw UnimplementedError();
+
 sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
     throw UnimplementedError();
 

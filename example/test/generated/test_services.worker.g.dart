@@ -922,6 +922,62 @@ class TestOptNullDefNamedPrivateFieldWorkerPool
   int? get _arg1 => throw UnimplementedError();
 }
 
+/// WorkerService class for TestPrefixedImportType
+class _$TestPrefixedImportTypeWorkerService extends TestPrefixedImportType
+    implements sq.WorkerService {
+  _$TestPrefixedImportTypeWorkerService(super.typedData) : super();
+
+  @override
+  Map<int, sq.CommandHandler> get operations => _operations;
+
+  late final Map<int, sq.CommandHandler> _operations =
+      Map.unmodifiable(<int, sq.CommandHandler>{
+    _$getTypedDataId: ($in) => getTypedData(),
+  });
+
+  static const int _$getTypedDataId = 1;
+}
+
+/// Service initializer for TestPrefixedImportType
+sq.WorkerService $TestPrefixedImportTypeInitializer(sq.WorkerRequest $in) =>
+    _$TestPrefixedImportTypeWorkerService($in.args[0] as typed_data.Int8List);
+
+/// Worker for TestPrefixedImportType
+class TestPrefixedImportTypeWorker extends sq.Worker
+    implements TestPrefixedImportType {
+  TestPrefixedImportTypeWorker(this.typedData,
+      {sq.PlatformThreadHook? threadHook})
+      : super($TestPrefixedImportTypeActivator,
+            args: [typedData], threadHook: threadHook);
+
+  @override
+  final typed_data.Int8List typedData;
+
+  @override
+  Future<typed_data.Int8List?> getTypedData() =>
+      send(_$TestPrefixedImportTypeWorkerService._$getTypedDataId, args: []);
+}
+
+/// Worker pool for TestPrefixedImportType
+class TestPrefixedImportTypeWorkerPool
+    extends sq.WorkerPool<TestPrefixedImportTypeWorker>
+    implements TestPrefixedImportType {
+  TestPrefixedImportTypeWorkerPool(this.typedData,
+      {sq.ConcurrencySettings? concurrencySettings,
+      sq.PlatformThreadHook? threadHook})
+      : super(
+            () =>
+                TestPrefixedImportTypeWorker(typedData, threadHook: threadHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  final typed_data.Int8List typedData;
+
+  @override
+  Future<typed_data.Int8List?> getTypedData() =>
+      execute((w) => w.getTypedData());
+}
+
 /// WorkerService class for TestOptNullDefNamedPrivateNonFinalField
 class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService
     extends TestOptNullDefNamedPrivateNonFinalField

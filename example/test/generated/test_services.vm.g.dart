@@ -157,6 +157,13 @@ void _start$TestOptNullDefNamedPrivateField(sq.WorkerRequest command) =>
 sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
     _start$TestOptNullDefNamedPrivateField;
 
+/// VM entry point for TestPrefixedImportType
+void _start$TestPrefixedImportType(sq.WorkerRequest command) =>
+    sq.run($TestPrefixedImportTypeInitializer, command);
+
+sq.EntryPoint $getTestPrefixedImportTypeActivator() =>
+    _start$TestPrefixedImportType;
+
 /// VM entry point for TestOptNullDefNamedPrivateNonFinalField
 void _start$TestOptNullDefNamedPrivateNonFinalField(sq.WorkerRequest command) =>
     sq.run($TestOptNullDefNamedPrivateNonFinalFieldInitializer, command);

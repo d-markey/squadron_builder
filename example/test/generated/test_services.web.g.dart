@@ -75,6 +75,9 @@ void main() {
   /// Web entry point for TestOptNullDefNamedPrivateField
   sq.run($TestOptNullDefNamedPrivateFieldInitializer);
 
+  /// Web entry point for TestPrefixedImportType
+  sq.run($TestPrefixedImportTypeInitializer);
+
   /// Web entry point for TestOptNullDefNamedPrivateNonFinalField
   sq.run($TestOptNullDefNamedPrivateNonFinalFieldInitializer);
 
@@ -149,6 +152,9 @@ sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
     Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+
+sq.EntryPoint $getTestPrefixedImportTypeActivator() =>
     Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>

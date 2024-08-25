@@ -2,6 +2,7 @@
 
 // ignore: unused_import
 import 'dart:async';
+import 'dart:typed_data' as typed_data;
 
 import 'package:squadron/squadron.dart' as sq;
 
@@ -169,7 +170,17 @@ class TestOptNullDefNamedPrivateField {
   final int? _arg1;
 }
 
-// mutable services should not be used via a worker pool
+@sq.SquadronService()
+class TestPrefixedImportType {
+  TestPrefixedImportType(this.typedData);
+
+  final typed_data.Int8List typedData; // Int8List from prefixed import
+
+  @sq.SquadronMethod()
+  FutureOr<typed_data.Int8List?> getTypedData() => typedData;
+}
+
+// note: mutable services should not be used via a worker pool
 @sq.SquadronService(pool: false)
 class TestOptNullDefNamedPrivateNonFinalField {
   // optional nullable named with default value

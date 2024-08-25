@@ -88,6 +88,9 @@ final $TestOptDefNamedPrivateFieldActivator =
 final $TestOptNullDefNamedPrivateFieldActivator =
     $getTestOptNullDefNamedPrivateFieldActivator();
 
+/// Service activator for TestPrefixedImportType
+final $TestPrefixedImportTypeActivator = $getTestPrefixedImportTypeActivator();
+
 /// Service activator for TestOptNullDefNamedPrivateNonFinalField
 final $TestOptNullDefNamedPrivateNonFinalFieldActivator =
     $getTestOptNullDefNamedPrivateNonFinalFieldActivator();
