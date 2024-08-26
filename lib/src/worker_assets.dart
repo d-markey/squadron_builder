@@ -116,8 +116,8 @@ class WorkerAssets {
       );
 
       final workerUrl = _service.baseUrl.isEmpty
-          ? '${output.path}.js'
-          : '${_service.baseUrl}/${output.pathSegments.last}.js';
+          ? '${output.path}.${_service.wasm ? 'wasm' : 'js'}'
+          : '${_service.baseUrl}/${output.pathSegments.last}.${_service.wasm ? 'wasm' : 'js'}';
       codeEvent.add(
         output,
         '${_typeManager.entryPointType} \$get$_serviceActivator() => Uri.parse(\'$workerUrl\');',
@@ -383,14 +383,16 @@ class WorkerAssets {
   String _commandHandler(SquadronMethodReader cmd) {
     final req = r'$in', res = r'$out';
     final serviceCall = '${cmd.name}(${cmd.parameters.deserialize(req)})';
+    final typeParams =
+        cmd.typeParameters.isEmpty ? '' : '<${cmd.typeParameters.join(', ')}>';
     if (cmd.needsSerialization && !cmd.serializedResult.isIdentity) {
       if (cmd.isStream) {
-        return '${cmd.id}: ($req) => $serviceCall.${cmd.continuation}(($res) => ${cmd.serializedResult(res)})';
+        return '${cmd.id}: $typeParams($req) => $serviceCall.${cmd.continuation}(($res) => ${cmd.serializedResult(res)})';
       } else {
-        return '${cmd.id}: ($req) async { final $res = await $serviceCall; return ${cmd.serializedResult(res)}; }';
+        return '${cmd.id}: $typeParams($req) async { final $res = await $serviceCall; return ${cmd.serializedResult(res)}; }';
       }
     } else {
-      return '${cmd.id}: ($req) => $serviceCall';
+      return '${cmd.id}: $typeParams($req) => $serviceCall';
     }
   }
 

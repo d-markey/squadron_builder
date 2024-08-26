@@ -24,6 +24,8 @@ class TypeManager {
     functionType = provider.functionType;
 
     listType = handleDartType(provider.listType(provider.dynamicType));
+    futureType = handleDartType(provider.futureType(provider.dynamicType));
+    streamType = handleDartType(provider.streamType(provider.dynamicType));
 
     entryPointType = ManagedType.knownType(prefix, 'squadron', 'EntryPoint');
     channelType = ManagedType.knownType(prefix, 'squadron', 'Channel');
@@ -64,6 +66,8 @@ class TypeManager {
   late final DartType functionType;
 
   late final ManagedType listType;
+  late final ManagedType streamType;
+  late final ManagedType futureType;
 
   late final ManagedType entryPointType;
   late final ManagedType channelType;

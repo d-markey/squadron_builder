@@ -22,7 +22,9 @@ class JsonService {
     required final T Function(Map<String, dynamic>) fromJson,
   }) {
     _logger.i('Deserializing $data...');
-    final json = jsonDecode(data) as Map<String, dynamic>;
+    final json = jsonDecode(_noop(data)) as Map<String, dynamic>;
     return fromJson(json);
   }
+
+  T _noop<T>(T data) => data;
 }

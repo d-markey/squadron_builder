@@ -22,9 +22,15 @@ class DartMethodReader {
   final String name;
   final TypeManager typeManager;
   final DartType _returnType;
+
+  final typeParameters = <String>[];
   late final parameters = SquadronParameters(typeManager);
 
   void _init(MethodElement method) {
+    if (method.typeParameters.isNotEmpty) {
+      typeParameters.addAll(method.typeParameters.map((e) => e.toString()));
+    }
+
     for (var n = 0; n < method.parameters.length; n++) {
       parameters.register(method.parameters[n], null);
     }
@@ -50,6 +56,7 @@ class DartMethodReader {
     return m;
   }
 
-  String get declaration =>
-      '${typeManager.handleDartType(_returnType)} $name($parameters)';
+  String get declaration => typeParameters.isEmpty
+      ? '${typeManager.handleDartType(_returnType)} $name($parameters)'
+      : '${typeManager.handleDartType(_returnType)} $name<${typeParameters.join(', ')}>($parameters)';
 }

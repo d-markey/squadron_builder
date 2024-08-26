@@ -12,9 +12,6 @@ class SquadronMethodReader extends DartMethodReader {
         valueType =
             typeManager.handleDartType(_getValueType(method.returnType)),
         _marshaling = MarshalingManager(typeManager),
-        // returnType = method.returnType.isDartAsyncFutureOr
-        //     ? method.returnType.getPrefixedName(method.library.prefixes).replaceFirst('FutureOr', 'Future')
-        //     : method.returnType.getPrefixedName(method.library.prefixes),
         super._(method, typeManager);
 
   static DartType _getValueType(DartType returnType) {
@@ -28,8 +25,6 @@ class SquadronMethodReader extends DartMethodReader {
       return returnType;
     }
   }
-
-  final _typeParameters = <String>[];
 
   final bool inspectRequest;
   final bool inspectResponse;
@@ -48,9 +43,9 @@ class SquadronMethodReader extends DartMethodReader {
       isStream ? 'Stream<$valueType>' : 'Future<$valueType>';
 
   @override
-  String get declaration => _typeParameters.isEmpty
+  String get declaration => typeParameters.isEmpty
       ? '$returnType $name($parameters)'
-      : '$returnType $name<${_typeParameters.join(', ')}>($parameters)';
+      : '$returnType $name<${typeParameters.join(', ')}>($parameters)';
 
   String get workerExecutor => isStream ? 'stream' : 'send';
   String get poolExecutor => isStream ? 'stream' : 'execute';
@@ -79,16 +74,16 @@ class SquadronMethodReader extends DartMethodReader {
           'return a Future, a FutureOr, or a Stream.');
     }
 
-    if (method.typeParameters.isNotEmpty) {
-      _typeParameters.addAll(method.typeParameters.map((e) => e.toString()));
-    }
-
     final resultMarshaler = typeManager.getExplicitMarshaler(method);
     if (resultMarshaler != null) {
       _resultMarshaler =
           _marshaling.getMarshaler(valueType, explicit: resultMarshaler);
     } else {
       _resultMarshaler = _marshaling.getMarshaler(valueType);
+    }
+
+    if (method.typeParameters.isNotEmpty) {
+      typeParameters.addAll(method.typeParameters.map((e) => e.toString()));
     }
 
     for (var n = 0; n < method.parameters.length; n++) {

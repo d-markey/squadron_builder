@@ -2,8 +2,8 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart';
-import '../types/type_manager.dart';
 
+import '../types/type_manager.dart';
 import 'annotations_reader.dart';
 import 'marshaling_manager.dart';
 import 'squadron_parameters.dart';
@@ -11,7 +11,7 @@ import 'squadron_parameters.dart';
 /// Reader for a Squadron service class
 class SquadronServiceReader {
   SquadronServiceReader._(ClassElement clazz, this.typeManager, this.pool,
-      this.vm, this.web, this.baseUrl)
+      this.vm, this.web, this.wasm, this.baseUrl)
       : name = clazz.name,
         parameters = SquadronParameters(typeManager),
         _marshaling = MarshalingManager(typeManager) {
@@ -29,6 +29,7 @@ class SquadronServiceReader {
   final bool pool;
   final bool vm;
   final bool web;
+  final bool wasm;
   final String baseUrl;
 
   final MarshalingManager _marshaling;
@@ -84,10 +85,12 @@ class SquadronServiceReader {
     final pool = reader.isSet('pool');
     final vm = reader.isSet('vm');
     final web = reader.isSet('web');
+    final wasm = reader.isSet('wasm');
     var baseUrl = reader.getString('baseUrl') ?? '';
     if (baseUrl.isNotEmpty && baseUrl.endsWith('/')) {
       baseUrl = baseUrl.substring(0, baseUrl.length - 1);
     }
-    return SquadronServiceReader._(clazz, typeManager, pool, vm, web, baseUrl);
+    return SquadronServiceReader._(
+        clazz, typeManager, pool, vm, web, wasm, baseUrl);
   }
 }

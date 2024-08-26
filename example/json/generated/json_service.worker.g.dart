@@ -15,7 +15,7 @@ class _$JsonServiceWorkerService extends JsonService implements WorkerService {
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$loadJsonId: ($in) => loadJson(
+    _$loadJsonId: <T>($in) => loadJson(
         data: $in.args[0] as String,
         fromJson: $in.args[1] as T Function(Map<String, dynamic>)),
   });
@@ -39,6 +39,9 @@ class JsonServiceWorker extends Worker implements JsonService {
       send(_$JsonServiceWorkerService._$loadJsonId, args: [data, fromJson]);
 
   @override
+  T _noop<T>(T data) => throw UnimplementedError();
+
+  @override
   // ignore: unused_element
   Logger get _logger => throw UnimplementedError();
 }
@@ -57,6 +60,9 @@ class JsonServiceWorkerPool extends WorkerPool<JsonServiceWorker>
           {required String data,
           required T Function(Map<String, dynamic>) fromJson}) =>
       execute((w) => w.loadJson(data: data, fromJson: fromJson));
+
+  @override
+  T _noop<T>(T data) => throw UnimplementedError();
 
   @override
   // ignore: unused_element
