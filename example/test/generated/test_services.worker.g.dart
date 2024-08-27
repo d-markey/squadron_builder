@@ -109,7 +109,7 @@ class TestOptNullPositionalWorkerPool extends sq
 /// WorkerService class for TestOptDefPositional
 class _$TestOptDefPositionalWorkerService extends TestOptDefPositional
     implements sq.WorkerService {
-  _$TestOptDefPositionalWorkerService([super.arg1]) : super();
+  _$TestOptDefPositionalWorkerService([super.arg1 = 0]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -144,7 +144,7 @@ class TestOptDefPositionalWorkerPool extends sq
 /// WorkerService class for TestOptNullDefPositional
 class _$TestOptNullDefPositionalWorkerService extends TestOptNullDefPositional
     implements sq.WorkerService {
-  _$TestOptNullDefPositionalWorkerService([super.arg1]) : super();
+  _$TestOptNullDefPositionalWorkerService([super.arg1 = 0]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -266,7 +266,7 @@ class TestOptNullPositionalFieldWorkerPool
 /// WorkerService class for TestOptDefPositionalField
 class _$TestOptDefPositionalFieldWorkerService extends TestOptDefPositionalField
     implements sq.WorkerService {
-  _$TestOptDefPositionalFieldWorkerService([super.arg1]) : super();
+  _$TestOptDefPositionalFieldWorkerService([super.arg1 = 0]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -309,7 +309,7 @@ class TestOptDefPositionalFieldWorkerPool
 /// WorkerService class for TestOptNullDefPositionalField
 class _$TestOptNullDefPositionalFieldWorkerService
     extends TestOptNullDefPositionalField implements sq.WorkerService {
-  _$TestOptNullDefPositionalFieldWorkerService([super.arg1]) : super();
+  _$TestOptNullDefPositionalFieldWorkerService([super.arg1 = 0]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -448,7 +448,7 @@ class TestOptNullPositionalPrivateFieldWorkerPool
 /// WorkerService class for TestOptDefPositionalPrivateField
 class _$TestOptDefPositionalPrivateFieldWorkerService
     extends TestOptDefPositionalPrivateField implements sq.WorkerService {
-  _$TestOptDefPositionalPrivateFieldWorkerService([super.arg1]) : super();
+  _$TestOptDefPositionalPrivateFieldWorkerService([super.arg1 = 0]) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -494,7 +494,8 @@ class TestOptDefPositionalPrivateFieldWorkerPool
 /// WorkerService class for TestOptNullDefPositionalPrivateField
 class _$TestOptNullDefPositionalPrivateFieldWorkerService
     extends TestOptNullDefPositionalPrivateField implements sq.WorkerService {
-  _$TestOptNullDefPositionalPrivateFieldWorkerService([super.arg1]) : super();
+  _$TestOptNullDefPositionalPrivateFieldWorkerService([super.arg1 = 0])
+      : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -575,7 +576,7 @@ class TestOptNullNamedWorkerPool extends sq.WorkerPool<TestOptNullNamedWorker>
 /// WorkerService class for TestOptDefNamed
 class _$TestOptDefNamedWorkerService extends TestOptDefNamed
     implements sq.WorkerService {
-  _$TestOptDefNamedWorkerService({super.arg1}) : super();
+  _$TestOptDefNamedWorkerService({super.arg1 = 0}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -608,7 +609,7 @@ class TestOptDefNamedWorkerPool extends sq.WorkerPool<TestOptDefNamedWorker>
 /// WorkerService class for TestOptNullDefNamed
 class _$TestOptNullDefNamedWorkerService extends TestOptNullDefNamed
     implements sq.WorkerService {
-  _$TestOptNullDefNamedWorkerService({super.arg1}) : super();
+  _$TestOptNullDefNamedWorkerService({super.arg1 = 0}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -689,7 +690,7 @@ class TestOptNullNamedFieldWorkerPool extends sq
 /// WorkerService class for TestOptDefNamedField
 class _$TestOptDefNamedFieldWorkerService extends TestOptDefNamedField
     implements sq.WorkerService {
-  _$TestOptDefNamedFieldWorkerService({super.arg1}) : super();
+  _$TestOptDefNamedFieldWorkerService({super.arg1 = 0}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -732,7 +733,7 @@ class TestOptDefNamedFieldWorkerPool extends sq
 /// WorkerService class for TestOptNullDefNamedField
 class _$TestOptNullDefNamedFieldWorkerService extends TestOptNullDefNamedField
     implements sq.WorkerService {
-  _$TestOptNullDefNamedFieldWorkerService({super.arg1}) : super();
+  _$TestOptNullDefNamedFieldWorkerService({super.arg1 = 0}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -827,7 +828,7 @@ class TestOptNullNamedPrivateFieldWorkerPool
 /// WorkerService class for TestOptDefNamedPrivateField
 class _$TestOptDefNamedPrivateFieldWorkerService
     extends TestOptDefNamedPrivateField implements sq.WorkerService {
-  _$TestOptDefNamedPrivateFieldWorkerService({super.arg1}) : super();
+  _$TestOptDefNamedPrivateFieldWorkerService({super.arg1 = 0}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -876,7 +877,7 @@ class TestOptDefNamedPrivateFieldWorkerPool
 /// WorkerService class for TestOptNullDefNamedPrivateField
 class _$TestOptNullDefNamedPrivateFieldWorkerService
     extends TestOptNullDefNamedPrivateField implements sq.WorkerService {
-  _$TestOptNullDefNamedPrivateFieldWorkerService({super.arg1}) : super();
+  _$TestOptNullDefNamedPrivateFieldWorkerService({super.arg1 = 0}) : super();
 
   @override
   Map<int, sq.CommandHandler> get operations => _operations;
@@ -982,7 +983,7 @@ class TestPrefixedImportTypeWorkerPool
 class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService
     extends TestOptNullDefNamedPrivateNonFinalField
     implements sq.WorkerService {
-  _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService({super.state})
+  _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService({super.state = 0})
       : super();
 
   @override
@@ -1155,4 +1156,60 @@ class TestRecordTypesWorkerPool extends sq.WorkerPool<TestRecordTypesWorker>
 
   @override
   Future<(int, List<dynamic>)> unnamed() => execute((w) => w.unnamed());
+}
+
+/// WorkerService class for TestRequiredSuperParam
+class _$TestRequiredSuperParamWorkerService extends TestRequiredSuperParam
+    implements sq.WorkerService {
+  _$TestRequiredSuperParamWorkerService({required super.path}) : super();
+
+  @override
+  Map<int, sq.CommandHandler> get operations => _operations;
+
+  late final Map<int, sq.CommandHandler> _operations =
+      Map.unmodifiable(<int, sq.CommandHandler>{
+    _$clearId: ($in) => clear(),
+  });
+
+  static const int _$clearId = 1;
+}
+
+/// Service initializer for TestRequiredSuperParam
+sq.WorkerService $TestRequiredSuperParamInitializer(sq.WorkerRequest $in) =>
+    _$TestRequiredSuperParamWorkerService(path: $in.args[0] as String);
+
+/// Worker for TestRequiredSuperParam
+class TestRequiredSuperParamWorker extends sq.Worker
+    implements TestRequiredSuperParam {
+  TestRequiredSuperParamWorker(
+      {required this.path, sq.PlatformThreadHook? threadHook})
+      : super($TestRequiredSuperParamActivator,
+            args: [path], threadHook: threadHook);
+
+  @override
+  final String path;
+
+  @override
+  Future<void> clear() =>
+      send(_$TestRequiredSuperParamWorkerService._$clearId, args: []);
+}
+
+/// Worker pool for TestRequiredSuperParam
+class TestRequiredSuperParamWorkerPool
+    extends sq.WorkerPool<TestRequiredSuperParamWorker>
+    implements TestRequiredSuperParam {
+  TestRequiredSuperParamWorkerPool(
+      {required this.path,
+      sq.ConcurrencySettings? concurrencySettings,
+      sq.PlatformThreadHook? threadHook})
+      : super(
+            () => TestRequiredSuperParamWorker(
+                path: path, threadHook: threadHook),
+            concurrencySettings: concurrencySettings);
+
+  @override
+  final String path;
+
+  @override
+  Future<void> clear() => execute((w) => w.clear());
 }

@@ -9,7 +9,7 @@ part of '../fibonacci_service.dart';
 /// WorkerService class for FibonacciService
 class _$FibonacciServiceWorkerService extends FibonacciService
     implements WorkerService {
-  _$FibonacciServiceWorkerService({super.trace}) : super();
+  _$FibonacciServiceWorkerService({super.trace = false}) : super();
 
   @override
   Map<int, CommandHandler> get operations => _operations;

@@ -182,3 +182,10 @@ void _start$TestRecordTypes(sq.WorkerRequest command) =>
     sq.run($TestRecordTypesInitializer, command);
 
 sq.EntryPoint $getTestRecordTypesActivator() => _start$TestRecordTypes;
+
+/// VM entry point for TestRequiredSuperParam
+void _start$TestRequiredSuperParam(sq.WorkerRequest command) =>
+    sq.run($TestRequiredSuperParamInitializer, command);
+
+sq.EntryPoint $getTestRequiredSuperParamActivator() =>
+    _start$TestRequiredSuperParam;

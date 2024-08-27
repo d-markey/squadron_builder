@@ -74,3 +74,6 @@ sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
 sq.EntryPoint $getTestInstallableActivator() => throw UnimplementedError();
 
 sq.EntryPoint $getTestRecordTypesActivator() => throw UnimplementedError();
+
+sq.EntryPoint $getTestRequiredSuperParamActivator() =>
+    throw UnimplementedError();

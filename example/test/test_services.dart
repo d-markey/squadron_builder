@@ -235,3 +235,13 @@ class TestRecordTypes {
     return (0, items: []);
   }
 }
+
+@sq.SquadronService()
+class TestRequiredSuperParam {
+  TestRequiredSuperParam({required this.path});
+
+  final String path;
+
+  @sq.squadronMethod
+  Future<void> clear() async {}
+}

@@ -86,6 +86,9 @@ void main() {
 
   /// Web entry point for TestRecordTypes
   sq.run($TestRecordTypesInitializer);
+
+  /// Web entry point for TestRequiredSuperParam
+  sq.run($TestRequiredSuperParamInitializer);
 }
 
 sq.EntryPoint $getTestParameterLessActivator() =>
@@ -164,4 +167,7 @@ sq.EntryPoint $getTestInstallableActivator() =>
     Uri.parse('example/test/generated/test_services.web.g.dart.js');
 
 sq.EntryPoint $getTestRecordTypesActivator() =>
+    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+
+sq.EntryPoint $getTestRequiredSuperParamActivator() =>
     Uri.parse('example/test/generated/test_services.web.g.dart.js');

@@ -109,7 +109,7 @@ class SquadronParameter {
   String toSuperParam() {
     if (isSuperParam) {
       // this is a super parameter
-      return 'super.$name';
+      return '${required}super.$name${defaultValue == null ? '' : ' = $defaultValue'}';
     }
     // programmatically added: may be null
     NullabilitySuffix? nullabilitySuffix;

@@ -100,3 +100,6 @@ final $TestInstallableActivator = $getTestInstallableActivator();
 
 /// Service activator for TestRecordTypes
 final $TestRecordTypesActivator = $getTestRecordTypesActivator();
+
+/// Service activator for TestRequiredSuperParam
+final $TestRequiredSuperParamActivator = $getTestRequiredSuperParamActivator();

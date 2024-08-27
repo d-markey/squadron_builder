@@ -8,7 +8,8 @@ part of '../echo_service.dart';
 
 /// WorkerService class for EchoService
 class _$EchoServiceWorkerService extends EchoService implements WorkerService {
-  _$EchoServiceWorkerService([super.trace, super.workloadDelay]) : super();
+  _$EchoServiceWorkerService([super.trace = false, super.workloadDelay])
+      : super();
 
   @override
   Map<int, CommandHandler> get operations => _operations;
