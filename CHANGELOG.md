@@ -2,6 +2,7 @@
 
 - squadron_builder for Squadron version >= 6.0. Please note there are no versions 3.x-5.x in order to align squadron_builder version numbers with that of Squadron.
 - Removed support for 'useLogger' and 'SerializeWith' annotations.
+- Added support for libraries imported with a prefix -- fixes https://github.com/d-markey/squadron_builder/issues/14
 - Added support for record types.
 
 ## 3.x-5.x

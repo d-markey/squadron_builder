@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cancelation_token/cancelation_token.dart';
 import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
 
@@ -22,13 +23,13 @@ class FibonacciService {
   final Logger? _logger;
 
   @squadronMethod
-  FutureOr<int> fibonacci(int i) {
+  FutureOr<int?> fibonacci(int i) {
     _logger?.i('fibonacci($i)');
     return _fib(i);
   }
 
   @squadronMethod
-  FutureOr<Iterable<int>> fibonacciList0(int s, int e) {
+  FutureOr<Iterable<int>?> fibonacciList0(int s, int e) {
     _logger?.i('fibonacciList0($s, $e)');
     var res = <int>[];
     for (var i = s; i < e; i++) {

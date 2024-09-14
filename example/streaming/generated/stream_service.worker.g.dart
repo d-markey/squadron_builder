@@ -16,11 +16,9 @@ class _$StreamServiceWorkerService extends StreamService
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$clockId: ($in) => clock(
-        frequency: Cast.toInt($in.args[0]),
-        token: $in.args[1] as CancelationToken?),
-    _$infiniteClockId: ($in) =>
-        infiniteClock(frequency: Cast.toInt($in.args[0])),
+    _$clockId: ($in) =>
+        clock(frequency: _$X.$0($in.args[0]), token: _$X.$2($in.args[1])),
+    _$infiniteClockId: ($in) => infiniteClock(frequency: _$X.$0($in.args[0])),
   });
 
   static const int _$clockId = 1;
@@ -38,11 +36,13 @@ class StreamServiceWorker extends Worker implements StreamService {
 
   @override
   Stream<int> clock({int frequency = 1, CancelationToken? token}) =>
-      stream(_$StreamServiceWorkerService._$clockId, args: [frequency, token]);
+      stream(_$StreamServiceWorkerService._$clockId, args: [frequency, token])
+          .map(_$X.$0);
 
   @override
   Stream<int> infiniteClock({int frequency = 1}) =>
-      stream(_$StreamServiceWorkerService._$infiniteClockId, args: [frequency]);
+      stream(_$StreamServiceWorkerService._$infiniteClockId, args: [frequency])
+          .map(_$X.$0);
 }
 
 /// Worker pool for StreamService
@@ -61,4 +61,10 @@ class StreamServiceWorkerPool extends WorkerPool<StreamServiceWorker>
   @override
   Stream<int> infiniteClock({int frequency = 1}) =>
       stream((w) => w.infiniteClock(frequency: frequency));
+}
+
+class _$X {
+  static final $0 = Squadron.converter.value<int>();
+  static final $1 = Squadron.converter.value<CancelationToken>();
+  static final $2 = Squadron.converter.nullable($1);
 }

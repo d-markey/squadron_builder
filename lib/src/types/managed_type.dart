@@ -1,67 +1,87 @@
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:squadron_builder/src/types/type_manager.dart';
 
+import '../marshalers/converters.dart';
 import '../marshalers/marshaler.dart';
 import 'extensions.dart';
 
-abstract class ManagedType {
-  ManagedType._(String? prefix, [Iterable<ManagedType>? typeArguments])
-      : prefix = prefix ?? '',
-        typeArguments = (typeArguments == null || typeArguments.isEmpty)
-            ? const []
-            : typeArguments.toList();
+part 'managed_type_iterable.dart';
+part 'managed_type_map.dart';
+part 'managed_type_record.dart';
+part 'managed_type_set.dart';
+part 'managed_type_typed_data.dart';
 
-  factory ManagedType(String squadronPrefix, String? prefix, DartType dartType,
-      [Iterable<ManagedType>? typeArguments]) {
-    if (dartType is DynamicType) {
-      return ManagedDynamicType._(prefix, dartType);
-    } else if (dartType is VoidType) {
-      return ManagedVoidType._(prefix, dartType);
-    } else if (dartType.isDartCoreInt) {
-      return ManagedIntType._(squadronPrefix, prefix, dartType);
-    } else if (dartType.isDartCoreDouble) {
-      return ManagedDoubleType._(squadronPrefix, prefix, dartType);
-    } else if (dartType is FunctionType) {
-      throw ArgumentError('ManagedType cannot handle ${dartType.runtimeType}');
-    } else if (dartType.element == null) {
-      throw ArgumentError(
-          'ManagedType cannot handle ${dartType.runtimeType} when element is null');
+abstract class ManagedType {
+  ManagedType._(String? prefix, DartType? dartType, this.attachedMarshaler,
+      TypeManager typeManager)
+      : prefix = prefix ?? '',
+        typeArguments = (dartType is ParameterizedType)
+            ? dartType.typeArguments.map(typeManager.handleDartType).toList()
+            : const [];
+
+  final Marshaler? attachedMarshaler;
+
+  String getSerializer(Converters converters);
+  String getDeserializer(Converters converters);
+
+  factory ManagedType(String? prefix, DartType dartType,
+      Marshaler? attachedMarshaler, TypeManager typeManager) {
+    if (dartType.isDartCoreMap) {
+      return _ManagedMapType._(
+          prefix, dartType as ParameterizedType, typeManager);
+    } else if (dartType.isDartCoreSet) {
+      return _ManagedSetType._(
+          prefix, dartType as ParameterizedType, typeManager);
+    } else if (dartType.isDartCoreIterable || dartType.isDartCoreList) {
+      return _ManagedIterableType._(
+          prefix, dartType as ParameterizedType, typeManager);
+    } else if (dartType.isA(typeManager.typedDataType)) {
+      return _ManagedTypedDataType._(prefix, dartType, typeManager);
     } else {
-      return _ManagedType._(prefix, dartType, typeArguments);
+      return _ManagedType._(prefix, dartType, attachedMarshaler, typeManager);
     }
   }
 
-  factory ManagedType.knownType(
-          String? prefix, String packageName, String baseName,
-          [Iterable<ManagedType>? typeArguments]) =>
-      KnownType._(prefix, packageName, baseName, typeArguments);
-
-  factory ManagedType.function(
-    String squadronPrefix,
-    String? prefix,
-    DartType functionType,
-    ManagedType returnType,
-    Iterable<ManagedParameter>? parameters,
+  factory ManagedType.record(
+    RecordType dartType,
+    TypeManager typeManager,
   ) =>
-      ManagedFunctionType._(prefix, functionType, returnType, parameters);
+      ManagedRecordType._(dartType, typeManager);
 
   final String prefix;
   final List<ManagedType> typeArguments;
-
   DartType? get dartType;
 
   NullabilitySuffix get nullabilitySuffix;
 
-  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]);
+  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
+    try {
+      if (dartType is VoidType) {
+        return prefix.isEmpty ? 'void' : '$prefix.void';
+      } else if (dartType is DynamicType) {
+        return prefix.isEmpty ? 'void' : '$prefix.void';
+      }
+
+      final s = (forcedNullabilitySuffix ?? dartType!.nullabilitySuffix).suffix;
+      final a = typeArguments.isEmpty ? '' : '<${typeArguments.join(', ')}>';
+      return prefix.isEmpty
+          ? '${dartType!.element!.name}$a$s'
+          : '$prefix.${dartType!.element!.name}$a$s';
+    } catch (ex) {
+      throw Exception(
+          'Error for dartType = $dartType / element = ${dartType?.element}');
+    }
+  }
 
   @override
   String toString() => getTypeName();
 }
 
 class _ManagedType extends ManagedType {
-  _ManagedType._(String? prefix, this.dartType,
-      [Iterable<ManagedType>? typeArguments])
-      : super._(prefix, typeArguments);
+  _ManagedType._(String? prefix, this.dartType, Marshaler? attachedMarshaler,
+      TypeManager typeManager)
+      : super._(prefix, dartType, attachedMarshaler, typeManager);
 
   @override
   final DartType dartType;
@@ -70,179 +90,11 @@ class _ManagedType extends ManagedType {
   NullabilitySuffix get nullabilitySuffix => dartType.nullabilitySuffix;
 
   @override
-  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
-    try {
-      final s = (forcedNullabilitySuffix ?? dartType.nullabilitySuffix).suffix;
-      final a = typeArguments.isNotEmpty ? '<${typeArguments.join(', ')}>' : '';
-      return prefix.isEmpty
-          ? '${dartType.element!.name}$a$s'
-          : '$prefix.${dartType.element!.name}$a$s';
-    } catch (ex) {
-      throw Exception(
-          'Error for dartType = $dartType / element = ${dartType.element}');
-    }
-  }
+  String getSerializer(Converters converters) =>
+      attachedMarshaler?.serializerOf(this, converters) ?? '';
 
   @override
-  String toString() => getTypeName();
-}
-
-class KnownType extends ManagedType {
-  KnownType._(String? prefix, this.packageName, this.baseName,
-      [Iterable<ManagedType>? typeArguments])
-      : super._(prefix, typeArguments);
-
-  final String packageName;
-  final String baseName;
-
-  @override
-  DartType? get dartType => null;
-
-  @override
-  NullabilitySuffix get nullabilitySuffix => NullabilitySuffix.none;
-
-  @override
-  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
-    final s = (forcedNullabilitySuffix ?? NullabilitySuffix.none).suffix;
-    final a = typeArguments.isNotEmpty ? '<${typeArguments.join(', ')}>' : '';
-    return prefix.isEmpty ? '$baseName$a$s' : '$prefix.$baseName$a$s';
-  }
-}
-
-class ManagedDynamicType extends _ManagedType {
-  ManagedDynamicType._(super.prefix, super.dartType) : super._();
-
-  @override
-  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
-    final s = (forcedNullabilitySuffix ?? dartType.nullabilitySuffix).suffix;
-    return prefix.isEmpty ? 'dynamic$s' : '$prefix.dynamic$s';
-  }
-}
-
-class ManagedVoidType extends _ManagedType {
-  ManagedVoidType._(super.prefix, super.dartType) : super._();
-
-  @override
-  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
-    final s = (forcedNullabilitySuffix ?? dartType.nullabilitySuffix).suffix;
-    return prefix.isEmpty ? 'void$s' : '$prefix.void$s';
-  }
-}
-
-class ManagedIntType extends _ManagedType {
-  ManagedIntType._(this.squadronPrefix, super.prefix, super.dartType)
-      : super._();
-
-  final String squadronPrefix;
-
-  @override
-  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
-    final s = (forcedNullabilitySuffix ?? dartType.nullabilitySuffix).suffix;
-    return prefix.isEmpty ? 'int$s' : '$prefix.int$s';
-  }
-}
-
-class ManagedDoubleType extends _ManagedType {
-  ManagedDoubleType._(this.squadronPrefix, super.prefix, super.dartType)
-      : super._();
-
-  final String squadronPrefix;
-
-  @override
-  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
-    final s = (forcedNullabilitySuffix ?? dartType.nullabilitySuffix).suffix;
-    return prefix.isEmpty ? 'double$s' : '$prefix.double$s';
-  }
-}
-
-class ManagedFunctionType extends _ManagedType {
-  ManagedFunctionType._(super.prefix, super.dartType, this.returnType,
-      [Iterable<ManagedParameter>? parameters])
-      : parameters =
-            (parameters?.isEmpty ?? true) ? null : parameters?.toList(),
-        super._();
-
-  final ManagedType returnType;
-  final List<ManagedParameter>? parameters;
-
-  @override
-  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
-    final n = super.getTypeName(NullabilitySuffix.none);
-    final s = (forcedNullabilitySuffix ?? dartType.nullabilitySuffix).suffix;
-    return '$returnType $n(${parameters?.join(', ') ?? ''})$s';
-  }
-}
-
-class ManagedParameter {
-  ManagedParameter(
-    this.type,
-    this.name, {
-    this.defaultValueCode,
-    this.isOptionalPositional = false,
-    bool isRequired = false,
-    this.isOptionalNamed = false,
-    this.forcedNullabilitySuffix,
-  }) : required = isRequired ? 'required ' : '';
-
-  final ManagedType type;
-  final String name;
-  final String? defaultValueCode;
-  final bool isOptionalPositional;
-  final bool isOptionalNamed;
-  final String required;
-  final NullabilitySuffix? forcedNullabilitySuffix;
-
-  @override
-  String toString() {
-    return (defaultValueCode?.isEmpty ?? true)
-        ? '$required${type.getTypeName(forcedNullabilitySuffix)} $name'
-        : '$required${type.getTypeName(forcedNullabilitySuffix)} $name = $defaultValueCode';
-  }
-}
-
-class MarshaledManagedType extends ManagedType {
-  MarshaledManagedType._(this.managedType, this.marshaler) : super._('');
-
-  final ManagedType managedType;
-  final Marshaler marshaler;
-
-  @override
-  DartType? get dartType => managedType.dartType;
-
-  @override
-  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) =>
-      managedType.getTypeName(forcedNullabilitySuffix);
-
-  @override
-  NullabilitySuffix get nullabilitySuffix => managedType.nullabilitySuffix;
-}
-
-class ManagedRecordType extends ManagedType {
-  ManagedRecordType(this.dartType, this.positional, this.named) : super._('');
-
-  @override
-  final DartType? dartType;
-
-  final List<ManagedType> positional;
-  final Map<String, ManagedType> named;
-
-  @override
-  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
-    final suffix = (forcedNullabilitySuffix ?? nullabilitySuffix).suffix;
-    final p = positional.map((t) => t.getTypeName()).join(', ');
-    final n = named.entries
-        .map((t) => '${t.value.getTypeName()} ${t.key}')
-        .join(', ');
-    if (p.isEmpty) {
-      return '({$n})$suffix';
-    } else if (n.isEmpty) {
-      return '($p)$suffix';
-    } else {
-      return '($p, {$n})$suffix';
-    }
-  }
-
-  @override
-  NullabilitySuffix get nullabilitySuffix =>
-      dartType?.nullabilitySuffix ?? NullabilitySuffix.none;
+  String getDeserializer(Converters converters) =>
+      attachedMarshaler?.deserializerOf(this, converters) ??
+      '${converters.instance}.value<${getTypeName(NullabilitySuffix.none)}>()';
 }

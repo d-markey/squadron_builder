@@ -11,17 +11,17 @@ class _InstanceMarshaler extends Marshaler {
       type.getTypeName(NullabilitySuffix.none) == _typeName;
 
   @override
-  Adapter getSerializer(ManagedType type) =>
+  String serializerOf(ManagedType type, Converters converters) =>
       (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? (v, {bool forceCast = false}) => '$v.marshal()'
-          : (v, {bool forceCast = false}) => '$v?.marshal()';
+          ? '((\$) => \$.marshal())'
+          : '((\$) => \$?.marshal())';
 
   @override
-  Adapter getDeserializer(ManagedType type) {
-    final typeName = type.getTypeName();
+  String deserializerOf(ManagedType type, Converters converters) {
+    final typeName = type.getTypeName(NullabilitySuffix.none);
+    final deserializer = '((\$) => $typeName.unmarshal(\$))';
     return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? (v, {bool forceCast = false}) => '$typeName.unmarshal($v)'
-        : (v, {bool forceCast = false}) =>
-            '($v == null) ? null : $typeName.unmarshal($v)';
+        ? deserializer
+        : '${converters.instance}.nullable($deserializer)';
   }
 }

@@ -1,69 +1,75 @@
-part of 'marshaler.dart';
+// part of 'marshaler.dart';
 
-// This marshaler serializes fields to/from a List using the field's marshalers
-class RecordMarshaler extends Marshaler {
-  RecordMarshaler(this._managedType, List<Marshaler> fieldMarshalers) {
-    final fldSerializers = <Adapter>[], fldDererializers = <Adapter>[];
-    var idx = 0;
-    for (var type in _managedType.positional) {
-      idx++;
-      final name = '\$$idx';
-      final marshaler =
-          fieldMarshalers.where((m) => m.targets(type)).firstOrNull ??
-              Marshaler.identity;
-      fldSerializers.add(_serialize(type, name, marshaler));
-      fldDererializers.add(_deserializePositional(type, idx - 1, marshaler));
-    }
-    for (var named in _managedType.named.entries) {
-      idx++;
-      final name = named.key, type = named.value;
-      var marshaler =
-          fieldMarshalers.where((m) => m.targets(type)).firstOrNull ??
-              Marshaler.identity;
-      fldSerializers.add(_serialize(type, name, marshaler));
-      fldDererializers.add(_deserializeNamed(type, idx - 1, name, marshaler));
-    }
-    _serializer = (v, {bool forceCast = false}) =>
-        fldSerializers.map((a) => a(v, forceCast: forceCast)).join(', ');
-    _deserializer = (v, {bool forceCast = false}) =>
-        fldDererializers.map((a) => a(v, forceCast: forceCast)).join(', ');
-  }
+// // This marshaler serializes fields to/from a List using the field's marshalers
+// class RecordMarshaler extends Marshaler {
+//   RecordMarshaler(this._managedType, Converters converters,
+//       List<Marshaler?> fieldMarshalers) {
+//     final fldSerializers = <String>[], fldDererializers = <String>[];
+//     var idx = 0;
+//     for (var type in _managedType.positional) {
+//       idx++;
+//       final name = '\$$idx';
+//       final marshaler =
+//           fieldMarshalers.where((m) => m?.targets(type) ?? false).firstOrNull ??
+//               Marshaler.identity;
+//       fldSerializers.add(_serialize(type, converters, name, marshaler));
+//       fldDererializers
+//           .add(_deserialize(type, converters, idx - 1, null, marshaler));
+//     }
+//     for (var named in _managedType.named.entries) {
+//       idx++;
+//       final name = named.key, type = named.value;
+//       var marshaler =
+//           fieldMarshalers.where((m) => m?.targets(type) ?? false).firstOrNull ??
+//               Marshaler.identity;
+//       fldSerializers.add(_serialize(type, converters, name, marshaler));
+//       fldDererializers
+//           .add(_deserialize(type, converters, idx - 1, name, marshaler));
+//     }
+//     // _serializer = (v) => fldSerializers.map((a) => a(v)).join(', ');
+//     // _deserializer = (v) => fldDererializers.map((a) => a(v)).join(', ');
+//     _serializer = fldSerializers.join(', ');
+//     _deserializer = fldDererializers.join(', ');
+//   }
 
-  final ManagedRecordType _managedType;
+//   final ManagedRecordType _managedType;
 
-  late final Adapter _serializer;
-  late final Adapter _deserializer;
+//   // late final Adapter _serializer;
+//   // late final Adapter _deserializer;
+//   late final String _serializer;
+//   late final String _deserializer;
 
-  @override
-  bool targets(ManagedType type) => type.dartType?.isA(_managedType) ?? false;
+//   @override
+//   bool targets(ManagedType type) => type.dartType?.isA(_managedType) ?? false;
 
-  static Adapter _serialize(
-          ManagedType type, String field, Marshaler marshaler) =>
-      (v, {bool forceCast = false}) =>
-          marshaler.getSerializer(type)('$v.$field');
+//   static String _serialize(ManagedType type, Converters converters,
+//           String field, Marshaler marshaler) =>
+//       '${converters.getSerializerOf(type, marshaler)}(\$.$field)';
 
-  static Adapter _deserializePositional(
-          ManagedType type, int idx, Marshaler marshaler) =>
-      (v, {bool forceCast = false}) =>
-          marshaler.getDeserializer(type)('$v[$idx]', forceCast: forceCast);
+//   static String _deserialize(ManagedType type, Converters converters, int idx,
+//       String? name, Marshaler marshaler) {
+//     final deserializer =
+//         '${converters.getDeserializerOf(type, marshaler)}(\$[$idx])';
+//     return (name == null) ? deserializer : '$name: $deserializer';
+//   }
 
-  static Adapter _deserializeNamed(
-          ManagedType type, int idx, String name, Marshaler marshaler) =>
-      (v, {bool forceCast = false}) =>
-          '$name: ${marshaler.getDeserializer(type)('$v[$idx]', forceCast: forceCast)}';
+//   @override
+//   String serializerOf(ManagedType type, Converters converters) {
+//     // serialize to array
+//     final typeName = type.getTypeName(NullabilitySuffix.none);
+//     final serializer = '(($typeName \$) => [$_serializer])';
+//     return (type.nullabilitySuffix == NullabilitySuffix.none)
+//         ? serializer
+//         : '${converters.instance}.nullable<List<dynamic>>($serializer)';
+//   }
 
-  @override
-  Adapter getSerializer(ManagedType type) =>
-      (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? (v, {bool forceCast = false}) => '[${_serializer(v)}]'
-          : (v, {bool forceCast = false}) =>
-              '($v == null) ? null : [${_serializer(v)}]';
-
-  @override
-  Adapter getDeserializer(ManagedType type) => (type.nullabilitySuffix ==
-          NullabilitySuffix.none)
-      ? (v, {bool forceCast = false}) =>
-          '(${_deserializer(v, forceCast: forceCast)})'
-      : (v, {bool forceCast = false}) =>
-          '($v == null) ? null : (${_deserializer(v, forceCast: forceCast)})';
-}
+//   @override
+//   String deserializerOf(ManagedType type, Converters converters) {
+//     // deserialize from array
+//     final typeName = type.getTypeName(NullabilitySuffix.none);
+//     final deserializer = '((\$) { \$ as List;return ($_deserializer); })';
+//     return (type.nullabilitySuffix == NullabilitySuffix.none)
+//         ? deserializer
+//         : '${converters.instance}.nullable<$typeName>($deserializer)';
+//   }
+// }

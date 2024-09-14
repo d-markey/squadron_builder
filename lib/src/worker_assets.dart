@@ -7,7 +7,6 @@ import 'package:meta/meta.dart';
 
 import '_overrides.dart';
 import 'build_step_events.dart';
-import 'marshalers/marshaling_info.dart';
 import 'readers/dart_method_reader.dart';
 import 'readers/squadron_service_reader.dart';
 import 'types/type_manager.dart';
@@ -218,14 +217,14 @@ class WorkerAssets {
   String _generateServiceInitializer() => '''
         /// Service initializer for ${_service.name}
         ${_typeManager.workerServiceType} $_serviceInitializerName(${_typeManager.workerRequestType} \$in)
-            => $_workerServiceClassName(${_service.parameters.deserialize('\$in')});
+            => $_workerServiceClassName(${_service.parameters.deserialize(_typeManager.converters, '\$in')});
       ''';
 
   /// Worker
   String _generateWorker(
       List<SquadronMethodReader> commands, List<DartMethodReader> unimplemented,
       {bool finalizable = false}) {
-    final serialized = _service.parameters.serialize();
+    final serialized = _service.parameters.serialize(_typeManager.converters);
     var activationArgs = serialized.isEmpty
         ? _serviceActivator
         : '$_serviceActivator, args: [$serialized]';
@@ -381,18 +380,20 @@ class WorkerAssets {
 
   /// Command handler
   String _commandHandler(SquadronMethodReader cmd) {
-    final req = r'$in', res = r'$out';
-    final serviceCall = '${cmd.name}(${cmd.parameters.deserialize(req)})';
+    final req = r'$in';
+    final serviceCall =
+        '${cmd.name}(${cmd.parameters.deserialize(_typeManager.converters, req)})';
     final typeParams =
         cmd.typeParameters.isEmpty ? '' : '<${cmd.typeParameters.join(', ')}>';
-    if (cmd.needsSerialization && !cmd.serializedResult.isIdentity) {
-      if (cmd.isStream) {
-        return '${cmd.id}: $typeParams($req) => $serviceCall.${cmd.continuation}(($res) => ${cmd.serializedResult(res)})';
-      } else {
-        return '${cmd.id}: $typeParams($req) async { final $res = await $serviceCall; return ${cmd.serializedResult(res)}; }';
-      }
-    } else {
+    final serialize = cmd.serializer;
+    if (serialize.isEmpty) {
       return '${cmd.id}: $typeParams($req) => $serviceCall';
+    } else if (cmd.isStream) {
+      return '${cmd.id}: $typeParams($req) => $serviceCall.map($serialize)';
+    } else if (cmd.isFuture) {
+      return '${cmd.id}: $typeParams($req) => $serviceCall.then($serialize)';
+    } else {
+      return '${cmd.id}: $typeParams($req) async => $serialize(await $serviceCall)';
     }
   }
 
@@ -429,22 +430,20 @@ class WorkerAssets {
 
   /// Service method invocation from worker
   String _workerMethod(SquadronMethodReader cmd) {
-    final res = r'$x';
-    final deserialize = (cmd.needsSerialization &&
-            !cmd.deserializedResult.isIdentity)
-        ? '.${cmd.continuation}(($res) => ${cmd.deserializedResult(res, forceCast: true)})'
-        : '';
     final args = [
       '$_workerServiceClassName.${cmd.id}',
-      'args: [ ${cmd.parameters.serialize()} ]',
+      'args: [ ${cmd.parameters.serialize(_typeManager.converters)} ]',
       if (cmd.parameters.cancelationToken != null)
         'token: ${cmd.parameters.cancelationToken}',
       if (cmd.inspectRequest) 'inspectRequest: true',
       if (cmd.inspectResponse) 'inspectResponse: true'
     ].join(', ');
+    final deserialize = cmd.deserializer;
+    var continuation = cmd.isStream ? '.map' : '.then';
+    continuation = deserialize.isEmpty ? '' : '$continuation($deserialize)';
     return '''
       @override
-      ${cmd.declaration} => ${cmd.workerExecutor}($args)$deserialize;
+      ${cmd.declaration} => ${cmd.workerExecutor}($args)$continuation;
     ''';
   }
 

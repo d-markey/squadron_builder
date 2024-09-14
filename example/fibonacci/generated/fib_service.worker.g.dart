@@ -15,7 +15,7 @@ class _$FibServiceWorkerService extends FibService implements WorkerService {
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$fibonacciId: ($in) => fibonacci(Cast.toInt($in.args[0])),
+    _$fibonacciId: ($in) => fibonacci(_$X.$0($in.args[0])),
   });
 
   static const int _$fibonacciId = 1;
@@ -32,7 +32,7 @@ class FibServiceWorker extends Worker implements FibService {
 
   @override
   Future<int> fibonacci(int i) =>
-      send(_$FibServiceWorkerService._$fibonacciId, args: [i]);
+      send(_$FibServiceWorkerService._$fibonacciId, args: [i]).then(_$X.$0);
 }
 
 /// Worker pool for FibService
@@ -46,4 +46,8 @@ class FibServiceWorkerPool extends WorkerPool<FibServiceWorker>
 
   @override
   Future<int> fibonacci(int i) => execute((w) => w.fibonacci(i));
+}
+
+class _$X {
+  static final $0 = Squadron.converter.value<int>();
 }

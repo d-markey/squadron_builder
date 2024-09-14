@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
 
+import '../marshalers/converters.dart';
 import '../marshalers/marshaler.dart';
 import '../types/extensions.dart';
 import '../types/managed_type.dart';
@@ -98,14 +99,14 @@ class SquadronParameters {
   String nonSuperArguments() =>
       _params.where((p) => !p.isSuperParam).map((p) => p.argument()).join(', ');
 
-  String serialize() => _params
+  String serialize(Converters converters) => _params
       // cancelation token is passed separately when invoking the worker
       .where((p) => !p.isCancelationToken)
-      .map((p) => p.serialized())
+      .map((p) => p.serialized(converters))
       .join(', ');
 
-  String deserialize(String jsonObj) =>
-      _params.map((p) => p.deserialized(jsonObj)).join(', ');
+  String deserialize(Converters converters, String jsonObj) =>
+      _params.map((p) => p.deserialized(converters, jsonObj)).join(', ');
 
   @override
   String toString() {

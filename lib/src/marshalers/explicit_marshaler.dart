@@ -28,22 +28,18 @@ class _ExplicitMarshaler extends Marshaler {
   bool targets(ManagedType type) => type.dartType?.isA(_itemType) ?? false;
 
   @override
-  Adapter getSerializer(ManagedType type) =>
-      (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? (v, {bool forceCast = false}) => '$_instance.marshal($v)'
-          : (v, {bool forceCast = false}) =>
-              '($v == null) ? null : $_instance.marshal($v)';
+  String serializerOf(ManagedType type, Converters converters) {
+    final serializer = '$_instance.marshaler';
+    return (type.nullabilitySuffix == NullabilitySuffix.none)
+        ? serializer
+        : '${converters.instance}.nullable($serializer)';
+  }
 
   @override
-  Adapter getDeserializer(ManagedType type) {
-    final cast =
-        (type.dartType?.implementedTypes(_itemType).isNotEmpty ?? false)
-            ? ' as $type'
-            : '';
+  String deserializerOf(ManagedType type, Converters converters) {
+    final deserializer = '$_instance.unmarshaler';
     return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? (v, {bool forceCast = false}) =>
-            '$_instance.unmarshal($v)${forceCast ? cast : ''}'
-        : (v, {bool forceCast = false}) =>
-            '($v == null) ? null : $_instance.unmarshal($v)${forceCast ? cast : ''}';
+        ? deserializer
+        : '${converters.instance}.nullable($deserializer)';
   }
 }

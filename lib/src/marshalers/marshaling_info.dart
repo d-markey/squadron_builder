@@ -3,15 +3,6 @@ import 'package:analyzer/dart/element/element.dart';
 import '../types/managed_type.dart';
 import 'marshaler.dart';
 
-typedef Adapter = String Function(String, {bool forceCast});
-
-extension IdentityCheckerExt on Adapter {
-  bool get isIdentity => (this == identity) || (this('@!?') == '@!?');
-}
-
-// identity is an Adapter
-String identity(String expr, {bool forceCast = false}) => expr;
-
 class MarshalingInfo {
   MarshalingInfo(this._type, this._marshaler);
 
@@ -64,14 +55,14 @@ class MarshalingInfo {
   final Marshaler? _marshaler;
   Marshaler? _defaultMarshaler;
 
-  Marshaler get marshaler {
+  Marshaler? get marshaler {
     if (_defaultMarshaler == null && _hasMarshal && _hasUnmarshal) {
       _defaultMarshaler = Marshaler.instance(_type);
     }
     if (_defaultMarshaler == null && _hasToJson && _hasFromJson) {
       _defaultMarshaler = Marshaler.json(_type);
     }
-    return _marshaler ?? _defaultMarshaler ?? Marshaler.identity;
+    return _marshaler ?? _defaultMarshaler;
   }
 
   void registerMethod(ExecutableElement method) {

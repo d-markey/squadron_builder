@@ -1,9 +1,13 @@
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
+import 'package:source_gen/source_gen.dart';
 
 import '../marshalers/marshaler.dart';
 import '../marshalers/marshaling_info.dart';
+import '../readers/annotations_reader.dart';
+import '../types/extensions.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
 
@@ -14,10 +18,31 @@ class MarshalingManager extends SimpleElementVisitor {
 
   final _cache = <Element, MarshalingInfo>{};
 
+  bool isMarshaler(DartObject obj) =>
+      obj.type?.isA(_typeManager.squadronMarshalerType) ?? false;
+
+  Marshaler? getExplicitMarshaler(Element element) {
+    Marshaler? explicit;
+    for (var marshaler in element.getAnnotations().where(isMarshaler)) {
+      final type = marshaler.toTypeValue() ?? marshaler.type;
+      final baseMarshaler =
+          type?.implementedTypes(_typeManager.squadronMarshalerType);
+      if (baseMarshaler == null || baseMarshaler.isEmpty) {
+        throw InvalidGenerationSourceError(
+            'Invalid marshaler for $element: $marshaler');
+      }
+      explicit = Marshaler.explicit(
+          marshaler, _typeManager.handleDartType(baseMarshaler.single));
+      break;
+    }
+
+    return explicit;
+  }
+
   MarshalingInfo _getOrAddMarshalingInfo(DartType type, Element clazz) {
     var entry = _cache[clazz];
     if (entry == null) {
-      final marshaler = _typeManager.getExplicitMarshaler(clazz);
+      final marshaler = getExplicitMarshaler(clazz);
       entry = MarshalingInfo(_typeManager.handleDartType(type), marshaler);
       _cache[clazz] = entry;
     }
@@ -59,8 +84,8 @@ class MarshalingManager extends SimpleElementVisitor {
     }
   }
 
-  Marshaler getMarshalerFor(ParameterElement param) {
-    final explicitMarshaler = _typeManager.getExplicitMarshaler(param);
+  Marshaler? getMarshalerFor(ParameterElement param) {
+    final explicitMarshaler = getExplicitMarshaler(param);
     final type = (param is FieldFormalParameterElement && param.field != null)
         ? param.field!.type
         : param.type;
@@ -68,53 +93,23 @@ class MarshalingManager extends SimpleElementVisitor {
         explicit: explicitMarshaler);
   }
 
-  Marshaler getMarshaler(ManagedType type, {Marshaler? explicit}) {
-    if (type is ManagedDynamicType ||
-        type is ManagedVoidType ||
-        type.dartType == null) {
-      return Marshaler.identity;
+  Marshaler? getMarshaler(ManagedType type, {Marshaler? explicit}) {
+    final dartType = type.dartType;
+
+    if (dartType is DynamicType || dartType is VoidType || dartType == null) {
+      return null;
     }
 
     if (explicit != null && explicit.targets(type)) {
       return explicit;
     }
 
-    if (type.dartType!.isDartCoreList || type.dartType!.isDartCoreIterable) {
-      final itemType = type.typeArguments.first;
-      if (explicit != null && explicit.targets(itemType)) {
-        return Marshaler.iterable(type, explicit);
-      }
-      explicit = getMarshaler(itemType, explicit: explicit);
-      return Marshaler.iterable(type, explicit);
-    }
+    final elt = dartType.element;
+    // elt?.visitChildren(this);
 
-    if (type.dartType!.isDartCoreMap) {
-      final itemType = type.typeArguments.last;
-      if (explicit != null && explicit.targets(itemType)) {
-        return Marshaler.map(type, explicit);
-      }
-      explicit = getMarshaler(itemType, explicit: explicit);
-      return Marshaler.map(type, explicit);
-    }
-
-    if (type is ManagedRecordType) {
-      final marshalers = type.positional
-          .followedBy(type.named.values)
-          .map(getMarshaler)
-          .toList();
-      return Marshaler.record(type, marshalers);
-    }
-
-    final elt = type.dartType!.element;
-    if (elt == null) {
-      // type has no associated element
-      return Marshaler.identity;
-    }
-
-    elt.visitChildren(this);
-    final decl = elt.declaration;
+    final decl = elt?.declaration;
     return (decl == null)
-        ? Marshaler.identity
-        : _getOrAddMarshalingInfo(type.dartType!, decl).marshaler;
+        ? null
+        : _getOrAddMarshalingInfo(dartType, decl).marshaler;
   }
 }

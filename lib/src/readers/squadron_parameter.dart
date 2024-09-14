@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 
+import '../marshalers/converters.dart';
 import '../marshalers/marshaler.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
@@ -66,15 +67,23 @@ class SquadronParameter {
 
   String namedArgument() => '$name: $name';
 
-  String serialized() => marshaler?.serialize(managedType, name) ?? name;
+  String serialized(Converters converters) {
+    final serializer = converters.getSerializerOf(managedType, marshaler);
+    return serializer.isEmpty ? name : '$serializer($name)';
+  }
 
-  String deserialized(String variableName) {
-    final v = isCancelationToken
-        ? '$variableName.cancelToken'
-        : ((marshaler?.deserialize(managedType, '$variableName.args[$serIdx]',
-                forceCast: true)) ??
-            '$variableName.args[$serIdx]');
-    return isNamed ? '$name: $v' : v;
+  String deserialized(Converters converters, String variableName) {
+    String value;
+    if (isCancelationToken) {
+      value = '$variableName.cancelToken';
+    } else {
+      value = '$variableName.args[$serIdx]';
+      final deserializer = converters.getDeserializerOf(managedType, marshaler);
+      if (deserializer.isNotEmpty) {
+        value = '$deserializer($value)';
+      }
+    }
+    return isNamed ? '$name: $value' : value;
   }
 
   @override

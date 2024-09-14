@@ -2,6 +2,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
+import 'package:squadron_builder/src/types/known_type.dart';
 
 import '../extensions.dart';
 import '../types/managed_type.dart';
@@ -68,10 +69,13 @@ extension NullabilitySuffixExt on NullabilitySuffix {
 
 class _TypeFilter {
   _TypeFilter(ManagedType knownType)
-      : pckUri =
-            (knownType is KnownType) ? 'package:${knownType.packageName}/' : '',
-        typeName = knownType.getTypeName(NullabilitySuffix.none),
-        genTypeName = '${knownType.getTypeName(NullabilitySuffix.none)}<';
+      : pckUri = (knownType is KnownType) ? knownType.pckUri : '',
+        typeName = (knownType is KnownType && !knownType.isResolved)
+            ? ''
+            : knownType.getTypeName(NullabilitySuffix.none),
+        genTypeName = (knownType is KnownType && !knownType.isResolved)
+            ? '<'
+            : '${knownType.getTypeName(NullabilitySuffix.none)}<';
 
   final String typeName;
   final String genTypeName;

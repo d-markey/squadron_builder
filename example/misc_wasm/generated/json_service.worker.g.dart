@@ -16,7 +16,7 @@ class _$JsonServiceWorkerService extends JsonService
 
   late final Map<int, sq.CommandHandler> _operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$decodeId: ($in) => decode($in.args[0] as String),
+    _$decodeId: ($in) => decode(_$X.$0($in.args[0])),
   });
 
   static const int _$decodeId = 1;
@@ -32,8 +32,8 @@ class JsonServiceWorker extends sq.Worker implements JsonService {
       : super($JsonServiceActivator, threadHook: threadHook);
 
   @override
-  Future<dynamic> decode(String source) =>
-      send(_$JsonServiceWorkerService._$decodeId, args: [source]);
+  Future<void> decode(String source) =>
+      send(_$JsonServiceWorkerService._$decodeId, args: [source]).then(_$X.$1);
 }
 
 /// Worker pool for JsonService
@@ -46,5 +46,10 @@ class JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
             concurrencySettings: concurrencySettings);
 
   @override
-  Future<dynamic> decode(String source) => execute((w) => w.decode(source));
+  Future<void> decode(String source) => execute((w) => w.decode(source));
+}
+
+class _$X {
+  static final $0 = sq.Squadron.converter.value<String>();
+  static final $1 = sq.Squadron.converter.value<void>();
 }

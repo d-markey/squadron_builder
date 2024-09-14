@@ -16,10 +16,7 @@ class _$SampleServiceWorkerService extends SampleService
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$computeId: ($in) async {
-      final $out = await compute(DataIn.unmarshal($in.args[0]));
-      return $out.marshal();
-    },
+    _$computeId: ($in) => compute(_$X.$0($in.args[0])),
   });
 
   static const int _$computeId = 1;
@@ -36,8 +33,8 @@ class SampleServiceWorker extends Worker implements SampleService {
 
   @override
   Future<DataOut> compute(DataIn input) =>
-      send(_$SampleServiceWorkerService._$computeId, args: [input.marshal()])
-          .then(($x) => DataOut.unmarshal($x));
+      send(_$SampleServiceWorkerService._$computeId, args: [input])
+          .then(_$X.$1);
 }
 
 /// Worker pool for SampleService
@@ -51,4 +48,9 @@ class SampleServiceWorkerPool extends WorkerPool<SampleServiceWorker>
 
   @override
   Future<DataOut> compute(DataIn input) => execute((w) => w.compute(input));
+}
+
+class _$X {
+  static final $0 = Squadron.converter.value<DataIn>();
+  static final $1 = Squadron.converter.value<DataOut>();
 }

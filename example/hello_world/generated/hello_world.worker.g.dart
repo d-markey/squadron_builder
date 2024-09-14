@@ -15,7 +15,7 @@ class _$HelloWorldWorkerService extends HelloWorld implements WorkerService {
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$helloId: ($in) => hello($in.args[0] as String?),
+    _$helloId: ($in) => hello(_$X.$1($in.args[0])),
   });
 
   static const int _$helloId = 1;
@@ -31,8 +31,8 @@ class HelloWorldWorker extends Worker implements HelloWorld {
       : super($HelloWorldActivator, threadHook: threadHook);
 
   @override
-  Future<String> hello([String? name]) =>
-      send(_$HelloWorldWorkerService._$helloId, args: [name]);
+  xxx.Future<String?> hello([String? name]) =>
+      send(_$HelloWorldWorkerService._$helloId, args: [name]).then(_$X.$1);
 }
 
 /// Worker pool for HelloWorld
@@ -45,5 +45,10 @@ class HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
             concurrencySettings: concurrencySettings);
 
   @override
-  Future<String> hello([String? name]) => execute((w) => w.hello(name));
+  xxx.Future<String?> hello([String? name]) => execute((w) => w.hello(name));
+}
+
+class _$X {
+  static final $0 = Squadron.converter.value<String>();
+  static final $1 = Squadron.converter.nullable($0);
 }

@@ -1,6 +1,7 @@
-import 'dart:async';
+import 'dart:async' as xxx;
 import 'dart:convert';
 
+import 'package:cancelation_token/cancelation_token.dart';
 import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
 
@@ -29,7 +30,7 @@ class EchoService {
   final Duration _delay;
 
   @squadronMethod
-  FutureOr<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
+  xxx.FutureOr<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
       srv.ServiceRequest request) {
     _logger?.t('jsonEchoWithJsonResult(${jsonEncode(request.toJson())})');
     _simulateWorkload();
@@ -37,7 +38,7 @@ class EchoService {
   }
 
   @squadronMethod
-  FutureOr<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
+  xxx.FutureOr<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
       @ServiceRequestToString() srv.ServiceRequest request) {
     _logger?.t('explicitEchoWithJsonResult(${jsonEncode(request.toJson())})');
     _simulateWorkload();
@@ -46,7 +47,7 @@ class EchoService {
 
   @squadronMethod
   @ServiceResponseOfStringToByteBuffer()
-  FutureOr<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
+  xxx.FutureOr<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
       srv.ServiceRequest request) {
     _logger?.t('jsonEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     _simulateWorkload();
@@ -55,7 +56,7 @@ class EchoService {
 
   @squadronMethod
   @ServiceResponseOfStringToByteBuffer.instance
-  FutureOr<srv.ServiceResponse<String>> explicitEchoWithExplicitResult(
+  xxx.FutureOr<srv.ServiceResponse<String>> explicitEchoWithExplicitResult(
       @ServiceRequestGenericToString.instance srv.ServiceRequest request,
       {CancelationToken? token}) {
     _logger
@@ -66,7 +67,7 @@ class EchoService {
 
   @squadronMethod
   @ServiceResponseToJson()
-  FutureOr<srv.ServiceResponse<String>> jsonEncodeEcho(
+  xxx.FutureOr<srv.ServiceResponse<String>> jsonEncodeEcho(
       @ServiceRequestToString.instance srv.ServiceRequest request,
       [CancelationToken? token]) {
     _logger

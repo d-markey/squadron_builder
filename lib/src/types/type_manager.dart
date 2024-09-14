@@ -1,161 +1,111 @@
-import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../marshalers/marshaler.dart';
-import '../readers/annotations_reader.dart';
+import '../marshalers/converters.dart';
 import 'extensions.dart';
+import 'known_type.dart';
 import 'managed_type.dart';
 
 class TypeManager {
   TypeManager(LibraryElement library) : _prefixes = library.prefixes {
     final provider = library.typeProvider;
 
-    final prefix = _prefixes
-            .where((p) =>
-                p.imports.any((i) => i.isFromPackage('package:squadron/')))
-            .firstOrNull
-            ?.name ??
-        '';
+    final squadron = library.libraryImports
+        .where((import) => import.isFromPackage('package:squadron/'))
+        .firstOrNull;
 
-    squadronAlias = prefix;
+    if (squadron == null) {
+      throw InvalidGenerationSourceError('Missing import of Squadron library.');
+    }
 
-    functionType = provider.functionType;
+    squadronAlias = squadron.prefix?.element.name ?? '';
+    squadronPrefix = squadronAlias.isEmpty ? '' : '$squadronAlias.';
+
+    converters.squadronAlias = squadronAlias;
+
+    final squadronPckUri = 'package:squadron/';
+    entryPointType = KnownType(squadronPckUri, 'EntryPoint', squadron);
+    channelType = KnownType(squadronPckUri, 'Channel', squadron);
+    workerServiceType = KnownType(squadronPckUri, 'WorkerService', squadron);
+    workerType = KnownType(squadronPckUri, 'Worker', squadron);
+    workerPoolType = KnownType(squadronPckUri, 'WorkerPool', squadron);
+    workerRequestType = KnownType(squadronPckUri, 'WorkerRequest', squadron);
+    workerStatType = KnownType(squadronPckUri, 'WorkerStat', squadron);
+    perfCounterType = KnownType(squadronPckUri, 'PerfCounter', squadron);
+    concurrencySettingsType =
+        KnownType(squadronPckUri, 'ConcurrencySettings', squadron);
+    exceptionManagerType =
+        KnownType(squadronPckUri, 'ExceptionManager', squadron);
+    platformThreadHookType =
+        KnownType(squadronPckUri, 'PlatformThreadHook', squadron);
+    squadronMarshalerType =
+        KnownType(squadronPckUri, 'SquadronMarshaler', squadron);
+    commandHandlerType = KnownType(squadronPckUri, 'CommandHandler', squadron);
+    taskType = KnownType(squadronPckUri, 'Task', squadron);
+    valueTaskType = KnownType(squadronPckUri, 'ValueTask', squadron);
+    streamTaskType = KnownType(squadronPckUri, 'StreamTask', squadron);
+
+    cancelationTokenType = _getImportedType(
+        library, 'package:cancelation_token/', 'CancelationToken');
+    loggerType = _getImportedType(library, 'package:logger/', 'Logger');
+    typedDataType = _getImportedType(library, 'dart:typed_data', 'TypedData');
 
     listType = handleDartType(provider.listType(provider.dynamicType));
-    futureType = handleDartType(provider.futureType(provider.dynamicType));
-    streamType = handleDartType(provider.streamType(provider.dynamicType));
-
-    entryPointType = ManagedType.knownType(prefix, 'squadron', 'EntryPoint');
-    channelType = ManagedType.knownType(prefix, 'squadron', 'Channel');
-    workerServiceType =
-        ManagedType.knownType(prefix, 'squadron', 'WorkerService');
-    workerType = ManagedType.knownType(prefix, 'squadron', 'Worker');
-    workerPoolType = ManagedType.knownType(prefix, 'squadron', 'WorkerPool');
-    workerRequestType =
-        ManagedType.knownType(prefix, 'squadron', 'WorkerRequest');
-    workerStatType = ManagedType.knownType(prefix, 'squadron', 'WorkerStat');
-    perfCounterType = ManagedType.knownType(prefix, 'squadron', 'PerfCounter');
-    concurrencySettingsType =
-        ManagedType.knownType(prefix, 'squadron', 'ConcurrencySettings');
-    exceptionManagerType =
-        ManagedType.knownType(prefix, 'squadron', 'ExceptionManager');
-    platformThreadHookType =
-        ManagedType.knownType(prefix, 'squadron', 'PlatformThreadHook');
-    squadronMarshalerType =
-        ManagedType.knownType(prefix, 'squadron', 'SquadronMarshaler');
-    commandHandlerType =
-        ManagedType.knownType(prefix, 'squadron', 'CommandHandler');
-    taskType = ManagedType.knownType(prefix, 'squadron', 'Task');
-    valueTaskType = ManagedType.knownType(prefix, 'squadron', 'ValueTask');
-    streamTaskType = ManagedType.knownType(prefix, 'squadron', 'StreamTask');
-
-    // exported types from package:logger and package:cancelation_token
-    cancelationTokenType =
-        ManagedType.knownType(prefix, 'squadron', 'CancelationToken');
-    loggerType = ManagedType.knownType(prefix, 'squadron', 'Logger');
   }
+
+  KnownType _getImportedType(
+      LibraryElement library, String pckUri, String baseName) {
+    final import = library.libraryImports
+        .where((i) => i.isFromPackage(pckUri))
+        .firstOrNull;
+    return KnownType(pckUri, 'TypedData', import);
+  }
+
+  final converters = Converters();
 
   final List<PrefixElement> _prefixes;
 
+  late final String squadronPrefix;
   late final String squadronAlias;
 
-  String get squadronPrefix => squadronAlias.isEmpty ? '' : '$squadronAlias.';
-
-  late final DartType functionType;
-
   late final ManagedType listType;
-  late final ManagedType streamType;
-  late final ManagedType futureType;
 
-  late final ManagedType entryPointType;
-  late final ManagedType channelType;
-  late final ManagedType workerServiceType;
-  late final ManagedType workerType;
-  late final ManagedType workerPoolType;
-  late final ManagedType workerRequestType;
-  late final ManagedType workerStatType;
-  late final ManagedType perfCounterType;
-  late final ManagedType exceptionManagerType;
-  late final ManagedType concurrencySettingsType;
-  late final ManagedType platformThreadHookType;
-  late final ManagedType squadronMarshalerType;
-  late final ManagedType commandHandlerType;
-  late final ManagedType taskType;
-  late final ManagedType valueTaskType;
-  late final ManagedType streamTaskType;
+  late final KnownType entryPointType;
+  late final KnownType channelType;
+  late final KnownType workerServiceType;
+  late final KnownType workerType;
+  late final KnownType workerPoolType;
+  late final KnownType workerRequestType;
+  late final KnownType workerStatType;
+  late final KnownType perfCounterType;
+  late final KnownType exceptionManagerType;
+  late final KnownType concurrencySettingsType;
+  late final KnownType platformThreadHookType;
+  late final KnownType squadronMarshalerType;
+  late final KnownType commandHandlerType;
+  late final KnownType taskType;
+  late final KnownType valueTaskType;
+  late final KnownType streamTaskType;
 
-  late final ManagedType cancelationTokenType;
-  late final ManagedType loggerType;
+  late final KnownType cancelationTokenType;
+  late final KnownType loggerType;
+  late final KnownType typedDataType;
 
-  bool isMarshaler(DartObject obj) =>
-      obj.type?.isA(squadronMarshalerType) ?? false;
-
-  Marshaler? getExplicitMarshaler(Element element) {
-    Marshaler? explicit;
-    for (var marshaler in element.getAnnotations().where(isMarshaler)) {
-      final type = marshaler.toTypeValue() ?? marshaler.type;
-      final baseMarshaler = type?.implementedTypes(squadronMarshalerType);
-      if (baseMarshaler == null || baseMarshaler.isEmpty) {
-        throw InvalidGenerationSourceError(
-            'Invalid marshaler for $element: $marshaler');
-      }
-      explicit =
-          Marshaler.explicit(marshaler, handleDartType(baseMarshaler.single));
-      break;
-    }
-
-    return explicit;
-  }
-
-  ManagedType handleDartType(DartType type) => (type is RecordType)
-      ? _handleRecordDartType(type)
-      : _handlePlainDartType(type);
-
-  ManagedType _handleRecordDartType(RecordType type) {
-    return ManagedRecordType(
-      type,
-      List.from(
-        type.positionalFields.map((t) => handleDartType(t.type)),
-      ),
-      Map.fromEntries(type.namedFields.map(
-        (t) => MapEntry(t.name, handleDartType(t.type)),
-      )),
-    );
-  }
-
-  ManagedType _handlePlainDartType(DartType type) {
-    String? prefix;
-
-    final typeLib = type.element?.library;
-    if (typeLib != null) {
-      prefix = _prefixes
-          .where((p) => p.imports.any((i) => i.importedLibrary == typeLib))
-          .firstOrNull
-          ?.name;
-    }
-
-    if (type is DynamicType || type is VoidType) {
-      return ManagedType(squadronPrefix, prefix, type);
-    } else if (type is FunctionType) {
-      final returnType = handleDartType(type.returnType);
-      final parameters = type.parameters.map(
-        (e) => ManagedParameter(
-          handleDartType(e.type),
-          e.name,
-          defaultValueCode: e.defaultValueCode,
-          isOptionalNamed: e.isOptionalNamed,
-          isOptionalPositional: e.isOptionalPositional,
-        ),
-      );
-      return ManagedType.function(
-          squadronPrefix, prefix, functionType, returnType, parameters);
-    } else if (type is ParameterizedType) {
-      final typeArgs = type.typeArguments.map(handleDartType);
-      return ManagedType(squadronPrefix, prefix, type, typeArgs);
+  ManagedType handleDartType(DartType type) {
+    if (type is RecordType) {
+      return ManagedType.record(type, this);
     } else {
-      return ManagedType(squadronPrefix, prefix, type);
+      String? prefix;
+
+      final typeLib = type.element?.library;
+      if (typeLib != null) {
+        prefix = _prefixes
+            .where((p) => p.imports.any((i) => i.importedLibrary == typeLib))
+            .firstOrNull
+            ?.name;
+      }
+      return ManagedType(prefix, type, null, this);
     }
   }
 }

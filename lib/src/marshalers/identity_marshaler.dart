@@ -7,26 +7,18 @@ class _IdentityMarshaler extends Marshaler {
   bool targets(ManagedType type) => true;
 
   @override
-  Adapter getSerializer(ManagedType type) => identity;
+  String serializerOf(ManagedType type, Converters converters) {
+    final typeName = type.getTypeName(NullabilitySuffix.none);
+    return (type.nullabilitySuffix == NullabilitySuffix.none)
+        ? '${converters.instance}.value<$typeName>()'
+        : '${converters.instance}.nullable<$typeName>()';
+  }
 
   @override
-  Adapter getDeserializer(ManagedType type) {
-    if (type is ManagedIntType) {
-      final cast = (type.nullabilitySuffix == NullabilitySuffix.question)
-          ? '${type.squadronPrefix}Cast.toNullableInt'
-          : '${type.squadronPrefix}Cast.toInt';
-      return (v, {bool forceCast = false}) =>
-          forceCast ? '$cast(${identity(v)})' : identity(v);
-    } else if (type is ManagedDoubleType) {
-      final cast = (type.nullabilitySuffix == NullabilitySuffix.question)
-          ? '${type.squadronPrefix}Cast.toNullableDbl'
-          : '${type.squadronPrefix}Cast.toDbl';
-      return (v, {bool forceCast = false}) =>
-          forceCast ? '$cast(${identity(v)})' : identity(v);
-    } else {
-      final cast = ' as $type';
-      return (v, {bool forceCast = false}) =>
-          '${identity(v)}${forceCast ? cast : ''}';
-    }
+  String deserializerOf(ManagedType type, Converters converters) {
+    final typeName = type.getTypeName(NullabilitySuffix.none);
+    return (type.nullabilitySuffix == NullabilitySuffix.none)
+        ? '${converters.instance}.value<$typeName>()'
+        : '${converters.instance}.nullable<$typeName>()';
   }
 }

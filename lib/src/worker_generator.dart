@@ -37,6 +37,53 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
 
   final _results = <BuildStep, BuildStepCodeEvent>{};
 
+  TypeManager? _typeManager;
+
+  @override
+  Future<String> generate(LibraryReader library, BuildStep buildStep) async {
+    try {
+      // get a typemanager for the library
+      _typeManager = TypeManager(library.element);
+
+      // generate code
+      final result = StringBuffer();
+      result.writeln(await super.generate(library, buildStep));
+      result.writeln(_formatOutput(_typeManager!.converters.code));
+
+      // success, trigger code generation for additional assets associated to this libreay
+      _buildStepEventStream.add(BuildStepDoneEvent(buildStep));
+
+      return result.toString();
+    } catch (ex, st) {
+      log.severe(ex);
+      log.severe(st);
+      rethrow;
+    } finally {
+      _typeManager = null;
+    }
+  }
+
+  @override
+  Stream<String> generateForAnnotatedElement(
+      Element element, ConstantReader annotation, BuildStep buildStep) async* {
+    final classElt = element;
+    if (classElt is! ClassElement) return;
+
+    // implementation moved to specific methods to facilitate unit tests
+    final service = SquadronServiceReader.load(classElt, _typeManager!)!;
+
+    final assets = WorkerAssets(buildStep, service);
+
+    final codeEvent = BuildStepCodeEvent(buildStep, classElt);
+    assets.generateVmCode(codeEvent);
+    assets.generateWebCode(codeEvent);
+    assets.generateCrossPlatformCode(codeEvent);
+    assets.generateActivatorCode(codeEvent);
+    _buildStepEventStream.add(codeEvent);
+
+    yield* assets.generateWorkerAndPool(_withFinalizers);
+  }
+
   void _process(BuildStepEvent event) {
     if (event is BuildStepCodeEvent) {
       _registerAssetCode(event);
@@ -74,46 +121,6 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
         result.buildStep.writeAsString(asset, code);
       }
     }
-  }
-
-  @override
-  Future<String> generate(LibraryReader library, BuildStep buildStep) async {
-    try {
-      // generate code
-      final result = await super.generate(library, buildStep);
-
-      // success, trigger code generation for additional assets associated to this libreay
-      _buildStepEventStream.add(BuildStepDoneEvent(buildStep));
-
-      return result;
-    } catch (ex, st) {
-      log.severe(ex);
-      log.severe(st);
-      rethrow;
-    }
-  }
-
-  @override
-  Stream<String> generateForAnnotatedElement(
-      Element element, ConstantReader annotation, BuildStep buildStep) async* {
-    final classElt = element;
-    if (classElt is! ClassElement) return;
-
-    final typeManager = TypeManager(classElt.library);
-
-    // implementation moved to specific methods to facilitate unit tests
-    final service = SquadronServiceReader.load(classElt, typeManager)!;
-
-    final assets = WorkerAssets(buildStep, service);
-
-    final codeEvent = BuildStepCodeEvent(buildStep, classElt);
-    assets.generateVmCode(codeEvent);
-    assets.generateWebCode(codeEvent);
-    assets.generateCrossPlatformCode(codeEvent);
-    assets.generateActivatorCode(codeEvent);
-    _buildStepEventStream.add(codeEvent);
-
-    yield* assets.generateWorkerAndPool(_withFinalizers);
   }
 
   @override

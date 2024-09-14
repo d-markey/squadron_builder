@@ -226,13 +226,22 @@ class TestRecordTypes {
   }
 
   @sq.squadronMethod
-  FutureOr<({int count, List items})> named() {
+  Future<({int count, List items})> named() async {
     return (count: 0, items: []);
   }
 
   @sq.squadronMethod
-  FutureOr<(int, {List items})> both() {
-    return (0, items: []);
+  FutureOr<(int, {List<int> items})> both() {
+    return (0, items: <int>[]);
+  }
+
+  @sq.squadronMethod
+  FutureOr<bool> input(
+    (int, {List<int> items}) both,
+    (int, List) pos,
+    ({int count, List items}) named,
+  ) {
+    return true;
   }
 }
 

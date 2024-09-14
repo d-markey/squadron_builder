@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:async' as xxx;
 import 'dart:isolate';
 
 import 'package:squadron/squadron.dart';
@@ -10,7 +10,7 @@ part 'generated/hello_world.worker.g.dart';
 @SquadronService()
 class HelloWorld {
   @squadronMethod
-  Future<String> hello([String? name]) async {
+  xxx.FutureOr<String?> hello([String? name]) {
     name = name?.trim() ?? '';
     return name.isEmpty
         ? 'Hello, World! from Isolate ${Isolate.current.hashCode}'

@@ -4,7 +4,6 @@ import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart';
 
 import '../marshalers/marshaler.dart';
-import '../marshalers/marshaling_info.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
 import 'annotations_reader.dart';
@@ -17,11 +16,16 @@ part 'squadron_method_reader.dart';
 class DartMethodReader {
   DartMethodReader._(MethodElement method, this.typeManager)
       : name = method.name,
-        _returnType = method.returnType;
+        returnType = typeManager.handleDartType(method.returnType);
 
   final String name;
   final TypeManager typeManager;
-  final DartType _returnType;
+
+  final ManagedType returnType;
+
+  bool get isStream => returnType.dartType?.isDartAsyncStream ?? false;
+  bool get isFuture => returnType.dartType?.isDartAsyncFuture ?? false;
+  bool get isFutureOr => returnType.dartType?.isDartAsyncFutureOr ?? false;
 
   final typeParameters = <String>[];
   late final parameters = SquadronParameters(typeManager);
@@ -57,6 +61,6 @@ class DartMethodReader {
   }
 
   String get declaration => typeParameters.isEmpty
-      ? '${typeManager.handleDartType(_returnType)} $name($parameters)'
-      : '${typeManager.handleDartType(_returnType)} $name<${typeParameters.join(', ')}>($parameters)';
+      ? '$returnType $name($parameters)'
+      : '$returnType $name<${typeParameters.join(', ')}>($parameters)';
 }
