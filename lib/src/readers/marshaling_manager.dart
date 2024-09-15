@@ -105,7 +105,7 @@ class MarshalingManager extends SimpleElementVisitor {
     }
 
     final elt = dartType.element;
-    // elt?.visitChildren(this);
+    elt?.visitChildren(this);
 
     final decl = elt?.declaration;
     return (decl == null)

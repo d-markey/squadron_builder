@@ -2,10 +2,13 @@ part of 'managed_type.dart';
 
 class _ManagedSetType extends ManagedType {
   _ManagedSetType._(String? prefix, this.dartType, TypeManager typeManager)
-      : super._(prefix, dartType, null, typeManager);
+      : super._(prefix, dartType, typeManager);
 
   @override
   final ParameterizedType dartType;
+
+  @override
+  void setMarshaler(TypeManager typeManager) {}
 
   @override
   String getSerializer(Converters converters) {

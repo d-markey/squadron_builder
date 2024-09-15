@@ -8,13 +8,16 @@ class ManagedRecordType extends ManagedType {
         named = Map.fromEntries(dartType.namedFields.map(
           (t) => MapEntry(t.name, typeManager.handleDartType(t.type)),
         )),
-        super._('', dartType, null, typeManager);
+        super._('', dartType, typeManager);
 
   @override
   final RecordType dartType;
 
   final List<ManagedType> positional;
   final Map<String, ManagedType> named;
+
+  @override
+  void setMarshaler(TypeManager typeManager) {}
 
   @override
   String getSerializer(Converters converters) {

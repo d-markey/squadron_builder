@@ -7,6 +7,7 @@ import '../marshalers/converters.dart';
 import '../marshalers/marshaler.dart';
 import 'extensions.dart';
 import 'managed_type.dart';
+import 'type_manager.dart';
 
 class KnownType implements ManagedType {
   KnownType._(this.pckUri, this.baseName, [LibraryImportElement? import])
@@ -34,6 +35,9 @@ class KnownType implements ManagedType {
 
   @override
   Marshaler? get attachedMarshaler => null;
+
+  @override
+  void setMarshaler(TypeManager typeManager) {}
 
   @override
   String getSerializer(Converters converters) => '/* TODO $runtimeType */';

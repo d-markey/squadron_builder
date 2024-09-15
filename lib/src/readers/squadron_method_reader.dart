@@ -5,18 +5,19 @@ class SquadronMethodReader extends DartMethodReader {
   SquadronMethodReader._(MethodElement method, this.inspectRequest,
       this.inspectResponse, TypeManager typeManager)
       : id = '_\$${method.name}Id',
-        _marshaling = MarshalingManager(typeManager),
         patchedReturnType = _patchReturnType(method, typeManager),
+        _resultMarshaler = typeManager.getExplicitMarshaler(method),
         super._(method, typeManager);
 
   static ManagedType _patchReturnType(
-          MethodElement method, TypeManager typeManager) =>
-      typeManager.handleDartType(
-        method.returnType.isDartAsyncFutureOr
-            ? method.library.typeProvider.futureType(
-                (method.returnType as ParameterizedType).typeArguments.single)
-            : method.returnType,
-      );
+      MethodElement method, TypeManager typeManager) {
+    var returnType = method.returnType;
+    if (method.returnType.isDartAsyncFutureOr) {
+      final valueType = (returnType as ParameterizedType).typeArguments.single;
+      returnType = method.library.typeProvider.futureType(valueType);
+    }
+    return typeManager.handleDartType(returnType);
+  }
 
   final bool inspectRequest;
   final bool inspectResponse;
@@ -40,7 +41,7 @@ class SquadronMethodReader extends DartMethodReader {
   String get workerExecutor => isStream ? 'stream' : 'send';
   String get poolExecutor => isStream ? 'stream' : 'execute';
 
-  Marshaler? _resultMarshaler;
+  final Marshaler? _resultMarshaler;
 
   bool get needsSerialization => _resultMarshaler != null;
 
@@ -49,8 +50,6 @@ class SquadronMethodReader extends DartMethodReader {
 
   String get deserializer =>
       typeManager.converters.getDeserializerOf(valueType, _resultMarshaler);
-
-  late final MarshalingManager _marshaling;
 
   @override
   void _init(MethodElement method) {
@@ -62,13 +61,13 @@ class SquadronMethodReader extends DartMethodReader {
           'return a Future, a FutureOr, a Stream, or void.');
     }
 
-    final resultMarshaler = _marshaling.getExplicitMarshaler(method);
-    if (resultMarshaler != null) {
-      _resultMarshaler =
-          _marshaling.getMarshaler(valueType, explicit: resultMarshaler);
-    } else {
-      _resultMarshaler = _marshaling.getMarshaler(valueType);
-    }
+    // final resultMarshaler = _marshaling.getExplicitMarshaler(method);
+    // if (resultMarshaler != null) {
+    //   _resultMarshaler =
+    //       _marshaling.getMarshaler(valueType, explicit: resultMarshaler);
+    // } else {
+    //   _resultMarshaler = _marshaling.getMarshaler(valueType);
+    // }
 
     if (method.typeParameters.isNotEmpty) {
       typeParameters.addAll(method.typeParameters.map((e) => e.toString()));
@@ -76,7 +75,7 @@ class SquadronMethodReader extends DartMethodReader {
 
     for (var n = 0; n < method.parameters.length; n++) {
       final param = method.parameters[n];
-      final marshaler = _marshaling.getMarshalerFor(param);
+      final marshaler = typeManager.getExplicitMarshaler(param);
       parameters.register(param, marshaler);
     }
   }

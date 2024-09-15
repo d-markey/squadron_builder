@@ -12,16 +12,9 @@ class _JsonMarshaler extends Marshaler {
 
   @override
   String serializerOf(ManagedType type, Converters converters) =>
-      (type.nullabilitySuffix == NullabilitySuffix.none)
-          ? '((\$) => \$.toJson())'
-          : '((\$) => \$?.toJson())';
+      '((\$) => (\$ as ${type.getTypeName(NullabilitySuffix.none)}).toJson())';
 
   @override
-  String deserializerOf(ManagedType type, Converters converters) {
-    final typeName = type.getTypeName(NullabilitySuffix.none);
-    final deserializer = '((\$) => $typeName.fromJson(\$))';
-    return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? deserializer
-        : '${converters.instance}.nullable($deserializer)';
-  }
+  String deserializerOf(ManagedType type, Converters converters) =>
+      '((\$) => ${type.getTypeName(NullabilitySuffix.none)}.fromJson(\$))';
 }

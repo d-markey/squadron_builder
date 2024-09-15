@@ -28,18 +28,10 @@ class _ExplicitMarshaler extends Marshaler {
   bool targets(ManagedType type) => type.dartType?.isA(_itemType) ?? false;
 
   @override
-  String serializerOf(ManagedType type, Converters converters) {
-    final serializer = '$_instance.marshaler';
-    return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? serializer
-        : '${converters.instance}.nullable($serializer)';
-  }
+  String serializerOf(ManagedType type, Converters converters) =>
+      '((\$) => $_instance.marshal(\$))';
 
   @override
-  String deserializerOf(ManagedType type, Converters converters) {
-    final deserializer = '$_instance.unmarshaler';
-    return (type.nullabilitySuffix == NullabilitySuffix.none)
-        ? deserializer
-        : '${converters.instance}.nullable($deserializer)';
-  }
+  String deserializerOf(ManagedType type, Converters converters) =>
+      '((\$) => $_instance.unmarshal(\$))';
 }

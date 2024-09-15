@@ -113,14 +113,14 @@ class _$X {
   static final $0 = Squadron.converter.value<int>();
   static final $1 = Squadron.converter.list<int>();
   static final $2 = Squadron.converter.nullable($1);
-  static final $3 = (const ListIntMarshaler()).marshaler;
-  static final $4 = listIntMarshaler.marshaler;
+  static final $3 = (($) => (const ListIntMarshaler()).marshal($));
+  static final $4 = (($) => listIntMarshaler.marshal($));
   static final $5 = Squadron.converter.nullable($0);
   static final $6 = Squadron.converter.value<CancelationToken>();
   static final $7 = Squadron.converter.nullable($6);
   static final $8 = Squadron.converter.value<bool>();
   static final $9 = Squadron.converter.list<int>(_$X.$0);
   static final $10 = Squadron.converter.nullable($9);
-  static final $11 = (const ListIntMarshaler()).unmarshaler;
-  static final $12 = listIntMarshaler.unmarshaler;
+  static final $11 = (($) => (const ListIntMarshaler()).unmarshal($));
+  static final $12 = (($) => listIntMarshaler.unmarshal($));
 }

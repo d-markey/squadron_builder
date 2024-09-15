@@ -15,7 +15,8 @@ class _$DataServiceWorkerService extends DataService implements WorkerService {
 
   late final Map<int, CommandHandler> _operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$doSomethingId: ($in) => doSomething(_$X.$0($in.args[0])),
+    _$doSomethingId: ($in) async =>
+        _$X.$1(await doSomething(_$X.$0($in.args[0]))),
   });
 
   static const int _$doSomethingId = 1;
@@ -32,7 +33,7 @@ class DataServiceWorker extends Worker implements DataService {
 
   @override
   Future<Data> doSomething(Data input) =>
-      send(_$DataServiceWorkerService._$doSomethingId, args: [input])
+      send(_$DataServiceWorkerService._$doSomethingId, args: [_$X.$1(input)])
           .then(_$X.$0);
 }
 
@@ -50,5 +51,6 @@ class DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
 }
 
 class _$X {
-  static final $0 = Squadron.converter.value<Data>();
+  static final $0 = (($) => Data.unmarshal($));
+  static final $1 = (($) => ($ as Data).marshal());
 }

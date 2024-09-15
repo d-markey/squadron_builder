@@ -7,7 +7,6 @@ import '../marshalers/marshaler.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
 import 'annotations_reader.dart';
-import 'marshaling_manager.dart';
 import 'squadron_parameters.dart';
 
 part 'squadron_method_reader.dart';

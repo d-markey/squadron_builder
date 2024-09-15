@@ -1,6 +1,9 @@
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:squadron_builder/src/marshalers/marshaler.dart';
+import 'package:squadron_builder/src/readers/annotations_reader.dart';
 
 import '../marshalers/converters.dart';
 import 'extensions.dart';
@@ -92,9 +95,16 @@ class TypeManager {
   late final KnownType loggerType;
   late final KnownType typedDataType;
 
+  final _cache = <DartType, ManagedType>{};
+
   ManagedType handleDartType(DartType type) {
+    var managedType = _cache[type];
+    if (managedType != null) {
+      return managedType;
+    }
+
     if (type is RecordType) {
-      return ManagedType.record(type, this);
+      managedType = ManagedType.record(type, this);
     } else {
       String? prefix;
 
@@ -105,7 +115,28 @@ class TypeManager {
             .firstOrNull
             ?.name;
       }
-      return ManagedType(prefix, type, null, this);
+
+      managedType = ManagedType(prefix, type, this);
+      managedType.setMarshaler(this);
     }
+
+    _cache[type] = managedType;
+    return managedType;
+  }
+
+  bool _isMarshaler(DartObject obj) =>
+      obj.type?.isA(squadronMarshalerType) ?? false;
+
+  Marshaler? getExplicitMarshaler(Element? element) {
+    final marshaler =
+        element?.declaration?.getAnnotations().where(_isMarshaler).firstOrNull;
+    if (marshaler == null) return null;
+    final type = marshaler.toTypeValue() ?? marshaler.type;
+    final baseMarshaler = type?.implementedTypes(squadronMarshalerType);
+    if (baseMarshaler == null || baseMarshaler.isEmpty) {
+      throw InvalidGenerationSourceError(
+          'Invalid marshaler for $element: $marshaler');
+    }
+    return Marshaler.explicit(marshaler, handleDartType(baseMarshaler.single));
   }
 }
