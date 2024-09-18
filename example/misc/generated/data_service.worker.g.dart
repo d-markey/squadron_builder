@@ -51,6 +51,6 @@ class DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
 }
 
 class _$X {
-  static final $0 = (($) => Data.unmarshal($));
+  static final $0 = (($) => ext_d.DataMarshalerExt.unmarshal($));
   static final $1 = (($) => ($ as Data).marshal());
 }

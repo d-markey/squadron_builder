@@ -6,7 +6,7 @@ class _ExplicitMarshaler extends Marshaler {
     final variable = _marshaler.variable;
     if (variable != null) {
       if (variable.enclosingElement is ClassElement) {
-        _instance = '${variable.enclosingElement!.name}.${variable.name}';
+        _instance = '${variable.enclosingElement!.name!}.${variable.name}';
       } else {
         _instance = variable.name;
       }

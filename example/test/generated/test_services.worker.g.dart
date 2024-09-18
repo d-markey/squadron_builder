@@ -1087,9 +1087,9 @@ class _$TestRecordTypesWorkerService extends TestRecordTypes
       Map.unmodifiable(<int, sq.CommandHandler>{
     _$bothId: ($in) async => _$X.$6(await both()),
     _$inputId: ($in) =>
-        input(_$X.$8($in.args[0]), _$X.$10($in.args[1]), _$X.$11($in.args[2])),
-    _$namedId: ($in) => named().then(_$X.$13),
-    _$unnamedId: ($in) async => _$X.$14(await unnamed()),
+        input(_$X.$8($in.args[0]), _$X.$11($in.args[1]), _$X.$12($in.args[2])),
+    _$namedId: ($in) => named().then(_$X.$14),
+    _$unnamedId: ($in) async => _$X.$15(await unnamed()),
   });
 
   static const int _$bothId = 1;
@@ -1112,18 +1112,18 @@ class TestRecordTypesWorker extends sq.Worker implements TestRecordTypes {
       send(_$TestRecordTypesWorkerService._$bothId, args: []).then(_$X.$8);
 
   @override
-  Future<bool> input((int, {List<int> items}) both, (int, List<void>) pos,
-          ({int count, List<void> items}) named) =>
+  Future<bool> input((int, {List<int> items}) both, (int, List<dynamic>) pos,
+          ({int count, List<dynamic> items}) named) =>
       send(_$TestRecordTypesWorkerService._$inputId,
-          args: [_$X.$6(both), _$X.$14(pos), _$X.$13(named)]).then(_$X.$15);
+          args: [_$X.$6(both), _$X.$15(pos), _$X.$14(named)]).then(_$X.$16);
 
   @override
-  Future<({int count, List<void> items})> named() =>
-      send(_$TestRecordTypesWorkerService._$namedId, args: []).then(_$X.$11);
+  Future<({int count, List<dynamic> items})> named() =>
+      send(_$TestRecordTypesWorkerService._$namedId, args: []).then(_$X.$12);
 
   @override
-  Future<(int, List<void>)> unnamed() =>
-      send(_$TestRecordTypesWorkerService._$unnamedId, args: []).then(_$X.$10);
+  Future<(int, List<dynamic>)> unnamed() =>
+      send(_$TestRecordTypesWorkerService._$unnamedId, args: []).then(_$X.$11);
 }
 
 /// Worker pool for TestRecordTypes
@@ -1139,15 +1139,16 @@ class TestRecordTypesWorkerPool extends sq.WorkerPool<TestRecordTypesWorker>
   Future<(int, {List<int> items})> both() => execute((w) => w.both());
 
   @override
-  Future<bool> input((int, {List<int> items}) both, (int, List<void>) pos,
-          ({int count, List<void> items}) named) =>
+  Future<bool> input((int, {List<int> items}) both, (int, List<dynamic>) pos,
+          ({int count, List<dynamic> items}) named) =>
       execute((w) => w.input(both, pos, named));
 
   @override
-  Future<({int count, List<void> items})> named() => execute((w) => w.named());
+  Future<({int count, List<dynamic> items})> named() =>
+      execute((w) => w.named());
 
   @override
-  Future<(int, List<void>)> unnamed() => execute((w) => w.unnamed());
+  Future<(int, List<dynamic>)> unnamed() => execute((w) => w.unnamed());
 }
 
 /// WorkerService class for TestRequiredSuperParam
@@ -1168,7 +1169,7 @@ class _$TestRequiredSuperParamWorkerService extends TestRequiredSuperParam
 
 /// Service initializer for TestRequiredSuperParam
 sq.WorkerService $TestRequiredSuperParamInitializer(sq.WorkerRequest $in) =>
-    _$TestRequiredSuperParamWorkerService(path: _$X.$16($in.args[0]));
+    _$TestRequiredSuperParamWorkerService(path: _$X.$17($in.args[0]));
 
 /// Worker for TestRequiredSuperParam
 class TestRequiredSuperParamWorker extends sq.Worker
@@ -1220,19 +1221,20 @@ class _$X {
     $ as List;
     return (_$X.$0($[0]), items: _$X.$7($[1]));
   });
-  static final $9 = sq.Squadron.converter.list<void>(_$X.$4);
-  static final $10 = (($) {
-    $ as List;
-    return (_$X.$0($[0]), _$X.$9($[1]));
-  });
+  static final $9 = sq.Squadron.converter.value<dynamic>();
+  static final $10 = sq.Squadron.converter.list<dynamic>(_$X.$9);
   static final $11 = (($) {
     $ as List;
-    return (count: _$X.$0($[0]), items: _$X.$9($[1]));
+    return (_$X.$0($[0]), _$X.$10($[1]));
   });
-  static final $12 = sq.Squadron.converter.list<void>();
-  static final $13 =
-      ((({int count, List<void> items}) $) => [$.count, _$X.$12($.items)]);
-  static final $14 = (((int, List<void>) $) => [$.$1, _$X.$12($.$2)]);
-  static final $15 = sq.Squadron.converter.value<bool>();
-  static final $16 = sq.Squadron.converter.value<String>();
+  static final $12 = (($) {
+    $ as List;
+    return (count: _$X.$0($[0]), items: _$X.$10($[1]));
+  });
+  static final $13 = sq.Squadron.converter.list<dynamic>();
+  static final $14 =
+      ((({int count, List<dynamic> items}) $) => [$.count, _$X.$13($.items)]);
+  static final $15 = (((int, List<dynamic>) $) => [$.$1, _$X.$13($.$2)]);
+  static final $16 = sq.Squadron.converter.value<bool>();
+  static final $17 = sq.Squadron.converter.value<String>();
 }

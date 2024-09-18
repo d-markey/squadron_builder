@@ -32,7 +32,7 @@ class JsonServiceWorker extends sq.Worker implements JsonService {
       : super($JsonServiceActivator, threadHook: threadHook);
 
   @override
-  Future<void> decode(String source) =>
+  Future<dynamic> decode(String source) =>
       send(_$JsonServiceWorkerService._$decodeId, args: [source]).then(_$X.$1);
 }
 
@@ -46,10 +46,10 @@ class JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
             concurrencySettings: concurrencySettings);
 
   @override
-  Future<void> decode(String source) => execute((w) => w.decode(source));
+  Future<dynamic> decode(String source) => execute((w) => w.decode(source));
 }
 
 class _$X {
   static final $0 = sq.Squadron.converter.value<String>();
-  static final $1 = sq.Squadron.converter.value<void>();
+  static final $1 = sq.Squadron.converter.value<dynamic>();
 }

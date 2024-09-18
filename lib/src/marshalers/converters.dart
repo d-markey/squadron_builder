@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/nullability_suffix.dart';
-import 'package:squadron_builder/src/marshalers/marshaler.dart';
-import 'package:squadron_builder/src/types/managed_type.dart';
+
+import '../types/managed_type.dart';
+import 'marshaler.dart';
 
 class Converters {
   Converters([this._name = '_\$X']);

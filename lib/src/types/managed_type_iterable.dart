@@ -1,7 +1,7 @@
 part of 'managed_type.dart';
 
 class _ManagedIterableType extends ManagedType {
-  _ManagedIterableType._(String? prefix, this.dartType, TypeManager typeManager)
+  _ManagedIterableType._(String prefix, this.dartType, TypeManager typeManager)
       : super._(prefix, dartType, typeManager);
 
   @override

@@ -6,9 +6,9 @@ import '../types/extensions.dart';
 import '../types/managed_type.dart';
 import 'converters.dart';
 
-part 'explicit_marshaler.dart';
-part 'instance_marshaler.dart';
-part 'json_marshaler.dart';
+part 'marshaler_explicit.dart';
+part 'marshaler_json.dart';
+part 'marshaler_self.dart';
 
 abstract class Marshaler {
   const Marshaler();
@@ -24,9 +24,11 @@ abstract class Marshaler {
   String serializerOf(ManagedType type, Converters converters);
   String deserializerOf(ManagedType type, Converters converters);
 
-  static Marshaler instance(ManagedType type) => _InstanceMarshaler(type);
+  static Marshaler self(String typeName, String? loaderTypeName) =>
+      _SelfMarshaler(typeName, loaderTypeName);
 
-  static Marshaler json(ManagedType type) => _JsonMarshaler(type);
+  static Marshaler json(String typeName, String? loaderTypeName) =>
+      _JsonMarshaler(typeName, loaderTypeName);
 
   static Marshaler explicit(DartObject marshaler, ManagedType marshalerType) =>
       _ExplicitMarshaler(marshaler, marshalerType);

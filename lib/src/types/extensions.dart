@@ -2,10 +2,10 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
-import 'package:squadron_builder/src/types/known_type.dart';
 
 import '../extensions.dart';
-import '../types/managed_type.dart';
+import 'known_type.dart';
+import 'managed_type.dart';
 
 @internal
 extension DartTypeExt on DartType {

@@ -1,25 +1,28 @@
+import 'dart:collection';
+
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
-import 'package:squadron_builder/src/types/type_manager.dart';
 
 import '../marshalers/converters.dart';
 import '../marshalers/marshaler.dart';
 import 'extensions.dart';
+import 'type_manager.dart';
 
+part 'managed_type_impl.dart';
 part 'managed_type_iterable.dart';
 part 'managed_type_map.dart';
 part 'managed_type_record.dart';
 part 'managed_type_set.dart';
 part 'managed_type_typed_data.dart';
+part 'marshaler_loader.dart';
 
 typedef MarshalerBuilder = Marshaler Function(ManagedType);
 
 abstract class ManagedType {
-  ManagedType._(String? prefix, DartType? dartType, TypeManager typeManager)
-      : prefix = prefix ?? '',
-        typeArguments = (dartType is ParameterizedType)
+  ManagedType._(this.prefix, DartType? dartType, TypeManager typeManager)
+      : typeArguments = (dartType is ParameterizedType)
             ? dartType.typeArguments.map(typeManager.handleDartType).toList()
             : const [];
 
@@ -32,7 +35,7 @@ abstract class ManagedType {
   String getDeserializer(Converters converters);
 
   factory ManagedType(
-      String? prefix, DartType dartType, TypeManager typeManager) {
+      String prefix, DartType dartType, TypeManager typeManager) {
     if (dartType.isDartCoreMap) {
       return _ManagedMapType._(
           prefix, dartType as ParameterizedType, typeManager);
@@ -45,7 +48,7 @@ abstract class ManagedType {
     } else if (dartType.isA(typeManager.typedDataType)) {
       return _ManagedTypedDataType._(prefix, dartType, typeManager);
     } else {
-      return _ManagedType._(prefix, dartType, typeManager);
+      return _ManagedTypeImpl._(prefix, dartType, typeManager);
     }
   }
 
@@ -66,7 +69,7 @@ abstract class ManagedType {
       if (dartType is VoidType) {
         return prefix.isEmpty ? 'void' : '$prefix.void';
       } else if (dartType is DynamicType) {
-        return prefix.isEmpty ? 'void' : '$prefix.void';
+        return prefix.isEmpty ? 'dynamic' : '$prefix.dynamic';
       }
 
       final s = (forcedNullabilitySuffix ?? dartType!.nullabilitySuffix).suffix;
@@ -82,114 +85,4 @@ abstract class ManagedType {
 
   @override
   String toString() => getTypeName();
-}
-
-class _ManagedType extends ManagedType {
-  _ManagedType._(String? prefix, this.dartType, TypeManager typeManager)
-      : super._(prefix, dartType, typeManager);
-
-  @override
-  final DartType dartType;
-
-  @override
-  NullabilitySuffix get nullabilitySuffix => dartType.nullabilitySuffix;
-
-  @override
-  String getSerializer(Converters converters) =>
-      attachedMarshaler?.serializerOf(this, converters) ?? '';
-
-  @override
-  String getDeserializer(Converters converters) =>
-      attachedMarshaler?.deserializerOf(this, converters) ??
-      '${converters.instance}.value<${getTypeName(NullabilitySuffix.none)}>()';
-
-  @override
-  void setMarshaler(TypeManager typeManager) {
-    final element = dartType.element;
-    if (element == null) return;
-    _attachedMarshaler =
-        typeManager.getExplicitMarshaler(element) ?? _getSelfMarshalerBuilder();
-  }
-
-  Marshaler? _getSelfMarshalerBuilder() {
-    final checker = _MarshalerChecker();
-    dartType.element?.visitChildren(checker);
-    if (checker.hasMarshal && checker.hasUnmarshal) {
-      return Marshaler.instance(this);
-    } else if (checker.hasFromJson && checker.hasToJson) {
-      return Marshaler.json(this);
-    } else {
-      return null;
-    }
-  }
-}
-
-class _MarshalerChecker extends SimpleElementVisitor {
-  _MarshalerChecker();
-
-  final _methods = <ExecutableElement>[];
-
-  bool get hasToJson => _methods.any((m) =>
-      m is MethodElement &&
-      !m.isPrivate &&
-      !m.isAbstract &&
-      m.returnType.isDartCoreMap &&
-      m.name == 'toJson' &&
-      m.parameters.isEmpty);
-
-  bool get hasFromJson => _methods.any((c) =>
-      (c is ConstructorElement &&
-          !c.isPrivate &&
-          !c.isAbstract &&
-          c.name == 'fromJson' &&
-          c.parameters.length == 1 &&
-          c.parameters[0].declaration.type.isDartCoreMap) ||
-      (c is MethodElement &&
-          !c.isPrivate &&
-          !c.isAbstract &&
-          c.isStatic &&
-          c.name == 'fromJson' &&
-          c.parameters.length == 1 &&
-          c.parameters[0].declaration.type.isDartCoreMap));
-
-  bool get hasMarshal => _methods.any((m) =>
-      m is MethodElement &&
-      !m.isPrivate &&
-      !m.isAbstract &&
-      m.name == 'marshal' &&
-      m.parameters.isEmpty);
-
-  bool get hasUnmarshal => _methods.any((c) =>
-      (c is ConstructorElement &&
-          !c.isPrivate &&
-          !c.isAbstract &&
-          c.name == 'unmarshal' &&
-          c.parameters.length == 1) ||
-      (c is MethodElement &&
-          !c.isPrivate &&
-          !c.isAbstract &&
-          c.isStatic &&
-          c.name == 'unmarshal' &&
-          c.parameters.length == 1));
-
-  @override
-  void visitConstructorElement(ConstructorElement element) {
-    element = element.declaration;
-    if (element.name == 'fromJson' || element.name == 'unmarshal') {
-      // only interested in constructor 'fromJson()' or 'unmarshal()'
-      _methods.add(element);
-    }
-  }
-
-  @override
-  void visitMethodElement(MethodElement element) {
-    element = element.declaration;
-    if ((!element.isStatic && element.name == 'toJson') ||
-        (element.isStatic && element.name == 'fromJson') ||
-        (!element.isStatic && element.name == 'marshal') ||
-        (element.isStatic && element.name == 'unmarshal')) {
-      // only interested in instance methods 'toJson()' / 'marshal()' or static methods 'fromJson()' / 'unmarshal()'
-      _methods.add(element);
-    }
-  }
 }

@@ -5,7 +5,6 @@ import 'package:squadron/squadron.dart';
 
 import '../types/type_manager.dart';
 import 'annotations_reader.dart';
-import 'marshaling_manager.dart';
 import 'squadron_parameters.dart';
 
 /// Reader for a Squadron service class
@@ -13,8 +12,7 @@ class SquadronServiceReader {
   SquadronServiceReader._(ClassElement clazz, this.typeManager, this.pool,
       this.vm, this.web, this.wasm, this.baseUrl)
       : name = clazz.name,
-        parameters = SquadronParameters(typeManager),
-        _marshaling = MarshalingManager(typeManager) {
+        parameters = SquadronParameters(typeManager) {
     _load(clazz);
   }
 
@@ -31,8 +29,6 @@ class SquadronServiceReader {
   final bool web;
   final bool wasm;
   final String baseUrl;
-
-  final MarshalingManager _marshaling;
 
   void _load(ClassElement clazz) {
     if (clazz.isAbstract ||
@@ -62,7 +58,7 @@ class SquadronServiceReader {
           }
         }
 
-        final marshaler = _marshaling.getMarshalerFor(param);
+        final marshaler = typeManager.getExplicitMarshaler(param);
         final p = parameters.register(param, marshaler);
         if (p.isCancelationToken) {
           throw InvalidGenerationSourceError(

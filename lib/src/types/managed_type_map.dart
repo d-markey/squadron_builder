@@ -1,7 +1,7 @@
 part of 'managed_type.dart';
 
 class _ManagedMapType extends ManagedType {
-  _ManagedMapType._(String? prefix, this.dartType, TypeManager typeManager)
+  _ManagedMapType._(String prefix, this.dartType, TypeManager typeManager)
       : super._(prefix, dartType, typeManager);
 
   @override

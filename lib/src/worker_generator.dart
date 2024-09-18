@@ -43,6 +43,9 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
     try {
       // get a typemanager for the library
+      if (_typeManager != null) {
+        throw UnsupportedError('WorkerGenerator.generate() is not reentrant!');
+      }
       _typeManager = TypeManager(library.element);
 
       // generate code

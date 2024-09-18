@@ -2,16 +2,16 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:squadron_builder/src/marshalers/marshaler.dart';
-import 'package:squadron_builder/src/readers/annotations_reader.dart';
 
 import '../marshalers/converters.dart';
+import '../marshalers/marshaler.dart';
+import '../readers/annotations_reader.dart';
 import 'extensions.dart';
 import 'known_type.dart';
 import 'managed_type.dart';
 
 class TypeManager {
-  TypeManager(LibraryElement library) : _prefixes = library.prefixes {
+  TypeManager(this.library) {
     final provider = library.typeProvider;
 
     final squadron = library.libraryImports
@@ -62,12 +62,21 @@ class TypeManager {
     final import = library.libraryImports
         .where((i) => i.isFromPackage(pckUri))
         .firstOrNull;
-    return KnownType(pckUri, 'TypedData', import);
+    return KnownType(pckUri, baseName, import);
   }
+
+  final LibraryElement library;
 
   final converters = Converters();
 
-  final List<PrefixElement> _prefixes;
+  String getPrefixFor(LibraryElement? lib) {
+    if (lib == null) return '';
+    return library.prefixes
+            .where((p) => p.imports.any((i) => i.importedLibrary == lib))
+            .firstOrNull
+            ?.name ??
+        '';
+  }
 
   late final String squadronPrefix;
   late final String squadronAlias;
@@ -98,6 +107,7 @@ class TypeManager {
   final _cache = <DartType, ManagedType>{};
 
   ManagedType handleDartType(DartType type) {
+    type.nullabilitySuffix;
     var managedType = _cache[type];
     if (managedType != null) {
       return managedType;
@@ -106,17 +116,8 @@ class TypeManager {
     if (type is RecordType) {
       managedType = ManagedType.record(type, this);
     } else {
-      String? prefix;
-
       final typeLib = type.element?.library;
-      if (typeLib != null) {
-        prefix = _prefixes
-            .where((p) => p.imports.any((i) => i.importedLibrary == typeLib))
-            .firstOrNull
-            ?.name;
-      }
-
-      managedType = ManagedType(prefix, type, this);
+      managedType = ManagedType(getPrefixFor(typeLib), type, this);
       managedType.setMarshaler(this);
     }
 

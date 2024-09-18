@@ -1,8 +1,7 @@
 part of 'managed_type.dart';
 
 class _ManagedTypedDataType extends ManagedType {
-  _ManagedTypedDataType._(
-      String? prefix, this.dartType, TypeManager typeManager)
+  _ManagedTypedDataType._(String prefix, this.dartType, TypeManager typeManager)
       : super._(prefix, dartType, typeManager);
 
   @override

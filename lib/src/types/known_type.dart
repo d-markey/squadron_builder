@@ -11,7 +11,28 @@ import 'type_manager.dart';
 
 class KnownType implements ManagedType {
   KnownType._(this.pckUri, this.baseName, [LibraryImportElement? import])
-      : prefix = import?.prefix?.element.name ?? '';
+      : prefix = import?.prefix?.element.name ?? '' {
+    // final clazz = _findClass(import?.importedLibrary, baseName);
+    // stderr.writeln(
+    //     '$pckUri - ${import?.importedLibrary} - $baseName = ${clazz.runtimeType} $clazz');
+  }
+
+  static ClassElement? _findClass(LibraryElement? lib, String baseName) {
+    if (lib == null) return null;
+
+    final visited = <LibraryElement>{};
+
+    ClassElement? $findClass(LibraryElement library) {
+      if (!visited.add(library)) return null;
+      return library.getClass(baseName) ??
+          library.exportedLibraries
+              .map($findClass)
+              .whereType<ClassElement>()
+              .firstOrNull;
+    }
+
+    return $findClass(lib);
+  }
 
   factory KnownType(String pckUri, String baseName,
           [LibraryImportElement? import]) =>
