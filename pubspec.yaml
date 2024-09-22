@@ -16,20 +16,16 @@ dependencies:
   squadron: ^6.0.0
   build:
   source_gen:
-  analyzer:
+  analyzer: ">=6.5.0"
   meta:
 
 dev_dependencies:
-  lints:
+  lints: ">=4.0.0"
   test:
   build_runner:
   logger:
   cancelation_token:
   using:
-
-dependency_overrides:
-  squadron:
-    git: https://github.com/d-markey/squadron
 
 topics:
   - codegen
