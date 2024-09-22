@@ -13,5 +13,11 @@ void main() {
   sq.run($JsonServiceInitializer);
 }
 
-sq.EntryPoint $getJsonServiceActivator() =>
-    Uri.parse('example/misc_wasm/generated/json_service.web.g.dart.wasm');
+sq.EntryPoint $getJsonServiceActivator(sq.SquadronPlatformType platform) {
+  if (platform.isWeb) {
+    return sq.Squadron.uri(
+        'example/misc_wasm/generated/json_service.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

@@ -8,8 +8,15 @@ import 'package:squadron/squadron.dart' as sq;
 
 import '../json_service.dart';
 
-/// VM entry point for JsonService
-void _start$JsonService(sq.WorkerRequest command) =>
-    sq.run($JsonServiceInitializer, command);
+void _start$JsonService(sq.WorkerRequest command) {
+  /// VM entry point for JsonService
+  sq.run($JsonServiceInitializer, command);
+}
 
-sq.EntryPoint $getJsonServiceActivator() => _start$JsonService;
+sq.EntryPoint $getJsonServiceActivator(sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$JsonService;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

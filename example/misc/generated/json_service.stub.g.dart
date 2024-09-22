@@ -6,4 +6,5 @@
 
 import 'package:squadron/squadron.dart' as sq;
 
-sq.EntryPoint $getJsonServiceActivator() => throw UnimplementedError();
+sq.EntryPoint $getJsonServiceActivator(sq.SquadronPlatformType platform) =>
+    throw UnimplementedError();

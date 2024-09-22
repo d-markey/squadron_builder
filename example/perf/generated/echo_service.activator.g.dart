@@ -7,4 +7,4 @@
 import 'echo_service.vm.g.dart';
 
 /// Service activator for EchoService
-final $EchoServiceActivator = $getEchoServiceActivator();
+final $EchoServiceActivator = $getEchoServiceActivator;

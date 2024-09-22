@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:cancelation_token/cancelation_token.dart';
 import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
+import 'package:using/using.dart';
 
 import 'generated/fibonacci_service.activator.g.dart';
 import 'marshalers.dart';
 
 part 'generated/fibonacci_service.worker.g.dart';
 
-@SquadronService(web: false)
+@SquadronService(targetPlatform: TargetPlatform.vm)
 class FibonacciService {
   FibonacciService({bool trace = false})
       : _logger = trace

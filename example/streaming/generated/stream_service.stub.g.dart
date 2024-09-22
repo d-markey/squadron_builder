@@ -6,4 +6,5 @@
 
 import 'package:squadron/squadron.dart';
 
-EntryPoint $getStreamServiceActivator() => throw UnimplementedError();
+EntryPoint $getStreamServiceActivator(SquadronPlatformType platform) =>
+    throw UnimplementedError();

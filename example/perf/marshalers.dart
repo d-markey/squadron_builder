@@ -6,7 +6,7 @@ import 'package:squadron/squadron.dart';
 import 'service_request.dart';
 import 'service_response.dart';
 
-class ListIntMarshaler extends SquadronMarshaler<List<int>, ByteBuffer> {
+class ListIntMarshaler implements SquadronMarshaler<List<int>, ByteBuffer> {
   const ListIntMarshaler();
 
   @override
@@ -18,7 +18,8 @@ class ListIntMarshaler extends SquadronMarshaler<List<int>, ByteBuffer> {
 
 const listIntMarshaler = ListIntMarshaler();
 
-class ServiceRequestToString extends SquadronMarshaler<ServiceRequest, String> {
+class ServiceRequestToString
+    implements SquadronMarshaler<ServiceRequest, String> {
   const ServiceRequestToString();
 
   @override
@@ -31,7 +32,7 @@ class ServiceRequestToString extends SquadronMarshaler<ServiceRequest, String> {
 }
 
 abstract class ServiceRequestGeneric<T>
-    extends SquadronMarshaler<ServiceRequest, T> {
+    implements SquadronMarshaler<ServiceRequest, T> {
   const ServiceRequestGeneric();
 }
 
@@ -48,7 +49,7 @@ class ServiceRequestGenericToString extends ServiceRequestGeneric<String> {
 }
 
 class ServiceResponseOfStringToByteBuffer
-    extends SquadronMarshaler<ServiceResponse<String>, ByteBuffer> {
+    implements SquadronMarshaler<ServiceResponse<String>, ByteBuffer> {
   const ServiceResponseOfStringToByteBuffer();
 
   void _writeInt(Uint8List bytes, int offset, int value) {
@@ -89,7 +90,7 @@ class ServiceResponseOfStringToByteBuffer
 }
 
 class ServiceResponseToJson
-    extends SquadronMarshaler<ServiceResponse<String>, String> {
+    implements SquadronMarshaler<ServiceResponse<String>, String> {
   const ServiceResponseToJson();
 
   @override

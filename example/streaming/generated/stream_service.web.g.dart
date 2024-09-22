@@ -13,5 +13,11 @@ void main() {
   run($StreamServiceInitializer);
 }
 
-EntryPoint $getStreamServiceActivator() =>
-    Uri.parse('example/streaming/generated/stream_service.web.g.dart.js');
+EntryPoint $getStreamServiceActivator(SquadronPlatformType platform) {
+  if (platform.isWeb) {
+    return Squadron.uri(
+        'example/streaming/generated/stream_service.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

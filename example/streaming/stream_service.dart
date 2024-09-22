@@ -1,23 +1,26 @@
 import 'dart:async';
+import 'dart:core' as d;
 
 import 'package:cancelation_token/cancelation_token.dart';
+import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
+import 'package:using/using.dart';
 
 import 'generated/stream_service.activator.g.dart';
 
 part 'generated/stream_service.worker.g.dart';
 
-@SquadronService()
+@SquadronService(targetPlatform: TargetPlatform.vm | TargetPlatform.wasm)
 class StreamService {
   @squadronMethod
-  Stream<int> clock(
-      {int frequency = 1 /* Hz */, CancelationToken? token}) async* {
+  Stream<d.int> clock(
+      {d.int frequency = 1 /* Hz */, CancelationToken? token}) async* {
     var n = 0;
     final ms = 1000 ~/ frequency;
     if (ms == 0) {
-      throw Exception('Frequency is too high!');
+      throw d.Exception('Frequency is too high!');
     }
-    final delay = Duration(milliseconds: ms);
+    final delay = d.Duration(milliseconds: ms);
     while (token == null || !token.isCanceled) {
       yield n;
       n += 1;
@@ -26,13 +29,13 @@ class StreamService {
   }
 
   @squadronMethod
-  Stream<int> infiniteClock({int frequency = 1 /* Hz */}) async* {
+  Stream<d.int> infiniteClock({d.int frequency = 1 /* Hz */}) async* {
     var n = 0;
     final ms = 1000 ~/ frequency;
     if (ms == 0) {
-      throw Exception('Frequency is too high!');
+      throw d.Exception('Frequency is too high!');
     }
-    final delay = Duration(milliseconds: ms);
+    final delay = d.Duration(milliseconds: ms);
     while (true) {
       yield n;
       n += 1;

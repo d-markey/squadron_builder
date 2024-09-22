@@ -16,7 +16,7 @@ part 'managed_type_map.dart';
 part 'managed_type_record.dart';
 part 'managed_type_set.dart';
 part 'managed_type_typed_data.dart';
-part 'marshaler_loader.dart';
+part 'marshaler_inspector.dart';
 
 typedef MarshalerBuilder = Marshaler Function(ManagedType);
 
@@ -45,7 +45,7 @@ abstract class ManagedType {
     } else if (dartType.isDartCoreIterable || dartType.isDartCoreList) {
       return _ManagedIterableType._(
           prefix, dartType as ParameterizedType, typeManager);
-    } else if (dartType.isA(typeManager.typedDataType)) {
+    } else if (dartType.isA(typeManager.TTypedData)) {
       return _ManagedTypedDataType._(prefix, dartType, typeManager);
     } else {
       return _ManagedTypeImpl._(prefix, dartType, typeManager);
@@ -59,8 +59,12 @@ abstract class ManagedType {
       ManagedRecordType._(dartType, typeManager);
 
   final String prefix;
-  final List<ManagedType> typeArguments;
+
   DartType? get dartType;
+
+  final List<ManagedType> typeArguments;
+
+  // String get baseName => dartType?.baseName ?? '';
 
   NullabilitySuffix get nullabilitySuffix;
 

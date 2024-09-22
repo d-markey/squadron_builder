@@ -13,5 +13,10 @@ void main() {
   run($FibServiceInitializer);
 }
 
-EntryPoint $getFibServiceActivator() =>
-    Uri.parse('/workers/fib_service.web.g.dart.js');
+EntryPoint $getFibServiceActivator(SquadronPlatformType platform) {
+  if (platform.isWeb) {
+    return Squadron.uri('/workers/fib_service.web.g.dart.js');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

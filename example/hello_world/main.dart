@@ -12,7 +12,7 @@ void main() async {
     printer: SimplePrinter(),
   );
 
-  logger.i('main() running in Isolate ${Isolate.current.hashCode}');
+  logger.i('main() running in Isolate ${Isolate.current.hashCode.hex}');
 
   final names = [null, 'Mary', 'John', 'Joe', 'Rick', 'Bill', 'Henry'];
 

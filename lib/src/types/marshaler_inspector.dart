@@ -1,59 +1,70 @@
 part of 'managed_type.dart';
 
-class MarshalerLoader extends SimpleElementVisitor {
-  MarshalerLoader(this.typeManager);
+class MarshalerInspector extends SimpleElementVisitor {
+  MarshalerInspector(this.typeManager);
 
   final TypeManager typeManager;
+
+  bool _inspecting = false;
 
   Marshaler? getMarshalerFor(ManagedType type) {
     // make sure type can be visited
     final element = type.dartType?.element?.declaration;
     if (element == null) return null;
 
-    // final attached marshaler if provided
-    final explicit = typeManager.getExplicitMarshaler(element);
-    if (explicit != null) return explicit;
+    if (_inspecting) {
+      throw UnsupportedError(
+          'MarshalerInspector.getMarshalerFor() is not reentrant!');
+    }
+    _inspecting = true;
+    try {
+      // final attached marshaler if provided
+      final explicit = typeManager.getExplicitMarshaler(element);
+      if (explicit != null) return explicit;
 
-    // reset state
-    _toJson = null;
-    _fromJson = null;
-    _marshal = null;
-    _unmarshal = null;
+      // reset state
+      _toJson = null;
+      _fromJson = null;
+      _marshal = null;
+      _unmarshal = null;
 
-    // check this type
-    element.visitChildren(this);
+      // check this type
+      element.visitChildren(this);
 
-    // also check methods/getters defined in extensions of this type
-    final extensions = typeManager.library.accessibleExtensions
-        .where((e) => e.extendedType == type.dartType)
-        .toList();
-    if (extensions.isNotEmpty) {
-      for (var ext in extensions) {
-        ext.visitChildren(this);
+      // also check methods/getters defined in extensions of this type
+      final extensions = typeManager.library.accessibleExtensions
+          .where((e) => e.extendedType == type.dartType)
+          .toList();
+      if (extensions.isNotEmpty) {
+        for (var ext in extensions) {
+          ext.visitChildren(this);
+        }
       }
-    }
 
-    final typeName = type.getTypeName(NullabilitySuffix.none);
-    final isMarshaler = (_marshal != null) && (_unmarshal != null);
-    final isJson = !isMarshaler && (_toJson != null) && (_fromJson != null);
+      final typeName = type.getTypeName(NullabilitySuffix.none);
+      final isMarshaler = (_marshal != null) && (_unmarshal != null);
+      final isJson = !isMarshaler && (_toJson != null) && (_fromJson != null);
 
-    // get loader name if static methods are implemented via extensions
-    final loader = isMarshaler
-        ? _unmarshal!.enclosingElement!
-        : (isJson ? _fromJson!.enclosingElement! : null);
-    String? loaderTypeName;
-    if (loader is ExtensionElement) {
-      final pre = typeManager.getPrefixFor(loader.library);
-      loaderTypeName = pre.isEmpty ? loader.name! : '$pre.${loader.name!}';
-    }
+      // get loader name if static methods are implemented via extensions
+      final loader = isMarshaler
+          ? _unmarshal!.enclosingElement!
+          : (isJson ? _fromJson!.enclosingElement! : null);
+      String? loaderTypeName;
+      if (loader is ExtensionElement) {
+        final prefix = typeManager.getPrefixFor(loader.library);
+        loaderTypeName = '${prefix.isEmpty ? '' : '$prefix.'}${loader.name!}';
+      }
 
-    // return marshaler
-    if (isMarshaler) {
-      return Marshaler.self(typeName, loaderTypeName);
-    } else if (isJson) {
-      return Marshaler.json(typeName, loaderTypeName);
-    } else {
-      return null;
+      // return marshaler
+      if (isMarshaler) {
+        return Marshaler.self(typeName, loaderTypeName);
+      } else if (isJson) {
+        return Marshaler.json(typeName, loaderTypeName);
+      } else {
+        return null;
+      }
+    } finally {
+      _inspecting = false;
     }
   }
 

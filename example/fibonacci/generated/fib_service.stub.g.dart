@@ -6,4 +6,5 @@
 
 import 'package:squadron/squadron.dart';
 
-EntryPoint $getFibServiceActivator() => throw UnimplementedError();
+EntryPoint $getFibServiceActivator(SquadronPlatformType platform) =>
+    throw UnimplementedError();

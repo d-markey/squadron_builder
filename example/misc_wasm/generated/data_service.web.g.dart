@@ -13,5 +13,11 @@ void main() {
   run($DataServiceInitializer);
 }
 
-EntryPoint $getDataServiceActivator() =>
-    Uri.parse('example/misc_wasm/generated/data_service.web.g.dart.wasm');
+EntryPoint $getDataServiceActivator(SquadronPlatformType platform) {
+  if (platform.isWeb) {
+    return Squadron.uri(
+        'example/misc_wasm/generated/data_service.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

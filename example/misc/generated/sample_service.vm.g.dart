@@ -8,8 +8,15 @@ import 'package:squadron/squadron.dart';
 
 import '../sample_service.dart';
 
-/// VM entry point for SampleService
-void _start$SampleService(WorkerRequest command) =>
-    run($SampleServiceInitializer, command);
+void _start$SampleService(WorkerRequest command) {
+  /// VM entry point for SampleService
+  run($SampleServiceInitializer, command);
+}
 
-EntryPoint $getSampleServiceActivator() => _start$SampleService;
+EntryPoint $getSampleServiceActivator(SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$SampleService;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

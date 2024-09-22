@@ -8,8 +8,15 @@ import 'package:squadron/squadron.dart';
 
 import '../hello_world.dart';
 
-/// VM entry point for HelloWorld
-void _start$HelloWorld(WorkerRequest command) =>
-    run($HelloWorldInitializer, command);
+void _start$HelloWorld(WorkerRequest command) {
+  /// VM entry point for HelloWorld
+  run($HelloWorldInitializer, command);
+}
 
-EntryPoint $getHelloWorldActivator() => _start$HelloWorld;
+EntryPoint $getHelloWorldActivator(SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$HelloWorld;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

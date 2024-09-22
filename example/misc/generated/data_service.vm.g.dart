@@ -8,8 +8,15 @@ import 'package:squadron/squadron.dart';
 
 import '../data_service.dart';
 
-/// VM entry point for DataService
-void _start$DataService(WorkerRequest command) =>
-    run($DataServiceInitializer, command);
+void _start$DataService(WorkerRequest command) {
+  /// VM entry point for DataService
+  run($DataServiceInitializer, command);
+}
 
-EntryPoint $getDataServiceActivator() => _start$DataService;
+EntryPoint $getDataServiceActivator(SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$DataService;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

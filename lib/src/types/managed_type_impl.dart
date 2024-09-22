@@ -23,7 +23,7 @@ class _ManagedTypeImpl extends ManagedType {
   void setMarshaler(TypeManager typeManager) {
     final element = dartType.element;
     if (element == null) return;
-    final marshalerLoader = MarshalerLoader(typeManager);
+    final marshalerLoader = MarshalerInspector(typeManager);
     _attachedMarshaler = marshalerLoader.getMarshalerFor(this);
   }
 }

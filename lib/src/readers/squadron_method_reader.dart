@@ -22,10 +22,10 @@ class SquadronMethodReader extends DartMethodReader {
   final bool inspectRequest;
   final bool inspectResponse;
 
-  int? _num;
-  int get num => _num ?? -1;
+  int? _index;
+  int get index => _index ?? -1;
 
-  void setNum(int num) => _num ??= num;
+  void setIndex(int index) => _index ??= index;
 
   final String id;
 
@@ -40,6 +40,7 @@ class SquadronMethodReader extends DartMethodReader {
 
   String get workerExecutor => isStream ? 'stream' : 'send';
   String get poolExecutor => isStream ? 'stream' : 'execute';
+  String get continuation => isStream ? '.map' : '.then';
 
   final Marshaler? _resultMarshaler;
 

@@ -4,7 +4,10 @@
 import 'dart:async';
 import 'dart:typed_data' as typed_data;
 
+import 'package:cancelation_token/cancelation_token.dart';
+import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart' as sq;
+import 'package:using/using.dart';
 
 import 'generated/test_services.activator.g.dart';
 
@@ -196,7 +199,7 @@ class TestOptNullDefNamedPrivateNonFinalField {
 }
 
 @sq.SquadronService()
-class TestInstallable extends sq.ServiceInstaller {
+class TestInstallable with sq.ServiceInstaller {
   TestInstallable(this._delay);
 
   final int _delay;

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:cancelation_token/cancelation_token.dart';
 import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
+import 'package:using/src/releasable.dart';
 
 import 'generated/echo_service.activator.g.dart';
 import 'marshalers.dart';
@@ -13,7 +14,7 @@ import 'service_response.dart' as srv;
 
 part 'generated/echo_service.worker.g.dart';
 
-@SquadronService(web: false)
+@SquadronService(targetPlatform: TargetPlatform.vm)
 class EchoService {
   EchoService([bool trace = false, cfg.ServiceConfig<int>? workloadDelay])
       : _delay = Duration(microseconds: workloadDelay?.value ?? 50),

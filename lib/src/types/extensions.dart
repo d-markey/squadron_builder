@@ -2,20 +2,13 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
+import 'package:squadron_builder/src/types/imported_type.dart';
 
-import '../extensions.dart';
-import 'known_type.dart';
 import 'managed_type.dart';
 
 @internal
 extension DartTypeExt on DartType {
-  String get baseName {
-    var n = toString();
-    while (n.endsWith('?') || n.endsWith('*')) {
-      n = n.substring(0, n.length - 1);
-    }
-    return n;
-  }
+  String get baseName => element?.name ?? '<anonymous>';
 
   Iterable<DartType> implementedTypes(ManagedType knownType,
       {bool includeSelf = false}) sync* {
@@ -23,9 +16,8 @@ extension DartTypeExt on DartType {
     if (includeSelf && isMatch(this)) {
       yield this;
     }
-    final typeElt = element.safeCast<ClassElement>();
-    if (typeElt != null) {
-      yield* typeElt.allSupertypes.where(isMatch);
+    if (element is ClassElement) {
+      yield* (element as ClassElement).allSupertypes.where(isMatch);
     }
   }
 
@@ -45,6 +37,9 @@ extension LibraryImportElementExt on LibraryImportElement {
 @internal
 extension LibraryElementExt on LibraryElement {
   bool isFromPackage(String pckUri) => location?.isFromPackage(pckUri) ?? false;
+
+  LibraryImportElement? getImport(String pckUri) =>
+      libraryImports.where((i) => i.isFromPackage(pckUri)).firstOrNull;
 }
 
 @internal
@@ -68,25 +63,18 @@ extension NullabilitySuffixExt on NullabilitySuffix {
 }
 
 class _TypeFilter {
-  _TypeFilter(ManagedType knownType)
-      : pckUri = (knownType is KnownType) ? knownType.pckUri : '',
-        typeName = (knownType is KnownType && !knownType.isResolved)
-            ? ''
-            : knownType.getTypeName(NullabilitySuffix.none),
-        genTypeName = (knownType is KnownType && !knownType.isResolved)
-            ? '<'
-            : '${knownType.getTypeName(NullabilitySuffix.none)}<';
+  _TypeFilter(this.target);
 
-  final String typeName;
-  final String genTypeName;
-  final String pckUri;
+  final ManagedType target;
 
-  bool isMatch(DartType type) {
-    final baseName = type.baseName;
-    if (baseName == typeName || baseName.startsWith(genTypeName)) {
-      return pckUri.isEmpty || type.isFromPackage(pckUri);
-    } else {
-      return false;
-    }
+  late bool Function(DartType) isMatch = (target is ManagedImportedType)
+      ? _isImportMatch(target as ManagedImportedType)
+      : _isMatch;
+
+  bool _isMatch(DartType type) => (type == target.dartType);
+
+  bool Function(DartType) _isImportMatch(ManagedImportedType target) {
+    final pckUri = target.pckUri, baseName = target.baseName;
+    return (type) => (type.isFromPackage(pckUri) && type.baseName == baseName);
   }
 }

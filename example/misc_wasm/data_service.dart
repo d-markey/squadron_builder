@@ -2,13 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:cancelation_token/cancelation_token.dart';
+import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
+import 'package:using/using.dart';
 
 import 'generated/data_service.activator.g.dart';
 
 part 'generated/data_service.worker.g.dart';
 
-@SquadronService(wasm: true)
+@SquadronService(targetPlatform: TargetPlatform.wasm)
 class DataService {
   @squadronMethod
   FutureOr<Data> doSomething(Data input) =>

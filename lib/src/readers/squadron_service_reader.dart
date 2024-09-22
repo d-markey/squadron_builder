@@ -9,14 +9,15 @@ import 'squadron_parameters.dart';
 
 /// Reader for a Squadron service class
 class SquadronServiceReader {
-  SquadronServiceReader._(ClassElement clazz, this.typeManager, this.pool,
-      this.vm, this.web, this.wasm, this.baseUrl)
+  SquadronServiceReader._(ClassElement clazz, TypeManager typeManager,
+      this.pool, this.vm, this.web, this.js, this.wasm, this.baseUrl)
       : name = clazz.name,
+        isBase = clazz.isBase,
         parameters = SquadronParameters(typeManager) {
     _load(clazz);
   }
 
-  final TypeManager typeManager;
+  final bool isBase;
   final SquadronParameters parameters;
 
   final fields = <String, FieldElement>{};
@@ -28,18 +29,20 @@ class SquadronServiceReader {
   final bool vm;
   final bool web;
   final bool wasm;
+  final bool js;
   final String baseUrl;
+
+  TypeManager get typeManager => parameters.typeManager;
 
   void _load(ClassElement clazz) {
     if (clazz.isAbstract ||
         clazz.isInterface ||
         clazz.isSealed ||
         clazz.isFinal ||
-        clazz.isBase ||
         !clazz.isConstructable ||
         clazz.name.startsWith('_')) {
       throw InvalidGenerationSourceError(
-          'Service classes must be public and concrete.');
+          'Service classes must be public, concrete and extendable.');
     }
 
     final ctorElement = clazz.unnamedConstructor;
@@ -79,14 +82,18 @@ class SquadronServiceReader {
     final reader = AnnotationReader<SquadronService>(clazz);
     if (reader.isEmpty) return null;
     final pool = reader.isSet('pool');
-    final vm = reader.isSet('vm');
-    final web = reader.isSet('web');
-    final wasm = reader.isSet('wasm');
+    final targetPlatform = reader.getInt('targetPlatform');
+
+    final vm = targetPlatform.hasVm;
+    final js = targetPlatform.hasJs;
+    final wasm = targetPlatform.hasWasm;
+    final web = js | wasm;
+
     var baseUrl = reader.getString('baseUrl') ?? '';
     if (baseUrl.isNotEmpty && baseUrl.endsWith('/')) {
       baseUrl = baseUrl.substring(0, baseUrl.length - 1);
     }
     return SquadronServiceReader._(
-        clazz, typeManager, pool, vm, web, wasm, baseUrl);
+        clazz, typeManager, pool, vm, web, js, wasm, baseUrl);
   }
 }

@@ -8,184 +8,374 @@ import 'package:squadron/squadron.dart' as sq;
 
 import '../test_services.dart';
 
-/// VM entry point for TestParameterLess
-void _start$TestParameterLess(sq.WorkerRequest command) =>
-    sq.run($TestParameterLessInitializer, command);
+void _start$TestParameterLess(sq.WorkerRequest command) {
+  /// VM entry point for TestParameterLess
+  sq.run($TestParameterLessInitializer, command);
+}
 
-sq.EntryPoint $getTestParameterLessActivator() => _start$TestParameterLess;
+sq.EntryPoint $getTestParameterLessActivator(sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestParameterLess;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestReqPositional
-void _start$TestReqPositional(sq.WorkerRequest command) =>
-    sq.run($TestReqPositionalInitializer, command);
+void _start$TestReqPositional(sq.WorkerRequest command) {
+  /// VM entry point for TestReqPositional
+  sq.run($TestReqPositionalInitializer, command);
+}
 
-sq.EntryPoint $getTestReqPositionalActivator() => _start$TestReqPositional;
+sq.EntryPoint $getTestReqPositionalActivator(sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestReqPositional;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullPositional
-void _start$TestOptNullPositional(sq.WorkerRequest command) =>
-    sq.run($TestOptNullPositionalInitializer, command);
+void _start$TestOptNullPositional(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullPositional
+  sq.run($TestOptNullPositionalInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullPositionalActivator() =>
-    _start$TestOptNullPositional;
+sq.EntryPoint $getTestOptNullPositionalActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullPositional;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptDefPositional
-void _start$TestOptDefPositional(sq.WorkerRequest command) =>
-    sq.run($TestOptDefPositionalInitializer, command);
+void _start$TestOptDefPositional(sq.WorkerRequest command) {
+  /// VM entry point for TestOptDefPositional
+  sq.run($TestOptDefPositionalInitializer, command);
+}
 
-sq.EntryPoint $getTestOptDefPositionalActivator() =>
-    _start$TestOptDefPositional;
+sq.EntryPoint $getTestOptDefPositionalActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptDefPositional;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullDefPositional
-void _start$TestOptNullDefPositional(sq.WorkerRequest command) =>
-    sq.run($TestOptNullDefPositionalInitializer, command);
+void _start$TestOptNullDefPositional(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullDefPositional
+  sq.run($TestOptNullDefPositionalInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullDefPositionalActivator() =>
-    _start$TestOptNullDefPositional;
+sq.EntryPoint $getTestOptNullDefPositionalActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullDefPositional;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestReqPositionalField
-void _start$TestReqPositionalField(sq.WorkerRequest command) =>
-    sq.run($TestReqPositionalFieldInitializer, command);
+void _start$TestReqPositionalField(sq.WorkerRequest command) {
+  /// VM entry point for TestReqPositionalField
+  sq.run($TestReqPositionalFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestReqPositionalFieldActivator() =>
-    _start$TestReqPositionalField;
+sq.EntryPoint $getTestReqPositionalFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestReqPositionalField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullPositionalField
-void _start$TestOptNullPositionalField(sq.WorkerRequest command) =>
-    sq.run($TestOptNullPositionalFieldInitializer, command);
+void _start$TestOptNullPositionalField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullPositionalField
+  sq.run($TestOptNullPositionalFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullPositionalFieldActivator() =>
-    _start$TestOptNullPositionalField;
+sq.EntryPoint $getTestOptNullPositionalFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullPositionalField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptDefPositionalField
-void _start$TestOptDefPositionalField(sq.WorkerRequest command) =>
-    sq.run($TestOptDefPositionalFieldInitializer, command);
+void _start$TestOptDefPositionalField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptDefPositionalField
+  sq.run($TestOptDefPositionalFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptDefPositionalFieldActivator() =>
-    _start$TestOptDefPositionalField;
+sq.EntryPoint $getTestOptDefPositionalFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptDefPositionalField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullDefPositionalField
-void _start$TestOptNullDefPositionalField(sq.WorkerRequest command) =>
-    sq.run($TestOptNullDefPositionalFieldInitializer, command);
+void _start$TestOptNullDefPositionalField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullDefPositionalField
+  sq.run($TestOptNullDefPositionalFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullDefPositionalFieldActivator() =>
-    _start$TestOptNullDefPositionalField;
+sq.EntryPoint $getTestOptNullDefPositionalFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullDefPositionalField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestReqPositionalPrivateField
-void _start$TestReqPositionalPrivateField(sq.WorkerRequest command) =>
-    sq.run($TestReqPositionalPrivateFieldInitializer, command);
+void _start$TestReqPositionalPrivateField(sq.WorkerRequest command) {
+  /// VM entry point for TestReqPositionalPrivateField
+  sq.run($TestReqPositionalPrivateFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestReqPositionalPrivateFieldActivator() =>
-    _start$TestReqPositionalPrivateField;
+sq.EntryPoint $getTestReqPositionalPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestReqPositionalPrivateField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullPositionalPrivateField
-void _start$TestOptNullPositionalPrivateField(sq.WorkerRequest command) =>
-    sq.run($TestOptNullPositionalPrivateFieldInitializer, command);
+void _start$TestOptNullPositionalPrivateField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullPositionalPrivateField
+  sq.run($TestOptNullPositionalPrivateFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullPositionalPrivateFieldActivator() =>
-    _start$TestOptNullPositionalPrivateField;
+sq.EntryPoint $getTestOptNullPositionalPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullPositionalPrivateField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptDefPositionalPrivateField
-void _start$TestOptDefPositionalPrivateField(sq.WorkerRequest command) =>
-    sq.run($TestOptDefPositionalPrivateFieldInitializer, command);
+void _start$TestOptDefPositionalPrivateField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptDefPositionalPrivateField
+  sq.run($TestOptDefPositionalPrivateFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptDefPositionalPrivateFieldActivator() =>
-    _start$TestOptDefPositionalPrivateField;
+sq.EntryPoint $getTestOptDefPositionalPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptDefPositionalPrivateField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullDefPositionalPrivateField
-void _start$TestOptNullDefPositionalPrivateField(sq.WorkerRequest command) =>
-    sq.run($TestOptNullDefPositionalPrivateFieldInitializer, command);
+void _start$TestOptNullDefPositionalPrivateField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullDefPositionalPrivateField
+  sq.run($TestOptNullDefPositionalPrivateFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator() =>
-    _start$TestOptNullDefPositionalPrivateField;
+sq.EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullDefPositionalPrivateField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullNamed
-void _start$TestOptNullNamed(sq.WorkerRequest command) =>
-    sq.run($TestOptNullNamedInitializer, command);
+void _start$TestOptNullNamed(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullNamed
+  sq.run($TestOptNullNamedInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullNamedActivator() => _start$TestOptNullNamed;
+sq.EntryPoint $getTestOptNullNamedActivator(sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullNamed;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptDefNamed
-void _start$TestOptDefNamed(sq.WorkerRequest command) =>
-    sq.run($TestOptDefNamedInitializer, command);
+void _start$TestOptDefNamed(sq.WorkerRequest command) {
+  /// VM entry point for TestOptDefNamed
+  sq.run($TestOptDefNamedInitializer, command);
+}
 
-sq.EntryPoint $getTestOptDefNamedActivator() => _start$TestOptDefNamed;
+sq.EntryPoint $getTestOptDefNamedActivator(sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptDefNamed;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullDefNamed
-void _start$TestOptNullDefNamed(sq.WorkerRequest command) =>
-    sq.run($TestOptNullDefNamedInitializer, command);
+void _start$TestOptNullDefNamed(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullDefNamed
+  sq.run($TestOptNullDefNamedInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullDefNamedActivator() => _start$TestOptNullDefNamed;
+sq.EntryPoint $getTestOptNullDefNamedActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullDefNamed;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullNamedField
-void _start$TestOptNullNamedField(sq.WorkerRequest command) =>
-    sq.run($TestOptNullNamedFieldInitializer, command);
+void _start$TestOptNullNamedField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullNamedField
+  sq.run($TestOptNullNamedFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullNamedFieldActivator() =>
-    _start$TestOptNullNamedField;
+sq.EntryPoint $getTestOptNullNamedFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullNamedField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptDefNamedField
-void _start$TestOptDefNamedField(sq.WorkerRequest command) =>
-    sq.run($TestOptDefNamedFieldInitializer, command);
+void _start$TestOptDefNamedField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptDefNamedField
+  sq.run($TestOptDefNamedFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptDefNamedFieldActivator() =>
-    _start$TestOptDefNamedField;
+sq.EntryPoint $getTestOptDefNamedFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptDefNamedField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullDefNamedField
-void _start$TestOptNullDefNamedField(sq.WorkerRequest command) =>
-    sq.run($TestOptNullDefNamedFieldInitializer, command);
+void _start$TestOptNullDefNamedField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullDefNamedField
+  sq.run($TestOptNullDefNamedFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullDefNamedFieldActivator() =>
-    _start$TestOptNullDefNamedField;
+sq.EntryPoint $getTestOptNullDefNamedFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullDefNamedField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullNamedPrivateField
-void _start$TestOptNullNamedPrivateField(sq.WorkerRequest command) =>
-    sq.run($TestOptNullNamedPrivateFieldInitializer, command);
+void _start$TestOptNullNamedPrivateField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullNamedPrivateField
+  sq.run($TestOptNullNamedPrivateFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullNamedPrivateFieldActivator() =>
-    _start$TestOptNullNamedPrivateField;
+sq.EntryPoint $getTestOptNullNamedPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullNamedPrivateField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptDefNamedPrivateField
-void _start$TestOptDefNamedPrivateField(sq.WorkerRequest command) =>
-    sq.run($TestOptDefNamedPrivateFieldInitializer, command);
+void _start$TestOptDefNamedPrivateField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptDefNamedPrivateField
+  sq.run($TestOptDefNamedPrivateFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
-    _start$TestOptDefNamedPrivateField;
+sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptDefNamedPrivateField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullDefNamedPrivateField
-void _start$TestOptNullDefNamedPrivateField(sq.WorkerRequest command) =>
-    sq.run($TestOptNullDefNamedPrivateFieldInitializer, command);
+void _start$TestOptNullDefNamedPrivateField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullDefNamedPrivateField
+  sq.run($TestOptNullDefNamedPrivateFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
-    _start$TestOptNullDefNamedPrivateField;
+sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullDefNamedPrivateField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestPrefixedImportType
-void _start$TestPrefixedImportType(sq.WorkerRequest command) =>
-    sq.run($TestPrefixedImportTypeInitializer, command);
+void _start$TestPrefixedImportType(sq.WorkerRequest command) {
+  /// VM entry point for TestPrefixedImportType
+  sq.run($TestPrefixedImportTypeInitializer, command);
+}
 
-sq.EntryPoint $getTestPrefixedImportTypeActivator() =>
-    _start$TestPrefixedImportType;
+sq.EntryPoint $getTestPrefixedImportTypeActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestPrefixedImportType;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestOptNullDefNamedPrivateNonFinalField
-void _start$TestOptNullDefNamedPrivateNonFinalField(sq.WorkerRequest command) =>
-    sq.run($TestOptNullDefNamedPrivateNonFinalFieldInitializer, command);
+void _start$TestOptNullDefNamedPrivateNonFinalField(sq.WorkerRequest command) {
+  /// VM entry point for TestOptNullDefNamedPrivateNonFinalField
+  sq.run($TestOptNullDefNamedPrivateNonFinalFieldInitializer, command);
+}
 
-sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
-    _start$TestOptNullDefNamedPrivateNonFinalField;
+sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestOptNullDefNamedPrivateNonFinalField;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestInstallable
-void _start$TestInstallable(sq.WorkerRequest command) =>
-    sq.run($TestInstallableInitializer, command);
+void _start$TestInstallable(sq.WorkerRequest command) {
+  /// VM entry point for TestInstallable
+  sq.run($TestInstallableInitializer, command);
+}
 
-sq.EntryPoint $getTestInstallableActivator() => _start$TestInstallable;
+sq.EntryPoint $getTestInstallableActivator(sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestInstallable;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestRecordTypes
-void _start$TestRecordTypes(sq.WorkerRequest command) =>
-    sq.run($TestRecordTypesInitializer, command);
+void _start$TestRecordTypes(sq.WorkerRequest command) {
+  /// VM entry point for TestRecordTypes
+  sq.run($TestRecordTypesInitializer, command);
+}
 
-sq.EntryPoint $getTestRecordTypesActivator() => _start$TestRecordTypes;
+sq.EntryPoint $getTestRecordTypesActivator(sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestRecordTypes;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-/// VM entry point for TestRequiredSuperParam
-void _start$TestRequiredSuperParam(sq.WorkerRequest command) =>
-    sq.run($TestRequiredSuperParamInitializer, command);
+void _start$TestRequiredSuperParam(sq.WorkerRequest command) {
+  /// VM entry point for TestRequiredSuperParam
+  sq.run($TestRequiredSuperParamInitializer, command);
+}
 
-sq.EntryPoint $getTestRequiredSuperParamActivator() =>
-    _start$TestRequiredSuperParam;
+sq.EntryPoint $getTestRequiredSuperParamActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestRequiredSuperParam;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

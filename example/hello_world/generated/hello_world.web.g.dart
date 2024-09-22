@@ -13,5 +13,12 @@ void main() {
   run($HelloWorldInitializer);
 }
 
-EntryPoint $getHelloWorldActivator() =>
-    Uri.parse('example/hello_world/generated/hello_world.web.g.dart.js');
+EntryPoint $getHelloWorldActivator(SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return Squadron.uri('~/workers/hello_world.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return Squadron.uri('~/workers/hello_world.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

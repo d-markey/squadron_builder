@@ -4,6 +4,8 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart';
+import 'package:squadron_builder/src/types/imported_type.dart';
+import 'package:squadron_builder/src/types/managed_type.dart';
 
 import 'build_step_events.dart';
 import 'readers/squadron_service_reader.dart';
@@ -66,13 +68,27 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     }
   }
 
+  void _ensureImport(ManagedType type) {
+    if (type is NonImportedType) {
+      log.warning(
+        'Finalizable workers rely on ${type.baseName} from package ${type.pckUri} which is not accessible from your worker service library.'
+        'Please make sure your project has a dependency to package "${type.pckUri}" and import it in the worker service library.',
+      );
+    }
+  }
+
   @override
   Stream<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async* {
     final classElt = element;
     if (classElt is! ClassElement) return;
 
-    // implementation moved to specific methods to facilitate unit tests
+    if (_withFinalizers) {
+      _ensureImport(_typeManager!.TReleasable);
+      _ensureImport(_typeManager!.TCancelationToken);
+      _ensureImport(_typeManager!.TLogger);
+    }
+
     final service = SquadronServiceReader.load(classElt, _typeManager!)!;
 
     final assets = WorkerAssets(buildStep, service);

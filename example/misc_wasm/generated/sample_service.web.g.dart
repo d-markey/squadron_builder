@@ -13,5 +13,11 @@ void main() {
   run($SampleServiceInitializer);
 }
 
-EntryPoint $getSampleServiceActivator() =>
-    Uri.parse('example/misc_wasm/generated/sample_service.web.g.dart.wasm');
+EntryPoint $getSampleServiceActivator(SquadronPlatformType platform) {
+  if (platform.isWeb) {
+    return Squadron.uri(
+        'example/misc_wasm/generated/sample_service.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

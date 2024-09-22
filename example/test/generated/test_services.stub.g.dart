@@ -6,74 +6,106 @@
 
 import 'package:squadron/squadron.dart' as sq;
 
-sq.EntryPoint $getTestParameterLessActivator() => throw UnimplementedError();
-
-sq.EntryPoint $getTestReqPositionalActivator() => throw UnimplementedError();
-
-sq.EntryPoint $getTestOptNullPositionalActivator() =>
+sq.EntryPoint $getTestParameterLessActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptDefPositionalActivator() => throw UnimplementedError();
-
-sq.EntryPoint $getTestOptNullDefPositionalActivator() =>
+sq.EntryPoint $getTestReqPositionalActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestReqPositionalFieldActivator() =>
+sq.EntryPoint $getTestOptNullPositionalActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptNullPositionalFieldActivator() =>
+sq.EntryPoint $getTestOptDefPositionalActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptDefPositionalFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefPositionalActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptNullDefPositionalFieldActivator() =>
+sq.EntryPoint $getTestReqPositionalFieldActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestReqPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullPositionalFieldActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptNullPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptDefPositionalFieldActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptDefPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefPositionalFieldActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator() =>
+sq.EntryPoint $getTestReqPositionalPrivateFieldActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptNullNamedActivator() => throw UnimplementedError();
-
-sq.EntryPoint $getTestOptDefNamedActivator() => throw UnimplementedError();
-
-sq.EntryPoint $getTestOptNullDefNamedActivator() => throw UnimplementedError();
-
-sq.EntryPoint $getTestOptNullNamedFieldActivator() =>
+sq.EntryPoint $getTestOptNullPositionalPrivateFieldActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptDefNamedFieldActivator() => throw UnimplementedError();
-
-sq.EntryPoint $getTestOptNullDefNamedFieldActivator() =>
+sq.EntryPoint $getTestOptDefPositionalPrivateFieldActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptNullNamedPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptNullNamedActivator(sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
+sq.EntryPoint $getTestOptDefNamedActivator(sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestPrefixedImportTypeActivator() =>
+sq.EntryPoint $getTestOptNullDefNamedActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
+sq.EntryPoint $getTestOptNullNamedFieldActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
-sq.EntryPoint $getTestInstallableActivator() => throw UnimplementedError();
+sq.EntryPoint $getTestOptDefNamedFieldActivator(
+        sq.SquadronPlatformType platform) =>
+    throw UnimplementedError();
 
-sq.EntryPoint $getTestRecordTypesActivator() => throw UnimplementedError();
+sq.EntryPoint $getTestOptNullDefNamedFieldActivator(
+        sq.SquadronPlatformType platform) =>
+    throw UnimplementedError();
 
-sq.EntryPoint $getTestRequiredSuperParamActivator() =>
+sq.EntryPoint $getTestOptNullNamedPrivateFieldActivator(
+        sq.SquadronPlatformType platform) =>
+    throw UnimplementedError();
+
+sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator(
+        sq.SquadronPlatformType platform) =>
+    throw UnimplementedError();
+
+sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator(
+        sq.SquadronPlatformType platform) =>
+    throw UnimplementedError();
+
+sq.EntryPoint $getTestPrefixedImportTypeActivator(
+        sq.SquadronPlatformType platform) =>
+    throw UnimplementedError();
+
+sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator(
+        sq.SquadronPlatformType platform) =>
+    throw UnimplementedError();
+
+sq.EntryPoint $getTestInstallableActivator(sq.SquadronPlatformType platform) =>
+    throw UnimplementedError();
+
+sq.EntryPoint $getTestRecordTypesActivator(sq.SquadronPlatformType platform) =>
+    throw UnimplementedError();
+
+sq.EntryPoint $getTestRequiredSuperParamActivator(
+        sq.SquadronPlatformType platform) =>
     throw UnimplementedError();

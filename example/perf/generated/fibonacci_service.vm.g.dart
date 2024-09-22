@@ -8,8 +8,15 @@ import 'package:squadron/squadron.dart';
 
 import '../fibonacci_service.dart';
 
-/// VM entry point for FibonacciService
-void _start$FibonacciService(WorkerRequest command) =>
-    run($FibonacciServiceInitializer, command);
+void _start$FibonacciService(WorkerRequest command) {
+  /// VM entry point for FibonacciService
+  run($FibonacciServiceInitializer, command);
+}
 
-EntryPoint $getFibonacciServiceActivator() => _start$FibonacciService;
+EntryPoint $getFibonacciServiceActivator(SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$FibonacciService;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

@@ -6,4 +6,5 @@
 
 import 'package:squadron/squadron.dart';
 
-EntryPoint $getHelloWorldActivator() => throw UnimplementedError();
+EntryPoint $getHelloWorldActivator(SquadronPlatformType platform) =>
+    throw UnimplementedError();

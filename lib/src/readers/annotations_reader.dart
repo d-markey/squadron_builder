@@ -20,10 +20,22 @@ class AnnotationReader<T> {
     return value;
   }
 
+  int getInt(String fieldName) {
+    var value = 0;
+    for (var a in _annotations) {
+      final v = a.getField(fieldName)?.toIntValue();
+      if (v != null) {
+        value = value | v;
+      }
+    }
+    return value;
+  }
+
   bool isSet(String fieldName) {
     for (var a in _annotations) {
-      final v = a.getField(fieldName)?.toBoolValue();
-      if (v != null && v) return true;
+      if (a.getField(fieldName)?.hasKnownValue ?? false) {
+        return true;
+      }
     }
     return false;
   }

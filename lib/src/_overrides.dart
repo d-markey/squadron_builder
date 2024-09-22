@@ -1,77 +1,80 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'types/type_manager.dart';
 
-Map<String, String> getWorkerOverrides(TypeManager typeManager) => {
+extension SquadronOverrides on TypeManager {
+  Map<String, String> getWorkerOverrides() {
+    return {
       // state properties and statistics
-      '${typeManager.listType} get args': 'args',
-      '${typeManager.channelType}? get channel': 'channel',
-      '${typeManager.exceptionManagerType} get exceptionManager':
-          'exceptionManager',
-      '${typeManager.loggerType}? get channelLogger': 'channelLogger',
-      'set channelLogger(${typeManager.loggerType}? value)':
-          'channelLogger = value',
-      'Duration get idleTime': 'idleTime',
-      'bool get isStopped': 'isStopped',
-      'int get maxWorkload': 'maxWorkload',
-      '${typeManager.workerStatType} get stats': 'stats',
-      'String get status': 'status',
-      'int get totalErrors': 'totalErrors',
-      'int get totalWorkload': 'totalWorkload',
-      'Duration get upTime': 'upTime',
-      'int get workload': 'workload',
+      '$TList get args': 'args',
+      '$TExceptionManager get exceptionManager': 'exceptionManager',
+      '$TLogger? get channelLogger': 'channelLogger',
+      'set channelLogger($TLogger? value)': 'channelLogger = value',
+      '$TDuration get idleTime': 'idleTime',
+      '$TBool get isStopped': 'isStopped',
+      '$TBool get isConnected': 'isConnected',
+      '$TInt get maxWorkload': 'maxWorkload',
+      '$TWorkerStat get stats': 'stats',
+      '$TString get status': 'status',
+      '$TInt get totalErrors': 'totalErrors',
+      '$TInt get totalWorkload': 'totalWorkload',
+      '$TDuration get upTime': 'upTime',
+      '$TInt get workload': 'workload',
       // worker control
-      'Future<${typeManager.channelType}> start()': 'start()',
+      '$TFuture<$TChannel> start()': 'start()',
       'void stop()': 'stop()',
+      '$TChannel? getSharedChannel()': 'getSharedChannel()',
       // worker tasks
-      'Future<T> send<T>(int command, {${typeManager.listType} args = const [], ${typeManager.cancelationTokenType}? token, bool inspectRequest = false, bool inspectResponse = false})':
-          'send<T>(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)',
-      'Stream<T> stream<T>(int command, {${typeManager.listType} args = const [], ${typeManager.cancelationTokenType}? token, bool inspectRequest = false, bool inspectResponse = false})':
-          'stream<T>(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)',
+      '$TFuture<$TDynamic> send($TInt command, {$TList args = const [], $TCancelationToken? token, $TBool inspectRequest = false, $TBool inspectResponse = false})':
+          'send(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)',
+      '$TStream<$TDynamic> stream($TInt command, {$TList args = const [], $TCancelationToken? token, $TBool inspectRequest = false, $TBool inspectResponse = false})':
+          'stream(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)',
       // finalization token
-      'Object get _detachToken': '_detachToken',
+      '$TObject get _detachToken': '_detachToken',
     };
+  }
 
-Map<String, String> getWorkerPoolOverrides(TypeManager typeManager) => {
+  Map<String, String> getWorkerPoolOverrides() {
+    return {
       // state properties and statistics
-      '${typeManager.exceptionManagerType} get exceptionManager':
-          'exceptionManager',
-      '${typeManager.loggerType}? get channelLogger': 'channelLogger',
-      'set channelLogger(${typeManager.loggerType}? value)':
-          'channelLogger = value',
-      '${typeManager.concurrencySettingsType} get concurrencySettings':
-          'concurrencySettings',
-      'Iterable<${typeManager.workerStatType}> get fullStats': 'fullStats',
-      'int get maxConcurrency': 'maxConcurrency',
-      'int get maxParallel': 'maxParallel',
-      'int get maxSize': 'maxSize',
-      'int get maxWorkers': 'maxWorkers',
-      'int get maxWorkload': 'maxWorkload',
-      'int get minWorkers': 'minWorkers',
-      'int get pendingWorkload': 'pendingWorkload',
-      'int get size': 'size',
-      'Iterable<${typeManager.workerStatType}> get stats': 'stats',
-      'bool get stopped': 'stopped',
-      'int get totalErrors': 'totalErrors',
-      'int get totalWorkload': 'totalWorkload',
-      'int get workload': 'workload',
+      '$TExceptionManager get exceptionManager': 'exceptionManager',
+      '$TLogger? get channelLogger': 'channelLogger',
+      'set channelLogger($TLogger? value)': 'channelLogger = value',
+      '$TConcurrencySettings get concurrencySettings': 'concurrencySettings',
+      '$TIterable<$TWorkerStat> get fullStats': 'fullStats',
+      '$TInt get maxConcurrency': 'maxConcurrency',
+      '$TInt get maxParallel': 'maxParallel',
+      '$TInt get maxSize': 'maxSize',
+      '$TInt get maxWorkers': 'maxWorkers',
+      '$TInt get maxWorkload': 'maxWorkload',
+      '$TInt get minWorkers': 'minWorkers',
+      '$TInt get pendingWorkload': 'pendingWorkload',
+      '$TInt get size': 'size',
+      '$TIterable<$TWorkerStat> get stats': 'stats',
+      '$TBool get stopped': 'stopped',
+      '$TInt get totalErrors': 'totalErrors',
+      '$TInt get totalWorkload': 'totalWorkload',
+      '$TInt get workload': 'workload',
       // pool & task control
-      'void cancel([${typeManager.taskType}? task, String? message])':
-          'cancel(task, message)',
-      'FutureOr start()': 'start()',
-      r'int stop([bool Function($workerClassName worker)? predicate])':
+      'void cancel([$TTask? task, $TString? message])': 'cancel(task, message)',
+      '$TFutureOr<void> start()': 'start()',
+      '$TInt stop([$TBool Function(@Worker@ worker)? predicate])':
           'stop(predicate)',
-      r'Object registerWorkerPoolListener(void Function($workerClassName worker, bool removed) listener)':
+      '$TObject registerWorkerPoolListener(void Function(@Worker@ worker, $TBool removed) listener)':
           'registerWorkerPoolListener(listener)',
-      r'void unregisterWorkerPoolListener({void Function($workerClassName worker, bool removed)? listener, Object? token})':
+      'void unregisterWorkerPoolListener({void Function(@Worker@ worker, $TBool removed)? listener, $TObject? token})':
           'unregisterWorkerPoolListener(listener: listener, token: token)',
       // pool tasks
-      'Future<T> execute<T>(Future<T> Function(\$workerClassName worker) task, {${typeManager.perfCounterType}? counter})':
+      '$TFuture<T> execute<T>($TFuture<T> Function(@Worker@ worker) task, {$TPerfCounter? counter})':
           'execute<T>(task, counter: counter)',
-      '${typeManager.streamTaskType}<T> scheduleStream<T>(Stream<T> Function(\$workerClassName worker) task, {${typeManager.perfCounterType}? counter})':
-          'scheduleStream<T>(task, counter: counter)',
-      '${typeManager.valueTaskType}<T> scheduleTask<T>(Future<T> Function(\$workerClassName worker) task, {${typeManager.perfCounterType}? counter})':
-          'scheduleTask<T>(task, counter: counter)',
-      'Stream<T> stream<T>(Stream<T> Function(\$workerClassName worker) task, {${typeManager.perfCounterType}? counter})':
+      '$TStream<T> stream<T>($TStream<T> Function(@Worker@ worker) task, {$TPerfCounter? counter})':
           'stream<T>(task, counter: counter)',
+      '$TStreamTask<T> scheduleStreamTask<T>($TStream<T> Function(@Worker@ worker) task, {$TPerfCounter? counter})':
+          'scheduleStreamTask<T>(task, counter: counter)',
+      '$TValueTask<T> scheduleValueTask<T>($TFuture<T> Function(@Worker@ worker) task, {$TPerfCounter? counter})':
+          'scheduleValueTask<T>(task, counter: counter)',
       // finalization token
-      'Object get _detachToken': '_detachToken',
+      '$TObject get _detachToken': '_detachToken',
     };
+  }
+}

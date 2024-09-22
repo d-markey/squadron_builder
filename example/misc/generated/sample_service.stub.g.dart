@@ -6,4 +6,5 @@
 
 import 'package:squadron/squadron.dart';
 
-EntryPoint $getSampleServiceActivator() => throw UnimplementedError();
+EntryPoint $getSampleServiceActivator(SquadronPlatformType platform) =>
+    throw UnimplementedError();

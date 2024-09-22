@@ -8,8 +8,15 @@ import 'package:squadron/squadron.dart';
 
 import '../echo_service.dart';
 
-/// VM entry point for EchoService
-void _start$EchoService(WorkerRequest command) =>
-    run($EchoServiceInitializer, command);
+void _start$EchoService(WorkerRequest command) {
+  /// VM entry point for EchoService
+  run($EchoServiceInitializer, command);
+}
 
-EntryPoint $getEchoServiceActivator() => _start$EchoService;
+EntryPoint $getEchoServiceActivator(SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$EchoService;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

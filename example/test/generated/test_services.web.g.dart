@@ -91,83 +91,347 @@ void main() {
   sq.run($TestRequiredSuperParamInitializer);
 }
 
-sq.EntryPoint $getTestParameterLessActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestParameterLessActivator(sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestReqPositionalActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestReqPositionalActivator(sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullPositionalActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullPositionalActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptDefPositionalActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptDefPositionalActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullDefPositionalActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullDefPositionalActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestReqPositionalFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestReqPositionalFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullPositionalFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullPositionalFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptDefPositionalFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptDefPositionalFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullDefPositionalFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullDefPositionalFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestReqPositionalPrivateFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestReqPositionalPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullPositionalPrivateFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullPositionalPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptDefPositionalPrivateFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptDefPositionalPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullNamedActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullNamedActivator(sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptDefNamedActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptDefNamedActivator(sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullDefNamedActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullDefNamedActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullNamedFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullNamedFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptDefNamedFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptDefNamedFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullDefNamedFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullDefNamedFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullNamedPrivateFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullNamedPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestPrefixedImportTypeActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestPrefixedImportTypeActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestInstallableActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestInstallableActivator(sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestRecordTypesActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestRecordTypesActivator(sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
 
-sq.EntryPoint $getTestRequiredSuperParamActivator() =>
-    Uri.parse('example/test/generated/test_services.web.g.dart.js');
+sq.EntryPoint $getTestRequiredSuperParamActivator(
+    sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

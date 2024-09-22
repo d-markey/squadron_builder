@@ -13,21 +13,24 @@ part 'squadron_method_reader.dart';
 
 /// Reader for non-service methods implemented in a SquadronService
 class DartMethodReader {
-  DartMethodReader._(MethodElement method, this.typeManager)
+  DartMethodReader._(MethodElement method, TypeManager typeManager)
       : name = method.name,
-        returnType = typeManager.handleDartType(method.returnType);
+        returnType = typeManager.handleDartType(method.returnType),
+        parameters = SquadronParameters(typeManager);
 
   final String name;
-  final TypeManager typeManager;
+
+  final typeParameters = <String>[];
+
+  final SquadronParameters parameters;
+
+  TypeManager get typeManager => parameters.typeManager;
 
   final ManagedType returnType;
 
   bool get isStream => returnType.dartType?.isDartAsyncStream ?? false;
   bool get isFuture => returnType.dartType?.isDartAsyncFuture ?? false;
   bool get isFutureOr => returnType.dartType?.isDartAsyncFutureOr ?? false;
-
-  final typeParameters = <String>[];
-  late final parameters = SquadronParameters(typeManager);
 
   void _init(MethodElement method) {
     if (method.typeParameters.isNotEmpty) {

@@ -7,4 +7,4 @@
 import 'fibonacci_service.vm.g.dart';
 
 /// Service activator for FibonacciService
-final $FibonacciServiceActivator = $getFibonacciServiceActivator();
+final $FibonacciServiceActivator = $getFibonacciServiceActivator;

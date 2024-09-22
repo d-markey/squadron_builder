@@ -1,12 +1,15 @@
 import 'dart:async';
 
+import 'package:cancelation_token/cancelation_token.dart';
+import 'package:logger/web.dart';
 import 'package:squadron/squadron.dart';
+import 'package:using/using.dart';
 
 import 'generated/sample_service.activator.g.dart';
 
 part 'generated/sample_service.worker.g.dart';
 
-@SquadronService(wasm: true)
+@SquadronService(targetPlatform: TargetPlatform.wasm)
 class SampleService {
   @squadronMethod
   Future<DataOut> compute(DataIn input) async {

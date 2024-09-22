@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../marshalers/converters.dart';
 import '../marshalers/marshaler.dart';
 import '../types/extensions.dart';
 import '../types/managed_type.dart';
@@ -45,7 +44,7 @@ class SquadronParameters {
   Iterable<SquadronParameter> get named => _params.where(_named);
 
   bool _checkCancelationToken(ParameterElement param) {
-    if (param.type.implementedTypes(typeManager.cancelationTokenType).isEmpty) {
+    if (!param.type.isA(typeManager.TCancelationToken)) {
       // not a cancelation token
       return false;
     }
@@ -78,8 +77,7 @@ class SquadronParameters {
     if ((param.isNamed && _hasOptionalParameters) ||
         (param.isOptional && _hasNamedParameters)) {
       throw InvalidGenerationSourceError(
-          'Cannot register both named and optional parameters. Parameter name: '
-          '${param.name}');
+          'Cannot register both named and optional parameters. Parameter name: ${param.name}');
     }
 
     if (param.isNamed) {
@@ -94,19 +92,20 @@ class SquadronParameters {
     return param;
   }
 
-  String arguments() => _params.map((p) => p.argument()).join(', ');
+  String asArguments() => _params.map((p) => p.argument()).join(', ');
 
-  String nonSuperArguments() =>
+  String asNonSuperArguments() =>
       _params.where((p) => !p.isSuperParam).map((p) => p.argument()).join(', ');
 
-  String serialize(Converters converters) => _params
+  String serialize() => _params
       // cancelation token is passed separately when invoking the worker
       .where((p) => !p.isCancelationToken)
-      .map((p) => p.serialized(converters))
+      .map((p) => p.serialized(typeManager.converters))
       .join(', ');
 
-  String deserialize(Converters converters, String jsonObj) =>
-      _params.map((p) => p.deserialized(converters, jsonObj)).join(', ');
+  String deserialize(String jsonObj) => _params
+      .map((p) => p.deserialized(typeManager.converters, jsonObj))
+      .join(', ');
 
   @override
   String toString() {
@@ -145,7 +144,7 @@ class SquadronParameters {
     }
   }
 
-  String toSuperParams() {
+  String asSuperParams() {
     if (_hasPositionalParameters) {
       if (_hasOptionalParameters) {
         return '${positional.toSuperParam().join(', ')}, [${optional.toSuperParam().join(', ')}]';

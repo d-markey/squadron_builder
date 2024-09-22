@@ -11,11 +11,14 @@ class Converters {
   final _converters = <String, String>{};
 
   String _instance = 'Squadron.converter';
-
   String get instance => _instance;
 
-  set squadronAlias(String value) => _instance =
-      value.isEmpty ? 'Squadron.converter' : '$value.Squadron.converter';
+  String _squadronAlias = '';
+  String get squadronAlias => _squadronAlias;
+  set squadronAlias(String value) {
+    _squadronAlias = value;
+    _instance = '${value.isEmpty ? '' : '$value.'}Squadron.converter';
+  }
 
   void clear() => _converters.clear();
 

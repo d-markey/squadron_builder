@@ -75,7 +75,9 @@ class SquadronParameter {
   String deserialized(Converters converters, String variableName) {
     String value;
     if (isCancelationToken) {
-      value = '$variableName.cancelToken';
+      final nonNull =
+          (managedType.nullabilitySuffix == NullabilitySuffix.none) ? '!' : '';
+      value = '$variableName.cancelToken$nonNull';
     } else {
       value = '$variableName.args[$serIdx]';
       final deserializer = converters.getDeserializerOf(managedType, marshaler);

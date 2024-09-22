@@ -8,8 +8,15 @@ import 'package:squadron/squadron.dart';
 
 import '../stream_service.dart';
 
-/// VM entry point for StreamService
-void _start$StreamService(WorkerRequest command) =>
-    run($StreamServiceInitializer, command);
+void _start$StreamService(WorkerRequest command) {
+  /// VM entry point for StreamService
+  run($StreamServiceInitializer, command);
+}
 
-EntryPoint $getStreamServiceActivator() => _start$StreamService;
+EntryPoint $getStreamServiceActivator(SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$StreamService;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}

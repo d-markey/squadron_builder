@@ -25,6 +25,7 @@ dev_dependencies:
   build_runner:
   logger:
   cancelation_token:
+  using:
 
 dependency_overrides:
   squadron:
