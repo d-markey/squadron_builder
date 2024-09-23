@@ -2,9 +2,7 @@ import 'dart:async' as xxx;
 import 'dart:isolate';
 
 import 'package:cancelation_token/cancelation_token.dart';
-import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
-import 'package:using/using.dart';
 
 import 'generated/hello_world.activator.g.dart';
 

@@ -2,8 +2,8 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
-import 'package:squadron_builder/src/types/imported_type.dart';
 
+import 'imported_type.dart';
 import 'managed_type.dart';
 
 @internal
@@ -40,6 +40,13 @@ extension LibraryElementExt on LibraryElement {
 
   LibraryImportElement? getImport(String pckUri) =>
       libraryImports.where((i) => i.isFromPackage(pckUri)).firstOrNull;
+
+  String? getPrefixFor(String pckUri) {
+    final import =
+        libraryImports.where((i) => i.isFromPackage(pckUri)).firstOrNull;
+    if (import == null) return null;
+    return import.prefix?.element.name ?? '';
+  }
 }
 
 @internal

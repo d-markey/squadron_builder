@@ -4,14 +4,14 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart';
-import 'package:squadron_builder/src/types/imported_type.dart';
-import 'package:squadron_builder/src/types/managed_type.dart';
 
+import 'assets/worker_assets.dart';
 import 'build_step_events.dart';
 import 'readers/squadron_service_reader.dart';
+import 'types/imported_type.dart';
+import 'types/managed_type.dart';
 import 'types/type_manager.dart';
 import 'version.dart';
-import 'worker_assets.dart';
 
 /// Alias for a code formatting function.
 typedef Formatter = String Function(String source);
@@ -83,13 +83,16 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     final classElt = element;
     if (classElt is! ClassElement) return;
 
+    final service = SquadronServiceReader.load(classElt, _typeManager!);
+    if (service == null) return;
+
+    _typeManager!.initialize();
+
     if (_withFinalizers) {
       _ensureImport(_typeManager!.TReleasable);
       _ensureImport(_typeManager!.TCancelationToken);
       _ensureImport(_typeManager!.TLogger);
     }
-
-    final service = SquadronServiceReader.load(classElt, _typeManager!)!;
 
     final assets = WorkerAssets(buildStep, service);
 

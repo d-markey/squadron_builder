@@ -2,27 +2,30 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:squadron_builder/src/types/imported_type.dart';
-import 'package:squadron_builder/src/types/library_inspector.dart';
 
 import '../marshalers/converters.dart';
 import '../marshalers/marshaler.dart';
 import '../readers/annotations_reader.dart';
 import 'extensions.dart';
+import 'imported_type.dart';
+import 'library_inspector.dart';
 import 'managed_type.dart';
 
 class TypeManager {
   TypeManager(this.library) {
-    final dartCoreAlias =
-        library.getImport(_dartCorePckUri)?.prefix?.element.name ?? '';
-
+    final dartCoreAlias = library.getPrefixFor(_dartCorePckUri) ?? '';
     dartCorePrefix = dartCoreAlias.isEmpty ? '' : '$dartCoreAlias.';
+  }
 
-    final squadronImport = library.getImport(_squadronPckUri);
-    if (squadronImport == null) {
+  void initialize() {
+    if (_initialized) return;
+    _initialized = true;
+
+    final squadronAlias = library.getPrefixFor(_squadronPckUri);
+    if (squadronAlias == null) {
       throw InvalidGenerationSourceError('Missing import of Squadron library.');
     }
-    converters.squadronAlias = squadronImport.prefix?.element.name ?? '';
+    converters.squadronAlias = squadronAlias;
 
     final inspector = LibraryInspector(this);
     inspector.loadTypes(library, _managedTypes);
@@ -51,6 +54,8 @@ class TypeManager {
   final LibraryElement library;
 
   final converters = Converters();
+
+  bool _initialized = false;
 
   String getPrefixFor(LibraryElement? lib) {
     if (lib == null) return '';

@@ -21,172 +21,34 @@ sq.WorkerService $TestParameterLessInitializer(sq.WorkerRequest $$) =>
     _$TestParameterLessWorkerService();
 
 /// Worker for TestParameterLess
-base class _$TestParameterLessWorker extends sq.Worker
+base class TestParameterLessWorker extends sq.Worker
     implements TestParameterLess {
-  _$TestParameterLessWorker(
+  TestParameterLessWorker(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestParameterLessActivator(sq.Squadron.platformType));
 
-  _$TestParameterLessWorker.vm(
+  TestParameterLessWorker.vm(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestParameterLessActivator(sq.SquadronPlatformType.vm));
 
-  _$TestParameterLessWorker.js(
+  TestParameterLessWorker.js(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestParameterLessActivator(sq.SquadronPlatformType.js),
             threadHook: threadHook, exceptionManager: exceptionManager);
 
-  _$TestParameterLessWorker.wasm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super($TestParameterLessActivator(sq.SquadronPlatformType.wasm));
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestParameterLess
-base class TestParameterLessWorker
-    with Releasable
-    implements _$TestParameterLessWorker {
-  TestParameterLessWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestParameterLessWorker(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestParameterLessWorker(
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestParameterLessWorker.vm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestParameterLessWorker.vm(
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestParameterLessWorker.js(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestParameterLessWorker.js(
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
   TestParameterLessWorker.wasm(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : this._(_$TestParameterLessWorker.wasm(
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  final _$TestParameterLessWorker _$worker;
-
-  static final Finalizer<_$TestParameterLessWorker> _finalizer =
-      Finalizer<_$TestParameterLessWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
+      : super($TestParameterLessActivator(sq.SquadronPlatformType.wasm));
 }
 
 /// Worker pool for TestParameterLess
-base class _$TestParameterLessWorkerPool extends sq
+base class TestParameterLessWorkerPool extends sq
     .WorkerPool<TestParameterLessWorker> implements TestParameterLess {
-  _$TestParameterLessWorkerPool(
+  TestParameterLessWorkerPool(
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -196,7 +58,7 @@ base class _$TestParameterLessWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestParameterLessWorkerPool.vm(
+  TestParameterLessWorkerPool.vm(
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -206,7 +68,7 @@ base class _$TestParameterLessWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestParameterLessWorkerPool.js(
+  TestParameterLessWorkerPool.js(
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -216,7 +78,7 @@ base class _$TestParameterLessWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestParameterLessWorkerPool.wasm(
+  TestParameterLessWorkerPool.wasm(
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -226,180 +88,6 @@ base class _$TestParameterLessWorkerPool extends sq
                   threadHook: threadHook, exceptionManager: exceptionManager),
           concurrencySettings: concurrencySettings,
         );
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestParameterLess
-base class TestParameterLessWorkerPool
-    with Releasable
-    implements _$TestParameterLessWorkerPool {
-  TestParameterLessWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestParameterLessWorkerPool(
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestParameterLessWorkerPool(
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestParameterLessWorkerPool.vm(
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestParameterLessWorkerPool.vm(
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestParameterLessWorkerPool.js(
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestParameterLessWorkerPool.js(
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestParameterLessWorkerPool.wasm(
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestParameterLessWorkerPool.wasm(
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestParameterLessWorkerPool _$pool;
-
-  static final Finalizer<_$TestParameterLessWorkerPool> _finalizer =
-      Finalizer<_$TestParameterLessWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestParameterLessWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestParameterLessWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestParameterLessWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(Future<T> Function(TestParameterLessWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(Stream<T> Function(TestParameterLessWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestParameterLessWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestParameterLessWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestReqPositional
@@ -417,21 +105,21 @@ sq.WorkerService $TestReqPositionalInitializer(sq.WorkerRequest $$) =>
     _$TestReqPositionalWorkerService(_$X.$0($$.args[0]));
 
 /// Worker for TestReqPositional
-base class _$TestReqPositionalWorker extends sq.Worker
+base class TestReqPositionalWorker extends sq.Worker
     implements TestReqPositional {
-  _$TestReqPositionalWorker(int arg1,
+  TestReqPositionalWorker(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestReqPositionalWorker.vm(int arg1,
+  TestReqPositionalWorker.vm(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestReqPositionalWorker.js(int arg1,
+  TestReqPositionalWorker.js(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalActivator(sq.SquadronPlatformType.js),
@@ -439,155 +127,17 @@ base class _$TestReqPositionalWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestReqPositionalWorker.wasm(int arg1,
+  TestReqPositionalWorker.wasm(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalActivator(sq.SquadronPlatformType.wasm),
             args: [arg1]);
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestReqPositional
-base class TestReqPositionalWorker
-    with Releasable
-    implements _$TestReqPositionalWorker {
-  TestReqPositionalWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestReqPositionalWorker(int arg1,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalWorker(arg1,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestReqPositionalWorker.vm(int arg1,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalWorker.vm(arg1,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestReqPositionalWorker.js(int arg1,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalWorker.js(arg1,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestReqPositionalWorker.wasm(int arg1,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalWorker.wasm(arg1,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  final _$TestReqPositionalWorker _$worker;
-
-  static final Finalizer<_$TestReqPositionalWorker> _finalizer =
-      Finalizer<_$TestReqPositionalWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestReqPositional
-base class _$TestReqPositionalWorkerPool extends sq
+base class TestReqPositionalWorkerPool extends sq
     .WorkerPool<TestReqPositionalWorker> implements TestReqPositional {
-  _$TestReqPositionalWorkerPool(int arg1,
+  TestReqPositionalWorkerPool(int arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -599,7 +149,7 @@ base class _$TestReqPositionalWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestReqPositionalWorkerPool.vm(int arg1,
+  TestReqPositionalWorkerPool.vm(int arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -611,7 +161,7 @@ base class _$TestReqPositionalWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestReqPositionalWorkerPool.js(int arg1,
+  TestReqPositionalWorkerPool.js(int arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -623,7 +173,7 @@ base class _$TestReqPositionalWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestReqPositionalWorkerPool.wasm(int arg1,
+  TestReqPositionalWorkerPool.wasm(int arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -633,180 +183,6 @@ base class _$TestReqPositionalWorkerPool extends sq
                   threadHook: threadHook, exceptionManager: exceptionManager),
           concurrencySettings: concurrencySettings,
         );
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestReqPositional
-base class TestReqPositionalWorkerPool
-    with Releasable
-    implements _$TestReqPositionalWorkerPool {
-  TestReqPositionalWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestReqPositionalWorkerPool(int arg1,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalWorkerPool(arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestReqPositionalWorkerPool.vm(int arg1,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalWorkerPool.vm(arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestReqPositionalWorkerPool.js(int arg1,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalWorkerPool.js(arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestReqPositionalWorkerPool.wasm(int arg1,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalWorkerPool.wasm(arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestReqPositionalWorkerPool _$pool;
-
-  static final Finalizer<_$TestReqPositionalWorkerPool> _finalizer =
-      Finalizer<_$TestReqPositionalWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestReqPositionalWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestReqPositionalWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestReqPositionalWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(Future<T> Function(TestReqPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(Stream<T> Function(TestReqPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestReqPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestReqPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullPositional
@@ -824,23 +200,23 @@ sq.WorkerService $TestOptNullPositionalInitializer(sq.WorkerRequest $$) =>
     _$TestOptNullPositionalWorkerService(_$X.$1($$.args[0]));
 
 /// Worker for TestOptNullPositional
-base class _$TestOptNullPositionalWorker extends sq.Worker
+base class TestOptNullPositionalWorker extends sq.Worker
     implements TestOptNullPositional {
-  _$TestOptNullPositionalWorker(
+  TestOptNullPositionalWorker(
       [int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullPositionalActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptNullPositionalWorker.vm(
+  TestOptNullPositionalWorker.vm(
       [int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullPositionalActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptNullPositionalWorker.js(
+  TestOptNullPositionalWorker.js(
       [int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -849,160 +225,18 @@ base class _$TestOptNullPositionalWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullPositionalWorker.wasm(
+  TestOptNullPositionalWorker.wasm(
       [int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullPositionalActivator(sq.SquadronPlatformType.wasm),
             args: [arg1]);
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullPositional
-base class TestOptNullPositionalWorker
-    with Releasable
-    implements _$TestOptNullPositionalWorker {
-  TestOptNullPositionalWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullPositionalWorker(
-      [int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(
-            _$TestOptNullPositionalWorker(arg1, threadHook, exceptionManager));
-
-  TestOptNullPositionalWorker.vm(
-      [int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalWorker.vm(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullPositionalWorker.js(
-      [int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalWorker.js(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullPositionalWorker.wasm(
-      [int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalWorker.wasm(
-            arg1, threadHook, exceptionManager));
-
-  final _$TestOptNullPositionalWorker _$worker;
-
-  static final Finalizer<_$TestOptNullPositionalWorker> _finalizer =
-      Finalizer<_$TestOptNullPositionalWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullPositional
-base class _$TestOptNullPositionalWorkerPool extends sq
+base class TestOptNullPositionalWorkerPool extends sq
     .WorkerPool<TestOptNullPositionalWorker> implements TestOptNullPositional {
-  _$TestOptNullPositionalWorkerPool(
+  TestOptNullPositionalWorkerPool(
       [int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -1013,7 +247,7 @@ base class _$TestOptNullPositionalWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullPositionalWorkerPool.vm(
+  TestOptNullPositionalWorkerPool.vm(
       [int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -1025,7 +259,7 @@ base class _$TestOptNullPositionalWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullPositionalWorkerPool.js(
+  TestOptNullPositionalWorkerPool.js(
       [int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -1037,7 +271,7 @@ base class _$TestOptNullPositionalWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullPositionalWorkerPool.wasm(
+  TestOptNullPositionalWorkerPool.wasm(
       [int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -1048,178 +282,6 @@ base class _$TestOptNullPositionalWorkerPool extends sq
                   arg1, threadHook, exceptionManager),
           concurrencySettings: concurrencySettings,
         );
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullPositional
-base class TestOptNullPositionalWorkerPool
-    with Releasable
-    implements _$TestOptNullPositionalWorkerPool {
-  TestOptNullPositionalWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullPositionalWorkerPool(
-      [int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalWorkerPool(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullPositionalWorkerPool.vm(
-      [int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalWorkerPool.vm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullPositionalWorkerPool.js(
-      [int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalWorkerPool.js(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullPositionalWorkerPool.wasm(
-      [int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalWorkerPool.wasm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  final _$TestOptNullPositionalWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullPositionalWorkerPool> _finalizer =
-      Finalizer<_$TestOptNullPositionalWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestOptNullPositionalWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptNullPositionalWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptNullPositionalWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptNullPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptNullPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptNullPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptNullPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptDefPositional
@@ -1237,23 +299,23 @@ sq.WorkerService $TestOptDefPositionalInitializer(sq.WorkerRequest $$) =>
     _$TestOptDefPositionalWorkerService(_$X.$0($$.args[0]));
 
 /// Worker for TestOptDefPositional
-base class _$TestOptDefPositionalWorker extends sq.Worker
+base class TestOptDefPositionalWorker extends sq.Worker
     implements TestOptDefPositional {
-  _$TestOptDefPositionalWorker(
+  TestOptDefPositionalWorker(
       [int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptDefPositionalActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptDefPositionalWorker.vm(
+  TestOptDefPositionalWorker.vm(
       [int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptDefPositionalActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptDefPositionalWorker.js(
+  TestOptDefPositionalWorker.js(
       [int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -1262,160 +324,18 @@ base class _$TestOptDefPositionalWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptDefPositionalWorker.wasm(
+  TestOptDefPositionalWorker.wasm(
       [int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptDefPositionalActivator(sq.SquadronPlatformType.wasm),
             args: [arg1]);
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptDefPositional
-base class TestOptDefPositionalWorker
-    with Releasable
-    implements _$TestOptDefPositionalWorker {
-  TestOptDefPositionalWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptDefPositionalWorker(
-      [int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(
-            _$TestOptDefPositionalWorker(arg1, threadHook, exceptionManager));
-
-  TestOptDefPositionalWorker.vm(
-      [int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalWorker.vm(
-            arg1, threadHook, exceptionManager));
-
-  TestOptDefPositionalWorker.js(
-      [int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalWorker.js(
-            arg1, threadHook, exceptionManager));
-
-  TestOptDefPositionalWorker.wasm(
-      [int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalWorker.wasm(
-            arg1, threadHook, exceptionManager));
-
-  final _$TestOptDefPositionalWorker _$worker;
-
-  static final Finalizer<_$TestOptDefPositionalWorker> _finalizer =
-      Finalizer<_$TestOptDefPositionalWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptDefPositional
-base class _$TestOptDefPositionalWorkerPool extends sq
+base class TestOptDefPositionalWorkerPool extends sq
     .WorkerPool<TestOptDefPositionalWorker> implements TestOptDefPositional {
-  _$TestOptDefPositionalWorkerPool(
+  TestOptDefPositionalWorkerPool(
       [int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -1426,7 +346,7 @@ base class _$TestOptDefPositionalWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefPositionalWorkerPool.vm(
+  TestOptDefPositionalWorkerPool.vm(
       [int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -1437,7 +357,7 @@ base class _$TestOptDefPositionalWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefPositionalWorkerPool.js(
+  TestOptDefPositionalWorkerPool.js(
       [int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -1448,7 +368,7 @@ base class _$TestOptDefPositionalWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefPositionalWorkerPool.wasm(
+  TestOptDefPositionalWorkerPool.wasm(
       [int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -1459,178 +379,6 @@ base class _$TestOptDefPositionalWorkerPool extends sq
                   arg1, threadHook, exceptionManager),
           concurrencySettings: concurrencySettings,
         );
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptDefPositional
-base class TestOptDefPositionalWorkerPool
-    with Releasable
-    implements _$TestOptDefPositionalWorkerPool {
-  TestOptDefPositionalWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptDefPositionalWorkerPool(
-      [int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalWorkerPool(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptDefPositionalWorkerPool.vm(
-      [int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalWorkerPool.vm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptDefPositionalWorkerPool.js(
-      [int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalWorkerPool.js(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptDefPositionalWorkerPool.wasm(
-      [int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalWorkerPool.wasm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  final _$TestOptDefPositionalWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptDefPositionalWorkerPool> _finalizer =
-      Finalizer<_$TestOptDefPositionalWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestOptDefPositionalWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptDefPositionalWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptDefPositionalWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptDefPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptDefPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptDefPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptDefPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullDefPositional
@@ -1648,23 +396,23 @@ sq.WorkerService $TestOptNullDefPositionalInitializer(sq.WorkerRequest $$) =>
     _$TestOptNullDefPositionalWorkerService(_$X.$1($$.args[0]));
 
 /// Worker for TestOptNullDefPositional
-base class _$TestOptNullDefPositionalWorker extends sq.Worker
+base class TestOptNullDefPositionalWorker extends sq.Worker
     implements TestOptNullDefPositional {
-  _$TestOptNullDefPositionalWorker(
+  TestOptNullDefPositionalWorker(
       [int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullDefPositionalActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptNullDefPositionalWorker.vm(
+  TestOptNullDefPositionalWorker.vm(
       [int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullDefPositionalActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptNullDefPositionalWorker.js(
+  TestOptNullDefPositionalWorker.js(
       [int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -1673,161 +421,19 @@ base class _$TestOptNullDefPositionalWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullDefPositionalWorker.wasm(
+  TestOptNullDefPositionalWorker.wasm(
       [int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullDefPositionalActivator(sq.SquadronPlatformType.wasm),
             args: [arg1]);
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullDefPositional
-base class TestOptNullDefPositionalWorker
-    with Releasable
-    implements _$TestOptNullDefPositionalWorker {
-  TestOptNullDefPositionalWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullDefPositionalWorker(
-      [int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalWorker(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalWorker.vm(
-      [int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalWorker.vm(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalWorker.js(
-      [int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalWorker.js(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalWorker.wasm(
-      [int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalWorker.wasm(
-            arg1, threadHook, exceptionManager));
-
-  final _$TestOptNullDefPositionalWorker _$worker;
-
-  static final Finalizer<_$TestOptNullDefPositionalWorker> _finalizer =
-      Finalizer<_$TestOptNullDefPositionalWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullDefPositional
-base class _$TestOptNullDefPositionalWorkerPool
+base class TestOptNullDefPositionalWorkerPool
     extends sq.WorkerPool<TestOptNullDefPositionalWorker>
     implements TestOptNullDefPositional {
-  _$TestOptNullDefPositionalWorkerPool(
+  TestOptNullDefPositionalWorkerPool(
       [int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -1839,7 +445,7 @@ base class _$TestOptNullDefPositionalWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefPositionalWorkerPool.vm(
+  TestOptNullDefPositionalWorkerPool.vm(
       [int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -1851,7 +457,7 @@ base class _$TestOptNullDefPositionalWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefPositionalWorkerPool.js(
+  TestOptNullDefPositionalWorkerPool.js(
       [int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -1863,7 +469,7 @@ base class _$TestOptNullDefPositionalWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefPositionalWorkerPool.wasm(
+  TestOptNullDefPositionalWorkerPool.wasm(
       [int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -1874,178 +480,6 @@ base class _$TestOptNullDefPositionalWorkerPool
                   arg1, threadHook, exceptionManager),
           concurrencySettings: concurrencySettings,
         );
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullDefPositional
-base class TestOptNullDefPositionalWorkerPool
-    with Releasable
-    implements _$TestOptNullDefPositionalWorkerPool {
-  TestOptNullDefPositionalWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullDefPositionalWorkerPool(
-      [int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalWorkerPool(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalWorkerPool.vm(
-      [int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalWorkerPool.vm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalWorkerPool.js(
-      [int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalWorkerPool.js(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalWorkerPool.wasm(
-      [int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalWorkerPool.wasm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  final _$TestOptNullDefPositionalWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullDefPositionalWorkerPool> _finalizer =
-      Finalizer<_$TestOptNullDefPositionalWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestOptNullDefPositionalWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptNullDefPositionalWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptNullDefPositionalWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptNullDefPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptNullDefPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptNullDefPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptNullDefPositionalWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestReqPositionalField
@@ -2063,21 +497,21 @@ sq.WorkerService $TestReqPositionalFieldInitializer(sq.WorkerRequest $$) =>
     _$TestReqPositionalFieldWorkerService(_$X.$0($$.args[0]));
 
 /// Worker for TestReqPositionalField
-base class _$TestReqPositionalFieldWorker extends sq.Worker
+base class TestReqPositionalFieldWorker extends sq.Worker
     implements TestReqPositionalField {
-  _$TestReqPositionalFieldWorker(this.arg1,
+  TestReqPositionalFieldWorker(this.arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalFieldActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestReqPositionalFieldWorker.vm(this.arg1,
+  TestReqPositionalFieldWorker.vm(this.arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalFieldActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestReqPositionalFieldWorker.js(this.arg1,
+  TestReqPositionalFieldWorker.js(this.arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalFieldActivator(sq.SquadronPlatformType.js),
@@ -2085,7 +519,7 @@ base class _$TestReqPositionalFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestReqPositionalFieldWorker.wasm(this.arg1,
+  TestReqPositionalFieldWorker.wasm(this.arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalFieldActivator(sq.SquadronPlatformType.wasm),
@@ -2093,154 +527,13 @@ base class _$TestReqPositionalFieldWorker extends sq.Worker
 
   @override
   final int arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestReqPositionalField
-base class TestReqPositionalFieldWorker
-    with Releasable
-    implements _$TestReqPositionalFieldWorker {
-  TestReqPositionalFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestReqPositionalFieldWorker(int arg1,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalFieldWorker(arg1,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestReqPositionalFieldWorker.vm(int arg1,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalFieldWorker.vm(arg1,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestReqPositionalFieldWorker.js(int arg1,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalFieldWorker.js(arg1,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestReqPositionalFieldWorker.wasm(int arg1,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalFieldWorker.wasm(arg1,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  @override
-  int get arg1 => _$worker.arg1;
-
-  final _$TestReqPositionalFieldWorker _$worker;
-
-  static final Finalizer<_$TestReqPositionalFieldWorker> _finalizer =
-      Finalizer<_$TestReqPositionalFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestReqPositionalField
-base class _$TestReqPositionalFieldWorkerPool
+base class TestReqPositionalFieldWorkerPool
     extends sq.WorkerPool<TestReqPositionalFieldWorker>
     implements TestReqPositionalField {
-  _$TestReqPositionalFieldWorkerPool(this.arg1,
+  TestReqPositionalFieldWorkerPool(this.arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -2251,7 +544,7 @@ base class _$TestReqPositionalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestReqPositionalFieldWorkerPool.vm(this.arg1,
+  TestReqPositionalFieldWorkerPool.vm(this.arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -2262,7 +555,7 @@ base class _$TestReqPositionalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestReqPositionalFieldWorkerPool.js(this.arg1,
+  TestReqPositionalFieldWorkerPool.js(this.arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -2273,7 +566,7 @@ base class _$TestReqPositionalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestReqPositionalFieldWorkerPool.wasm(this.arg1,
+  TestReqPositionalFieldWorkerPool.wasm(this.arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -2286,185 +579,6 @@ base class _$TestReqPositionalFieldWorkerPool
 
   @override
   final int arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestReqPositionalField
-base class TestReqPositionalFieldWorkerPool
-    with Releasable
-    implements _$TestReqPositionalFieldWorkerPool {
-  TestReqPositionalFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestReqPositionalFieldWorkerPool(int arg1,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalFieldWorkerPool(arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestReqPositionalFieldWorkerPool.vm(int arg1,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalFieldWorkerPool.vm(arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestReqPositionalFieldWorkerPool.js(int arg1,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalFieldWorkerPool.js(arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestReqPositionalFieldWorkerPool.wasm(int arg1,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalFieldWorkerPool.wasm(arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  @override
-  int get arg1 => _$pool.arg1;
-
-  final _$TestReqPositionalFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestReqPositionalFieldWorkerPool> _finalizer =
-      Finalizer<_$TestReqPositionalFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestReqPositionalFieldWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestReqPositionalFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestReqPositionalFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestReqPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestReqPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestReqPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestReqPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullPositionalField
@@ -2482,23 +596,23 @@ sq.WorkerService $TestOptNullPositionalFieldInitializer(sq.WorkerRequest $$) =>
     _$TestOptNullPositionalFieldWorkerService(_$X.$1($$.args[0]));
 
 /// Worker for TestOptNullPositionalField
-base class _$TestOptNullPositionalFieldWorker extends sq.Worker
+base class TestOptNullPositionalFieldWorker extends sq.Worker
     implements TestOptNullPositionalField {
-  _$TestOptNullPositionalFieldWorker(
+  TestOptNullPositionalFieldWorker(
       [this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullPositionalFieldActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptNullPositionalFieldWorker.vm(
+  TestOptNullPositionalFieldWorker.vm(
       [this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullPositionalFieldActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptNullPositionalFieldWorker.js(
+  TestOptNullPositionalFieldWorker.js(
       [this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -2507,7 +621,7 @@ base class _$TestOptNullPositionalFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullPositionalFieldWorker.wasm(
+  TestOptNullPositionalFieldWorker.wasm(
       [this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -2517,158 +631,13 @@ base class _$TestOptNullPositionalFieldWorker extends sq.Worker
 
   @override
   final int? arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullPositionalField
-base class TestOptNullPositionalFieldWorker
-    with Releasable
-    implements _$TestOptNullPositionalFieldWorker {
-  TestOptNullPositionalFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullPositionalFieldWorker(
-      [int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalFieldWorker(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullPositionalFieldWorker.vm(
-      [int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalFieldWorker.vm(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullPositionalFieldWorker.js(
-      [int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalFieldWorker.js(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullPositionalFieldWorker.wasm(
-      [int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalFieldWorker.wasm(
-            arg1, threadHook, exceptionManager));
-
-  @override
-  int? get arg1 => _$worker.arg1;
-
-  final _$TestOptNullPositionalFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptNullPositionalFieldWorker> _finalizer =
-      Finalizer<_$TestOptNullPositionalFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullPositionalField
-base class _$TestOptNullPositionalFieldWorkerPool
+base class TestOptNullPositionalFieldWorkerPool
     extends sq.WorkerPool<TestOptNullPositionalFieldWorker>
     implements TestOptNullPositionalField {
-  _$TestOptNullPositionalFieldWorkerPool(
+  TestOptNullPositionalFieldWorkerPool(
       [this.arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -2680,7 +649,7 @@ base class _$TestOptNullPositionalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullPositionalFieldWorkerPool.vm(
+  TestOptNullPositionalFieldWorkerPool.vm(
       [this.arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -2692,7 +661,7 @@ base class _$TestOptNullPositionalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullPositionalFieldWorkerPool.js(
+  TestOptNullPositionalFieldWorkerPool.js(
       [this.arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -2704,7 +673,7 @@ base class _$TestOptNullPositionalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullPositionalFieldWorkerPool.wasm(
+  TestOptNullPositionalFieldWorkerPool.wasm(
       [this.arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -2718,183 +687,6 @@ base class _$TestOptNullPositionalFieldWorkerPool
 
   @override
   final int? arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullPositionalField
-base class TestOptNullPositionalFieldWorkerPool
-    with Releasable
-    implements _$TestOptNullPositionalFieldWorkerPool {
-  TestOptNullPositionalFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullPositionalFieldWorkerPool(
-      [int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalFieldWorkerPool(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullPositionalFieldWorkerPool.vm(
-      [int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalFieldWorkerPool.vm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullPositionalFieldWorkerPool.js(
-      [int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalFieldWorkerPool.js(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullPositionalFieldWorkerPool.wasm(
-      [int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalFieldWorkerPool.wasm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  @override
-  int? get arg1 => _$pool.arg1;
-
-  final _$TestOptNullPositionalFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullPositionalFieldWorkerPool> _finalizer =
-      Finalizer<_$TestOptNullPositionalFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop(
-          [bool Function(TestOptNullPositionalFieldWorker worker)?
-              predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptNullPositionalFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptNullPositionalFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptNullPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptNullPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptNullPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptNullPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptDefPositionalField
@@ -2912,23 +704,23 @@ sq.WorkerService $TestOptDefPositionalFieldInitializer(sq.WorkerRequest $$) =>
     _$TestOptDefPositionalFieldWorkerService(_$X.$0($$.args[0]));
 
 /// Worker for TestOptDefPositionalField
-base class _$TestOptDefPositionalFieldWorker extends sq.Worker
+base class TestOptDefPositionalFieldWorker extends sq.Worker
     implements TestOptDefPositionalField {
-  _$TestOptDefPositionalFieldWorker(
+  TestOptDefPositionalFieldWorker(
       [this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptDefPositionalFieldActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptDefPositionalFieldWorker.vm(
+  TestOptDefPositionalFieldWorker.vm(
       [this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptDefPositionalFieldActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptDefPositionalFieldWorker.js(
+  TestOptDefPositionalFieldWorker.js(
       [this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -2937,7 +729,7 @@ base class _$TestOptDefPositionalFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptDefPositionalFieldWorker.wasm(
+  TestOptDefPositionalFieldWorker.wasm(
       [this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -2946,158 +738,13 @@ base class _$TestOptDefPositionalFieldWorker extends sq.Worker
 
   @override
   final int arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptDefPositionalField
-base class TestOptDefPositionalFieldWorker
-    with Releasable
-    implements _$TestOptDefPositionalFieldWorker {
-  TestOptDefPositionalFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptDefPositionalFieldWorker(
-      [int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalFieldWorker(
-            arg1, threadHook, exceptionManager));
-
-  TestOptDefPositionalFieldWorker.vm(
-      [int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalFieldWorker.vm(
-            arg1, threadHook, exceptionManager));
-
-  TestOptDefPositionalFieldWorker.js(
-      [int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalFieldWorker.js(
-            arg1, threadHook, exceptionManager));
-
-  TestOptDefPositionalFieldWorker.wasm(
-      [int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalFieldWorker.wasm(
-            arg1, threadHook, exceptionManager));
-
-  @override
-  int get arg1 => _$worker.arg1;
-
-  final _$TestOptDefPositionalFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptDefPositionalFieldWorker> _finalizer =
-      Finalizer<_$TestOptDefPositionalFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptDefPositionalField
-base class _$TestOptDefPositionalFieldWorkerPool
+base class TestOptDefPositionalFieldWorkerPool
     extends sq.WorkerPool<TestOptDefPositionalFieldWorker>
     implements TestOptDefPositionalField {
-  _$TestOptDefPositionalFieldWorkerPool(
+  TestOptDefPositionalFieldWorkerPool(
       [this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -3109,7 +756,7 @@ base class _$TestOptDefPositionalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefPositionalFieldWorkerPool.vm(
+  TestOptDefPositionalFieldWorkerPool.vm(
       [this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -3121,7 +768,7 @@ base class _$TestOptDefPositionalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefPositionalFieldWorkerPool.js(
+  TestOptDefPositionalFieldWorkerPool.js(
       [this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -3133,7 +780,7 @@ base class _$TestOptDefPositionalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefPositionalFieldWorkerPool.wasm(
+  TestOptDefPositionalFieldWorkerPool.wasm(
       [this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -3147,182 +794,6 @@ base class _$TestOptDefPositionalFieldWorkerPool
 
   @override
   final int arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptDefPositionalField
-base class TestOptDefPositionalFieldWorkerPool
-    with Releasable
-    implements _$TestOptDefPositionalFieldWorkerPool {
-  TestOptDefPositionalFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptDefPositionalFieldWorkerPool(
-      [int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalFieldWorkerPool(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptDefPositionalFieldWorkerPool.vm(
-      [int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalFieldWorkerPool.vm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptDefPositionalFieldWorkerPool.js(
-      [int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalFieldWorkerPool.js(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptDefPositionalFieldWorkerPool.wasm(
-      [int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalFieldWorkerPool.wasm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  @override
-  int get arg1 => _$pool.arg1;
-
-  final _$TestOptDefPositionalFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptDefPositionalFieldWorkerPool> _finalizer =
-      Finalizer<_$TestOptDefPositionalFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop(
-          [bool Function(TestOptDefPositionalFieldWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptDefPositionalFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptDefPositionalFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptDefPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptDefPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptDefPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptDefPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullDefPositionalField
@@ -3341,16 +812,16 @@ sq.WorkerService $TestOptNullDefPositionalFieldInitializer(
     _$TestOptNullDefPositionalFieldWorkerService(_$X.$1($$.args[0]));
 
 /// Worker for TestOptNullDefPositionalField
-base class _$TestOptNullDefPositionalFieldWorker extends sq.Worker
+base class TestOptNullDefPositionalFieldWorker extends sq.Worker
     implements TestOptNullDefPositionalField {
-  _$TestOptNullDefPositionalFieldWorker(
+  TestOptNullDefPositionalFieldWorker(
       [this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullDefPositionalFieldActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptNullDefPositionalFieldWorker.vm(
+  TestOptNullDefPositionalFieldWorker.vm(
       [this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -3358,7 +829,7 @@ base class _$TestOptNullDefPositionalFieldWorker extends sq.Worker
             $TestOptNullDefPositionalFieldActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptNullDefPositionalFieldWorker.js(
+  TestOptNullDefPositionalFieldWorker.js(
       [this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -3368,7 +839,7 @@ base class _$TestOptNullDefPositionalFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullDefPositionalFieldWorker.wasm(
+  TestOptNullDefPositionalFieldWorker.wasm(
       [this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -3379,158 +850,13 @@ base class _$TestOptNullDefPositionalFieldWorker extends sq.Worker
 
   @override
   final int? arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullDefPositionalField
-base class TestOptNullDefPositionalFieldWorker
-    with Releasable
-    implements _$TestOptNullDefPositionalFieldWorker {
-  TestOptNullDefPositionalFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullDefPositionalFieldWorker(
-      [int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalFieldWorker(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalFieldWorker.vm(
-      [int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalFieldWorker.vm(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalFieldWorker.js(
-      [int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalFieldWorker.js(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalFieldWorker.wasm(
-      [int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalFieldWorker.wasm(
-            arg1, threadHook, exceptionManager));
-
-  @override
-  int? get arg1 => _$worker.arg1;
-
-  final _$TestOptNullDefPositionalFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptNullDefPositionalFieldWorker> _finalizer =
-      Finalizer<_$TestOptNullDefPositionalFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullDefPositionalField
-base class _$TestOptNullDefPositionalFieldWorkerPool
+base class TestOptNullDefPositionalFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefPositionalFieldWorker>
     implements TestOptNullDefPositionalField {
-  _$TestOptNullDefPositionalFieldWorkerPool(
+  TestOptNullDefPositionalFieldWorkerPool(
       [this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -3542,7 +868,7 @@ base class _$TestOptNullDefPositionalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefPositionalFieldWorkerPool.vm(
+  TestOptNullDefPositionalFieldWorkerPool.vm(
       [this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -3554,7 +880,7 @@ base class _$TestOptNullDefPositionalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefPositionalFieldWorkerPool.js(
+  TestOptNullDefPositionalFieldWorkerPool.js(
       [this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -3566,7 +892,7 @@ base class _$TestOptNullDefPositionalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefPositionalFieldWorkerPool.wasm(
+  TestOptNullDefPositionalFieldWorkerPool.wasm(
       [this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -3580,185 +906,6 @@ base class _$TestOptNullDefPositionalFieldWorkerPool
 
   @override
   final int? arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullDefPositionalField
-base class TestOptNullDefPositionalFieldWorkerPool
-    with Releasable
-    implements _$TestOptNullDefPositionalFieldWorkerPool {
-  TestOptNullDefPositionalFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullDefPositionalFieldWorkerPool(
-      [int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalFieldWorkerPool(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalFieldWorkerPool.vm(
-      [int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalFieldWorkerPool.vm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalFieldWorkerPool.js(
-      [int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalFieldWorkerPool.js(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalFieldWorkerPool.wasm(
-      [int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalFieldWorkerPool.wasm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  @override
-  int? get arg1 => _$pool.arg1;
-
-  final _$TestOptNullDefPositionalFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullDefPositionalFieldWorkerPool> _finalizer =
-      Finalizer<_$TestOptNullDefPositionalFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop(
-          [bool Function(TestOptNullDefPositionalFieldWorker worker)?
-              predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(
-                  TestOptNullDefPositionalFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(
-                  TestOptNullDefPositionalFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptNullDefPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptNullDefPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptNullDefPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptNullDefPositionalFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestReqPositionalPrivateField
@@ -3777,22 +924,22 @@ sq.WorkerService $TestReqPositionalPrivateFieldInitializer(
     _$TestReqPositionalPrivateFieldWorkerService(_$X.$0($$.args[0]));
 
 /// Worker for TestReqPositionalPrivateField
-base class _$TestReqPositionalPrivateFieldWorker extends sq.Worker
+base class TestReqPositionalPrivateFieldWorker extends sq.Worker
     implements TestReqPositionalPrivateField {
-  _$TestReqPositionalPrivateFieldWorker(int arg1,
+  TestReqPositionalPrivateFieldWorker(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalPrivateFieldActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestReqPositionalPrivateFieldWorker.vm(int arg1,
+  TestReqPositionalPrivateFieldWorker.vm(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super(
             $TestReqPositionalPrivateFieldActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestReqPositionalPrivateFieldWorker.js(int arg1,
+  TestReqPositionalPrivateFieldWorker.js(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super(
@@ -3801,7 +948,7 @@ base class _$TestReqPositionalPrivateFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestReqPositionalPrivateFieldWorker.wasm(int arg1,
+  TestReqPositionalPrivateFieldWorker.wasm(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super(
@@ -3812,154 +959,13 @@ base class _$TestReqPositionalPrivateFieldWorker extends sq.Worker
   @override
   // ignore: unused_element
   int get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestReqPositionalPrivateField
-base class TestReqPositionalPrivateFieldWorker
-    with Releasable
-    implements _$TestReqPositionalPrivateFieldWorker {
-  TestReqPositionalPrivateFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestReqPositionalPrivateFieldWorker(int arg1,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalPrivateFieldWorker(arg1,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestReqPositionalPrivateFieldWorker.vm(int arg1,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalPrivateFieldWorker.vm(arg1,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestReqPositionalPrivateFieldWorker.js(int arg1,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalPrivateFieldWorker.js(arg1,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestReqPositionalPrivateFieldWorker.wasm(int arg1,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalPrivateFieldWorker.wasm(arg1,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  final _$TestReqPositionalPrivateFieldWorker _$worker;
-
-  static final Finalizer<_$TestReqPositionalPrivateFieldWorker> _finalizer =
-      Finalizer<_$TestReqPositionalPrivateFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int get _arg1 => _$worker._arg1;
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestReqPositionalPrivateField
-base class _$TestReqPositionalPrivateFieldWorkerPool
+base class TestReqPositionalPrivateFieldWorkerPool
     extends sq.WorkerPool<TestReqPositionalPrivateFieldWorker>
     implements TestReqPositionalPrivateField {
-  _$TestReqPositionalPrivateFieldWorkerPool(int arg1,
+  TestReqPositionalPrivateFieldWorkerPool(int arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -3970,7 +976,7 @@ base class _$TestReqPositionalPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestReqPositionalPrivateFieldWorkerPool.vm(int arg1,
+  TestReqPositionalPrivateFieldWorkerPool.vm(int arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -3981,7 +987,7 @@ base class _$TestReqPositionalPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestReqPositionalPrivateFieldWorkerPool.js(int arg1,
+  TestReqPositionalPrivateFieldWorkerPool.js(int arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -3992,7 +998,7 @@ base class _$TestReqPositionalPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestReqPositionalPrivateFieldWorkerPool.wasm(int arg1,
+  TestReqPositionalPrivateFieldWorkerPool.wasm(int arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -4006,189 +1012,6 @@ base class _$TestReqPositionalPrivateFieldWorkerPool
   @override
   // ignore: unused_element
   int get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestReqPositionalPrivateField
-base class TestReqPositionalPrivateFieldWorkerPool
-    with Releasable
-    implements _$TestReqPositionalPrivateFieldWorkerPool {
-  TestReqPositionalPrivateFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestReqPositionalPrivateFieldWorkerPool(int arg1,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalPrivateFieldWorkerPool(arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestReqPositionalPrivateFieldWorkerPool.vm(int arg1,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalPrivateFieldWorkerPool.vm(arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestReqPositionalPrivateFieldWorkerPool.js(int arg1,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalPrivateFieldWorkerPool.js(arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestReqPositionalPrivateFieldWorkerPool.wasm(int arg1,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestReqPositionalPrivateFieldWorkerPool.wasm(arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestReqPositionalPrivateFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestReqPositionalPrivateFieldWorkerPool> _finalizer =
-      Finalizer<_$TestReqPositionalPrivateFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int get _arg1 => _$pool._arg1;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop(
-          [bool Function(TestReqPositionalPrivateFieldWorker worker)?
-              predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(
-                  TestReqPositionalPrivateFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(
-                  TestReqPositionalPrivateFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestReqPositionalPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestReqPositionalPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestReqPositionalPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestReqPositionalPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullPositionalPrivateField
@@ -4207,9 +1030,9 @@ sq.WorkerService $TestOptNullPositionalPrivateFieldInitializer(
     _$TestOptNullPositionalPrivateFieldWorkerService(_$X.$1($$.args[0]));
 
 /// Worker for TestOptNullPositionalPrivateField
-base class _$TestOptNullPositionalPrivateFieldWorker extends sq.Worker
+base class TestOptNullPositionalPrivateFieldWorker extends sq.Worker
     implements TestOptNullPositionalPrivateField {
-  _$TestOptNullPositionalPrivateFieldWorker(
+  TestOptNullPositionalPrivateFieldWorker(
       [int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -4218,7 +1041,7 @@ base class _$TestOptNullPositionalPrivateFieldWorker extends sq.Worker
                 sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptNullPositionalPrivateFieldWorker.vm(
+  TestOptNullPositionalPrivateFieldWorker.vm(
       [int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -4227,7 +1050,7 @@ base class _$TestOptNullPositionalPrivateFieldWorker extends sq.Worker
                 sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptNullPositionalPrivateFieldWorker.js(
+  TestOptNullPositionalPrivateFieldWorker.js(
       [int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -4238,7 +1061,7 @@ base class _$TestOptNullPositionalPrivateFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullPositionalPrivateFieldWorker.wasm(
+  TestOptNullPositionalPrivateFieldWorker.wasm(
       [int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -4250,158 +1073,13 @@ base class _$TestOptNullPositionalPrivateFieldWorker extends sq.Worker
   @override
   // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullPositionalPrivateField
-base class TestOptNullPositionalPrivateFieldWorker
-    with Releasable
-    implements _$TestOptNullPositionalPrivateFieldWorker {
-  TestOptNullPositionalPrivateFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullPositionalPrivateFieldWorker(
-      [int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalPrivateFieldWorker(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullPositionalPrivateFieldWorker.vm(
-      [int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalPrivateFieldWorker.vm(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullPositionalPrivateFieldWorker.js(
-      [int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalPrivateFieldWorker.js(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullPositionalPrivateFieldWorker.wasm(
-      [int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalPrivateFieldWorker.wasm(
-            arg1, threadHook, exceptionManager));
-
-  final _$TestOptNullPositionalPrivateFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptNullPositionalPrivateFieldWorker> _finalizer =
-      Finalizer<_$TestOptNullPositionalPrivateFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int? get _arg1 => _$worker._arg1;
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullPositionalPrivateField
-base class _$TestOptNullPositionalPrivateFieldWorkerPool
+base class TestOptNullPositionalPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptNullPositionalPrivateFieldWorker>
     implements TestOptNullPositionalPrivateField {
-  _$TestOptNullPositionalPrivateFieldWorkerPool(
+  TestOptNullPositionalPrivateFieldWorkerPool(
       [int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -4413,7 +1091,7 @@ base class _$TestOptNullPositionalPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullPositionalPrivateFieldWorkerPool.vm(
+  TestOptNullPositionalPrivateFieldWorkerPool.vm(
       [int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -4425,7 +1103,7 @@ base class _$TestOptNullPositionalPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullPositionalPrivateFieldWorkerPool.js(
+  TestOptNullPositionalPrivateFieldWorkerPool.js(
       [int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -4437,7 +1115,7 @@ base class _$TestOptNullPositionalPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullPositionalPrivateFieldWorkerPool.wasm(
+  TestOptNullPositionalPrivateFieldWorkerPool.wasm(
       [int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -4452,190 +1130,6 @@ base class _$TestOptNullPositionalPrivateFieldWorkerPool
   @override
   // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullPositionalPrivateField
-base class TestOptNullPositionalPrivateFieldWorkerPool
-    with Releasable
-    implements _$TestOptNullPositionalPrivateFieldWorkerPool {
-  TestOptNullPositionalPrivateFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullPositionalPrivateFieldWorkerPool(
-      [int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalPrivateFieldWorkerPool(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullPositionalPrivateFieldWorkerPool.vm(
-      [int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalPrivateFieldWorkerPool.vm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullPositionalPrivateFieldWorkerPool.js(
-      [int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalPrivateFieldWorkerPool.js(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullPositionalPrivateFieldWorkerPool.wasm(
-      [int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullPositionalPrivateFieldWorkerPool.wasm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  final _$TestOptNullPositionalPrivateFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullPositionalPrivateFieldWorkerPool>
-      _finalizer =
-      Finalizer<_$TestOptNullPositionalPrivateFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int? get _arg1 => _$pool._arg1;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop(
-          [bool Function(TestOptNullPositionalPrivateFieldWorker worker)?
-              predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(
-                  TestOptNullPositionalPrivateFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(
-                  TestOptNullPositionalPrivateFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptNullPositionalPrivateFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptNullPositionalPrivateFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptNullPositionalPrivateFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptNullPositionalPrivateFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptDefPositionalPrivateField
@@ -4654,9 +1148,9 @@ sq.WorkerService $TestOptDefPositionalPrivateFieldInitializer(
     _$TestOptDefPositionalPrivateFieldWorkerService(_$X.$0($$.args[0]));
 
 /// Worker for TestOptDefPositionalPrivateField
-base class _$TestOptDefPositionalPrivateFieldWorker extends sq.Worker
+base class TestOptDefPositionalPrivateFieldWorker extends sq.Worker
     implements TestOptDefPositionalPrivateField {
-  _$TestOptDefPositionalPrivateFieldWorker(
+  TestOptDefPositionalPrivateFieldWorker(
       [int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -4665,7 +1159,7 @@ base class _$TestOptDefPositionalPrivateFieldWorker extends sq.Worker
                 sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptDefPositionalPrivateFieldWorker.vm(
+  TestOptDefPositionalPrivateFieldWorker.vm(
       [int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -4674,7 +1168,7 @@ base class _$TestOptDefPositionalPrivateFieldWorker extends sq.Worker
                 sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptDefPositionalPrivateFieldWorker.js(
+  TestOptDefPositionalPrivateFieldWorker.js(
       [int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -4685,7 +1179,7 @@ base class _$TestOptDefPositionalPrivateFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptDefPositionalPrivateFieldWorker.wasm(
+  TestOptDefPositionalPrivateFieldWorker.wasm(
       [int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -4697,158 +1191,13 @@ base class _$TestOptDefPositionalPrivateFieldWorker extends sq.Worker
   @override
   // ignore: unused_element
   int get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptDefPositionalPrivateField
-base class TestOptDefPositionalPrivateFieldWorker
-    with Releasable
-    implements _$TestOptDefPositionalPrivateFieldWorker {
-  TestOptDefPositionalPrivateFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptDefPositionalPrivateFieldWorker(
-      [int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalPrivateFieldWorker(
-            arg1, threadHook, exceptionManager));
-
-  TestOptDefPositionalPrivateFieldWorker.vm(
-      [int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalPrivateFieldWorker.vm(
-            arg1, threadHook, exceptionManager));
-
-  TestOptDefPositionalPrivateFieldWorker.js(
-      [int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalPrivateFieldWorker.js(
-            arg1, threadHook, exceptionManager));
-
-  TestOptDefPositionalPrivateFieldWorker.wasm(
-      [int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalPrivateFieldWorker.wasm(
-            arg1, threadHook, exceptionManager));
-
-  final _$TestOptDefPositionalPrivateFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptDefPositionalPrivateFieldWorker> _finalizer =
-      Finalizer<_$TestOptDefPositionalPrivateFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int get _arg1 => _$worker._arg1;
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptDefPositionalPrivateField
-base class _$TestOptDefPositionalPrivateFieldWorkerPool
+base class TestOptDefPositionalPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptDefPositionalPrivateFieldWorker>
     implements TestOptDefPositionalPrivateField {
-  _$TestOptDefPositionalPrivateFieldWorkerPool(
+  TestOptDefPositionalPrivateFieldWorkerPool(
       [int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -4860,7 +1209,7 @@ base class _$TestOptDefPositionalPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefPositionalPrivateFieldWorkerPool.vm(
+  TestOptDefPositionalPrivateFieldWorkerPool.vm(
       [int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -4872,7 +1221,7 @@ base class _$TestOptDefPositionalPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefPositionalPrivateFieldWorkerPool.js(
+  TestOptDefPositionalPrivateFieldWorkerPool.js(
       [int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -4884,7 +1233,7 @@ base class _$TestOptDefPositionalPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefPositionalPrivateFieldWorkerPool.wasm(
+  TestOptDefPositionalPrivateFieldWorkerPool.wasm(
       [int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -4899,189 +1248,6 @@ base class _$TestOptDefPositionalPrivateFieldWorkerPool
   @override
   // ignore: unused_element
   int get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptDefPositionalPrivateField
-base class TestOptDefPositionalPrivateFieldWorkerPool
-    with Releasable
-    implements _$TestOptDefPositionalPrivateFieldWorkerPool {
-  TestOptDefPositionalPrivateFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptDefPositionalPrivateFieldWorkerPool(
-      [int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalPrivateFieldWorkerPool(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptDefPositionalPrivateFieldWorkerPool.vm(
-      [int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalPrivateFieldWorkerPool.vm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptDefPositionalPrivateFieldWorkerPool.js(
-      [int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalPrivateFieldWorkerPool.js(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptDefPositionalPrivateFieldWorkerPool.wasm(
-      [int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptDefPositionalPrivateFieldWorkerPool.wasm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  final _$TestOptDefPositionalPrivateFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptDefPositionalPrivateFieldWorkerPool>
-      _finalizer = Finalizer<_$TestOptDefPositionalPrivateFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int get _arg1 => _$pool._arg1;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop(
-          [bool Function(TestOptDefPositionalPrivateFieldWorker worker)?
-              predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(
-                  TestOptDefPositionalPrivateFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(
-                  TestOptDefPositionalPrivateFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptDefPositionalPrivateFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptDefPositionalPrivateFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptDefPositionalPrivateFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptDefPositionalPrivateFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullDefPositionalPrivateField
@@ -5101,9 +1267,9 @@ sq.WorkerService $TestOptNullDefPositionalPrivateFieldInitializer(
     _$TestOptNullDefPositionalPrivateFieldWorkerService(_$X.$1($$.args[0]));
 
 /// Worker for TestOptNullDefPositionalPrivateField
-base class _$TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
+base class TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
     implements TestOptNullDefPositionalPrivateField {
-  _$TestOptNullDefPositionalPrivateFieldWorker(
+  TestOptNullDefPositionalPrivateFieldWorker(
       [int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -5112,7 +1278,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
                 sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptNullDefPositionalPrivateFieldWorker.vm(
+  TestOptNullDefPositionalPrivateFieldWorker.vm(
       [int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -5121,7 +1287,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
                 sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptNullDefPositionalPrivateFieldWorker.js(
+  TestOptNullDefPositionalPrivateFieldWorker.js(
       [int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -5132,7 +1298,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullDefPositionalPrivateFieldWorker.wasm(
+  TestOptNullDefPositionalPrivateFieldWorker.wasm(
       [int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
@@ -5144,158 +1310,13 @@ base class _$TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
   @override
   // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullDefPositionalPrivateField
-base class TestOptNullDefPositionalPrivateFieldWorker
-    with Releasable
-    implements _$TestOptNullDefPositionalPrivateFieldWorker {
-  TestOptNullDefPositionalPrivateFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullDefPositionalPrivateFieldWorker(
-      [int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalPrivateFieldWorker(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalPrivateFieldWorker.vm(
-      [int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalPrivateFieldWorker.vm(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalPrivateFieldWorker.js(
-      [int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalPrivateFieldWorker.js(
-            arg1, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalPrivateFieldWorker.wasm(
-      [int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalPrivateFieldWorker.wasm(
-            arg1, threadHook, exceptionManager));
-
-  final _$TestOptNullDefPositionalPrivateFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptNullDefPositionalPrivateFieldWorker>
-      _finalizer = Finalizer<_$TestOptNullDefPositionalPrivateFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int? get _arg1 => _$worker._arg1;
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullDefPositionalPrivateField
-base class _$TestOptNullDefPositionalPrivateFieldWorkerPool
+base class TestOptNullDefPositionalPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefPositionalPrivateFieldWorker>
     implements TestOptNullDefPositionalPrivateField {
-  _$TestOptNullDefPositionalPrivateFieldWorkerPool(
+  TestOptNullDefPositionalPrivateFieldWorkerPool(
       [int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -5307,7 +1328,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefPositionalPrivateFieldWorkerPool.vm(
+  TestOptNullDefPositionalPrivateFieldWorkerPool.vm(
       [int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -5319,7 +1340,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefPositionalPrivateFieldWorkerPool.js(
+  TestOptNullDefPositionalPrivateFieldWorkerPool.js(
       [int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -5331,7 +1352,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefPositionalPrivateFieldWorkerPool.wasm(
+  TestOptNullDefPositionalPrivateFieldWorkerPool.wasm(
       [int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -5346,190 +1367,6 @@ base class _$TestOptNullDefPositionalPrivateFieldWorkerPool
   @override
   // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullDefPositionalPrivateField
-base class TestOptNullDefPositionalPrivateFieldWorkerPool
-    with Releasable
-    implements _$TestOptNullDefPositionalPrivateFieldWorkerPool {
-  TestOptNullDefPositionalPrivateFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullDefPositionalPrivateFieldWorkerPool(
-      [int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalPrivateFieldWorkerPool(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalPrivateFieldWorkerPool.vm(
-      [int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalPrivateFieldWorkerPool.vm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalPrivateFieldWorkerPool.js(
-      [int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalPrivateFieldWorkerPool.js(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  TestOptNullDefPositionalPrivateFieldWorkerPool.wasm(
-      [int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$TestOptNullDefPositionalPrivateFieldWorkerPool.wasm(
-            arg1, concurrencySettings, threadHook, exceptionManager));
-
-  final _$TestOptNullDefPositionalPrivateFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullDefPositionalPrivateFieldWorkerPool>
-      _finalizer =
-      Finalizer<_$TestOptNullDefPositionalPrivateFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int? get _arg1 => _$pool._arg1;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop(
-          [bool Function(TestOptNullDefPositionalPrivateFieldWorker worker)?
-              predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptNullDefPositionalPrivateFieldWorker worker,
-                  bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptNullDefPositionalPrivateFieldWorker worker,
-                  bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptNullDefPositionalPrivateFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptNullDefPositionalPrivateFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptNullDefPositionalPrivateFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptNullDefPositionalPrivateFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullNamed
@@ -5547,23 +1384,23 @@ sq.WorkerService $TestOptNullNamedInitializer(sq.WorkerRequest $$) =>
     _$TestOptNullNamedWorkerService(arg1: _$X.$1($$.args[0]));
 
 /// Worker for TestOptNullNamed
-base class _$TestOptNullNamedWorker extends sq.Worker
+base class TestOptNullNamedWorker extends sq.Worker
     implements TestOptNullNamed {
-  _$TestOptNullNamedWorker(
+  TestOptNullNamedWorker(
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullNamedActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptNullNamedWorker.vm(
+  TestOptNullNamedWorker.vm(
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullNamedActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptNullNamedWorker.js(
+  TestOptNullNamedWorker.js(
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -5572,168 +1409,18 @@ base class _$TestOptNullNamedWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullNamedWorker.wasm(
+  TestOptNullNamedWorker.wasm(
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullNamedActivator(sq.SquadronPlatformType.wasm),
             args: [arg1]);
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullNamed
-base class TestOptNullNamedWorker
-    with Releasable
-    implements _$TestOptNullNamedWorker {
-  TestOptNullNamedWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullNamedWorker(
-      {int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedWorker(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedWorker.vm(
-      {int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedWorker.vm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedWorker.js(
-      {int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedWorker.js(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedWorker.wasm(
-      {int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedWorker.wasm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptNullNamedWorker _$worker;
-
-  static final Finalizer<_$TestOptNullNamedWorker> _finalizer =
-      Finalizer<_$TestOptNullNamedWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullNamed
-base class _$TestOptNullNamedWorkerPool
+base class TestOptNullNamedWorkerPool
     extends sq.WorkerPool<TestOptNullNamedWorker> implements TestOptNullNamed {
-  _$TestOptNullNamedWorkerPool(
+  TestOptNullNamedWorkerPool(
       {int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -5746,7 +1433,7 @@ base class _$TestOptNullNamedWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullNamedWorkerPool.vm(
+  TestOptNullNamedWorkerPool.vm(
       {int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -5759,7 +1446,7 @@ base class _$TestOptNullNamedWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullNamedWorkerPool.js(
+  TestOptNullNamedWorkerPool.js(
       {int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -5772,7 +1459,7 @@ base class _$TestOptNullNamedWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullNamedWorkerPool.wasm(
+  TestOptNullNamedWorkerPool.wasm(
       {int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -5784,187 +1471,6 @@ base class _$TestOptNullNamedWorkerPool
               exceptionManager: exceptionManager),
           concurrencySettings: concurrencySettings,
         );
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullNamed
-base class TestOptNullNamedWorkerPool
-    with Releasable
-    implements _$TestOptNullNamedWorkerPool {
-  TestOptNullNamedWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullNamedWorkerPool(
-      {int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedWorkerPool(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedWorkerPool.vm(
-      {int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedWorkerPool.vm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedWorkerPool.js(
-      {int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedWorkerPool.js(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedWorkerPool.wasm(
-      {int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedWorkerPool.wasm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptNullNamedWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullNamedWorkerPool> _finalizer =
-      Finalizer<_$TestOptNullNamedWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestOptNullNamedWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptNullNamedWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptNullNamedWorker worker, bool removed)? listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(Future<T> Function(TestOptNullNamedWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(Stream<T> Function(TestOptNullNamedWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptNullNamedWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptNullNamedWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptDefNamed
@@ -5982,23 +1488,22 @@ sq.WorkerService $TestOptDefNamedInitializer(sq.WorkerRequest $$) =>
     _$TestOptDefNamedWorkerService(arg1: _$X.$0($$.args[0]));
 
 /// Worker for TestOptDefNamed
-base class _$TestOptDefNamedWorker extends sq.Worker
-    implements TestOptDefNamed {
-  _$TestOptDefNamedWorker(
+base class TestOptDefNamedWorker extends sq.Worker implements TestOptDefNamed {
+  TestOptDefNamedWorker(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptDefNamedWorker.vm(
+  TestOptDefNamedWorker.vm(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptDefNamedWorker.js(
+  TestOptDefNamedWorker.js(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -6007,168 +1512,18 @@ base class _$TestOptDefNamedWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptDefNamedWorker.wasm(
+  TestOptDefNamedWorker.wasm(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedActivator(sq.SquadronPlatformType.wasm),
             args: [arg1]);
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptDefNamed
-base class TestOptDefNamedWorker
-    with Releasable
-    implements _$TestOptDefNamedWorker {
-  TestOptDefNamedWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptDefNamedWorker(
-      {int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedWorker(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedWorker.vm(
-      {int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedWorker.vm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedWorker.js(
-      {int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedWorker.js(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedWorker.wasm(
-      {int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedWorker.wasm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptDefNamedWorker _$worker;
-
-  static final Finalizer<_$TestOptDefNamedWorker> _finalizer =
-      Finalizer<_$TestOptDefNamedWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptDefNamed
-base class _$TestOptDefNamedWorkerPool
+base class TestOptDefNamedWorkerPool
     extends sq.WorkerPool<TestOptDefNamedWorker> implements TestOptDefNamed {
-  _$TestOptDefNamedWorkerPool(
+  TestOptDefNamedWorkerPool(
       {int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -6181,7 +1536,7 @@ base class _$TestOptDefNamedWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefNamedWorkerPool.vm(
+  TestOptDefNamedWorkerPool.vm(
       {int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -6194,7 +1549,7 @@ base class _$TestOptDefNamedWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefNamedWorkerPool.js(
+  TestOptDefNamedWorkerPool.js(
       {int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -6207,7 +1562,7 @@ base class _$TestOptDefNamedWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefNamedWorkerPool.wasm(
+  TestOptDefNamedWorkerPool.wasm(
       {int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -6219,186 +1574,6 @@ base class _$TestOptDefNamedWorkerPool
               exceptionManager: exceptionManager),
           concurrencySettings: concurrencySettings,
         );
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptDefNamed
-base class TestOptDefNamedWorkerPool
-    with Releasable
-    implements _$TestOptDefNamedWorkerPool {
-  TestOptDefNamedWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptDefNamedWorkerPool(
-      {int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedWorkerPool(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedWorkerPool.vm(
-      {int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedWorkerPool.vm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedWorkerPool.js(
-      {int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedWorkerPool.js(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedWorkerPool.wasm(
-      {int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedWorkerPool.wasm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptDefNamedWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptDefNamedWorkerPool> _finalizer =
-      Finalizer<_$TestOptDefNamedWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestOptDefNamedWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptDefNamedWorker worker, bool removed) listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptDefNamedWorker worker, bool removed)? listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(Future<T> Function(TestOptDefNamedWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(Stream<T> Function(TestOptDefNamedWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptDefNamedWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptDefNamedWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullDefNamed
@@ -6416,23 +1591,23 @@ sq.WorkerService $TestOptNullDefNamedInitializer(sq.WorkerRequest $$) =>
     _$TestOptNullDefNamedWorkerService(arg1: _$X.$1($$.args[0]));
 
 /// Worker for TestOptNullDefNamed
-base class _$TestOptNullDefNamedWorker extends sq.Worker
+base class TestOptNullDefNamedWorker extends sq.Worker
     implements TestOptNullDefNamed {
-  _$TestOptNullDefNamedWorker(
+  TestOptNullDefNamedWorker(
       {int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullDefNamedActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptNullDefNamedWorker.vm(
+  TestOptNullDefNamedWorker.vm(
       {int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullDefNamedActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptNullDefNamedWorker.js(
+  TestOptNullDefNamedWorker.js(
       {int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -6441,168 +1616,18 @@ base class _$TestOptNullDefNamedWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullDefNamedWorker.wasm(
+  TestOptNullDefNamedWorker.wasm(
       {int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullDefNamedActivator(sq.SquadronPlatformType.wasm),
             args: [arg1]);
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullDefNamed
-base class TestOptNullDefNamedWorker
-    with Releasable
-    implements _$TestOptNullDefNamedWorker {
-  TestOptNullDefNamedWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullDefNamedWorker(
-      {int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedWorker(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedWorker.vm(
-      {int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedWorker.vm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedWorker.js(
-      {int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedWorker.js(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedWorker.wasm(
-      {int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedWorker.wasm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptNullDefNamedWorker _$worker;
-
-  static final Finalizer<_$TestOptNullDefNamedWorker> _finalizer =
-      Finalizer<_$TestOptNullDefNamedWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullDefNamed
-base class _$TestOptNullDefNamedWorkerPool extends sq
+base class TestOptNullDefNamedWorkerPool extends sq
     .WorkerPool<TestOptNullDefNamedWorker> implements TestOptNullDefNamed {
-  _$TestOptNullDefNamedWorkerPool(
+  TestOptNullDefNamedWorkerPool(
       {int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -6615,7 +1640,7 @@ base class _$TestOptNullDefNamedWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefNamedWorkerPool.vm(
+  TestOptNullDefNamedWorkerPool.vm(
       {int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -6629,7 +1654,7 @@ base class _$TestOptNullDefNamedWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefNamedWorkerPool.js(
+  TestOptNullDefNamedWorkerPool.js(
       {int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -6643,7 +1668,7 @@ base class _$TestOptNullDefNamedWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefNamedWorkerPool.wasm(
+  TestOptNullDefNamedWorkerPool.wasm(
       {int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -6656,189 +1681,6 @@ base class _$TestOptNullDefNamedWorkerPool extends sq
                   exceptionManager: exceptionManager),
           concurrencySettings: concurrencySettings,
         );
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullDefNamed
-base class TestOptNullDefNamedWorkerPool
-    with Releasable
-    implements _$TestOptNullDefNamedWorkerPool {
-  TestOptNullDefNamedWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullDefNamedWorkerPool(
-      {int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedWorkerPool(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedWorkerPool.vm(
-      {int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedWorkerPool.vm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedWorkerPool.js(
-      {int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedWorkerPool.js(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedWorkerPool.wasm(
-      {int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedWorkerPool.wasm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptNullDefNamedWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullDefNamedWorkerPool> _finalizer =
-      Finalizer<_$TestOptNullDefNamedWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestOptNullDefNamedWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptNullDefNamedWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptNullDefNamedWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptNullDefNamedWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(Stream<T> Function(TestOptNullDefNamedWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptNullDefNamedWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptNullDefNamedWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullNamedField
@@ -6856,23 +1698,23 @@ sq.WorkerService $TestOptNullNamedFieldInitializer(sq.WorkerRequest $$) =>
     _$TestOptNullNamedFieldWorkerService(arg1: _$X.$1($$.args[0]));
 
 /// Worker for TestOptNullNamedField
-base class _$TestOptNullNamedFieldWorker extends sq.Worker
+base class TestOptNullNamedFieldWorker extends sq.Worker
     implements TestOptNullNamedField {
-  _$TestOptNullNamedFieldWorker(
+  TestOptNullNamedFieldWorker(
       {this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullNamedFieldActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptNullNamedFieldWorker.vm(
+  TestOptNullNamedFieldWorker.vm(
       {this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullNamedFieldActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptNullNamedFieldWorker.js(
+  TestOptNullNamedFieldWorker.js(
       {this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -6881,7 +1723,7 @@ base class _$TestOptNullNamedFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullNamedFieldWorker.wasm(
+  TestOptNullNamedFieldWorker.wasm(
       {this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -6890,165 +1732,12 @@ base class _$TestOptNullNamedFieldWorker extends sq.Worker
 
   @override
   final int? arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullNamedField
-base class TestOptNullNamedFieldWorker
-    with Releasable
-    implements _$TestOptNullNamedFieldWorker {
-  TestOptNullNamedFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullNamedFieldWorker(
-      {int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedFieldWorker(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedFieldWorker.vm(
-      {int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedFieldWorker.vm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedFieldWorker.js(
-      {int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedFieldWorker.js(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedFieldWorker.wasm(
-      {int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedFieldWorker.wasm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  @override
-  int? get arg1 => _$worker.arg1;
-
-  final _$TestOptNullNamedFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptNullNamedFieldWorker> _finalizer =
-      Finalizer<_$TestOptNullNamedFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullNamedField
-base class _$TestOptNullNamedFieldWorkerPool extends sq
+base class TestOptNullNamedFieldWorkerPool extends sq
     .WorkerPool<TestOptNullNamedFieldWorker> implements TestOptNullNamedField {
-  _$TestOptNullNamedFieldWorkerPool(
+  TestOptNullNamedFieldWorkerPool(
       {this.arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -7061,7 +1750,7 @@ base class _$TestOptNullNamedFieldWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullNamedFieldWorkerPool.vm(
+  TestOptNullNamedFieldWorkerPool.vm(
       {this.arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -7075,7 +1764,7 @@ base class _$TestOptNullNamedFieldWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullNamedFieldWorkerPool.js(
+  TestOptNullNamedFieldWorkerPool.js(
       {this.arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -7089,7 +1778,7 @@ base class _$TestOptNullNamedFieldWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullNamedFieldWorkerPool.wasm(
+  TestOptNullNamedFieldWorkerPool.wasm(
       {this.arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -7105,193 +1794,6 @@ base class _$TestOptNullNamedFieldWorkerPool extends sq
 
   @override
   final int? arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullNamedField
-base class TestOptNullNamedFieldWorkerPool
-    with Releasable
-    implements _$TestOptNullNamedFieldWorkerPool {
-  TestOptNullNamedFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullNamedFieldWorkerPool(
-      {int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedFieldWorkerPool(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedFieldWorkerPool.vm(
-      {int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedFieldWorkerPool.vm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedFieldWorkerPool.js(
-      {int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedFieldWorkerPool.js(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedFieldWorkerPool.wasm(
-      {int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedFieldWorkerPool.wasm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  @override
-  int? get arg1 => _$pool.arg1;
-
-  final _$TestOptNullNamedFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullNamedFieldWorkerPool> _finalizer =
-      Finalizer<_$TestOptNullNamedFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestOptNullNamedFieldWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptNullNamedFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptNullNamedFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptNullNamedFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptNullNamedFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptNullNamedFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptNullNamedFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptDefNamedField
@@ -7309,23 +1811,23 @@ sq.WorkerService $TestOptDefNamedFieldInitializer(sq.WorkerRequest $$) =>
     _$TestOptDefNamedFieldWorkerService(arg1: _$X.$0($$.args[0]));
 
 /// Worker for TestOptDefNamedField
-base class _$TestOptDefNamedFieldWorker extends sq.Worker
+base class TestOptDefNamedFieldWorker extends sq.Worker
     implements TestOptDefNamedField {
-  _$TestOptDefNamedFieldWorker(
+  TestOptDefNamedFieldWorker(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedFieldActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptDefNamedFieldWorker.vm(
+  TestOptDefNamedFieldWorker.vm(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedFieldActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptDefNamedFieldWorker.js(
+  TestOptDefNamedFieldWorker.js(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -7334,7 +1836,7 @@ base class _$TestOptDefNamedFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptDefNamedFieldWorker.wasm(
+  TestOptDefNamedFieldWorker.wasm(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -7343,165 +1845,12 @@ base class _$TestOptDefNamedFieldWorker extends sq.Worker
 
   @override
   final int arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptDefNamedField
-base class TestOptDefNamedFieldWorker
-    with Releasable
-    implements _$TestOptDefNamedFieldWorker {
-  TestOptDefNamedFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptDefNamedFieldWorker(
-      {int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedFieldWorker(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedFieldWorker.vm(
-      {int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedFieldWorker.vm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedFieldWorker.js(
-      {int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedFieldWorker.js(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedFieldWorker.wasm(
-      {int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedFieldWorker.wasm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  @override
-  int get arg1 => _$worker.arg1;
-
-  final _$TestOptDefNamedFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptDefNamedFieldWorker> _finalizer =
-      Finalizer<_$TestOptDefNamedFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptDefNamedField
-base class _$TestOptDefNamedFieldWorkerPool extends sq
+base class TestOptDefNamedFieldWorkerPool extends sq
     .WorkerPool<TestOptDefNamedFieldWorker> implements TestOptDefNamedField {
-  _$TestOptDefNamedFieldWorkerPool(
+  TestOptDefNamedFieldWorkerPool(
       {this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -7514,7 +1863,7 @@ base class _$TestOptDefNamedFieldWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefNamedFieldWorkerPool.vm(
+  TestOptDefNamedFieldWorkerPool.vm(
       {this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -7528,7 +1877,7 @@ base class _$TestOptDefNamedFieldWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefNamedFieldWorkerPool.js(
+  TestOptDefNamedFieldWorkerPool.js(
       {this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -7542,7 +1891,7 @@ base class _$TestOptDefNamedFieldWorkerPool extends sq
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefNamedFieldWorkerPool.wasm(
+  TestOptDefNamedFieldWorkerPool.wasm(
       {this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -7558,193 +1907,6 @@ base class _$TestOptDefNamedFieldWorkerPool extends sq
 
   @override
   final int arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptDefNamedField
-base class TestOptDefNamedFieldWorkerPool
-    with Releasable
-    implements _$TestOptDefNamedFieldWorkerPool {
-  TestOptDefNamedFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptDefNamedFieldWorkerPool(
-      {int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedFieldWorkerPool(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedFieldWorkerPool.vm(
-      {int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedFieldWorkerPool.vm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedFieldWorkerPool.js(
-      {int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedFieldWorkerPool.js(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedFieldWorkerPool.wasm(
-      {int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedFieldWorkerPool.wasm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  @override
-  int get arg1 => _$pool.arg1;
-
-  final _$TestOptDefNamedFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptDefNamedFieldWorkerPool> _finalizer =
-      Finalizer<_$TestOptDefNamedFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestOptDefNamedFieldWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptDefNamedFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptDefNamedFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptDefNamedFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptDefNamedFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptDefNamedFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptDefNamedFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullDefNamedField
@@ -7762,23 +1924,23 @@ sq.WorkerService $TestOptNullDefNamedFieldInitializer(sq.WorkerRequest $$) =>
     _$TestOptNullDefNamedFieldWorkerService(arg1: _$X.$1($$.args[0]));
 
 /// Worker for TestOptNullDefNamedField
-base class _$TestOptNullDefNamedFieldWorker extends sq.Worker
+base class TestOptNullDefNamedFieldWorker extends sq.Worker
     implements TestOptNullDefNamedField {
-  _$TestOptNullDefNamedFieldWorker(
+  TestOptNullDefNamedFieldWorker(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullDefNamedFieldActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptNullDefNamedFieldWorker.vm(
+  TestOptNullDefNamedFieldWorker.vm(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullDefNamedFieldActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptNullDefNamedFieldWorker.js(
+  TestOptNullDefNamedFieldWorker.js(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -7787,7 +1949,7 @@ base class _$TestOptNullDefNamedFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullDefNamedFieldWorker.wasm(
+  TestOptNullDefNamedFieldWorker.wasm(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -7796,166 +1958,13 @@ base class _$TestOptNullDefNamedFieldWorker extends sq.Worker
 
   @override
   final int? arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullDefNamedField
-base class TestOptNullDefNamedFieldWorker
-    with Releasable
-    implements _$TestOptNullDefNamedFieldWorker {
-  TestOptNullDefNamedFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullDefNamedFieldWorker(
-      {int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedFieldWorker(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedFieldWorker.vm(
-      {int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedFieldWorker.vm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedFieldWorker.js(
-      {int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedFieldWorker.js(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedFieldWorker.wasm(
-      {int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedFieldWorker.wasm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  @override
-  int? get arg1 => _$worker.arg1;
-
-  final _$TestOptNullDefNamedFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptNullDefNamedFieldWorker> _finalizer =
-      Finalizer<_$TestOptNullDefNamedFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullDefNamedField
-base class _$TestOptNullDefNamedFieldWorkerPool
+base class TestOptNullDefNamedFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefNamedFieldWorker>
     implements TestOptNullDefNamedField {
-  _$TestOptNullDefNamedFieldWorkerPool(
+  TestOptNullDefNamedFieldWorkerPool(
       {this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -7969,7 +1978,7 @@ base class _$TestOptNullDefNamedFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefNamedFieldWorkerPool.vm(
+  TestOptNullDefNamedFieldWorkerPool.vm(
       {this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -7983,7 +1992,7 @@ base class _$TestOptNullDefNamedFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefNamedFieldWorkerPool.js(
+  TestOptNullDefNamedFieldWorkerPool.js(
       {this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -7997,7 +2006,7 @@ base class _$TestOptNullDefNamedFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefNamedFieldWorkerPool.wasm(
+  TestOptNullDefNamedFieldWorkerPool.wasm(
       {this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -8013,193 +2022,6 @@ base class _$TestOptNullDefNamedFieldWorkerPool
 
   @override
   final int? arg1;
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullDefNamedField
-base class TestOptNullDefNamedFieldWorkerPool
-    with Releasable
-    implements _$TestOptNullDefNamedFieldWorkerPool {
-  TestOptNullDefNamedFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullDefNamedFieldWorkerPool(
-      {int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedFieldWorkerPool(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedFieldWorkerPool.vm(
-      {int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedFieldWorkerPool.vm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedFieldWorkerPool.js(
-      {int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedFieldWorkerPool.js(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedFieldWorkerPool.wasm(
-      {int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedFieldWorkerPool.wasm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  @override
-  int? get arg1 => _$pool.arg1;
-
-  final _$TestOptNullDefNamedFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullDefNamedFieldWorkerPool> _finalizer =
-      Finalizer<_$TestOptNullDefNamedFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestOptNullDefNamedFieldWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptNullDefNamedFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptNullDefNamedFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptNullDefNamedFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptNullDefNamedFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptNullDefNamedFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptNullDefNamedFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullNamedPrivateField
@@ -8218,16 +2040,16 @@ sq.WorkerService $TestOptNullNamedPrivateFieldInitializer(
     _$TestOptNullNamedPrivateFieldWorkerService(arg1: _$X.$1($$.args[0]));
 
 /// Worker for TestOptNullNamedPrivateField
-base class _$TestOptNullNamedPrivateFieldWorker extends sq.Worker
+base class TestOptNullNamedPrivateFieldWorker extends sq.Worker
     implements TestOptNullNamedPrivateField {
-  _$TestOptNullNamedPrivateFieldWorker(
+  TestOptNullNamedPrivateFieldWorker(
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullNamedPrivateFieldActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptNullNamedPrivateFieldWorker.vm(
+  TestOptNullNamedPrivateFieldWorker.vm(
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -8235,7 +2057,7 @@ base class _$TestOptNullNamedPrivateFieldWorker extends sq.Worker
             $TestOptNullNamedPrivateFieldActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptNullNamedPrivateFieldWorker.js(
+  TestOptNullNamedPrivateFieldWorker.js(
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -8245,7 +2067,7 @@ base class _$TestOptNullNamedPrivateFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullNamedPrivateFieldWorker.wasm(
+  TestOptNullNamedPrivateFieldWorker.wasm(
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -8257,166 +2079,13 @@ base class _$TestOptNullNamedPrivateFieldWorker extends sq.Worker
   @override
   // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullNamedPrivateField
-base class TestOptNullNamedPrivateFieldWorker
-    with Releasable
-    implements _$TestOptNullNamedPrivateFieldWorker {
-  TestOptNullNamedPrivateFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullNamedPrivateFieldWorker(
-      {int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedPrivateFieldWorker(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedPrivateFieldWorker.vm(
-      {int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedPrivateFieldWorker.vm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedPrivateFieldWorker.js(
-      {int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedPrivateFieldWorker.js(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedPrivateFieldWorker.wasm(
-      {int? arg1,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedPrivateFieldWorker.wasm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptNullNamedPrivateFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptNullNamedPrivateFieldWorker> _finalizer =
-      Finalizer<_$TestOptNullNamedPrivateFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int? get _arg1 => _$worker._arg1;
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullNamedPrivateField
-base class _$TestOptNullNamedPrivateFieldWorkerPool
+base class TestOptNullNamedPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptNullNamedPrivateFieldWorker>
     implements TestOptNullNamedPrivateField {
-  _$TestOptNullNamedPrivateFieldWorkerPool(
+  TestOptNullNamedPrivateFieldWorkerPool(
       {int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -8430,7 +2099,7 @@ base class _$TestOptNullNamedPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullNamedPrivateFieldWorkerPool.vm(
+  TestOptNullNamedPrivateFieldWorkerPool.vm(
       {int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -8444,7 +2113,7 @@ base class _$TestOptNullNamedPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullNamedPrivateFieldWorkerPool.js(
+  TestOptNullNamedPrivateFieldWorkerPool.js(
       {int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -8458,7 +2127,7 @@ base class _$TestOptNullNamedPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullNamedPrivateFieldWorkerPool.wasm(
+  TestOptNullNamedPrivateFieldWorkerPool.wasm(
       {int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -8475,196 +2144,6 @@ base class _$TestOptNullNamedPrivateFieldWorkerPool
   @override
   // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullNamedPrivateField
-base class TestOptNullNamedPrivateFieldWorkerPool
-    with Releasable
-    implements _$TestOptNullNamedPrivateFieldWorkerPool {
-  TestOptNullNamedPrivateFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullNamedPrivateFieldWorkerPool(
-      {int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedPrivateFieldWorkerPool(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedPrivateFieldWorkerPool.vm(
-      {int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedPrivateFieldWorkerPool.vm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedPrivateFieldWorkerPool.js(
-      {int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedPrivateFieldWorkerPool.js(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullNamedPrivateFieldWorkerPool.wasm(
-      {int? arg1,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullNamedPrivateFieldWorkerPool.wasm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptNullNamedPrivateFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullNamedPrivateFieldWorkerPool> _finalizer =
-      Finalizer<_$TestOptNullNamedPrivateFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int? get _arg1 => _$pool._arg1;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop(
-          [bool Function(TestOptNullNamedPrivateFieldWorker worker)?
-              predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptNullNamedPrivateFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(
-                  TestOptNullNamedPrivateFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptNullNamedPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptNullNamedPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptNullNamedPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptNullNamedPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptDefNamedPrivateField
@@ -8682,23 +2161,23 @@ sq.WorkerService $TestOptDefNamedPrivateFieldInitializer(sq.WorkerRequest $$) =>
     _$TestOptDefNamedPrivateFieldWorkerService(arg1: _$X.$0($$.args[0]));
 
 /// Worker for TestOptDefNamedPrivateField
-base class _$TestOptDefNamedPrivateFieldWorker extends sq.Worker
+base class TestOptDefNamedPrivateFieldWorker extends sq.Worker
     implements TestOptDefNamedPrivateField {
-  _$TestOptDefNamedPrivateFieldWorker(
+  TestOptDefNamedPrivateFieldWorker(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedPrivateFieldActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptDefNamedPrivateFieldWorker.vm(
+  TestOptDefNamedPrivateFieldWorker.vm(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedPrivateFieldActivator(sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptDefNamedPrivateFieldWorker.js(
+  TestOptDefNamedPrivateFieldWorker.js(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -8707,7 +2186,7 @@ base class _$TestOptDefNamedPrivateFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptDefNamedPrivateFieldWorker.wasm(
+  TestOptDefNamedPrivateFieldWorker.wasm(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -8718,166 +2197,13 @@ base class _$TestOptDefNamedPrivateFieldWorker extends sq.Worker
   @override
   // ignore: unused_element
   int get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptDefNamedPrivateField
-base class TestOptDefNamedPrivateFieldWorker
-    with Releasable
-    implements _$TestOptDefNamedPrivateFieldWorker {
-  TestOptDefNamedPrivateFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptDefNamedPrivateFieldWorker(
-      {int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedPrivateFieldWorker(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedPrivateFieldWorker.vm(
-      {int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedPrivateFieldWorker.vm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedPrivateFieldWorker.js(
-      {int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedPrivateFieldWorker.js(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedPrivateFieldWorker.wasm(
-      {int arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedPrivateFieldWorker.wasm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptDefNamedPrivateFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptDefNamedPrivateFieldWorker> _finalizer =
-      Finalizer<_$TestOptDefNamedPrivateFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int get _arg1 => _$worker._arg1;
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptDefNamedPrivateField
-base class _$TestOptDefNamedPrivateFieldWorkerPool
+base class TestOptDefNamedPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptDefNamedPrivateFieldWorker>
     implements TestOptDefNamedPrivateField {
-  _$TestOptDefNamedPrivateFieldWorkerPool(
+  TestOptDefNamedPrivateFieldWorkerPool(
       {int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -8891,7 +2217,7 @@ base class _$TestOptDefNamedPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefNamedPrivateFieldWorkerPool.vm(
+  TestOptDefNamedPrivateFieldWorkerPool.vm(
       {int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -8905,7 +2231,7 @@ base class _$TestOptDefNamedPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefNamedPrivateFieldWorkerPool.js(
+  TestOptDefNamedPrivateFieldWorkerPool.js(
       {int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -8919,7 +2245,7 @@ base class _$TestOptDefNamedPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptDefNamedPrivateFieldWorkerPool.wasm(
+  TestOptDefNamedPrivateFieldWorkerPool.wasm(
       {int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -8936,196 +2262,6 @@ base class _$TestOptDefNamedPrivateFieldWorkerPool
   @override
   // ignore: unused_element
   int get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptDefNamedPrivateField
-base class TestOptDefNamedPrivateFieldWorkerPool
-    with Releasable
-    implements _$TestOptDefNamedPrivateFieldWorkerPool {
-  TestOptDefNamedPrivateFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptDefNamedPrivateFieldWorkerPool(
-      {int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedPrivateFieldWorkerPool(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedPrivateFieldWorkerPool.vm(
-      {int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedPrivateFieldWorkerPool.vm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedPrivateFieldWorkerPool.js(
-      {int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedPrivateFieldWorkerPool.js(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptDefNamedPrivateFieldWorkerPool.wasm(
-      {int arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptDefNamedPrivateFieldWorkerPool.wasm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptDefNamedPrivateFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptDefNamedPrivateFieldWorkerPool> _finalizer =
-      Finalizer<_$TestOptDefNamedPrivateFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int get _arg1 => _$pool._arg1;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop(
-          [bool Function(TestOptDefNamedPrivateFieldWorker worker)?
-              predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptDefNamedPrivateFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(
-                  TestOptDefNamedPrivateFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptDefNamedPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptDefNamedPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptDefNamedPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptDefNamedPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullDefNamedPrivateField
@@ -9144,9 +2280,9 @@ sq.WorkerService $TestOptNullDefNamedPrivateFieldInitializer(
     _$TestOptNullDefNamedPrivateFieldWorkerService(arg1: _$X.$1($$.args[0]));
 
 /// Worker for TestOptNullDefNamedPrivateField
-base class _$TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
+base class TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
     implements TestOptNullDefNamedPrivateField {
-  _$TestOptNullDefNamedPrivateFieldWorker(
+  TestOptNullDefNamedPrivateFieldWorker(
       {int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -9154,7 +2290,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
             $TestOptNullDefNamedPrivateFieldActivator(sq.Squadron.platformType),
             args: [arg1]);
 
-  _$TestOptNullDefNamedPrivateFieldWorker.vm(
+  TestOptNullDefNamedPrivateFieldWorker.vm(
       {int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -9163,7 +2299,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
                 sq.SquadronPlatformType.vm),
             args: [arg1]);
 
-  _$TestOptNullDefNamedPrivateFieldWorker.js(
+  TestOptNullDefNamedPrivateFieldWorker.js(
       {int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -9174,7 +2310,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullDefNamedPrivateFieldWorker.wasm(
+  TestOptNullDefNamedPrivateFieldWorker.wasm(
       {int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -9186,166 +2322,13 @@ base class _$TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
   @override
   // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullDefNamedPrivateField
-base class TestOptNullDefNamedPrivateFieldWorker
-    with Releasable
-    implements _$TestOptNullDefNamedPrivateFieldWorker {
-  TestOptNullDefNamedPrivateFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullDefNamedPrivateFieldWorker(
-      {int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateFieldWorker(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedPrivateFieldWorker.vm(
-      {int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateFieldWorker.vm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedPrivateFieldWorker.js(
-      {int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateFieldWorker.js(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedPrivateFieldWorker.wasm(
-      {int? arg1 = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateFieldWorker.wasm(
-            arg1: arg1,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptNullDefNamedPrivateFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptNullDefNamedPrivateFieldWorker> _finalizer =
-      Finalizer<_$TestOptNullDefNamedPrivateFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int? get _arg1 => _$worker._arg1;
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullDefNamedPrivateField
-base class _$TestOptNullDefNamedPrivateFieldWorkerPool
+base class TestOptNullDefNamedPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefNamedPrivateFieldWorker>
     implements TestOptNullDefNamedPrivateField {
-  _$TestOptNullDefNamedPrivateFieldWorkerPool(
+  TestOptNullDefNamedPrivateFieldWorkerPool(
       {int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -9359,7 +2342,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefNamedPrivateFieldWorkerPool.vm(
+  TestOptNullDefNamedPrivateFieldWorkerPool.vm(
       {int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -9373,7 +2356,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefNamedPrivateFieldWorkerPool.js(
+  TestOptNullDefNamedPrivateFieldWorkerPool.js(
       {int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -9387,7 +2370,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefNamedPrivateFieldWorkerPool.wasm(
+  TestOptNullDefNamedPrivateFieldWorkerPool.wasm(
       {int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -9404,197 +2387,6 @@ base class _$TestOptNullDefNamedPrivateFieldWorkerPool
   @override
   // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullDefNamedPrivateField
-base class TestOptNullDefNamedPrivateFieldWorkerPool
-    with Releasable
-    implements _$TestOptNullDefNamedPrivateFieldWorkerPool {
-  TestOptNullDefNamedPrivateFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullDefNamedPrivateFieldWorkerPool(
-      {int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateFieldWorkerPool(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedPrivateFieldWorkerPool.vm(
-      {int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateFieldWorkerPool.vm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedPrivateFieldWorkerPool.js(
-      {int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateFieldWorkerPool.js(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedPrivateFieldWorkerPool.wasm(
-      {int? arg1 = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateFieldWorkerPool.wasm(
-            arg1: arg1,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptNullDefNamedPrivateFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullDefNamedPrivateFieldWorkerPool>
-      _finalizer = Finalizer<_$TestOptNullDefNamedPrivateFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  int? get _arg1 => _$pool._arg1;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop(
-          [bool Function(TestOptNullDefNamedPrivateFieldWorker worker)?
-              predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(
-                  TestOptNullDefNamedPrivateFieldWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(
-                  TestOptNullDefNamedPrivateFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestOptNullDefNamedPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestOptNullDefNamedPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestOptNullDefNamedPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestOptNullDefNamedPrivateFieldWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestPrefixedImportType
@@ -9616,21 +2408,21 @@ sq.WorkerService $TestPrefixedImportTypeInitializer(sq.WorkerRequest $$) =>
     _$TestPrefixedImportTypeWorkerService(_$X.$4($$.args[0]));
 
 /// Worker for TestPrefixedImportType
-base class _$TestPrefixedImportTypeWorker extends sq.Worker
+base class TestPrefixedImportTypeWorker extends sq.Worker
     implements TestPrefixedImportType {
-  _$TestPrefixedImportTypeWorker(this.typedData,
+  TestPrefixedImportTypeWorker(this.typedData,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.Squadron.platformType),
             args: [_$X.$2(typedData)]);
 
-  _$TestPrefixedImportTypeWorker.vm(this.typedData,
+  TestPrefixedImportTypeWorker.vm(this.typedData,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.SquadronPlatformType.vm),
             args: [_$X.$2(typedData)]);
 
-  _$TestPrefixedImportTypeWorker.js(this.typedData,
+  TestPrefixedImportTypeWorker.js(this.typedData,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.SquadronPlatformType.js),
@@ -9638,7 +2430,7 @@ base class _$TestPrefixedImportTypeWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestPrefixedImportTypeWorker.wasm(this.typedData,
+  TestPrefixedImportTypeWorker.wasm(this.typedData,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.SquadronPlatformType.wasm),
@@ -9652,157 +2444,13 @@ base class _$TestPrefixedImportTypeWorker extends sq.Worker
       send(_$TestPrefixedImportTypeWorkerService._$getTypedDataId,
               args: [], inspectRequest: true, inspectResponse: true)
           .then(_$X.$5);
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestPrefixedImportType
-base class TestPrefixedImportTypeWorker
-    with Releasable
-    implements _$TestPrefixedImportTypeWorker {
-  TestPrefixedImportTypeWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestPrefixedImportTypeWorker(typed_data.Int8List typedData,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestPrefixedImportTypeWorker(typedData,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestPrefixedImportTypeWorker.vm(typed_data.Int8List typedData,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestPrefixedImportTypeWorker.vm(typedData,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestPrefixedImportTypeWorker.js(typed_data.Int8List typedData,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestPrefixedImportTypeWorker.js(typedData,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestPrefixedImportTypeWorker.wasm(typed_data.Int8List typedData,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestPrefixedImportTypeWorker.wasm(typedData,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  @override
-  typed_data.Int8List get typedData => _$worker.typedData;
-
-  final _$TestPrefixedImportTypeWorker _$worker;
-
-  static final Finalizer<_$TestPrefixedImportTypeWorker> _finalizer =
-      Finalizer<_$TestPrefixedImportTypeWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  Future<typed_data.Int8List?> getTypedData() => _$worker.getTypedData();
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestPrefixedImportType
-base class _$TestPrefixedImportTypeWorkerPool
+base class TestPrefixedImportTypeWorkerPool
     extends sq.WorkerPool<TestPrefixedImportTypeWorker>
     implements TestPrefixedImportType {
-  _$TestPrefixedImportTypeWorkerPool(this.typedData,
+  TestPrefixedImportTypeWorkerPool(this.typedData,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -9813,7 +2461,7 @@ base class _$TestPrefixedImportTypeWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestPrefixedImportTypeWorkerPool.vm(this.typedData,
+  TestPrefixedImportTypeWorkerPool.vm(this.typedData,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -9824,7 +2472,7 @@ base class _$TestPrefixedImportTypeWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestPrefixedImportTypeWorkerPool.js(this.typedData,
+  TestPrefixedImportTypeWorkerPool.js(this.typedData,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -9835,7 +2483,7 @@ base class _$TestPrefixedImportTypeWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestPrefixedImportTypeWorkerPool.wasm(this.typedData,
+  TestPrefixedImportTypeWorkerPool.wasm(this.typedData,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -9852,188 +2500,6 @@ base class _$TestPrefixedImportTypeWorkerPool
   @override
   Future<typed_data.Int8List?> getTypedData() =>
       execute((w) => w.getTypedData());
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestPrefixedImportType
-base class TestPrefixedImportTypeWorkerPool
-    with Releasable
-    implements _$TestPrefixedImportTypeWorkerPool {
-  TestPrefixedImportTypeWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestPrefixedImportTypeWorkerPool(typed_data.Int8List typedData,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestPrefixedImportTypeWorkerPool(typedData,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestPrefixedImportTypeWorkerPool.vm(typed_data.Int8List typedData,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestPrefixedImportTypeWorkerPool.vm(typedData,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestPrefixedImportTypeWorkerPool.js(typed_data.Int8List typedData,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestPrefixedImportTypeWorkerPool.js(typedData,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestPrefixedImportTypeWorkerPool.wasm(typed_data.Int8List typedData,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestPrefixedImportTypeWorkerPool.wasm(typedData,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  @override
-  typed_data.Int8List get typedData => _$pool.typedData;
-
-  final _$TestPrefixedImportTypeWorkerPool _$pool;
-
-  static final Finalizer<_$TestPrefixedImportTypeWorkerPool> _finalizer =
-      Finalizer<_$TestPrefixedImportTypeWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  Future<typed_data.Int8List?> getTypedData() => _$pool.getTypedData();
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestPrefixedImportTypeWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestPrefixedImportTypeWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestPrefixedImportTypeWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestPrefixedImportTypeWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestPrefixedImportTypeWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestPrefixedImportTypeWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestPrefixedImportTypeWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestOptNullDefNamedPrivateNonFinalField
@@ -10061,9 +2527,9 @@ sq.WorkerService $TestOptNullDefNamedPrivateNonFinalFieldInitializer(
         state: _$X.$1($$.args[0]));
 
 /// Worker for TestOptNullDefNamedPrivateNonFinalField
-base class _$TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
+base class TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
     implements TestOptNullDefNamedPrivateNonFinalField {
-  _$TestOptNullDefNamedPrivateNonFinalFieldWorker(
+  TestOptNullDefNamedPrivateNonFinalFieldWorker(
       {int? state = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -10072,7 +2538,7 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
                 sq.Squadron.platformType),
             args: [state]);
 
-  _$TestOptNullDefNamedPrivateNonFinalFieldWorker.vm(
+  TestOptNullDefNamedPrivateNonFinalFieldWorker.vm(
       {int? state = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -10081,7 +2547,7 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
                 sq.SquadronPlatformType.vm),
             args: [state]);
 
-  _$TestOptNullDefNamedPrivateNonFinalFieldWorker.js(
+  TestOptNullDefNamedPrivateNonFinalFieldWorker.js(
       {int? state = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -10092,7 +2558,7 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestOptNullDefNamedPrivateNonFinalFieldWorker.wasm(
+  TestOptNullDefNamedPrivateNonFinalFieldWorker.wasm(
       {int? state = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -10120,176 +2586,13 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
   @override
   // ignore: unused_element
   set _state(void value) => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestOptNullDefNamedPrivateNonFinalField
-base class TestOptNullDefNamedPrivateNonFinalFieldWorker
-    with Releasable
-    implements _$TestOptNullDefNamedPrivateNonFinalFieldWorker {
-  TestOptNullDefNamedPrivateNonFinalFieldWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestOptNullDefNamedPrivateNonFinalFieldWorker(
-      {int? state = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateNonFinalFieldWorker(
-            state: state,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedPrivateNonFinalFieldWorker.vm(
-      {int? state = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateNonFinalFieldWorker.vm(
-            state: state,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedPrivateNonFinalFieldWorker.js(
-      {int? state = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateNonFinalFieldWorker.js(
-            state: state,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedPrivateNonFinalFieldWorker.wasm(
-      {int? state = 0,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateNonFinalFieldWorker.wasm(
-            state: state,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptNullDefNamedPrivateNonFinalFieldWorker _$worker;
-
-  static final Finalizer<_$TestOptNullDefNamedPrivateNonFinalFieldWorker>
-      _finalizer =
-      Finalizer<_$TestOptNullDefNamedPrivateNonFinalFieldWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  Future<int?> getState() => _$worker.getState();
-
-  @override
-  Future<void> setState(int? state) => _$worker.setState(state);
-
-  @override
-  int? get _state => _$worker._state;
-
-  @override
-  set _state(void value) => _$worker._state = value;
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestOptNullDefNamedPrivateNonFinalField
-base class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool
+base class TestOptNullDefNamedPrivateNonFinalFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefNamedPrivateNonFinalFieldWorker>
     implements TestOptNullDefNamedPrivateNonFinalField {
-  _$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool(
+  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool(
       {int? state = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -10303,7 +2606,7 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.vm(
+  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.vm(
       {int? state = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -10317,7 +2620,7 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.js(
+  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.js(
       {int? state = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -10331,7 +2634,7 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.wasm(
+  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.wasm(
       {int? state = 0,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -10358,215 +2661,6 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool
   @override
   // ignore: unused_element
   set _state(void value) => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestOptNullDefNamedPrivateNonFinalField
-base class TestOptNullDefNamedPrivateNonFinalFieldWorkerPool
-    with Releasable
-    implements _$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool {
-  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool(
-      {int? state = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool(
-            state: state,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.vm(
-      {int? state = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.vm(
-            state: state,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.js(
-      {int? state = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.js(
-            state: state,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.wasm(
-      {int? state = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.wasm(
-            state: state,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool _$pool;
-
-  static final Finalizer<_$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool>
-      _finalizer =
-      Finalizer<_$TestOptNullDefNamedPrivateNonFinalFieldWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  Future<int?> getState() => _$pool.getState();
-
-  @override
-  Future<void> setState(int? state) => _$pool.setState(state);
-
-  @override
-  int? get _state => _$pool._state;
-
-  @override
-  set _state(void value) => _$pool._state = value;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop(
-          [bool Function(TestOptNullDefNamedPrivateNonFinalFieldWorker worker)?
-              predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestOptNullDefNamedPrivateNonFinalFieldWorker worker,
-                  bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestOptNullDefNamedPrivateNonFinalFieldWorker worker,
-                  bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(
-                  TestOptNullDefNamedPrivateNonFinalFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(
-                  TestOptNullDefNamedPrivateNonFinalFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(
-                  TestOptNullDefNamedPrivateNonFinalFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(
-                  TestOptNullDefNamedPrivateNonFinalFieldWorker worker)
-              task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestInstallable
@@ -10584,21 +2678,20 @@ sq.WorkerService $TestInstallableInitializer(sq.WorkerRequest $$) =>
     _$TestInstallableWorkerService(_$X.$0($$.args[0]));
 
 /// Worker for TestInstallable
-base class _$TestInstallableWorker extends sq.Worker
-    implements TestInstallable {
-  _$TestInstallableWorker(int delay,
+base class TestInstallableWorker extends sq.Worker implements TestInstallable {
+  TestInstallableWorker(int delay,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestInstallableActivator(sq.Squadron.platformType),
             args: [delay]);
 
-  _$TestInstallableWorker.vm(int delay,
+  TestInstallableWorker.vm(int delay,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestInstallableActivator(sq.SquadronPlatformType.vm),
             args: [delay]);
 
-  _$TestInstallableWorker.js(int delay,
+  TestInstallableWorker.js(int delay,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestInstallableActivator(sq.SquadronPlatformType.js),
@@ -10606,7 +2699,7 @@ base class _$TestInstallableWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestInstallableWorker.wasm(int delay,
+  TestInstallableWorker.wasm(int delay,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestInstallableActivator(sq.SquadronPlatformType.wasm),
@@ -10621,159 +2714,12 @@ base class _$TestInstallableWorker extends sq.Worker
   @override
   // ignore: unused_element
   int get _delay => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestInstallable
-base class TestInstallableWorker
-    with Releasable
-    implements _$TestInstallableWorker {
-  TestInstallableWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestInstallableWorker(int delay,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestInstallableWorker(delay,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestInstallableWorker.vm(int delay,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestInstallableWorker.vm(delay,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestInstallableWorker.js(int delay,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestInstallableWorker.js(delay,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestInstallableWorker.wasm(int delay,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestInstallableWorker.wasm(delay,
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  final _$TestInstallableWorker _$worker;
-
-  static final Finalizer<_$TestInstallableWorker> _finalizer =
-      Finalizer<_$TestInstallableWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  FutureOr<void> install() => _$worker.install();
-
-  @override
-  FutureOr<void> uninstall() => _$worker.uninstall();
-
-  @override
-  int get _delay => _$worker._delay;
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestInstallable
-base class _$TestInstallableWorkerPool
+base class TestInstallableWorkerPool
     extends sq.WorkerPool<TestInstallableWorker> implements TestInstallable {
-  _$TestInstallableWorkerPool(int delay,
+  TestInstallableWorkerPool(int delay,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -10783,7 +2729,7 @@ base class _$TestInstallableWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestInstallableWorkerPool.vm(int delay,
+  TestInstallableWorkerPool.vm(int delay,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -10795,7 +2741,7 @@ base class _$TestInstallableWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestInstallableWorkerPool.js(int delay,
+  TestInstallableWorkerPool.js(int delay,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -10807,7 +2753,7 @@ base class _$TestInstallableWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestInstallableWorkerPool.wasm(int delay,
+  TestInstallableWorkerPool.wasm(int delay,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -10828,187 +2774,6 @@ base class _$TestInstallableWorkerPool
   @override
   // ignore: unused_element
   int get _delay => throw UnimplementedError();
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestInstallable
-base class TestInstallableWorkerPool
-    with Releasable
-    implements _$TestInstallableWorkerPool {
-  TestInstallableWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestInstallableWorkerPool(int delay,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestInstallableWorkerPool(delay,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestInstallableWorkerPool.vm(int delay,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestInstallableWorkerPool.vm(delay,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestInstallableWorkerPool.js(int delay,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestInstallableWorkerPool.js(delay,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestInstallableWorkerPool.wasm(int delay,
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestInstallableWorkerPool.wasm(delay,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestInstallableWorkerPool _$pool;
-
-  static final Finalizer<_$TestInstallableWorkerPool> _finalizer =
-      Finalizer<_$TestInstallableWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  FutureOr<void> install() => _$pool.install();
-
-  @override
-  FutureOr<void> uninstall() => _$pool.uninstall();
-
-  @override
-  int get _delay => _$pool._delay;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestInstallableWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestInstallableWorker worker, bool removed) listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestInstallableWorker worker, bool removed)? listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(Future<T> Function(TestInstallableWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(Stream<T> Function(TestInstallableWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestInstallableWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestInstallableWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestRecordTypes
@@ -11037,25 +2802,24 @@ sq.WorkerService $TestRecordTypesInitializer(sq.WorkerRequest $$) =>
     _$TestRecordTypesWorkerService();
 
 /// Worker for TestRecordTypes
-base class _$TestRecordTypesWorker extends sq.Worker
-    implements TestRecordTypes {
-  _$TestRecordTypesWorker(
+base class TestRecordTypesWorker extends sq.Worker implements TestRecordTypes {
+  TestRecordTypesWorker(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestRecordTypesActivator(sq.Squadron.platformType));
 
-  _$TestRecordTypesWorker.vm(
+  TestRecordTypesWorker.vm(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestRecordTypesActivator(sq.SquadronPlatformType.vm));
 
-  _$TestRecordTypesWorker.js(
+  TestRecordTypesWorker.js(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestRecordTypesActivator(sq.SquadronPlatformType.js),
             threadHook: threadHook, exceptionManager: exceptionManager);
 
-  _$TestRecordTypesWorker.wasm(
+  TestRecordTypesWorker.wasm(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestRecordTypesActivator(sq.SquadronPlatformType.wasm));
@@ -11086,164 +2850,12 @@ base class _$TestRecordTypesWorker extends sq.Worker
       send(_$TestRecordTypesWorkerService._$unnamedId,
               args: [], inspectRequest: true, inspectResponse: true)
           .then(_$X.$13);
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestRecordTypes
-base class TestRecordTypesWorker
-    with Releasable
-    implements _$TestRecordTypesWorker {
-  TestRecordTypesWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestRecordTypesWorker(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRecordTypesWorker(
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestRecordTypesWorker.vm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRecordTypesWorker.vm(
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestRecordTypesWorker.js(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRecordTypesWorker.js(
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  TestRecordTypesWorker.wasm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRecordTypesWorker.wasm(
-            threadHook: threadHook, exceptionManager: exceptionManager));
-
-  final _$TestRecordTypesWorker _$worker;
-
-  static final Finalizer<_$TestRecordTypesWorker> _finalizer =
-      Finalizer<_$TestRecordTypesWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  Future<(int, {List<int> items})> both() => _$worker.both();
-
-  @override
-  Future<bool> input((int, {List<int> items}) both, (int, List<dynamic>) pos,
-          ({int count, List<dynamic> items}) named) =>
-      _$worker.input(both, pos, named);
-
-  @override
-  Future<({int count, List<dynamic> items})> named() => _$worker.named();
-
-  @override
-  Future<(int, List<dynamic>)> unnamed() => _$worker.unnamed();
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestRecordTypes
-base class _$TestRecordTypesWorkerPool
+base class TestRecordTypesWorkerPool
     extends sq.WorkerPool<TestRecordTypesWorker> implements TestRecordTypes {
-  _$TestRecordTypesWorkerPool(
+  TestRecordTypesWorkerPool(
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -11253,7 +2865,7 @@ base class _$TestRecordTypesWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestRecordTypesWorkerPool.vm(
+  TestRecordTypesWorkerPool.vm(
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -11263,7 +2875,7 @@ base class _$TestRecordTypesWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestRecordTypesWorkerPool.js(
+  TestRecordTypesWorkerPool.js(
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -11273,7 +2885,7 @@ base class _$TestRecordTypesWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestRecordTypesWorkerPool.wasm(
+  TestRecordTypesWorkerPool.wasm(
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -11297,192 +2909,6 @@ base class _$TestRecordTypesWorkerPool
 
   @override
   Future<(int, List<dynamic>)> unnamed() => execute((w) => w.unnamed());
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestRecordTypes
-base class TestRecordTypesWorkerPool
-    with Releasable
-    implements _$TestRecordTypesWorkerPool {
-  TestRecordTypesWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestRecordTypesWorkerPool(
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRecordTypesWorkerPool(
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestRecordTypesWorkerPool.vm(
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRecordTypesWorkerPool.vm(
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestRecordTypesWorkerPool.js(
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRecordTypesWorkerPool.js(
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestRecordTypesWorkerPool.wasm(
-      {sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRecordTypesWorkerPool.wasm(
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  final _$TestRecordTypesWorkerPool _$pool;
-
-  static final Finalizer<_$TestRecordTypesWorkerPool> _finalizer =
-      Finalizer<_$TestRecordTypesWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  Future<(int, {List<int> items})> both() => _$pool.both();
-
-  @override
-  Future<bool> input((int, {List<int> items}) both, (int, List<dynamic>) pos,
-          ({int count, List<dynamic> items}) named) =>
-      _$pool.input(both, pos, named);
-
-  @override
-  Future<({int count, List<dynamic> items})> named() => _$pool.named();
-
-  @override
-  Future<(int, List<dynamic>)> unnamed() => _$pool.unnamed();
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestRecordTypesWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestRecordTypesWorker worker, bool removed) listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestRecordTypesWorker worker, bool removed)? listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(Future<T> Function(TestRecordTypesWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(Stream<T> Function(TestRecordTypesWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestRecordTypesWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestRecordTypesWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// WorkerService class for TestRequiredSuperParam
@@ -11504,23 +2930,23 @@ sq.WorkerService $TestRequiredSuperParamInitializer(sq.WorkerRequest $$) =>
     _$TestRequiredSuperParamWorkerService(path: _$X.$19($$.args[0]));
 
 /// Worker for TestRequiredSuperParam
-base class _$TestRequiredSuperParamWorker extends sq.Worker
+base class TestRequiredSuperParamWorker extends sq.Worker
     implements TestRequiredSuperParam {
-  _$TestRequiredSuperParamWorker(
+  TestRequiredSuperParamWorker(
       {required this.path,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestRequiredSuperParamActivator(sq.Squadron.platformType),
             args: [path]);
 
-  _$TestRequiredSuperParamWorker.vm(
+  TestRequiredSuperParamWorker.vm(
       {required this.path,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestRequiredSuperParamActivator(sq.SquadronPlatformType.vm),
             args: [path]);
 
-  _$TestRequiredSuperParamWorker.js(
+  TestRequiredSuperParamWorker.js(
       {required this.path,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -11529,7 +2955,7 @@ base class _$TestRequiredSuperParamWorker extends sq.Worker
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
-  _$TestRequiredSuperParamWorker.wasm(
+  TestRequiredSuperParamWorker.wasm(
       {required this.path,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
@@ -11543,169 +2969,13 @@ base class _$TestRequiredSuperParamWorker extends sq.Worker
   Future<void> clear() => send(_$TestRequiredSuperParamWorkerService._$clearId,
           args: [], inspectRequest: true, inspectResponse: true)
       .then(_$X.$6);
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker wrapper for TestRequiredSuperParam
-base class TestRequiredSuperParamWorker
-    with Releasable
-    implements _$TestRequiredSuperParamWorker {
-  TestRequiredSuperParamWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._detachToken);
-  }
-
-  TestRequiredSuperParamWorker(
-      {required String path,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRequiredSuperParamWorker(
-            path: path,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestRequiredSuperParamWorker.vm(
-      {required String path,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRequiredSuperParamWorker.vm(
-            path: path,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestRequiredSuperParamWorker.js(
-      {required String path,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRequiredSuperParamWorker.js(
-            path: path,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestRequiredSuperParamWorker.wasm(
-      {required String path,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRequiredSuperParamWorker.wasm(
-            path: path,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  @override
-  String get path => _$worker.path;
-
-  final _$TestRequiredSuperParamWorker _$worker;
-
-  static final Finalizer<_$TestRequiredSuperParamWorker> _finalizer =
-      Finalizer<_$TestRequiredSuperParamWorker>((w) {
-    try {
-      _finalizer.detach(w._detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  Future<void> clear() => _$worker.clear();
-
-  @override
-  List get args => _$worker.args;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
-
-  @override
-  Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _detachToken => _$worker._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for TestRequiredSuperParam
-base class _$TestRequiredSuperParamWorkerPool
+base class TestRequiredSuperParamWorkerPool
     extends sq.WorkerPool<TestRequiredSuperParamWorker>
     implements TestRequiredSuperParam {
-  _$TestRequiredSuperParamWorkerPool(
+  TestRequiredSuperParamWorkerPool(
       {required this.path,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -11719,7 +2989,7 @@ base class _$TestRequiredSuperParamWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestRequiredSuperParamWorkerPool.vm(
+  TestRequiredSuperParamWorkerPool.vm(
       {required this.path,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -11733,7 +3003,7 @@ base class _$TestRequiredSuperParamWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestRequiredSuperParamWorkerPool.js(
+  TestRequiredSuperParamWorkerPool.js(
       {required this.path,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -11747,7 +3017,7 @@ base class _$TestRequiredSuperParamWorkerPool
           concurrencySettings: concurrencySettings,
         );
 
-  _$TestRequiredSuperParamWorkerPool.wasm(
+  TestRequiredSuperParamWorkerPool.wasm(
       {required this.path,
       sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -11766,196 +3036,6 @@ base class _$TestRequiredSuperParamWorkerPool
 
   @override
   Future<void> clear() => execute((w) => w.clear());
-
-  final Object _detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for TestRequiredSuperParam
-base class TestRequiredSuperParamWorkerPool
-    with Releasable
-    implements _$TestRequiredSuperParamWorkerPool {
-  TestRequiredSuperParamWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._detachToken);
-  }
-
-  TestRequiredSuperParamWorkerPool(
-      {required String path,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRequiredSuperParamWorkerPool(
-            path: path,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestRequiredSuperParamWorkerPool.vm(
-      {required String path,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRequiredSuperParamWorkerPool.vm(
-            path: path,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestRequiredSuperParamWorkerPool.js(
-      {required String path,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRequiredSuperParamWorkerPool.js(
-            path: path,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  TestRequiredSuperParamWorkerPool.wasm(
-      {required String path,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$TestRequiredSuperParamWorkerPool.wasm(
-            path: path,
-            concurrencySettings: concurrencySettings,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
-
-  @override
-  String get path => _$pool.path;
-
-  final _$TestRequiredSuperParamWorkerPool _$pool;
-
-  static final Finalizer<_$TestRequiredSuperParamWorkerPool> _finalizer =
-      Finalizer<_$TestRequiredSuperParamWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  Future<void> clear() => _$pool.clear();
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
-
-  @override
-  void cancel([sq.Task? task, String? message]) => _$pool.cancel(task, message);
-
-  @override
-  FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(TestRequiredSuperParamWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(TestRequiredSuperParamWorker worker, bool removed)
-              listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(TestRequiredSuperParamWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  Future<T> execute<T>(
-          Future<T> Function(TestRequiredSuperParamWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  Stream<T> stream<T>(
-          Stream<T> Function(TestRequiredSuperParamWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(TestRequiredSuperParamWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(TestRequiredSuperParamWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _detachToken => _$pool._detachToken;
-
-  @override
-  final Map<int, sq.CommandHandler> operations = sq.WorkerService.noOperations;
 }
 
 class _$X {

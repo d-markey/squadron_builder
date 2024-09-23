@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:cancelation_token/cancelation_token.dart';
 import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
-import 'package:using/src/releasable.dart';
 
 import 'generated/echo_service.activator.g.dart';
 import 'marshalers.dart';

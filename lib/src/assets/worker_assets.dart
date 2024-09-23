@@ -4,11 +4,11 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
 
-import '_overrides.dart';
-import 'build_step_events.dart';
-import 'readers/dart_method_reader.dart';
-import 'readers/squadron_service_reader.dart';
-import 'types/type_manager.dart';
+import '../_overrides.dart';
+import '../build_step_events.dart';
+import '../readers/dart_method_reader.dart';
+import '../readers/squadron_service_reader.dart';
+import '../types/type_manager.dart';
 
 part 'worker_assets_activator.dart';
 part 'worker_assets_activator_stub.dart';

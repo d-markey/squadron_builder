@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:core' as d;
 
 import 'package:cancelation_token/cancelation_token.dart';
-import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
-import 'package:using/using.dart';
 
 import 'generated/stream_service.activator.g.dart';
 

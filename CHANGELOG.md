@@ -1,3 +1,7 @@
+## 6.0.1
+
+- Do not initialize the type manager before a Squadron annotation is effectively found -- fixes https://github.com/d-markey/squadron/issues/40
+
 ## 6.0.0
 
 - squadron_builder for Squadron version >= 6.0. Please note there are no versions 3.x-5.x in order to align squadron_builder version numbers with that of Squadron.

@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
 
-import 'package:cancelation_token/cancelation_token.dart';
-import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
-import 'package:using/using.dart';
 
 // ignore: unused_import
+import 'data.dart';
 import 'data_marshaler_ext.dart' as ext_d;
 import 'generated/data_service.activator.g.dart';
 
@@ -18,42 +14,4 @@ class DataService {
   @squadronMethod
   FutureOr<Data> doSomething(Data input) =>
       Data(input.a + 1, !input.b, '(was $input)');
-}
-
-class Data {
-  Data(this.a, this.b, this.c);
-
-  final int a; // 32-bits
-  final bool b;
-  final String c;
-
-  @override
-  String toString() => 'a=$a, b=$b, c=$c';
-
-  Uint8List Function() get marshal => () {
-        final str = utf8.encode(c);
-        final buffer = Uint8List(4 + 1 + str.length);
-        writeInt(buffer, 0, a);
-        buffer[4] = b ? 1 : 0;
-        buffer.setRange(5 /* = 4 + 1 */, buffer.length, str);
-        return buffer;
-      };
-
-  // Data.unmarshal(Uint8List buffer)
-  //     : a = readInt(buffer, 0),
-  //       b = (buffer[4] != 0),
-  //       c = utf8.decode(buffer.sublist(5));
-
-  static void writeInt(Uint8List buffer, int pos, int value) {
-    buffer[pos] = (value & 0xFF000000) >> 24;
-    buffer[pos + 1] = (value & 0x00FF0000) >> 16;
-    buffer[pos + 2] = (value & 0x0000FF00) >> 8;
-    buffer[pos + 3] = (value & 0x000000FF);
-  }
-
-  static int readInt(Uint8List buffer, int pos) =>
-      (buffer[pos] << 24) |
-      (buffer[pos + 1] << 16) |
-      (buffer[pos + 2] << 8) |
-      buffer[pos + 3];
 }
