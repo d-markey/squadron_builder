@@ -3,7 +3,7 @@
 part of '../hello_world.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.0
+// Generator: WorkerGenerator 6.0.2
 // **************************************************************************
 
 /// WorkerService class for HelloWorld

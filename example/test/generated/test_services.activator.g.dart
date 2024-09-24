@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.0
+// Generator: WorkerGenerator 6.0.2
 // **************************************************************************
 
 import 'test_services.stub.g.dart'
@@ -101,3 +101,6 @@ final $TestRecordTypesActivator = $getTestRecordTypesActivator;
 
 /// Service activator for TestRequiredSuperParam
 final $TestRequiredSuperParamActivator = $getTestRequiredSuperParamActivator;
+
+/// Service activator for TestBigInt
+final $TestBigIntActivator = $getTestBigIntActivator;

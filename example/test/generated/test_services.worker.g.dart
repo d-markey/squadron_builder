@@ -3,7 +3,7 @@
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.0
+// Generator: WorkerGenerator 6.0.2
 // **************************************************************************
 
 /// WorkerService class for TestParameterLess
@@ -3038,6 +3038,103 @@ base class TestRequiredSuperParamWorkerPool
   Future<void> clear() => execute((w) => w.clear());
 }
 
+/// WorkerService class for TestBigInt
+class _$TestBigIntWorkerService extends TestBigInt implements sq.WorkerService {
+  _$TestBigIntWorkerService() : super();
+
+  @override
+  late final Map<int, sq.CommandHandler> operations =
+      Map.unmodifiable(<int, sq.CommandHandler>{
+    _$addId: ($) async =>
+        _$X.$21(await add(_$X.$20($.args[0]), _$X.$20($.args[1]))),
+  });
+
+  static const int _$addId = 1;
+}
+
+/// Service initializer for TestBigInt
+sq.WorkerService $TestBigIntInitializer(sq.WorkerRequest $$) =>
+    _$TestBigIntWorkerService();
+
+/// Worker for TestBigInt
+base class TestBigIntWorker extends sq.Worker implements TestBigInt {
+  TestBigIntWorker(
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($TestBigIntActivator(sq.Squadron.platformType));
+
+  TestBigIntWorker.vm(
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($TestBigIntActivator(sq.SquadronPlatformType.vm));
+
+  TestBigIntWorker.js(
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($TestBigIntActivator(sq.SquadronPlatformType.js),
+            threadHook: threadHook, exceptionManager: exceptionManager);
+
+  TestBigIntWorker.wasm(
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($TestBigIntActivator(sq.SquadronPlatformType.wasm));
+
+  @override
+  Future<BigInt> add(BigInt a, BigInt b) =>
+      send(_$TestBigIntWorkerService._$addId,
+              args: [_$X.$21(a), _$X.$21(b)],
+              inspectRequest: true,
+              inspectResponse: true)
+          .then(_$X.$20);
+}
+
+/// Worker pool for TestBigInt
+base class TestBigIntWorkerPool extends sq.WorkerPool<TestBigIntWorker>
+    implements TestBigInt {
+  TestBigIntWorkerPool(
+      {sq.ConcurrencySettings? concurrencySettings,
+      sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super(
+          (sq.ExceptionManager exceptionManager) => TestBigIntWorker(
+              threadHook: threadHook, exceptionManager: exceptionManager),
+          concurrencySettings: concurrencySettings,
+        );
+
+  TestBigIntWorkerPool.vm(
+      {sq.ConcurrencySettings? concurrencySettings,
+      sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super(
+          (sq.ExceptionManager exceptionManager) => TestBigIntWorker.vm(
+              threadHook: threadHook, exceptionManager: exceptionManager),
+          concurrencySettings: concurrencySettings,
+        );
+
+  TestBigIntWorkerPool.js(
+      {sq.ConcurrencySettings? concurrencySettings,
+      sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super(
+          (sq.ExceptionManager exceptionManager) => TestBigIntWorker.js(
+              threadHook: threadHook, exceptionManager: exceptionManager),
+          concurrencySettings: concurrencySettings,
+        );
+
+  TestBigIntWorkerPool.wasm(
+      {sq.ConcurrencySettings? concurrencySettings,
+      sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super(
+          (sq.ExceptionManager exceptionManager) => TestBigIntWorker.wasm(
+              threadHook: threadHook, exceptionManager: exceptionManager),
+          concurrencySettings: concurrencySettings,
+        );
+
+  @override
+  Future<BigInt> add(BigInt a, BigInt b) => execute((w) => w.add(a, b));
+}
+
 class _$X {
   static final $0 = sq.Squadron.converter.value<int>();
   static final $1 = sq.Squadron.converter.nullable($0);
@@ -3069,4 +3166,6 @@ class _$X {
   static final $17 = (((int, List<dynamic>) $) => [$.$1, _$X.$15($.$2)]);
   static final $18 = sq.Squadron.converter.value<bool>();
   static final $19 = sq.Squadron.converter.value<String>();
+  static final $20 = (($) => (const _BigIntMarshaler()).unmarshal($));
+  static final $21 = (($) => (const _BigIntMarshaler()).marshal($));
 }

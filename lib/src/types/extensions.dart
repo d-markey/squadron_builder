@@ -74,13 +74,13 @@ class _TypeFilter {
 
   final ManagedType target;
 
-  late bool Function(DartType) isMatch = (target is ManagedImportedType)
-      ? _isImportMatch(target as ManagedImportedType)
+  late bool Function(DartType) isMatch = (target is ImportedType)
+      ? _isImportMatch(target as ImportedType)
       : _isMatch;
 
   bool _isMatch(DartType type) => (type == target.dartType);
 
-  bool Function(DartType) _isImportMatch(ManagedImportedType target) {
+  bool Function(DartType) _isImportMatch(ImportedType target) {
     final pckUri = target.pckUri, baseName = target.baseName;
     return (type) => (type.isFromPackage(pckUri) && type.baseName == baseName);
   }

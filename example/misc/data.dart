@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'data.freezed.dart';

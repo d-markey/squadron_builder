@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.0
+// Generator: WorkerGenerator 6.0.2
 // **************************************************************************
 
 import 'package:squadron/squadron.dart' as sq;
@@ -375,6 +375,19 @@ sq.EntryPoint $getTestRequiredSuperParamActivator(
     sq.SquadronPlatformType platform) {
   if (platform.isVm) {
     return _start$TestRequiredSuperParam;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
+
+void _start$TestBigInt(sq.WorkerRequest command) {
+  /// VM entry point for TestBigInt
+  sq.run($TestBigIntInitializer, command);
+}
+
+sq.EntryPoint $getTestBigIntActivator(sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestBigInt;
   } else {
     throw UnsupportedError('${platform.label} not supported.');
   }

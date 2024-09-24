@@ -1,3 +1,7 @@
+## 6.0.2
+
+- Reworked initialization of imported types.
+
 ## 6.0.1
 
 - Do not initialize the type manager before a Squadron annotation is effectively found -- fixes https://github.com/d-markey/squadron/issues/40

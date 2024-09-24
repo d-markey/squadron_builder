@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:typed_data' as typed_data;
 
 import 'package:squadron/squadron.dart' as sq;
+import 'package:squadron/squadron.dart';
 
 import 'generated/test_services.activator.g.dart';
 
@@ -253,4 +254,28 @@ class TestRequiredSuperParam {
 
   @sq.squadronMethod
   Future<void> clear() async {}
+}
+
+class _BigIntMarshaler implements GenericMarshaler<BigInt> {
+  // "const" so it can be used to annotate parameters and return values
+  const _BigIntMarshaler();
+
+  @override
+  dynamic marshal(BigInt data) => data.toString();
+
+  @override
+  BigInt unmarshal(dynamic data) => BigInt.parse(data);
+}
+
+@sq.SquadronService()
+class TestBigInt {
+  TestBigInt();
+
+  @sq.squadronMethod
+  @_BigIntMarshaler()
+  FutureOr<BigInt> add(
+    @_BigIntMarshaler() BigInt a,
+    @_BigIntMarshaler() BigInt b,
+  ) =>
+      a + b;
 }

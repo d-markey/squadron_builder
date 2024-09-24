@@ -58,12 +58,11 @@ class BuildStepCodeEvent extends BuildStepEvent {
     }
     if (!alreadyWarned && _warn) {
       log.warning(
-          'Library ${_class.library.librarySource.shortName} defines multiple '
-          'services including some targetting Web platforms. This will fail '
-          'in production as each Web Worker needs its own URL and its own '
-          'communication channel. Web workers services must be implemented '
-          'in separate libraries. If necessary, code generation for Web '
-          'platforms can be turned off with @SquadronService(web: false).');
+        'Library ${_class.library.librarySource.shortName} defines multiple services including some targetting Web platforms. '
+        'This will fail in production as each Web Worker needs its own URL and its own communication channel. '
+        'Web workers services must be implemented in separate libraries. '
+        'If necessary, code generation for Web platforms can be turned off with @SquadronService(targetPlatform: TargetPlatform.vm).',
+      );
     }
   }
 

@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.0
+// Generator: WorkerGenerator 6.0.2
 // **************************************************************************
 
 import 'package:squadron/squadron.dart' as sq;
@@ -89,6 +89,9 @@ void main() {
 
   /// Web entry point for TestRequiredSuperParam
   sq.run($TestRequiredSuperParamInitializer);
+
+  /// Web entry point for TestBigInt
+  sq.run($TestBigIntInitializer);
 }
 
 sq.EntryPoint $getTestParameterLessActivator(sq.SquadronPlatformType platform) {
@@ -425,6 +428,18 @@ sq.EntryPoint $getTestRecordTypesActivator(sq.SquadronPlatformType platform) {
 
 sq.EntryPoint $getTestRequiredSuperParamActivator(
     sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
+
+sq.EntryPoint $getTestBigIntActivator(sq.SquadronPlatformType platform) {
   if (platform.isJs) {
     return sq.Squadron.uri(
         'example/test/generated/test_services.web.g.dart.js');

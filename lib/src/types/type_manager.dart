@@ -8,7 +8,6 @@ import '../marshalers/marshaler.dart';
 import '../readers/annotations_reader.dart';
 import 'extensions.dart';
 import 'imported_type.dart';
-import 'library_inspector.dart';
 import 'managed_type.dart';
 
 class TypeManager {
@@ -27,27 +26,23 @@ class TypeManager {
     }
     converters.squadronAlias = squadronAlias;
 
-    final inspector = LibraryInspector(this);
-    inspector.loadTypes(library, _managedTypes);
+    // initialize managed imported types
+    _importedTypes.updateAll((pckUri, types) {
+      final prefix = library.getPrefixFor(pckUri) ?? '';
+      types.updateAll((k, v) => ImportedType(pckUri, prefix, k));
+      return types;
+    });
+  }
 
-    final missingTypes =
-        _managedTypes[_squadronPckUri]!.values.whereType<NonImportedType>();
-
-    if (missingTypes.isNotEmpty) {
-      throw InvalidGenerationSourceError(
-        'Missing Squadron types: ${missingTypes.map((t) => t.baseName).join(', ')}',
-      );
-    }
-
-    final missingDartCore = _managedTypes['dart:core']!
-        .values
-        .followedBy(_managedTypes['dart:async']!.values)
-        .whereType<NonImportedType>();
-
-    if (missingDartCore.isNotEmpty) {
-      throw InvalidGenerationSourceError(
-        'Missing Dart types: ${missingDartCore.map((t) => t.baseName).join(', ')}',
-      );
+  void checkImportsFor(String message, List<ImportedType> requiredTypes) {
+    if (requiredTypes.isNotEmpty) {
+      final missingImports = requiredTypes.map((t) => t.pckUri).toSet()
+        ..removeWhere((pckUri) =>
+            library.importedLibraries.any((l) => l.isFromPackage(pckUri)));
+      if (missingImports.isNotEmpty) {
+        throw InvalidGenerationSourceError(
+            '$message: ${missingImports.join(', ')}');
+      }
     }
   }
 
@@ -74,56 +69,56 @@ class TypeManager {
   static const _squadronPckUri = 'package:squadron/';
   static const _dartCorePckUri = 'dart:core';
 
-  final Map<String, Map<String, ManagedType>> _managedTypes = {
+  final Map<String, Map<String, ImportedType>> _importedTypes = {
     'package:squadron/': {
-      'EntryPoint': ManagedImportedType.uninitialized,
-      'Squadron': ManagedImportedType.uninitialized,
-      'SquadronPlatformType': ManagedImportedType.uninitialized,
-      'Channel': ManagedImportedType.uninitialized,
-      'WorkerService': ManagedImportedType.uninitialized,
-      'Worker': ManagedImportedType.uninitialized,
-      'WorkerPool': ManagedImportedType.uninitialized,
-      'WorkerRequest': ManagedImportedType.uninitialized,
-      'WorkerStat': ManagedImportedType.uninitialized,
-      'PerfCounter': ManagedImportedType.uninitialized,
-      'ConcurrencySettings': ManagedImportedType.uninitialized,
-      'ExceptionManager': ManagedImportedType.uninitialized,
-      'PlatformThreadHook': ManagedImportedType.uninitialized,
-      'SquadronMarshaler': ManagedImportedType.uninitialized,
-      'CommandHandler': ManagedImportedType.uninitialized,
-      'Task': ManagedImportedType.uninitialized,
-      'ValueTask': ManagedImportedType.uninitialized,
-      'StreamTask': ManagedImportedType.uninitialized,
+      'EntryPoint': ImportedType.unset,
+      'Squadron': ImportedType.unset,
+      'SquadronPlatformType': ImportedType.unset,
+      'Channel': ImportedType.unset,
+      'WorkerService': ImportedType.unset,
+      'Worker': ImportedType.unset,
+      'WorkerPool': ImportedType.unset,
+      'WorkerRequest': ImportedType.unset,
+      'WorkerStat': ImportedType.unset,
+      'PerfCounter': ImportedType.unset,
+      'ConcurrencySettings': ImportedType.unset,
+      'ExceptionManager': ImportedType.unset,
+      'PlatformThreadHook': ImportedType.unset,
+      'SquadronMarshaler': ImportedType.unset,
+      'CommandHandler': ImportedType.unset,
+      'Task': ImportedType.unset,
+      'ValueTask': ImportedType.unset,
+      'StreamTask': ImportedType.unset,
     },
     'package:cancelation_token/': {
-      'CancelationToken': ManagedImportedType.uninitialized,
+      'CancelationToken': ImportedType.unset,
     },
     'package:using/': {
-      'Releasable': ManagedImportedType.uninitialized,
+      'Releasable': ImportedType.unset,
     },
     'package:logger/': {
-      'Logger': ManagedImportedType.uninitialized,
+      'Logger': ImportedType.unset,
     },
     'dart:typed_data': {
-      'TypedData': ManagedImportedType.uninitialized,
+      'TypedData': ImportedType.unset,
     },
     'dart:async': {
-      'FutureOr': ManagedImportedType.uninitialized,
-      'Future': ManagedImportedType.uninitialized,
-      'Stream': ManagedImportedType.uninitialized,
+      'FutureOr': ImportedType.unset,
+      'Future': ImportedType.unset,
+      'Stream': ImportedType.unset,
     },
     'dart:core': {
-      'Iterable': ManagedImportedType.uninitialized,
-      'List': ManagedImportedType.uninitialized,
-      'Map': ManagedImportedType.uninitialized,
-      'String': ManagedImportedType.uninitialized,
-      'int': ManagedImportedType.uninitialized,
-      'bool': ManagedImportedType.uninitialized,
-      'dynamic': ManagedImportedType.uninitialized,
-      'Object': ManagedImportedType.uninitialized,
-      'Duration': ManagedImportedType.uninitialized,
-      'Finalizer': ManagedImportedType.uninitialized,
-      'UnimplementedError': ManagedImportedType.uninitialized,
+      'Iterable': ImportedType.unset,
+      'List': ImportedType.unset,
+      'Map': ImportedType.unset,
+      'String': ImportedType.unset,
+      'int': ImportedType.unset,
+      'bool': ImportedType.unset,
+      'dynamic': ImportedType.unset,
+      'Object': ImportedType.unset,
+      'Duration': ImportedType.unset,
+      'Finalizer': ImportedType.unset,
+      'UnimplementedError': ImportedType.unset,
     },
   };
 
@@ -167,95 +162,97 @@ class TypeManager {
   }
 
   // ignore: non_constant_identifier_names
-  ManagedType get TEntryPoint =>
-      _managedTypes['package:squadron/']!['EntryPoint']!;
+  ImportedType get TEntryPoint =>
+      _importedTypes['package:squadron/']!['EntryPoint']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TSquadron => _managedTypes['package:squadron/']!['Squadron']!;
+  ImportedType get TSquadron =>
+      _importedTypes['package:squadron/']!['Squadron']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TSquadronPlatformType =>
-      _managedTypes['package:squadron/']!['SquadronPlatformType']!;
+  ImportedType get TSquadronPlatformType =>
+      _importedTypes['package:squadron/']!['SquadronPlatformType']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TChannel => _managedTypes['package:squadron/']!['Channel']!;
+  ImportedType get TChannel => _importedTypes['package:squadron/']!['Channel']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TWorkerService =>
-      _managedTypes['package:squadron/']!['WorkerService']!;
+  ImportedType get TWorkerService =>
+      _importedTypes['package:squadron/']!['WorkerService']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TWorker => _managedTypes['package:squadron/']!['Worker']!;
+  ImportedType get TWorker => _importedTypes['package:squadron/']!['Worker']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TWorkerPool =>
-      _managedTypes['package:squadron/']!['WorkerPool']!;
+  ImportedType get TWorkerPool =>
+      _importedTypes['package:squadron/']!['WorkerPool']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TWorkerRequest =>
-      _managedTypes['package:squadron/']!['WorkerRequest']!;
+  ImportedType get TWorkerRequest =>
+      _importedTypes['package:squadron/']!['WorkerRequest']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TWorkerStat =>
-      _managedTypes['package:squadron/']!['WorkerStat']!;
+  ImportedType get TWorkerStat =>
+      _importedTypes['package:squadron/']!['WorkerStat']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TPerfCounter =>
-      _managedTypes['package:squadron/']!['PerfCounter']!;
+  ImportedType get TPerfCounter =>
+      _importedTypes['package:squadron/']!['PerfCounter']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TConcurrencySettings =>
-      _managedTypes['package:squadron/']!['ConcurrencySettings']!;
+  ImportedType get TConcurrencySettings =>
+      _importedTypes['package:squadron/']!['ConcurrencySettings']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TExceptionManager =>
-      _managedTypes['package:squadron/']!['ExceptionManager']!;
+  ImportedType get TExceptionManager =>
+      _importedTypes['package:squadron/']!['ExceptionManager']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TPlatformThreadHook =>
-      _managedTypes['package:squadron/']!['PlatformThreadHook']!;
+  ImportedType get TPlatformThreadHook =>
+      _importedTypes['package:squadron/']!['PlatformThreadHook']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TSquadronMarshaler =>
-      _managedTypes['package:squadron/']!['SquadronMarshaler']!;
+  ImportedType get TSquadronMarshaler =>
+      _importedTypes['package:squadron/']!['SquadronMarshaler']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TCommandHandler =>
-      _managedTypes['package:squadron/']!['CommandHandler']!;
+  ImportedType get TCommandHandler =>
+      _importedTypes['package:squadron/']!['CommandHandler']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TTask => _managedTypes['package:squadron/']!['Task']!;
+  ImportedType get TTask => _importedTypes['package:squadron/']!['Task']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TValueTask =>
-      _managedTypes['package:squadron/']!['ValueTask']!;
+  ImportedType get TValueTask =>
+      _importedTypes['package:squadron/']!['ValueTask']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TStreamTask =>
-      _managedTypes['package:squadron/']!['StreamTask']!;
+  ImportedType get TStreamTask =>
+      _importedTypes['package:squadron/']!['StreamTask']!;
 
   // ignore: non_constant_identifier_names
-  ManagedType get TCancelationToken =>
-      _managedTypes['package:cancelation_token/']!['CancelationToken']!;
+  ImportedType get TCancelationToken =>
+      _importedTypes['package:cancelation_token/']!['CancelationToken']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TReleasable =>
-      _managedTypes['package:using/']!['Releasable']!;
+  ImportedType get TReleasable =>
+      _importedTypes['package:using/']!['Releasable']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TLogger => _managedTypes['package:logger/']!['Logger']!;
+  ImportedType get TLogger => _importedTypes['package:logger/']!['Logger']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TTypedData => _managedTypes['dart:typed_data']!['TypedData']!;
+  ImportedType get TTypedData =>
+      _importedTypes['dart:typed_data']!['TypedData']!;
 
   // ignore: non_constant_identifier_names
-  ManagedType get TFutureOr => _managedTypes['dart:async']!['FutureOr']!;
+  ImportedType get TFutureOr => _importedTypes['dart:async']!['FutureOr']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TFuture => _managedTypes['dart:async']!['Future']!;
+  ImportedType get TFuture => _importedTypes['dart:async']!['Future']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TStream => _managedTypes['dart:async']!['Stream']!;
+  ImportedType get TStream => _importedTypes['dart:async']!['Stream']!;
 
   // ignore: non_constant_identifier_names
-  ManagedType get TList => _managedTypes['dart:core']!['List']!;
+  ImportedType get TList => _importedTypes['dart:core']!['List']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TIterable => _managedTypes['dart:core']!['Iterable']!;
+  ImportedType get TIterable => _importedTypes['dart:core']!['Iterable']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TMap => _managedTypes['dart:core']!['Map']!;
+  ImportedType get TMap => _importedTypes['dart:core']!['Map']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TInt => _managedTypes['dart:core']!['int']!;
+  ImportedType get TInt => _importedTypes['dart:core']!['int']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TBool => _managedTypes['dart:core']!['bool']!;
+  ImportedType get TBool => _importedTypes['dart:core']!['bool']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TDynamic => _managedTypes['dart:core']!['dynamic']!;
+  ImportedType get TDynamic => _importedTypes['dart:core']!['dynamic']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TObject => _managedTypes['dart:core']!['Object']!;
+  ImportedType get TObject => _importedTypes['dart:core']!['Object']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TString => _managedTypes['dart:core']!['String']!;
+  ImportedType get TString => _importedTypes['dart:core']!['String']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TDuration => _managedTypes['dart:core']!['Duration']!;
+  ImportedType get TDuration => _importedTypes['dart:core']!['Duration']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TFinalizer => _managedTypes['dart:core']!['Finalizer']!;
+  ImportedType get TFinalizer => _importedTypes['dart:core']!['Finalizer']!;
   // ignore: non_constant_identifier_names
-  ManagedType get TUnimplementedError =>
-      _managedTypes['dart:core']!['UnimplementedError']!;
+  ImportedType get TUnimplementedError =>
+      _importedTypes['dart:core']!['UnimplementedError']!;
 }

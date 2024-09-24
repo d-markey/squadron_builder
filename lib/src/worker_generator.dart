@@ -8,8 +8,6 @@ import 'package:squadron/squadron.dart';
 import 'assets/worker_assets.dart';
 import 'build_step_events.dart';
 import 'readers/squadron_service_reader.dart';
-import 'types/imported_type.dart';
-import 'types/managed_type.dart';
 import 'types/type_manager.dart';
 import 'version.dart';
 
@@ -68,30 +66,28 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     }
   }
 
-  void _ensureImport(ManagedType type) {
-    if (type is NonImportedType) {
-      log.warning(
-        'Finalizable workers rely on ${type.baseName} from package ${type.pckUri} which is not accessible from your worker service library.'
-        'Please make sure your project has a dependency to package "${type.pckUri}" and import it in the worker service library.',
-      );
-    }
-  }
-
   @override
   Stream<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async* {
     final classElt = element;
     if (classElt is! ClassElement) return;
 
-    final service = SquadronServiceReader.load(classElt, _typeManager!);
+    final typeManager = _typeManager!;
+
+    final service = SquadronServiceReader.load(classElt, typeManager);
     if (service == null) return;
 
-    _typeManager!.initialize();
+    typeManager.initialize();
 
     if (_withFinalizers) {
-      _ensureImport(_typeManager!.TReleasable);
-      _ensureImport(_typeManager!.TCancelationToken);
-      _ensureImport(_typeManager!.TLogger);
+      typeManager.checkImportsFor(
+          'To generate fnalization code, your library must import the following:',
+          [
+            typeManager.TReleasable,
+            typeManager.TCancelationToken,
+            typeManager.TLogger,
+            typeManager.TFutureOr
+          ]);
     }
 
     final assets = WorkerAssets(buildStep, service);
