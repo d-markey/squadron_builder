@@ -20,8 +20,6 @@ class Converters {
     _instance = '${value.isEmpty ? '' : '$value.'}Squadron.converter';
   }
 
-  void clear() => _converters.clear();
-
   String getSerializerOf(ManagedType type, Marshaler? marshaler) {
     var serializer =
         marshaler?.serializerOf(type, this) ?? type.getSerializer(this);
@@ -56,9 +54,11 @@ class Converters {
     return '$_name.$deserializer';
   }
 
+  int get count => _converters.length;
+
   String get code => _converters.isEmpty
-      ? ''
-      : '''class $_name {
+      ? 'sealed class $_name { /* no converters */ }'
+      : '''sealed class $_name {
   ${_converters.entries.map((e) => 'static final ${e.value} = ${e.key};').join('\n')}
 }
 ''';

@@ -41,7 +41,7 @@ class TypeManager {
             library.importedLibraries.any((l) => l.isFromPackage(pckUri)));
       if (missingImports.isNotEmpty) {
         throw InvalidGenerationSourceError(
-            '$message: ${missingImports.join(', ')}');
+            '$message: ${missingImports.map((s) => s.endsWith('/') ? s.substring(0, s.length - 1) : s).join(', ')}');
       }
     }
   }

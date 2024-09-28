@@ -3,7 +3,7 @@
 part of '../sample_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.2
+// Generator: WorkerGenerator 6.0.3
 // **************************************************************************
 
 /// WorkerService class for SampleService
@@ -99,7 +99,7 @@ base class SampleServiceWorkerPool extends WorkerPool<SampleServiceWorker>
   Future<DataOut> compute(DataIn input) => execute((w) => w.compute(input));
 }
 
-class _$X {
+sealed class _$X {
   static final $0 = (($) => DataIn.unmarshal($));
   static final $1 = (($) => ($ as DataOut).marshal());
   static final $2 = (($) => ($ as DataIn).marshal());

@@ -3,7 +3,7 @@
 part of '../fibonacci_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.2
+// Generator: WorkerGenerator 6.0.3
 // **************************************************************************
 
 /// WorkerService class for FibonacciService
@@ -142,7 +142,7 @@ base class FibonacciServiceWorkerPool extends WorkerPool<FibonacciServiceWorker>
   Logger? get _logger => throw UnimplementedError();
 }
 
-class _$X {
+sealed class _$X {
   static final $0 = Squadron.converter.value<int>();
   static final $1 = Squadron.converter.list<int>();
   static final $2 = Squadron.converter.nullable($1);

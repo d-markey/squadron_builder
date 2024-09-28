@@ -3,7 +3,7 @@
 part of '../fib_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.2
+// Generator: WorkerGenerator 6.0.3
 // **************************************************************************
 
 /// WorkerService class for FibService
@@ -82,6 +82,6 @@ base class FibServiceWorkerPool extends WorkerPool<FibServiceWorker>
   Future<dc.int> fibonacci(dc.int i) => execute((w) => w.fibonacci(i));
 }
 
-class _$X {
+sealed class _$X {
   static final $0 = Squadron.converter.value<dc.int>();
 }

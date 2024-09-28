@@ -3,7 +3,7 @@
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.2
+// Generator: WorkerGenerator 6.0.3
 // **************************************************************************
 
 /// WorkerService class for TestParameterLess
@@ -3135,7 +3135,7 @@ base class TestBigIntWorkerPool extends sq.WorkerPool<TestBigIntWorker>
   Future<BigInt> add(BigInt a, BigInt b) => execute((w) => w.add(a, b));
 }
 
-class _$X {
+sealed class _$X {
   static final $0 = sq.Squadron.converter.value<int>();
   static final $1 = sq.Squadron.converter.nullable($0);
   static final $2 = (($) => ($ as typed_data.Int8List).buffer);

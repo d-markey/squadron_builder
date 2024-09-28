@@ -3,7 +3,7 @@
 part of '../json_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.2
+// Generator: WorkerGenerator 6.0.3
 // **************************************************************************
 
 /// WorkerService class for JsonService
@@ -101,7 +101,7 @@ base class JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
   Future<dynamic> decode(String source) => execute((w) => w.decode(source));
 }
 
-class _$X {
+sealed class _$X {
   static final $0 = sq.Squadron.converter.value<String>();
   static final $1 = sq.Squadron.converter.value<dynamic>();
 }

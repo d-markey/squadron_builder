@@ -3,7 +3,7 @@
 part of '../echo_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.2
+// Generator: WorkerGenerator 6.0.3
 // **************************************************************************
 
 /// WorkerService class for EchoService
@@ -183,7 +183,7 @@ base class EchoServiceWorkerPool extends WorkerPool<EchoServiceWorker>
   Duration get _delay => throw UnimplementedError();
 }
 
-class _$X {
+sealed class _$X {
   static final $0 =
       (($) => ServiceRequestGenericToString.instance.unmarshal($));
   static final $1 =

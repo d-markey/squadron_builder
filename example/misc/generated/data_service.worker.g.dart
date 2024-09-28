@@ -3,7 +3,7 @@
 part of '../data_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.2
+// Generator: WorkerGenerator 6.0.3
 // **************************************************************************
 
 /// WorkerService class for DataService
@@ -98,7 +98,7 @@ base class DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
   Future<Data> doSomething(Data input) => execute((w) => w.doSomething(input));
 }
 
-class _$X {
+sealed class _$X {
   static final $0 = (($) => ext_d.DataMarshalerExt.unmarshal($));
   static final $1 = (($) => ($ as Data).marshal());
 }

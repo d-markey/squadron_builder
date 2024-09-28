@@ -3,7 +3,7 @@
 part of '../stream_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.2
+// Generator: WorkerGenerator 6.0.3
 // **************************************************************************
 
 /// WorkerService class for StreamService
@@ -98,6 +98,6 @@ base class StreamServiceWorkerPool extends WorkerPool<StreamServiceWorker>
       stream((w) => w.infiniteClock(frequency: frequency));
 }
 
-class _$X {
+sealed class _$X {
   static final $0 = Squadron.converter.value<d.int>();
 }

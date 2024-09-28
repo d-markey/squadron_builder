@@ -3,7 +3,7 @@
 part of '../hello_world.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.2
+// Generator: WorkerGenerator 6.0.3
 // **************************************************************************
 
 /// WorkerService class for HelloWorld
@@ -103,7 +103,7 @@ base class HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
       execute((w) => w.hello(name, token));
 }
 
-class _$X {
+sealed class _$X {
   static final $0 = Squadron.converter.value<String>();
   static final $1 = Squadron.converter.nullable($0);
 }

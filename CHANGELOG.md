@@ -1,3 +1,8 @@
+## 6.0.3
+
+- Added log messages.
+- Implemented a cache for TypeManagers -- credits go to https://github.com/jpohhhh, thanks! 
+
 ## 6.0.2
 
 - Reworked initialization of imported types.

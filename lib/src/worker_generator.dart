@@ -37,33 +37,27 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
 
   final _results = <BuildStep, BuildStepCodeEvent>{};
 
-  TypeManager? _typeManager;
+  final _typeManagers = <BuildStep, TypeManager>{};
 
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
-    try {
-      // get a typemanager for the library
-      if (_typeManager != null) {
-        throw UnsupportedError('WorkerGenerator.generate() is not reentrant!');
-      }
-      _typeManager = TypeManager(library.element);
+    log.info(
+        'BuildStep ${buildStep.hashCode.hex} for ${buildStep.inputId.path}');
+    // get a typemanager for the library
+    final typeManager = _typeManagers.putIfAbsent(
+        buildStep, () => TypeManager(library.element));
 
-      // generate code
-      final result = StringBuffer();
-      result.writeln(await super.generate(library, buildStep));
-      result.writeln(_formatOutput(_typeManager!.converters.code));
+    // generate code
+    final result = StringBuffer();
+    log.fine('   Generating code...');
+    result.writeln(await super.generate(library, buildStep));
+    log.fine('   Adding ${typeManager.converters.count} converters...');
+    result.writeln(_formatOutput(typeManager.converters.code));
 
-      // success, trigger code generation for additional assets associated to this libreay
-      _buildStepEventStream.add(BuildStepDoneEvent(buildStep));
+    // success, trigger code generation for additional assets associated to this libreay
+    _buildStepEventStream.add(BuildStepDoneEvent(buildStep));
 
-      return result.toString();
-    } catch (ex, st) {
-      log.severe(ex);
-      log.severe(st);
-      rethrow;
-    } finally {
-      _typeManager = null;
-    }
+    return result.toString();
   }
 
   @override
@@ -72,16 +66,22 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     final classElt = element;
     if (classElt is! ClassElement) return;
 
-    final typeManager = _typeManager!;
+    final typeManager = _typeManagers[buildStep];
+    if (typeManager == null) {
+      throw StateError('TypeManager not found for build step $buildStep');
+    }
+    // final typeManager = _typeManager!;
 
     final service = SquadronServiceReader.load(classElt, typeManager);
     if (service == null) return;
+
+    log.fine('   Worker/WorkerPool generation started for ${classElt.name}...');
 
     typeManager.initialize();
 
     if (_withFinalizers) {
       typeManager.checkImportsFor(
-          'To generate fnalization code, your library must import the following:',
+          'To generate finalization code, your library must import the following:',
           [
             typeManager.TReleasable,
             typeManager.TCancelationToken,
@@ -125,16 +125,20 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
 
   void _writeAssetCode(BuildStepDoneEvent done) {
     final result = _results[done.buildStep];
+    _typeManagers.remove(done.buildStep);
     if (result != null) {
+      log.fine(
+          '   Worker/WorkerPool generation completed for ${done.buildStep.inputId.path}');
       _results.remove(done.buildStep);
       final insertHeader = [_header].followedBy;
       for (var asset in result.assets) {
+        log.fine('      Generating code for additional asset ${asset.path}...');
         var code = insertHeader(result.getCode(asset)).join('\n\n');
         try {
           code = _formatOutput(code);
         } catch (ex) {
           log.severe(
-              'An exception occurred while formatting code for ${asset.uri}: $ex');
+              'An exception occurred while formatting code for ${asset.path}: $ex');
         }
         result.buildStep.writeAsString(asset, code);
       }
