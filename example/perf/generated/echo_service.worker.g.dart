@@ -61,48 +61,33 @@ base class EchoServiceWorker extends Worker implements EchoService {
           srv.ServiceRequest request,
           {CancelationToken? token}) =>
       send(_$EchoServiceWorkerService._$explicitEchoWithExplicitResultId,
-              args: [_$X.$14(request)],
-              token: token,
-              inspectRequest: true,
-              inspectResponse: true)
+              args: [_$X.$14(request)], token: token)
           .then(_$X.$15);
 
   @override
   xxx.Future<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
           srv.ServiceRequest request) =>
       send(_$EchoServiceWorkerService._$explicitEchoWithJsonResultId,
-              args: [_$X.$16(request)],
-              inspectRequest: true,
-              inspectResponse: true)
-          .then(_$X.$17);
+          args: [_$X.$16(request)]).then(_$X.$17);
 
   @override
   xxx.Future<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
           srv.ServiceRequest request) =>
       send(_$EchoServiceWorkerService._$jsonEchoWithExplicitResultId,
-              args: [_$X.$18(request)],
-              inspectRequest: true,
-              inspectResponse: true)
-          .then(_$X.$19);
+          args: [_$X.$18(request)]).then(_$X.$19);
 
   @override
   xxx.Future<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
           srv.ServiceRequest request) =>
       send(_$EchoServiceWorkerService._$jsonEchoWithJsonResultId,
-              args: [_$X.$18(request)],
-              inspectRequest: true,
-              inspectResponse: true)
-          .then(_$X.$20);
+          args: [_$X.$18(request)]).then(_$X.$20);
 
   @override
   xxx.Future<srv.ServiceResponse<String>> jsonEncodeEcho(
           srv.ServiceRequest request,
           [CancelationToken? token]) =>
       send(_$EchoServiceWorkerService._$jsonEncodeEchoId,
-              args: [_$X.$21(request)],
-              token: token,
-              inspectRequest: true,
-              inspectResponse: true)
+              args: [_$X.$21(request)], token: token)
           .then(_$X.$22);
 
   @override

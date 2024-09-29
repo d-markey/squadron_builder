@@ -2441,8 +2441,7 @@ base class TestPrefixedImportTypeWorker extends sq.Worker
 
   @override
   Future<typed_data.Int8List?> getTypedData() =>
-      send(_$TestPrefixedImportTypeWorkerService._$getTypedDataId,
-              args: [], inspectRequest: true, inspectResponse: true)
+      send(_$TestPrefixedImportTypeWorkerService._$getTypedDataId, args: [])
           .then(_$X.$5);
 }
 
@@ -2570,89 +2569,12 @@ base class TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
   @override
   Future<int?> getState() =>
       send(_$TestOptNullDefNamedPrivateNonFinalFieldWorkerService._$getStateId,
-              args: [], inspectRequest: true, inspectResponse: true)
-          .then(_$X.$1);
+          args: []).then(_$X.$1);
 
   @override
   Future<void> setState(int? state) =>
       send(_$TestOptNullDefNamedPrivateNonFinalFieldWorkerService._$setStateId,
-              args: [state], inspectRequest: true, inspectResponse: true)
-          .then(_$X.$6);
-
-  @override
-  // ignore: unused_element
-  int? get _state => throw UnimplementedError();
-
-  @override
-  // ignore: unused_element
-  set _state(void value) => throw UnimplementedError();
-}
-
-/// Worker pool for TestOptNullDefNamedPrivateNonFinalField
-base class TestOptNullDefNamedPrivateNonFinalFieldWorkerPool
-    extends sq.WorkerPool<TestOptNullDefNamedPrivateNonFinalFieldWorker>
-    implements TestOptNullDefNamedPrivateNonFinalField {
-  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool(
-      {int? state = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super(
-          (sq.ExceptionManager exceptionManager) =>
-              TestOptNullDefNamedPrivateNonFinalFieldWorker(
-                  state: state,
-                  threadHook: threadHook,
-                  exceptionManager: exceptionManager),
-          concurrencySettings: concurrencySettings,
-        );
-
-  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.vm(
-      {int? state = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super(
-          (sq.ExceptionManager exceptionManager) =>
-              TestOptNullDefNamedPrivateNonFinalFieldWorker.vm(
-                  state: state,
-                  threadHook: threadHook,
-                  exceptionManager: exceptionManager),
-          concurrencySettings: concurrencySettings,
-        );
-
-  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.js(
-      {int? state = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super(
-          (sq.ExceptionManager exceptionManager) =>
-              TestOptNullDefNamedPrivateNonFinalFieldWorker.js(
-                  state: state,
-                  threadHook: threadHook,
-                  exceptionManager: exceptionManager),
-          concurrencySettings: concurrencySettings,
-        );
-
-  TestOptNullDefNamedPrivateNonFinalFieldWorkerPool.wasm(
-      {int? state = 0,
-      sq.ConcurrencySettings? concurrencySettings,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super(
-          (sq.ExceptionManager exceptionManager) =>
-              TestOptNullDefNamedPrivateNonFinalFieldWorker.wasm(
-                  state: state,
-                  threadHook: threadHook,
-                  exceptionManager: exceptionManager),
-          concurrencySettings: concurrencySettings,
-        );
-
-  @override
-  Future<int?> getState() => execute((w) => w.getState());
-
-  @override
-  Future<void> setState(int? state) => execute((w) => w.setState(state));
+          args: [state]).then(_$X.$6);
 
   @override
   // ignore: unused_element
@@ -2787,8 +2709,8 @@ class _$TestRecordTypesWorkerService extends TestRecordTypes
     _$bothId: ($) async => _$X.$8(await both()),
     _$inputId: ($) =>
         input(_$X.$10($.args[0]), _$X.$13($.args[1]), _$X.$14($.args[2])),
-    _$namedId: ($) => named().then(_$X.$16),
-    _$unnamedId: ($) async => _$X.$17(await unnamed()),
+    _$namedId: ($) => named().then(_$X.$15),
+    _$unnamedId: ($) async => _$X.$16(await unnamed()),
   });
 
   static const int _$bothId = 1;
@@ -2826,30 +2748,21 @@ base class TestRecordTypesWorker extends sq.Worker implements TestRecordTypes {
 
   @override
   Future<(int, {List<int> items})> both() =>
-      send(_$TestRecordTypesWorkerService._$bothId,
-              args: [], inspectRequest: true, inspectResponse: true)
-          .then(_$X.$10);
+      send(_$TestRecordTypesWorkerService._$bothId, args: []).then(_$X.$10);
 
   @override
   Future<bool> input((int, {List<int> items}) both, (int, List<dynamic>) pos,
           ({int count, List<dynamic> items}) named) =>
       send(_$TestRecordTypesWorkerService._$inputId,
-              args: [_$X.$8(both), _$X.$17(pos), _$X.$16(named)],
-              inspectRequest: true,
-              inspectResponse: true)
-          .then(_$X.$18);
+          args: [_$X.$8(both), _$X.$16(pos), _$X.$15(named)]).then(_$X.$17);
 
   @override
   Future<({int count, List<dynamic> items})> named() =>
-      send(_$TestRecordTypesWorkerService._$namedId,
-              args: [], inspectRequest: true, inspectResponse: true)
-          .then(_$X.$14);
+      send(_$TestRecordTypesWorkerService._$namedId, args: []).then(_$X.$14);
 
   @override
   Future<(int, List<dynamic>)> unnamed() =>
-      send(_$TestRecordTypesWorkerService._$unnamedId,
-              args: [], inspectRequest: true, inspectResponse: true)
-          .then(_$X.$13);
+      send(_$TestRecordTypesWorkerService._$unnamedId, args: []).then(_$X.$13);
 }
 
 /// Worker pool for TestRecordTypes
@@ -2927,7 +2840,7 @@ class _$TestRequiredSuperParamWorkerService extends TestRequiredSuperParam
 
 /// Service initializer for TestRequiredSuperParam
 sq.WorkerService $TestRequiredSuperParamInitializer(sq.WorkerRequest $$) =>
-    _$TestRequiredSuperParamWorkerService(path: _$X.$19($$.args[0]));
+    _$TestRequiredSuperParamWorkerService(path: _$X.$18($$.args[0]));
 
 /// Worker for TestRequiredSuperParam
 base class TestRequiredSuperParamWorker extends sq.Worker
@@ -2966,9 +2879,9 @@ base class TestRequiredSuperParamWorker extends sq.Worker
   final String path;
 
   @override
-  Future<void> clear() => send(_$TestRequiredSuperParamWorkerService._$clearId,
-          args: [], inspectRequest: true, inspectResponse: true)
-      .then(_$X.$6);
+  Future<void> clear() =>
+      send(_$TestRequiredSuperParamWorkerService._$clearId, args: [])
+          .then(_$X.$6);
 }
 
 /// Worker pool for TestRequiredSuperParam
@@ -3046,7 +2959,7 @@ class _$TestBigIntWorkerService extends TestBigInt implements sq.WorkerService {
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
     _$addId: ($) async =>
-        _$X.$21(await add(_$X.$20($.args[0]), _$X.$20($.args[1]))),
+        _$X.$20(await add(_$X.$19($.args[0]), _$X.$19($.args[1]))),
   });
 
   static const int _$addId = 1;
@@ -3081,11 +2994,8 @@ base class TestBigIntWorker extends sq.Worker implements TestBigInt {
 
   @override
   Future<BigInt> add(BigInt a, BigInt b) =>
-      send(_$TestBigIntWorkerService._$addId,
-              args: [_$X.$21(a), _$X.$21(b)],
-              inspectRequest: true,
-              inspectResponse: true)
-          .then(_$X.$20);
+      send(_$TestBigIntWorkerService._$addId, args: [_$X.$20(a), _$X.$20(b)])
+          .then(_$X.$19);
 }
 
 /// Worker pool for TestBigInt
@@ -3143,7 +3053,7 @@ sealed class _$X {
   static final $4 = sq.Squadron.converter.typedData<typed_data.Int8List>();
   static final $5 = sq.Squadron.converter.nullable($4);
   static final $6 = sq.Squadron.converter.value<void>();
-  static final $7 = sq.Squadron.converter.list<int>();
+  static final $7 = sq.Squadron.converter.list();
   static final $8 = (((int, {List<int> items}) $) => [$.$1, _$X.$7($.items)]);
   static final $9 = sq.Squadron.converter.list<int>(_$X.$0);
   static final $10 = (($) {
@@ -3160,12 +3070,11 @@ sealed class _$X {
     $ as List;
     return (count: _$X.$0($[0]), items: _$X.$12($[1]));
   });
-  static final $15 = sq.Squadron.converter.list<dynamic>();
-  static final $16 =
-      ((({int count, List<dynamic> items}) $) => [$.count, _$X.$15($.items)]);
-  static final $17 = (((int, List<dynamic>) $) => [$.$1, _$X.$15($.$2)]);
-  static final $18 = sq.Squadron.converter.value<bool>();
-  static final $19 = sq.Squadron.converter.value<String>();
-  static final $20 = (($) => (const _BigIntMarshaler()).unmarshal($));
-  static final $21 = (($) => (const _BigIntMarshaler()).marshal($));
+  static final $15 =
+      ((({int count, List<dynamic> items}) $) => [$.count, _$X.$7($.items)]);
+  static final $16 = (((int, List<dynamic>) $) => [$.$1, _$X.$7($.$2)]);
+  static final $17 = sq.Squadron.converter.value<bool>();
+  static final $18 = sq.Squadron.converter.value<String>();
+  static final $19 = (($) => (const _BigIntMarshaler()).unmarshal($));
+  static final $20 = (($) => (const _BigIntMarshaler()).marshal($));
 }

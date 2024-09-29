@@ -53,35 +53,28 @@ base class FibonacciServiceWorker extends Worker implements FibonacciService {
 
   @override
   Future<int?> fibonacci(int i) =>
-      send(_$FibonacciServiceWorkerService._$fibonacciId,
-              args: [i], inspectRequest: true, inspectResponse: true)
+      send(_$FibonacciServiceWorkerService._$fibonacciId, args: [i])
           .then(_$X.$5);
 
   @override
   Future<Iterable<int>?> fibonacciList0(int s, int e) =>
-      send(_$FibonacciServiceWorkerService._$fibonacciList0Id,
-              args: [s, e], inspectRequest: true, inspectResponse: true)
+      send(_$FibonacciServiceWorkerService._$fibonacciList0Id, args: [s, e])
           .then(_$X.$8);
 
   @override
   Future<List<int>> fibonacciList1(int s, int e) =>
-      send(_$FibonacciServiceWorkerService._$fibonacciList1Id,
-              args: [s, e], inspectRequest: true, inspectResponse: true)
+      send(_$FibonacciServiceWorkerService._$fibonacciList1Id, args: [s, e])
           .then(_$X.$9);
 
   @override
   Future<List<int>> fibonacciList2(int s, int e) =>
-      send(_$FibonacciServiceWorkerService._$fibonacciList2Id,
-              args: [s, e], inspectRequest: true, inspectResponse: true)
+      send(_$FibonacciServiceWorkerService._$fibonacciList2Id, args: [s, e])
           .then(_$X.$10);
 
   @override
   Stream<int> fibonacciStream(int start, {int? end, CancelationToken? token}) =>
       stream(_$FibonacciServiceWorkerService._$fibonacciStreamId,
-              args: [start, end],
-              token: token,
-              inspectRequest: true,
-              inspectResponse: true)
+              args: [start, end], token: token)
           .map(_$X.$0);
 
   @override
@@ -144,7 +137,7 @@ base class FibonacciServiceWorkerPool extends WorkerPool<FibonacciServiceWorker>
 
 sealed class _$X {
   static final $0 = Squadron.converter.value<int>();
-  static final $1 = Squadron.converter.list<int>();
+  static final $1 = Squadron.converter.list();
   static final $2 = Squadron.converter.nullable($1);
   static final $3 = (($) => (const ListIntMarshaler()).marshal($));
   static final $4 = (($) => listIntMarshaler.marshal($));

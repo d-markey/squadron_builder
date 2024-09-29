@@ -45,10 +45,7 @@ base class SampleServiceWorker extends Worker implements SampleService {
 
   @override
   Future<DataOut> compute(DataIn input) =>
-      send(_$SampleServiceWorkerService._$computeId,
-              args: [_$X.$2(input)],
-              inspectRequest: true,
-              inspectResponse: true)
+      send(_$SampleServiceWorkerService._$computeId, args: [_$X.$2(input)])
           .then(_$X.$3);
 }
 

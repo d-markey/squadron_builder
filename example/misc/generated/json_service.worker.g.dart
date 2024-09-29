@@ -49,9 +49,7 @@ base class JsonServiceWorker extends sq.Worker implements JsonService {
 
   @override
   Future<dynamic> decode(String source) =>
-      send(_$JsonServiceWorkerService._$decodeId,
-              args: [source], inspectRequest: true, inspectResponse: true)
-          .then(_$X.$1);
+      send(_$JsonServiceWorkerService._$decodeId, args: [source]).then(_$X.$1);
 }
 
 /// Worker pool for JsonService

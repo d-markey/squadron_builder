@@ -81,7 +81,7 @@ class SquadronServiceReader {
       ClassElement clazz, TypeManager typeManager) {
     final reader = AnnotationReader<SquadronService>(clazz);
     if (reader.isEmpty) return null;
-    final pool = reader.isSet('pool');
+    final pool = reader.getBool('pool');
     final targetPlatform = reader.getInt('targetPlatform');
 
     final vm = targetPlatform.hasVm;

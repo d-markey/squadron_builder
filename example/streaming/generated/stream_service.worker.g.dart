@@ -43,16 +43,12 @@ base class StreamServiceWorker extends Worker implements StreamService {
   @d.override
   Stream<d.int> clock({d.int frequency = 1, CancelationToken? token}) =>
       stream(_$StreamServiceWorkerService._$clockId,
-              args: [frequency],
-              token: token,
-              inspectRequest: true,
-              inspectResponse: true)
+              args: [frequency], token: token)
           .map(_$X.$0);
 
   @d.override
   Stream<d.int> infiniteClock({d.int frequency = 1}) =>
-      stream(_$StreamServiceWorkerService._$infiniteClockId,
-              args: [frequency], inspectRequest: true, inspectResponse: true)
+      stream(_$StreamServiceWorkerService._$infiniteClockId, args: [frequency])
           .map(_$X.$0);
 }
 

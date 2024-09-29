@@ -1,3 +1,8 @@
+## 6.0.4
+
+- Update managed type cache asap in `handleDartType()` (fixes a stack overflow exception).
+- Read value of boolean flags in annotations -- fixes https://github.com/d-markey/squadron/issues/44 
+
 ## 6.0.3
 
 - Added log messages.

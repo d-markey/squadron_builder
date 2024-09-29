@@ -62,14 +62,6 @@ class SquadronMethodReader extends DartMethodReader {
           'return a Future, a FutureOr, a Stream, or void.');
     }
 
-    // final resultMarshaler = _marshaling.getExplicitMarshaler(method);
-    // if (resultMarshaler != null) {
-    //   _resultMarshaler =
-    //       _marshaling.getMarshaler(valueType, explicit: resultMarshaler);
-    // } else {
-    //   _resultMarshaler = _marshaling.getMarshaler(valueType);
-    // }
-
     if (method.typeParameters.isNotEmpty) {
       typeParameters.addAll(method.typeParameters.map((e) => e.toString()));
     }

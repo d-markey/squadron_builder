@@ -35,10 +35,7 @@ base class DataServiceWorker extends Worker implements DataService {
 
   @override
   Future<Data> doSomething(Data input) =>
-      send(_$DataServiceWorkerService._$doSomethingId,
-              args: [_$X.$1(input)],
-              inspectRequest: true,
-              inspectResponse: true)
+      send(_$DataServiceWorkerService._$doSomethingId, args: [_$X.$1(input)])
           .then(_$X.$0);
 }
 

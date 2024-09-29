@@ -132,13 +132,14 @@ class TypeManager {
 
     if (type is RecordType) {
       managedType = ManagedType.record(type, this);
+      _cache[type] = managedType;
     } else {
       final typeLib = type.element?.library;
       managedType = ManagedType(getPrefixFor(typeLib), type, this);
+      _cache[type] = managedType;
       managedType.setMarshaler(this);
     }
 
-    _cache[type] = managedType;
     return managedType;
   }
 

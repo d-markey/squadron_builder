@@ -14,7 +14,7 @@ class _ManagedIterableType extends ManagedType {
   String getSerializer(Converters converters) {
     final itemType = typeArguments.single;
     final itemSerializer = converters.getSerializerOf(itemType, null);
-    return '${converters.instance}.list<$itemType>($itemSerializer)';
+    return '${converters.instance}.list($itemSerializer)';
   }
 
   @override

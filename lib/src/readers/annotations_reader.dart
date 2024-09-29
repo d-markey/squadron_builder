@@ -31,13 +31,15 @@ class AnnotationReader<T> {
     return value;
   }
 
-  bool isSet(String fieldName) {
+  bool getBool(String fieldName) {
+    var value = false;
     for (var a in _annotations) {
-      if (a.getField(fieldName)?.hasKnownValue ?? false) {
-        return true;
+      final v = a.getField(fieldName)?.toBoolValue();
+      if (v != null) {
+        value = value || v;
       }
     }
-    return false;
+    return value;
   }
 }
 

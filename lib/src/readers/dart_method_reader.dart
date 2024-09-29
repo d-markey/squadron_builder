@@ -53,8 +53,8 @@ class DartMethodReader {
       // private method or no SquadronMethod annotation
       m = DartMethodReader._(method, typeManager);
     } else {
-      final inspectRequest = reader.isSet('inspectRequest');
-      final inspectResponse = reader.isSet('inspectResponse');
+      final inspectRequest = reader.getBool('inspectRequest');
+      final inspectResponse = reader.getBool('inspectResponse');
       m = SquadronMethodReader._(
           method, inspectRequest, inspectResponse, typeManager);
     }

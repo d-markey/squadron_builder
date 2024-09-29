@@ -40,9 +40,7 @@ base class FibServiceWorker extends Worker implements FibService {
 
   @dc.override
   Future<dc.int> fibonacci(dc.int i) =>
-      send(_$FibServiceWorkerService._$fibonacciId,
-              args: [i], inspectRequest: true, inspectResponse: true)
-          .then(_$X.$0);
+      send(_$FibServiceWorkerService._$fibonacciId, args: [i]).then(_$X.$0);
 }
 
 /// Worker pool for FibService

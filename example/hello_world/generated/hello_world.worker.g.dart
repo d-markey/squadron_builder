@@ -46,11 +46,7 @@ base class HelloWorldWorker extends Worker implements HelloWorld {
   @override
   xxx.Future<String?> hello(
           [String? name = 'world', CancelationToken? token]) =>
-      send(_$HelloWorldWorkerService._$helloId,
-              args: [name],
-              token: token,
-              inspectRequest: true,
-              inspectResponse: true)
+      send(_$HelloWorldWorkerService._$helloId, args: [name], token: token)
           .then(_$X.$1);
 }
 
