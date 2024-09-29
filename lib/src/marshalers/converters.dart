@@ -57,7 +57,7 @@ class Converters {
   int get count => _converters.length;
 
   String get code => _converters.isEmpty
-      ? 'sealed class $_name { /* no converters */ }'
+      ? ''
       : '''sealed class $_name {
   ${_converters.entries.map((e) => 'static final ${e.value} = ${e.key};').join('\n')}
 }

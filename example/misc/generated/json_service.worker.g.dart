@@ -3,7 +3,7 @@
 part of '../json_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.3
+// Generator: WorkerGenerator 6.0.4
 // **************************************************************************
 
 /// WorkerService class for JsonService

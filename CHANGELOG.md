@@ -1,3 +1,7 @@
+## 6.0.5
+
+- Make sure no code is emitted when no worker code was generated.
+
 ## 6.0.4
 
 - Update managed type cache asap in `handleDartType()` (fixes a stack overflow exception).

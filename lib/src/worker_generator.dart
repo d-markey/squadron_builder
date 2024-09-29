@@ -48,16 +48,18 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
         buildStep, () => TypeManager(library.element));
 
     // generate code
-    final result = StringBuffer();
     log.fine('   Generating code...');
-    result.writeln(await super.generate(library, buildStep));
-    log.fine('   Adding ${typeManager.converters.count} converters...');
-    result.writeln(_formatOutput(typeManager.converters.code));
+    var code = (await super.generate(library, buildStep)).trim();
+    if (code.isNotEmpty) {
+      final n = typeManager.converters.count;
+      log.fine('   Adding $n converter${(n == 1) ? '' : 's'}...');
+      code += '\n\n${typeManager.converters.code}';
+    }
 
-    // success, trigger code generation for additional assets associated to this libreay
+    // done, trigger code generation for additional assets if any
     _buildStepEventStream.add(BuildStepDoneEvent(buildStep));
 
-    return result.toString();
+    return code;
   }
 
   @override
@@ -70,7 +72,6 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     if (typeManager == null) {
       throw StateError('TypeManager not found for build step $buildStep');
     }
-    // final typeManager = _typeManager!;
 
     final service = SquadronServiceReader.load(classElt, typeManager);
     if (service == null) return;
@@ -119,6 +120,8 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
       _results[newResult.buildStep] = newResult;
     } else {
       // merge additional results as they come through
+      log.info(
+          'new result for ${newResult.buildStep} ${newResult.buildStep.hashCode.hex}');
       result.mergeWith(newResult);
     }
   }
