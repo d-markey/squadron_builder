@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.4
+// Generator: WorkerGenerator 6.0.6
 // **************************************************************************
 
 import 'json_service.stub.g.dart'
@@ -9,4 +9,4 @@ import 'json_service.stub.g.dart'
     if (dart.library.io) 'json_service.vm.g.dart';
 
 /// Service activator for JsonService
-final $JsonServiceActivator = $getJsonServiceActivator;
+const $JsonServiceActivator = $getJsonServiceActivator;

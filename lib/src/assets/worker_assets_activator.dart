@@ -18,7 +18,7 @@ extension ActivatorExt on WorkerAssets {
       }
 
       codeEvent.add(output, '''/// Service activator for $_name
-          final \$$_serviceActivator = \$get$_serviceActivator;
+          const \$$_serviceActivator = \$get$_serviceActivator;
         ''');
     }
   }

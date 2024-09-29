@@ -3,7 +3,7 @@
 part of '../echo_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.4
+// Generator: WorkerGenerator 6.0.6
 // **************************************************************************
 
 /// WorkerService class for EchoService

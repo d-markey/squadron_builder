@@ -1,3 +1,7 @@
+## 6.0.6
+
+- Declare the service activator as `const` instead of `final`.
+
 ## 6.0.5
 
 - Make sure no code is emitted when no worker code was generated.

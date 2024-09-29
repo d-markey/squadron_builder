@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.4
+// Generator: WorkerGenerator 6.0.6
 // **************************************************************************
 
 import 'test_services.stub.g.dart'
@@ -9,98 +9,98 @@ import 'test_services.stub.g.dart'
     if (dart.library.io) 'test_services.vm.g.dart';
 
 /// Service activator for TestParameterLess
-final $TestParameterLessActivator = $getTestParameterLessActivator;
+const $TestParameterLessActivator = $getTestParameterLessActivator;
 
 /// Service activator for TestReqPositional
-final $TestReqPositionalActivator = $getTestReqPositionalActivator;
+const $TestReqPositionalActivator = $getTestReqPositionalActivator;
 
 /// Service activator for TestOptNullPositional
-final $TestOptNullPositionalActivator = $getTestOptNullPositionalActivator;
+const $TestOptNullPositionalActivator = $getTestOptNullPositionalActivator;
 
 /// Service activator for TestOptDefPositional
-final $TestOptDefPositionalActivator = $getTestOptDefPositionalActivator;
+const $TestOptDefPositionalActivator = $getTestOptDefPositionalActivator;
 
 /// Service activator for TestOptNullDefPositional
-final $TestOptNullDefPositionalActivator =
+const $TestOptNullDefPositionalActivator =
     $getTestOptNullDefPositionalActivator;
 
 /// Service activator for TestReqPositionalField
-final $TestReqPositionalFieldActivator = $getTestReqPositionalFieldActivator;
+const $TestReqPositionalFieldActivator = $getTestReqPositionalFieldActivator;
 
 /// Service activator for TestOptNullPositionalField
-final $TestOptNullPositionalFieldActivator =
+const $TestOptNullPositionalFieldActivator =
     $getTestOptNullPositionalFieldActivator;
 
 /// Service activator for TestOptDefPositionalField
-final $TestOptDefPositionalFieldActivator =
+const $TestOptDefPositionalFieldActivator =
     $getTestOptDefPositionalFieldActivator;
 
 /// Service activator for TestOptNullDefPositionalField
-final $TestOptNullDefPositionalFieldActivator =
+const $TestOptNullDefPositionalFieldActivator =
     $getTestOptNullDefPositionalFieldActivator;
 
 /// Service activator for TestReqPositionalPrivateField
-final $TestReqPositionalPrivateFieldActivator =
+const $TestReqPositionalPrivateFieldActivator =
     $getTestReqPositionalPrivateFieldActivator;
 
 /// Service activator for TestOptNullPositionalPrivateField
-final $TestOptNullPositionalPrivateFieldActivator =
+const $TestOptNullPositionalPrivateFieldActivator =
     $getTestOptNullPositionalPrivateFieldActivator;
 
 /// Service activator for TestOptDefPositionalPrivateField
-final $TestOptDefPositionalPrivateFieldActivator =
+const $TestOptDefPositionalPrivateFieldActivator =
     $getTestOptDefPositionalPrivateFieldActivator;
 
 /// Service activator for TestOptNullDefPositionalPrivateField
-final $TestOptNullDefPositionalPrivateFieldActivator =
+const $TestOptNullDefPositionalPrivateFieldActivator =
     $getTestOptNullDefPositionalPrivateFieldActivator;
 
 /// Service activator for TestOptNullNamed
-final $TestOptNullNamedActivator = $getTestOptNullNamedActivator;
+const $TestOptNullNamedActivator = $getTestOptNullNamedActivator;
 
 /// Service activator for TestOptDefNamed
-final $TestOptDefNamedActivator = $getTestOptDefNamedActivator;
+const $TestOptDefNamedActivator = $getTestOptDefNamedActivator;
 
 /// Service activator for TestOptNullDefNamed
-final $TestOptNullDefNamedActivator = $getTestOptNullDefNamedActivator;
+const $TestOptNullDefNamedActivator = $getTestOptNullDefNamedActivator;
 
 /// Service activator for TestOptNullNamedField
-final $TestOptNullNamedFieldActivator = $getTestOptNullNamedFieldActivator;
+const $TestOptNullNamedFieldActivator = $getTestOptNullNamedFieldActivator;
 
 /// Service activator for TestOptDefNamedField
-final $TestOptDefNamedFieldActivator = $getTestOptDefNamedFieldActivator;
+const $TestOptDefNamedFieldActivator = $getTestOptDefNamedFieldActivator;
 
 /// Service activator for TestOptNullDefNamedField
-final $TestOptNullDefNamedFieldActivator =
+const $TestOptNullDefNamedFieldActivator =
     $getTestOptNullDefNamedFieldActivator;
 
 /// Service activator for TestOptNullNamedPrivateField
-final $TestOptNullNamedPrivateFieldActivator =
+const $TestOptNullNamedPrivateFieldActivator =
     $getTestOptNullNamedPrivateFieldActivator;
 
 /// Service activator for TestOptDefNamedPrivateField
-final $TestOptDefNamedPrivateFieldActivator =
+const $TestOptDefNamedPrivateFieldActivator =
     $getTestOptDefNamedPrivateFieldActivator;
 
 /// Service activator for TestOptNullDefNamedPrivateField
-final $TestOptNullDefNamedPrivateFieldActivator =
+const $TestOptNullDefNamedPrivateFieldActivator =
     $getTestOptNullDefNamedPrivateFieldActivator;
 
 /// Service activator for TestPrefixedImportType
-final $TestPrefixedImportTypeActivator = $getTestPrefixedImportTypeActivator;
+const $TestPrefixedImportTypeActivator = $getTestPrefixedImportTypeActivator;
 
 /// Service activator for TestOptNullDefNamedPrivateNonFinalField
-final $TestOptNullDefNamedPrivateNonFinalFieldActivator =
+const $TestOptNullDefNamedPrivateNonFinalFieldActivator =
     $getTestOptNullDefNamedPrivateNonFinalFieldActivator;
 
 /// Service activator for TestInstallable
-final $TestInstallableActivator = $getTestInstallableActivator;
+const $TestInstallableActivator = $getTestInstallableActivator;
 
 /// Service activator for TestRecordTypes
-final $TestRecordTypesActivator = $getTestRecordTypesActivator;
+const $TestRecordTypesActivator = $getTestRecordTypesActivator;
 
 /// Service activator for TestRequiredSuperParam
-final $TestRequiredSuperParamActivator = $getTestRequiredSuperParamActivator;
+const $TestRequiredSuperParamActivator = $getTestRequiredSuperParamActivator;
 
 /// Service activator for TestBigInt
-final $TestBigIntActivator = $getTestBigIntActivator;
+const $TestBigIntActivator = $getTestBigIntActivator;
