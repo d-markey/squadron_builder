@@ -3,7 +3,7 @@
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.6
+// Generator: WorkerGenerator 6.0.7
 // **************************************************************************
 
 /// WorkerService class for TestParameterLess
@@ -2441,8 +2441,7 @@ base class TestPrefixedImportTypeWorker extends sq.Worker
 
   @override
   Future<typed_data.Int8List?> getTypedData() =>
-      send(_$TestPrefixedImportTypeWorkerService._$getTypedDataId, args: [])
-          .then(_$X.$5);
+      send(_$TestPrefixedImportTypeWorkerService._$getTypedDataId).then(_$X.$5);
 }
 
 /// Worker pool for TestPrefixedImportType
@@ -2568,13 +2567,13 @@ base class TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
 
   @override
   Future<int?> getState() =>
-      send(_$TestOptNullDefNamedPrivateNonFinalFieldWorkerService._$getStateId,
-          args: []).then(_$X.$1);
+      send(_$TestOptNullDefNamedPrivateNonFinalFieldWorkerService._$getStateId)
+          .then(_$X.$1);
 
   @override
   Future<void> setState(int? state) =>
       send(_$TestOptNullDefNamedPrivateNonFinalFieldWorkerService._$setStateId,
-          args: [state]).then(_$X.$6);
+          args: [state]);
 
   @override
   // ignore: unused_element
@@ -2706,11 +2705,11 @@ class _$TestRecordTypesWorkerService extends TestRecordTypes
   @override
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$bothId: ($) async => _$X.$8(await both()),
+    _$bothId: ($) async => _$X.$7(await both()),
     _$inputId: ($) =>
-        input(_$X.$10($.args[0]), _$X.$13($.args[1]), _$X.$14($.args[2])),
-    _$namedId: ($) => named().then(_$X.$15),
-    _$unnamedId: ($) async => _$X.$16(await unnamed()),
+        input(_$X.$9($.args[0]), _$X.$11($.args[1]), _$X.$12($.args[2])),
+    _$namedId: ($) => named().then(_$X.$13),
+    _$unnamedId: ($) async => _$X.$14(await unnamed()),
   });
 
   static const int _$bothId = 1;
@@ -2748,21 +2747,21 @@ base class TestRecordTypesWorker extends sq.Worker implements TestRecordTypes {
 
   @override
   Future<(int, {List<int> items})> both() =>
-      send(_$TestRecordTypesWorkerService._$bothId, args: []).then(_$X.$10);
+      send(_$TestRecordTypesWorkerService._$bothId).then(_$X.$9);
 
   @override
   Future<bool> input((int, {List<int> items}) both, (int, List<dynamic>) pos,
           ({int count, List<dynamic> items}) named) =>
       send(_$TestRecordTypesWorkerService._$inputId,
-          args: [_$X.$8(both), _$X.$16(pos), _$X.$15(named)]).then(_$X.$17);
+          args: [_$X.$7(both), _$X.$14(pos), _$X.$13(named)]).then(_$X.$15);
 
   @override
   Future<({int count, List<dynamic> items})> named() =>
-      send(_$TestRecordTypesWorkerService._$namedId, args: []).then(_$X.$14);
+      send(_$TestRecordTypesWorkerService._$namedId).then(_$X.$12);
 
   @override
   Future<(int, List<dynamic>)> unnamed() =>
-      send(_$TestRecordTypesWorkerService._$unnamedId, args: []).then(_$X.$13);
+      send(_$TestRecordTypesWorkerService._$unnamedId).then(_$X.$11);
 }
 
 /// Worker pool for TestRecordTypes
@@ -2840,7 +2839,7 @@ class _$TestRequiredSuperParamWorkerService extends TestRequiredSuperParam
 
 /// Service initializer for TestRequiredSuperParam
 sq.WorkerService $TestRequiredSuperParamInitializer(sq.WorkerRequest $$) =>
-    _$TestRequiredSuperParamWorkerService(path: _$X.$18($$.args[0]));
+    _$TestRequiredSuperParamWorkerService(path: _$X.$16($$.args[0]));
 
 /// Worker for TestRequiredSuperParam
 base class TestRequiredSuperParamWorker extends sq.Worker
@@ -2879,9 +2878,7 @@ base class TestRequiredSuperParamWorker extends sq.Worker
   final String path;
 
   @override
-  Future<void> clear() =>
-      send(_$TestRequiredSuperParamWorkerService._$clearId, args: [])
-          .then(_$X.$6);
+  Future<void> clear() => send(_$TestRequiredSuperParamWorkerService._$clearId);
 }
 
 /// Worker pool for TestRequiredSuperParam
@@ -2959,7 +2956,7 @@ class _$TestBigIntWorkerService extends TestBigInt implements sq.WorkerService {
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
     _$addId: ($) async =>
-        _$X.$20(await add(_$X.$19($.args[0]), _$X.$19($.args[1]))),
+        _$X.$18(await add(_$X.$17($.args[0]), _$X.$17($.args[1]))),
   });
 
   static const int _$addId = 1;
@@ -2994,8 +2991,8 @@ base class TestBigIntWorker extends sq.Worker implements TestBigInt {
 
   @override
   Future<BigInt> add(BigInt a, BigInt b) =>
-      send(_$TestBigIntWorkerService._$addId, args: [_$X.$20(a), _$X.$20(b)])
-          .then(_$X.$19);
+      send(_$TestBigIntWorkerService._$addId, args: [_$X.$18(a), _$X.$18(b)])
+          .then(_$X.$17);
 }
 
 /// Worker pool for TestBigInt
@@ -3052,29 +3049,27 @@ sealed class _$X {
   static final $3 = sq.Squadron.converter.nullable($2);
   static final $4 = sq.Squadron.converter.typedData<typed_data.Int8List>();
   static final $5 = sq.Squadron.converter.nullable($4);
-  static final $6 = sq.Squadron.converter.value<void>();
-  static final $7 = sq.Squadron.converter.list();
-  static final $8 = (((int, {List<int> items}) $) => [$.$1, _$X.$7($.items)]);
-  static final $9 = sq.Squadron.converter.list<int>(_$X.$0);
-  static final $10 = (($) {
+  static final $6 = sq.Squadron.converter.list();
+  static final $7 = (((int, {List<int> items}) $) => [$.$1, _$X.$6($.items)]);
+  static final $8 = sq.Squadron.converter.list<int>(_$X.$0);
+  static final $9 = (($) {
     $ as List;
-    return (_$X.$0($[0]), items: _$X.$9($[1]));
+    return (_$X.$0($[0]), items: _$X.$8($[1]));
   });
-  static final $11 = sq.Squadron.converter.value<dynamic>();
-  static final $12 = sq.Squadron.converter.list<dynamic>(_$X.$11);
-  static final $13 = (($) {
+  static final $10 = sq.Squadron.converter.list<dynamic>();
+  static final $11 = (($) {
     $ as List;
-    return (_$X.$0($[0]), _$X.$12($[1]));
+    return (_$X.$0($[0]), _$X.$10($[1]));
   });
-  static final $14 = (($) {
+  static final $12 = (($) {
     $ as List;
-    return (count: _$X.$0($[0]), items: _$X.$12($[1]));
+    return (count: _$X.$0($[0]), items: _$X.$10($[1]));
   });
-  static final $15 =
-      ((({int count, List<dynamic> items}) $) => [$.count, _$X.$7($.items)]);
-  static final $16 = (((int, List<dynamic>) $) => [$.$1, _$X.$7($.$2)]);
-  static final $17 = sq.Squadron.converter.value<bool>();
-  static final $18 = sq.Squadron.converter.value<String>();
-  static final $19 = (($) => (const _BigIntMarshaler()).unmarshal($));
-  static final $20 = (($) => (const _BigIntMarshaler()).marshal($));
+  static final $13 =
+      ((({int count, List<dynamic> items}) $) => [$.count, _$X.$6($.items)]);
+  static final $14 = (((int, List<dynamic>) $) => [$.$1, _$X.$6($.$2)]);
+  static final $15 = sq.Squadron.converter.value<bool>();
+  static final $16 = sq.Squadron.converter.value<String>();
+  static final $17 = (const marshaler.BigIntMarshaler()).unmarshal;
+  static final $18 = (const marshaler.BigIntMarshaler()).marshal;
 }

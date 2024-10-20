@@ -2,11 +2,21 @@ builders:
   # name of the builder
   squadron_builder:worker_builder:
     # library URI containing the builder
-    import: 'package:squadron_builder/squadron_builder.dart'
+    import: "package:squadron_builder/squadron_builder.dart"
     # Name of the function in the above library to call.
-    builder_factories: [ 'workerBuilder' ]
+    builder_factories: ["workerBuilder"]
     # The mapping from the source extension to the generated file extension
-    build_extensions: { '.dart': [ '.worker.g.dart', '.vm.g.dart', '.web.g.dart', '.stub.g.dart', '.activator.g.dart' ] }
+    build_extensions:
+      {
+        ".dart":
+          [
+            ".worker.g.dart",
+            ".vm.g.dart",
+            ".web.g.dart",
+            ".stub.g.dart",
+            ".activator.g.dart",
+          ],
+      }
     # Will automatically run on any package that depends on it
     auto_apply: dependents
     # Generate to a hidden cache dir

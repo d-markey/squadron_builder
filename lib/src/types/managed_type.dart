@@ -64,8 +64,6 @@ abstract class ManagedType {
 
   final List<ManagedType> typeArguments;
 
-  // String get baseName => dartType?.baseName ?? '';
-
   NullabilitySuffix get nullabilitySuffix;
 
   String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {

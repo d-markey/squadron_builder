@@ -2,9 +2,8 @@ part of 'worker_assets.dart';
 
 extension on WorkerAssets {
   /// Worker pool
-  String _generateWorkerPool(
-      List<SquadronMethodReader> commands, List<DartMethodReader> unimplemented,
-      {bool finalizable = false}) {
+  String _generateWorkerPool(List<SquadronMethodReader> commands,
+      List<DartMethodReader> unimplemented, bool finalizable) {
     final poolParams = _service.parameters.clone();
     final cs =
         poolParams.addOptional('concurrencySettings', TConcurrencySettings);
@@ -45,7 +44,7 @@ extension on WorkerAssets {
 
           ${unimplemented.map((m) => m.unimplemented()).join('\n\n')}
 
-          ${_service.accessors.map((a) => a.unimplemented(_typeManager)).join('\n\n')}
+          ${_service.accessors.where((a) => !a.isOperationMap).map((a) => a.unimplemented(_typeManager)).join('\n\n')}
 
           ${finalizable ? 'final $TObject _detachToken = $TObject();' : ''}
         }
@@ -95,7 +94,7 @@ extension on WorkerAssets {
 
           ${unimplemented.map((cmd) => cmd.forwardTo(instance)).join('\n\n')}
 
-          ${_service.accessors.map((a) => a.forwardTo(instance, _typeManager)).join('\n\n')}
+          ${_service.accessors.where((a) => !a.isOperationMap).map((a) => a.forwardTo(instance, _typeManager)).join('\n\n')}
 
           ${_typeManager.getWorkerPoolOverrides().entries.map((e) => _forwardOverride(e.key, instance, e.value)).join('\n\n')}
 

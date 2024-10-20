@@ -1,3 +1,9 @@
+## 6.0.7
+
+- Don't generate converters for `dynamic` or `void`.
+- Use tear-offs instead of lambdas for marshalers where pivot type is `dynamic`.
+- Add support for generating local workers / local worker clients.
+
 ## 6.0.6
 
 - Declare the service activator as `const` instead of `final`.

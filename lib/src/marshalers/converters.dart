@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/nullability_suffix.dart';
+import 'package:analyzer/dart/element/type.dart';
 
 import '../types/managed_type.dart';
 import 'marshaler.dart';
@@ -21,6 +22,7 @@ class Converters {
   }
 
   String getSerializerOf(ManagedType type, Marshaler? marshaler) {
+    if (type.dartType is DynamicType) return '';
     var serializer =
         marshaler?.serializerOf(type, this) ?? type.getSerializer(this);
     if (serializer.isEmpty) return '';
@@ -38,6 +40,9 @@ class Converters {
   }
 
   String getDeserializerOf(ManagedType type, Marshaler? marshaler) {
+    if (type.dartType is DynamicType || type.dartType is VoidType) {
+      return '';
+    }
     var deserializer =
         marshaler?.deserializerOf(type, this) ?? type.getDeserializer(this);
     if (deserializer.isEmpty) return '';

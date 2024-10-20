@@ -24,6 +24,9 @@ class SquadronParameters {
 
   final _params = <SquadronParameter>[];
 
+  bool get isEmpty => _params.isEmpty;
+  bool get isNotEmpty => !isEmpty;
+
   String? _cancelationToken;
   String? get cancelationToken => _cancelationToken;
 

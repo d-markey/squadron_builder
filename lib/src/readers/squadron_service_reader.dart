@@ -9,8 +9,16 @@ import 'squadron_parameters.dart';
 
 /// Reader for a Squadron service class
 class SquadronServiceReader {
-  SquadronServiceReader._(ClassElement clazz, TypeManager typeManager,
-      this.pool, this.vm, this.web, this.js, this.wasm, this.baseUrl)
+  SquadronServiceReader._(
+      ClassElement clazz,
+      TypeManager typeManager,
+      this.local,
+      this.pool,
+      this.vm,
+      this.web,
+      this.js,
+      this.wasm,
+      this.baseUrl)
       : name = clazz.name,
         isBase = clazz.isBase,
         parameters = SquadronParameters(typeManager) {
@@ -25,6 +33,7 @@ class SquadronServiceReader {
   final methods = <MethodElement>[];
 
   final String name;
+  final bool local;
   final bool pool;
   final bool vm;
   final bool web;
@@ -81,6 +90,7 @@ class SquadronServiceReader {
       ClassElement clazz, TypeManager typeManager) {
     final reader = AnnotationReader<SquadronService>(clazz);
     if (reader.isEmpty) return null;
+    final local = reader.getBool('local');
     final pool = reader.getBool('pool');
     final targetPlatform = reader.getInt('targetPlatform');
 
@@ -94,6 +104,6 @@ class SquadronServiceReader {
       baseUrl = baseUrl.substring(0, baseUrl.length - 1);
     }
     return SquadronServiceReader._(
-        clazz, typeManager, pool, vm, web, js, wasm, baseUrl);
+        clazz, typeManager, local, pool, vm, web, js, wasm, baseUrl);
   }
 }

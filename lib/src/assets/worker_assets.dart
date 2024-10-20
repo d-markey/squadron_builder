@@ -14,6 +14,7 @@ part 'worker_assets_activator.dart';
 part 'worker_assets_activator_stub.dart';
 part 'worker_assets_activator_vm.dart';
 part 'worker_assets_activator_web.dart';
+part 'worker_assets_local_worker.dart';
 part 'worker_assets_service.dart';
 part 'worker_assets_worker.dart';
 part 'worker_assets_worker_pool.dart';
@@ -32,16 +33,19 @@ class WorkerAssets {
         _typeManager = _service.typeManager,
         _squadronAlias = _service.typeManager.squadronAlias,
         _override = _service.typeManager.override {
-    for (var output in buildStep.allowedOutputs) {
-      final path = output.path.toLowerCase();
-      if (_service.vm && path.endsWith('.vm.g.dart')) {
-        _vmOutput = output;
-      } else if (_service.web && path.endsWith('.web.g.dart')) {
-        _webOutput = output;
-      } else if (path.endsWith('.stub.g.dart')) {
-        _xplatOutput = output;
-      } else if (path.endsWith('.activator.g.dart')) {
-        _activatorOutput = output;
+    if (!_service.local) {
+      // do not generate these for local workers
+      for (var output in buildStep.allowedOutputs) {
+        final path = output.path.toLowerCase();
+        if (_service.vm && path.endsWith('.vm.g.dart')) {
+          _vmOutput = output;
+        } else if (_service.web && path.endsWith('.web.g.dart')) {
+          _webOutput = output;
+        } else if (path.endsWith('.stub.g.dart')) {
+          _xplatOutput = output;
+        } else if (path.endsWith('.activator.g.dart')) {
+          _activatorOutput = output;
+        }
       }
     }
   }
@@ -60,6 +64,10 @@ class WorkerAssets {
 
   final TypeManager _typeManager;
 
+  // ignore: non_constant_identifier_names
+  late final TChannel = _typeManager.TChannel;
+  // ignore: non_constant_identifier_names
+  late final TPlatformChannel = _typeManager.TPlatformChannel;
   // ignore: non_constant_identifier_names
   late final TCommandHandler = _typeManager.TCommandHandler;
   // ignore: non_constant_identifier_names
@@ -81,6 +89,11 @@ class WorkerAssets {
   // ignore: non_constant_identifier_names
   late final TWorkerPool = _typeManager.TWorkerPool;
   // ignore: non_constant_identifier_names
+  late final TLocalWorker = _typeManager.TLocalWorker;
+  // ignore: non_constant_identifier_names
+  late final TLocalWorkerClient = _typeManager.TLocalWorkerClient;
+
+  // ignore: non_constant_identifier_names
   late final TConcurrencySettings = _typeManager.TConcurrencySettings;
   // ignore: non_constant_identifier_names
   late final TReleasable = _typeManager.TReleasable;
@@ -93,6 +106,8 @@ class WorkerAssets {
   late final TFinalizer = _typeManager.TFinalizer;
   // ignore: non_constant_identifier_names
   late final TObject = _typeManager.TObject;
+  // ignore: non_constant_identifier_names
+  late final TDynamic = _typeManager.TDynamic;
 
   final String _name;
   final String _workerService;
@@ -126,14 +141,19 @@ class WorkerAssets {
       commands[i].setIndex(i + 1);
     }
 
-    return Stream.fromIterable([
-      _generateServiceClass(commands),
-      _generateServiceInitializer(),
-      _generateWorker(commands, unimplemented, finalizable: withFinalizers),
-      if (_service.pool)
-        _generateWorkerPool(commands, unimplemented,
-            finalizable: withFinalizers)
-    ]);
+    return Stream.fromIterable(_service.local
+        ? [
+            // local worker
+            _generateLocalWorker(commands, unimplemented),
+          ]
+        : [
+            // regular worker
+            _generateServiceClass(commands),
+            _generateServiceInitializer(),
+            _generateWorker(commands, unimplemented, withFinalizers),
+            if (_service.pool)
+              _generateWorkerPool(commands, unimplemented, withFinalizers),
+          ]);
   }
 
   /// Proxy for base worker/worker pool method
@@ -183,7 +203,7 @@ extension on SquadronMethodReader {
   String workerMethod(String workerService) {
     final args = [
       '$workerService.$id',
-      'args: [ ${parameters.serialize()} ]',
+      if (parameters.isNotEmpty) 'args: [ ${parameters.serialize()} ]',
       if (parameters.cancelationToken != null)
         'token: ${parameters.cancelationToken}',
       if (inspectRequest) 'inspectRequest: true',
@@ -223,6 +243,8 @@ extension on FieldElement {
 
 extension on PropertyAccessorElement {
   String get property => isGetter ? name : name.replaceAll('=', '');
+
+  bool get isOperationMap => property == 'operations';
 
   String forwardTo(String target, TypeManager typeManager) {
     final type = typeManager.getTypeName(returnType);

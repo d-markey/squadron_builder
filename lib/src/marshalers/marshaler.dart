@@ -1,9 +1,11 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
+import 'package:analyzer/dart/element/type.dart';
 
 import '../types/extensions.dart';
 import '../types/managed_type.dart';
+import '../types/type_manager.dart';
 import 'converters.dart';
 
 part 'marshaler_explicit.dart';
@@ -30,6 +32,7 @@ abstract class Marshaler {
   static Marshaler json(String typeName, String? loaderTypeName) =>
       _JsonMarshaler(typeName, loaderTypeName);
 
-  static Marshaler explicit(DartObject marshaler, ManagedType marshalerType) =>
-      _ExplicitMarshaler(marshaler, marshalerType);
+  static Marshaler explicit(TypeManager typeManager, DartObject marshaler,
+          ManagedType marshalerType) =>
+      _ExplicitMarshaler(typeManager, marshaler, marshalerType);
 }
