@@ -36,10 +36,10 @@ Its purpose is to generate the code for Workers and WorkerPools based on the ser
 Example of a service class:
 
 ```dart
-// this annotation tells squadron_builder that this class contains code to be execute on dedicated threads
+// this annotation tells squadron_builder that this class contains code to be executed on dedicated threads
 @SquadronService(baseUrl: '~/workers', targetPlatform: TargetPlatform.vm | TargetPlatform.web)
 base class HelloWorld {
-  // this annotation tells squadron_builder that this method executes in a dedicated thread
+  // this annotation tells squadron_builder that this method is exposed to clients running in the main thread for instance
   @SquadronMethod()
   FutureOr<String> hello([String? name]) {
     name = name?.trim() ?? 'World';
