@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.7
+// Generator: WorkerGenerator 6.0.9
 // **************************************************************************
 
 import 'sample_service.stub.g.dart'

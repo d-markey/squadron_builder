@@ -1,3 +1,7 @@
+## 6.0.9
+
+- Update version number
+
 ## 6.0.8
 
 - Don't use marshaller tear-offs when method implementations do not use `dynamic` (eg. `GenericMarshaler<T>.marshal()` could be overridden to return something more specific than `dynamic`).

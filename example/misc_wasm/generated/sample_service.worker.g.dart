@@ -3,7 +3,7 @@
 part of '../sample_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.7
+// Generator: WorkerGenerator 6.0.9
 // **************************************************************************
 
 /// WorkerService class for SampleService
