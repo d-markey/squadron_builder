@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.9
+// Generator: WorkerGenerator 6.1.0
 // **************************************************************************
 
 import 'package:squadron/squadron.dart' as sq;

@@ -3,7 +3,7 @@
 part of '../data_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.9
+// Generator: WorkerGenerator 6.1.0
 // **************************************************************************
 
 /// WorkerService class for DataService
@@ -13,7 +13,8 @@ class _$DataServiceWorkerService extends DataService implements WorkerService {
   @override
   late final Map<int, CommandHandler> operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$doSomethingId: ($) async => _$X.$1(await doSomething(_$X.$0($.args[0]))),
+    _$doSomethingId: ($) async =>
+        _$X.$sr1(await doSomething(_$X.$dsr0($.args[0]))),
   });
 
   static const int _$doSomethingId = 1;
@@ -35,8 +36,8 @@ base class DataServiceWorker extends Worker implements DataService {
 
   @override
   Future<Data> doSomething(Data input) =>
-      send(_$DataServiceWorkerService._$doSomethingId, args: [_$X.$1(input)])
-          .then(_$X.$0);
+      send(_$DataServiceWorkerService._$doSomethingId, args: [_$X.$sr1(input)])
+          .then(_$X.$dsr0);
 }
 
 /// Worker pool for DataService
@@ -67,6 +68,6 @@ base class DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
 }
 
 sealed class _$X {
-  static final $0 = (($) => Data.unmarshal($));
-  static final $1 = (($) => ($ as Data).marshal());
+  static final $dsr0 = (($) => Data.unmarshal($));
+  static final $sr1 = (($) => ($ as Data).marshal());
 }

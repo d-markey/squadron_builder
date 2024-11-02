@@ -20,6 +20,7 @@ mixin _ImportedTypesMixin {
       'ExceptionManager': ImportedType.unset,
       'PlatformThreadHook': ImportedType.unset,
       'SquadronMarshaler': ImportedType.unset,
+      'TypedDataMarshaler': ImportedType.unset,
       'CommandHandler': ImportedType.unset,
       'Task': ImportedType.unset,
       'ValueTask': ImportedType.unset,
@@ -105,6 +106,9 @@ mixin _ImportedTypesMixin {
   // ignore: non_constant_identifier_names
   ImportedType get TSquadronMarshaler =>
       _importedTypes[PckUri.squadron]!['SquadronMarshaler']!;
+  // ignore: non_constant_identifier_names
+  ImportedType get TTypedDataMarshaler =>
+      _importedTypes[PckUri.squadron]!['TypedDataMarshaler']!;
   // ignore: non_constant_identifier_names
   ImportedType get TCommandHandler =>
       _importedTypes[PckUri.squadron]!['CommandHandler']!;

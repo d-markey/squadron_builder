@@ -3,7 +3,7 @@
 part of '../hello_world.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.9
+// Generator: WorkerGenerator 6.1.0
 // **************************************************************************
 
 /// WorkerService class for HelloWorld
@@ -14,7 +14,7 @@ base class _$HelloWorldWorkerService extends HelloWorld
   @override
   late final Map<int, CommandHandler> operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$helloId: ($) => hello(_$X.$1($.args[0]), $.cancelToken),
+    _$helloId: ($) => hello(_$X.$dsr1($.args[0]), $.cancelToken),
   });
 
   static const int _$helloId = 1;
@@ -47,7 +47,7 @@ base class HelloWorldWorker extends Worker implements HelloWorld {
   xxx.Future<String?> hello(
           [String? name = 'world', CancelationToken? token]) =>
       send(_$HelloWorldWorkerService._$helloId, args: [name], token: token)
-          .then(_$X.$1);
+          .then(_$X.$dsr1);
 }
 
 /// Worker pool for HelloWorld
@@ -100,6 +100,6 @@ base class HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
 }
 
 sealed class _$X {
-  static final $0 = Squadron.converter.value<String>();
-  static final $1 = Squadron.converter.nullable($0);
+  static final $dsr0 = Squadron.converter.value<String>();
+  static final $dsr1 = Squadron.converter.nullable(_$X.$dsr0);
 }

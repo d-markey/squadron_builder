@@ -15,7 +15,9 @@ class Converters {
   String get instance => _instance;
 
   String _squadronAlias = '';
+
   String get squadronAlias => _squadronAlias;
+
   set squadronAlias(String value) {
     _squadronAlias = value;
     _instance = '${value.isEmpty ? '' : '$value.'}Squadron.converter';
@@ -28,12 +30,12 @@ class Converters {
     if (serializer.isEmpty) return '';
     serializer = _converters.putIfAbsent(
       serializer,
-      () => '\$${_converters.length}',
+      () => '\$sr${_converters.length}',
     );
     if (type.nullabilitySuffix != NullabilitySuffix.none) {
       serializer = _converters.putIfAbsent(
-        '$instance.nullable($serializer)',
-        () => '\$${_converters.length}',
+        '$instance.nullable($_name.$serializer)',
+        () => '\$sr${_converters.length}',
       );
     }
     return '$_name.$serializer';
@@ -48,12 +50,12 @@ class Converters {
     if (deserializer.isEmpty) return '';
     deserializer = _converters.putIfAbsent(
       deserializer,
-      () => '\$${_converters.length}',
+      () => '\$dsr${_converters.length}',
     );
     if (type.nullabilitySuffix != NullabilitySuffix.none) {
       deserializer = _converters.putIfAbsent(
-        '$instance.nullable($deserializer)',
-        () => '\$${_converters.length}',
+        '$instance.nullable($_name.$deserializer)',
+        () => '\$dsr${_converters.length}',
       );
     }
     return '$_name.$deserializer';

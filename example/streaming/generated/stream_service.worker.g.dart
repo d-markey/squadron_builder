@@ -3,7 +3,7 @@
 part of '../stream_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.9
+// Generator: WorkerGenerator 6.1.0
 // **************************************************************************
 
 /// WorkerService class for StreamService
@@ -14,8 +14,9 @@ class _$StreamServiceWorkerService extends StreamService
   @d.override
   late final d.Map<d.int, CommandHandler> operations =
       d.Map.unmodifiable(<d.int, CommandHandler>{
-    _$clockId: ($) => clock(frequency: _$X.$0($.args[0]), token: $.cancelToken),
-    _$infiniteClockId: ($) => infiniteClock(frequency: _$X.$0($.args[0])),
+    _$clockId: ($) =>
+        clock(frequency: _$X.$dsr0($.args[0]), token: $.cancelToken),
+    _$infiniteClockId: ($) => infiniteClock(frequency: _$X.$dsr0($.args[0])),
   });
 
   static const d.int _$clockId = 1;
@@ -44,12 +45,12 @@ base class StreamServiceWorker extends Worker implements StreamService {
   Stream<d.int> clock({d.int frequency = 1, CancelationToken? token}) =>
       stream(_$StreamServiceWorkerService._$clockId,
               args: [frequency], token: token)
-          .map(_$X.$0);
+          .map(_$X.$dsr0);
 
   @d.override
   Stream<d.int> infiniteClock({d.int frequency = 1}) =>
       stream(_$StreamServiceWorkerService._$infiniteClockId, args: [frequency])
-          .map(_$X.$0);
+          .map(_$X.$dsr0);
 }
 
 /// Worker pool for StreamService
@@ -95,5 +96,5 @@ base class StreamServiceWorkerPool extends WorkerPool<StreamServiceWorker>
 }
 
 sealed class _$X {
-  static final $0 = Squadron.converter.value<d.int>();
+  static final $dsr0 = Squadron.converter.value<d.int>();
 }

@@ -1,6 +1,11 @@
+## 6.1.0
+
+- Use marshalers for `TypedData`.
+- Update version number.
+
 ## 6.0.9
 
-- Update version number
+- Update version number.
 
 ## 6.0.8
 

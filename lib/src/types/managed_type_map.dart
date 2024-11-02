@@ -22,7 +22,7 @@ class _ManagedMapType extends ManagedType {
     final valueSerializer = converters.getSerializerOf(valueType, null);
     if (valueSerializer.isNotEmpty) args.add('vcast: $valueSerializer');
 
-    return '${converters.instance}.map<$keyType, $valueType>(${args.join(', ')})';
+    return '${converters.instance}.map(${args.join(', ')})';
   }
 
   @override

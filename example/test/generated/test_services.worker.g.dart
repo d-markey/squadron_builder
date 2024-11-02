@@ -3,7 +3,7 @@
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.0.9
+// Generator: WorkerGenerator 6.1.0
 // **************************************************************************
 
 /// WorkerService class for TestParameterLess
@@ -102,7 +102,7 @@ class _$TestReqPositionalWorkerService extends TestReqPositional
 
 /// Service initializer for TestReqPositional
 sq.WorkerService $TestReqPositionalInitializer(sq.WorkerRequest $$) =>
-    _$TestReqPositionalWorkerService(_$X.$0($$.args[0]));
+    _$TestReqPositionalWorkerService(_$X.$dsr0($$.args[0]));
 
 /// Worker for TestReqPositional
 base class TestReqPositionalWorker extends sq.Worker
@@ -197,7 +197,7 @@ class _$TestOptNullPositionalWorkerService extends TestOptNullPositional
 
 /// Service initializer for TestOptNullPositional
 sq.WorkerService $TestOptNullPositionalInitializer(sq.WorkerRequest $$) =>
-    _$TestOptNullPositionalWorkerService(_$X.$1($$.args[0]));
+    _$TestOptNullPositionalWorkerService(_$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullPositional
 base class TestOptNullPositionalWorker extends sq.Worker
@@ -296,7 +296,7 @@ class _$TestOptDefPositionalWorkerService extends TestOptDefPositional
 
 /// Service initializer for TestOptDefPositional
 sq.WorkerService $TestOptDefPositionalInitializer(sq.WorkerRequest $$) =>
-    _$TestOptDefPositionalWorkerService(_$X.$0($$.args[0]));
+    _$TestOptDefPositionalWorkerService(_$X.$dsr0($$.args[0]));
 
 /// Worker for TestOptDefPositional
 base class TestOptDefPositionalWorker extends sq.Worker
@@ -393,7 +393,7 @@ class _$TestOptNullDefPositionalWorkerService extends TestOptNullDefPositional
 
 /// Service initializer for TestOptNullDefPositional
 sq.WorkerService $TestOptNullDefPositionalInitializer(sq.WorkerRequest $$) =>
-    _$TestOptNullDefPositionalWorkerService(_$X.$1($$.args[0]));
+    _$TestOptNullDefPositionalWorkerService(_$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullDefPositional
 base class TestOptNullDefPositionalWorker extends sq.Worker
@@ -494,7 +494,7 @@ class _$TestReqPositionalFieldWorkerService extends TestReqPositionalField
 
 /// Service initializer for TestReqPositionalField
 sq.WorkerService $TestReqPositionalFieldInitializer(sq.WorkerRequest $$) =>
-    _$TestReqPositionalFieldWorkerService(_$X.$0($$.args[0]));
+    _$TestReqPositionalFieldWorkerService(_$X.$dsr0($$.args[0]));
 
 /// Worker for TestReqPositionalField
 base class TestReqPositionalFieldWorker extends sq.Worker
@@ -593,7 +593,7 @@ class _$TestOptNullPositionalFieldWorkerService
 
 /// Service initializer for TestOptNullPositionalField
 sq.WorkerService $TestOptNullPositionalFieldInitializer(sq.WorkerRequest $$) =>
-    _$TestOptNullPositionalFieldWorkerService(_$X.$1($$.args[0]));
+    _$TestOptNullPositionalFieldWorkerService(_$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullPositionalField
 base class TestOptNullPositionalFieldWorker extends sq.Worker
@@ -701,7 +701,7 @@ class _$TestOptDefPositionalFieldWorkerService extends TestOptDefPositionalField
 
 /// Service initializer for TestOptDefPositionalField
 sq.WorkerService $TestOptDefPositionalFieldInitializer(sq.WorkerRequest $$) =>
-    _$TestOptDefPositionalFieldWorkerService(_$X.$0($$.args[0]));
+    _$TestOptDefPositionalFieldWorkerService(_$X.$dsr0($$.args[0]));
 
 /// Worker for TestOptDefPositionalField
 base class TestOptDefPositionalFieldWorker extends sq.Worker
@@ -809,7 +809,7 @@ class _$TestOptNullDefPositionalFieldWorkerService
 /// Service initializer for TestOptNullDefPositionalField
 sq.WorkerService $TestOptNullDefPositionalFieldInitializer(
         sq.WorkerRequest $$) =>
-    _$TestOptNullDefPositionalFieldWorkerService(_$X.$1($$.args[0]));
+    _$TestOptNullDefPositionalFieldWorkerService(_$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullDefPositionalField
 base class TestOptNullDefPositionalFieldWorker extends sq.Worker
@@ -921,7 +921,7 @@ class _$TestReqPositionalPrivateFieldWorkerService
 /// Service initializer for TestReqPositionalPrivateField
 sq.WorkerService $TestReqPositionalPrivateFieldInitializer(
         sq.WorkerRequest $$) =>
-    _$TestReqPositionalPrivateFieldWorkerService(_$X.$0($$.args[0]));
+    _$TestReqPositionalPrivateFieldWorkerService(_$X.$dsr0($$.args[0]));
 
 /// Worker for TestReqPositionalPrivateField
 base class TestReqPositionalPrivateFieldWorker extends sq.Worker
@@ -1027,7 +1027,7 @@ class _$TestOptNullPositionalPrivateFieldWorkerService
 /// Service initializer for TestOptNullPositionalPrivateField
 sq.WorkerService $TestOptNullPositionalPrivateFieldInitializer(
         sq.WorkerRequest $$) =>
-    _$TestOptNullPositionalPrivateFieldWorkerService(_$X.$1($$.args[0]));
+    _$TestOptNullPositionalPrivateFieldWorkerService(_$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullPositionalPrivateField
 base class TestOptNullPositionalPrivateFieldWorker extends sq.Worker
@@ -1145,7 +1145,7 @@ class _$TestOptDefPositionalPrivateFieldWorkerService
 /// Service initializer for TestOptDefPositionalPrivateField
 sq.WorkerService $TestOptDefPositionalPrivateFieldInitializer(
         sq.WorkerRequest $$) =>
-    _$TestOptDefPositionalPrivateFieldWorkerService(_$X.$0($$.args[0]));
+    _$TestOptDefPositionalPrivateFieldWorkerService(_$X.$dsr0($$.args[0]));
 
 /// Worker for TestOptDefPositionalPrivateField
 base class TestOptDefPositionalPrivateFieldWorker extends sq.Worker
@@ -1264,7 +1264,7 @@ class _$TestOptNullDefPositionalPrivateFieldWorkerService
 /// Service initializer for TestOptNullDefPositionalPrivateField
 sq.WorkerService $TestOptNullDefPositionalPrivateFieldInitializer(
         sq.WorkerRequest $$) =>
-    _$TestOptNullDefPositionalPrivateFieldWorkerService(_$X.$1($$.args[0]));
+    _$TestOptNullDefPositionalPrivateFieldWorkerService(_$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullDefPositionalPrivateField
 base class TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
@@ -1381,7 +1381,7 @@ class _$TestOptNullNamedWorkerService extends TestOptNullNamed
 
 /// Service initializer for TestOptNullNamed
 sq.WorkerService $TestOptNullNamedInitializer(sq.WorkerRequest $$) =>
-    _$TestOptNullNamedWorkerService(arg1: _$X.$1($$.args[0]));
+    _$TestOptNullNamedWorkerService(arg1: _$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullNamed
 base class TestOptNullNamedWorker extends sq.Worker
@@ -1485,7 +1485,7 @@ class _$TestOptDefNamedWorkerService extends TestOptDefNamed
 
 /// Service initializer for TestOptDefNamed
 sq.WorkerService $TestOptDefNamedInitializer(sq.WorkerRequest $$) =>
-    _$TestOptDefNamedWorkerService(arg1: _$X.$0($$.args[0]));
+    _$TestOptDefNamedWorkerService(arg1: _$X.$dsr0($$.args[0]));
 
 /// Worker for TestOptDefNamed
 base class TestOptDefNamedWorker extends sq.Worker implements TestOptDefNamed {
@@ -1588,7 +1588,7 @@ class _$TestOptNullDefNamedWorkerService extends TestOptNullDefNamed
 
 /// Service initializer for TestOptNullDefNamed
 sq.WorkerService $TestOptNullDefNamedInitializer(sq.WorkerRequest $$) =>
-    _$TestOptNullDefNamedWorkerService(arg1: _$X.$1($$.args[0]));
+    _$TestOptNullDefNamedWorkerService(arg1: _$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullDefNamed
 base class TestOptNullDefNamedWorker extends sq.Worker
@@ -1695,7 +1695,7 @@ class _$TestOptNullNamedFieldWorkerService extends TestOptNullNamedField
 
 /// Service initializer for TestOptNullNamedField
 sq.WorkerService $TestOptNullNamedFieldInitializer(sq.WorkerRequest $$) =>
-    _$TestOptNullNamedFieldWorkerService(arg1: _$X.$1($$.args[0]));
+    _$TestOptNullNamedFieldWorkerService(arg1: _$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullNamedField
 base class TestOptNullNamedFieldWorker extends sq.Worker
@@ -1808,7 +1808,7 @@ class _$TestOptDefNamedFieldWorkerService extends TestOptDefNamedField
 
 /// Service initializer for TestOptDefNamedField
 sq.WorkerService $TestOptDefNamedFieldInitializer(sq.WorkerRequest $$) =>
-    _$TestOptDefNamedFieldWorkerService(arg1: _$X.$0($$.args[0]));
+    _$TestOptDefNamedFieldWorkerService(arg1: _$X.$dsr0($$.args[0]));
 
 /// Worker for TestOptDefNamedField
 base class TestOptDefNamedFieldWorker extends sq.Worker
@@ -1917,15 +1917,25 @@ class _$TestOptNullDefNamedFieldWorkerService extends TestOptNullDefNamedField
   @override
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$fooId: ($) => foo(_$X.$2($.args[0]), isLandscape: _$X.$3($.args[1])),
+    _$barId: ($) => bar(_$X.$dsr2($.args[0]),
+        title: _$X.$dsr4($.args[1]),
+        isLandscape: _$X.$dsr5($.args[2]),
+        columns: _$X.$dsr7($.args[3]),
+        columnWidths: _$X.$dsr10($.args[4]),
+        fontData: _$X.$dsr12($.args[5]),
+        titleFonts: _$X.$dsr14($.args[6]),
+        dataFonts: _$X.$dsr14($.args[7])),
+    _$fooId: ($) =>
+        foo(_$X.$dsr2($.args[0]), isLandscape: _$X.$dsr5($.args[1])),
   });
 
-  static const int _$fooId = 1;
+  static const int _$barId = 1;
+  static const int _$fooId = 2;
 }
 
 /// Service initializer for TestOptNullDefNamedField
 sq.WorkerService $TestOptNullDefNamedFieldInitializer(sq.WorkerRequest $$) =>
-    _$TestOptNullDefNamedFieldWorkerService(arg1: _$X.$1($$.args[0]));
+    _$TestOptNullDefNamedFieldWorkerService(arg1: _$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullDefNamedField
 base class TestOptNullDefNamedFieldWorker extends sq.Worker
@@ -1964,10 +1974,30 @@ base class TestOptNullDefNamedFieldWorker extends sq.Worker
   final int? arg1;
 
   @override
+  Future<typed_data.ByteBuffer?> bar(List<int> bytes,
+          {String? title,
+          bool isLandscape = true,
+          List<String>? columns,
+          Map<int, double>? columnWidths,
+          typed_data.ByteData? fontData,
+          Map<int, typed_data.ByteData>? titleFonts,
+          Map<int, typed_data.ByteData>? dataFonts}) =>
+      send(_$TestOptNullDefNamedFieldWorkerService._$barId, args: [
+        _$X.$sr15(bytes),
+        title,
+        isLandscape,
+        _$X.$sr16(columns),
+        _$X.$sr18(columnWidths),
+        _$X.$sr20(fontData),
+        _$X.$sr22(titleFonts),
+        _$X.$sr22(dataFonts)
+      ]).then(_$X.$dsr24);
+
+  @override
   Future<typed_data.ByteBuffer?> foo(List<int> bytes,
           {bool isLandscape = true}) =>
       send(_$TestOptNullDefNamedFieldWorkerService._$fooId,
-          args: [_$X.$4(bytes), isLandscape]).then(_$X.$6);
+          args: [_$X.$sr15(bytes), isLandscape]).then(_$X.$dsr24);
 }
 
 /// Worker pool for TestOptNullDefNamedField
@@ -2034,6 +2064,24 @@ base class TestOptNullDefNamedFieldWorkerPool
   final int? arg1;
 
   @override
+  Future<typed_data.ByteBuffer?> bar(List<int> bytes,
+          {String? title,
+          bool isLandscape = true,
+          List<String>? columns,
+          Map<int, double>? columnWidths,
+          typed_data.ByteData? fontData,
+          Map<int, typed_data.ByteData>? titleFonts,
+          Map<int, typed_data.ByteData>? dataFonts}) =>
+      execute((w) => w.bar(bytes,
+          title: title,
+          isLandscape: isLandscape,
+          columns: columns,
+          columnWidths: columnWidths,
+          fontData: fontData,
+          titleFonts: titleFonts,
+          dataFonts: dataFonts));
+
+  @override
   Future<typed_data.ByteBuffer?> foo(List<int> bytes,
           {bool isLandscape = true}) =>
       execute((w) => w.foo(bytes, isLandscape: isLandscape));
@@ -2052,7 +2100,7 @@ class _$TestOptNullNamedPrivateFieldWorkerService
 /// Service initializer for TestOptNullNamedPrivateField
 sq.WorkerService $TestOptNullNamedPrivateFieldInitializer(
         sq.WorkerRequest $$) =>
-    _$TestOptNullNamedPrivateFieldWorkerService(arg1: _$X.$1($$.args[0]));
+    _$TestOptNullNamedPrivateFieldWorkerService(arg1: _$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullNamedPrivateField
 base class TestOptNullNamedPrivateFieldWorker extends sq.Worker
@@ -2173,7 +2221,7 @@ class _$TestOptDefNamedPrivateFieldWorkerService
 
 /// Service initializer for TestOptDefNamedPrivateField
 sq.WorkerService $TestOptDefNamedPrivateFieldInitializer(sq.WorkerRequest $$) =>
-    _$TestOptDefNamedPrivateFieldWorkerService(arg1: _$X.$0($$.args[0]));
+    _$TestOptDefNamedPrivateFieldWorkerService(arg1: _$X.$dsr0($$.args[0]));
 
 /// Worker for TestOptDefNamedPrivateField
 base class TestOptDefNamedPrivateFieldWorker extends sq.Worker
@@ -2292,7 +2340,7 @@ class _$TestOptNullDefNamedPrivateFieldWorkerService
 /// Service initializer for TestOptNullDefNamedPrivateField
 sq.WorkerService $TestOptNullDefNamedPrivateFieldInitializer(
         sq.WorkerRequest $$) =>
-    _$TestOptNullDefNamedPrivateFieldWorkerService(arg1: _$X.$1($$.args[0]));
+    _$TestOptNullDefNamedPrivateFieldWorkerService(arg1: _$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullDefNamedPrivateField
 base class TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
@@ -2412,7 +2460,7 @@ class _$TestPrefixedImportTypeWorkerService extends TestPrefixedImportType
   @override
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$getTypedDataId: ($) async => _$X.$8(await getTypedData()),
+    _$getTypedDataId: ($) async => _$X.$sr26(await getTypedData()),
   });
 
   static const int _$getTypedDataId = 1;
@@ -2420,7 +2468,7 @@ class _$TestPrefixedImportTypeWorkerService extends TestPrefixedImportType
 
 /// Service initializer for TestPrefixedImportType
 sq.WorkerService $TestPrefixedImportTypeInitializer(sq.WorkerRequest $$) =>
-    _$TestPrefixedImportTypeWorkerService(_$X.$9($$.args[0]));
+    _$TestPrefixedImportTypeWorkerService(_$X.$dsr27($$.args[0]));
 
 /// Worker for TestPrefixedImportType
 base class TestPrefixedImportTypeWorker extends sq.Worker
@@ -2429,19 +2477,19 @@ base class TestPrefixedImportTypeWorker extends sq.Worker
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.Squadron.platformType),
-            args: [_$X.$7(typedData)]);
+            args: [_$X.$sr25(typedData)]);
 
   TestPrefixedImportTypeWorker.vm(this.typedData,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.SquadronPlatformType.vm),
-            args: [_$X.$7(typedData)]);
+            args: [_$X.$sr25(typedData)]);
 
   TestPrefixedImportTypeWorker.js(this.typedData,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.SquadronPlatformType.js),
-            args: [_$X.$7(typedData)],
+            args: [_$X.$sr25(typedData)],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -2449,7 +2497,7 @@ base class TestPrefixedImportTypeWorker extends sq.Worker
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.SquadronPlatformType.wasm),
-            args: [_$X.$7(typedData)]);
+            args: [_$X.$sr25(typedData)]);
 
   @override
   final typed_data.Int8List typedData;
@@ -2457,7 +2505,7 @@ base class TestPrefixedImportTypeWorker extends sq.Worker
   @override
   Future<typed_data.Int8List?> getTypedData() =>
       send(_$TestPrefixedImportTypeWorkerService._$getTypedDataId)
-          .then(_$X.$10);
+          .then(_$X.$dsr28);
 }
 
 /// Worker pool for TestPrefixedImportType
@@ -2527,7 +2575,7 @@ class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
     _$getStateId: ($) => getState(),
-    _$setStateId: ($) => setState(_$X.$1($.args[0])),
+    _$setStateId: ($) => setState(_$X.$dsr1($.args[0])),
   });
 
   static const int _$getStateId = 1;
@@ -2538,7 +2586,7 @@ class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService
 sq.WorkerService $TestOptNullDefNamedPrivateNonFinalFieldInitializer(
         sq.WorkerRequest $$) =>
     _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService(
-        state: _$X.$1($$.args[0]));
+        state: _$X.$dsr1($$.args[0]));
 
 /// Worker for TestOptNullDefNamedPrivateNonFinalField
 base class TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
@@ -2584,7 +2632,7 @@ base class TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
   @override
   Future<int?> getState() =>
       send(_$TestOptNullDefNamedPrivateNonFinalFieldWorkerService._$getStateId)
-          .then(_$X.$1);
+          .then(_$X.$dsr1);
 
   @override
   Future<void> setState(int? state) =>
@@ -2612,7 +2660,7 @@ class _$TestInstallableWorkerService extends TestInstallable
 
 /// Service initializer for TestInstallable
 sq.WorkerService $TestInstallableInitializer(sq.WorkerRequest $$) =>
-    _$TestInstallableWorkerService(_$X.$0($$.args[0]));
+    _$TestInstallableWorkerService(_$X.$dsr0($$.args[0]));
 
 /// Worker for TestInstallable
 base class TestInstallableWorker extends sq.Worker implements TestInstallable {
@@ -2721,11 +2769,11 @@ class _$TestRecordTypesWorkerService extends TestRecordTypes
   @override
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$bothId: ($) async => _$X.$11(await both()),
-    _$inputId: ($) =>
-        input(_$X.$12($.args[0]), _$X.$14($.args[1]), _$X.$15($.args[2])),
-    _$namedId: ($) => named().then(_$X.$16),
-    _$unnamedId: ($) async => _$X.$17(await unnamed()),
+    _$bothId: ($) async => _$X.$sr29(await both()),
+    _$inputId: ($) => input(
+        _$X.$dsr30($.args[0]), _$X.$dsr32($.args[1]), _$X.$dsr33($.args[2])),
+    _$namedId: ($) => named().then(_$X.$sr34),
+    _$unnamedId: ($) async => _$X.$sr35(await unnamed()),
   });
 
   static const int _$bothId = 1;
@@ -2763,21 +2811,22 @@ base class TestRecordTypesWorker extends sq.Worker implements TestRecordTypes {
 
   @override
   Future<(int, {List<int> items})> both() =>
-      send(_$TestRecordTypesWorkerService._$bothId).then(_$X.$12);
+      send(_$TestRecordTypesWorkerService._$bothId).then(_$X.$dsr30);
 
   @override
   Future<bool> input((int, {List<int> items}) both, (int, List<dynamic>) pos,
           ({int count, List<dynamic> items}) named) =>
       send(_$TestRecordTypesWorkerService._$inputId,
-          args: [_$X.$11(both), _$X.$17(pos), _$X.$16(named)]).then(_$X.$3);
+              args: [_$X.$sr29(both), _$X.$sr35(pos), _$X.$sr34(named)])
+          .then(_$X.$dsr5);
 
   @override
   Future<({int count, List<dynamic> items})> named() =>
-      send(_$TestRecordTypesWorkerService._$namedId).then(_$X.$15);
+      send(_$TestRecordTypesWorkerService._$namedId).then(_$X.$dsr33);
 
   @override
   Future<(int, List<dynamic>)> unnamed() =>
-      send(_$TestRecordTypesWorkerService._$unnamedId).then(_$X.$14);
+      send(_$TestRecordTypesWorkerService._$unnamedId).then(_$X.$dsr32);
 }
 
 /// Worker pool for TestRecordTypes
@@ -2855,7 +2904,7 @@ class _$TestRequiredSuperParamWorkerService extends TestRequiredSuperParam
 
 /// Service initializer for TestRequiredSuperParam
 sq.WorkerService $TestRequiredSuperParamInitializer(sq.WorkerRequest $$) =>
-    _$TestRequiredSuperParamWorkerService(path: _$X.$18($$.args[0]));
+    _$TestRequiredSuperParamWorkerService(path: _$X.$dsr3($$.args[0]));
 
 /// Worker for TestRequiredSuperParam
 base class TestRequiredSuperParamWorker extends sq.Worker
@@ -2972,7 +3021,7 @@ class _$TestBigIntWorkerService extends TestBigInt implements sq.WorkerService {
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
     _$addId: ($) async =>
-        _$X.$20(await add(_$X.$19($.args[0]), _$X.$19($.args[1]))),
+        _$X.$sr37(await add(_$X.$dsr36($.args[0]), _$X.$dsr36($.args[1]))),
   });
 
   static const int _$addId = 1;
@@ -3007,8 +3056,8 @@ base class TestBigIntWorker extends sq.Worker implements TestBigInt {
 
   @override
   Future<BigInt> add(BigInt a, BigInt b) =>
-      send(_$TestBigIntWorkerService._$addId, args: [_$X.$20(a), _$X.$20(b)])
-          .then(_$X.$19);
+      send(_$TestBigIntWorkerService._$addId,
+          args: [_$X.$sr37(a), _$X.$sr37(b)]).then(_$X.$dsr36);
 }
 
 /// Worker pool for TestBigInt
@@ -3059,35 +3108,59 @@ base class TestBigIntWorkerPool extends sq.WorkerPool<TestBigIntWorker>
 }
 
 sealed class _$X {
-  static final $0 = sq.Squadron.converter.value<int>();
-  static final $1 = sq.Squadron.converter.nullable($0);
-  static final $2 = sq.Squadron.converter.list<int>(_$X.$0);
-  static final $3 = sq.Squadron.converter.value<bool>();
-  static final $4 = sq.Squadron.converter.list();
-  static final $5 = sq.Squadron.converter.value<typed_data.ByteBuffer>();
-  static final $6 = sq.Squadron.converter.nullable($5);
-  static final $7 = (($) => ($ as typed_data.Int8List).buffer);
-  static final $8 = sq.Squadron.converter.nullable($7);
-  static final $9 = sq.Squadron.converter.typedData<typed_data.Int8List>();
-  static final $10 = sq.Squadron.converter.nullable($9);
-  static final $11 = (((int, {List<int> items}) $) => [$.$1, _$X.$4($.items)]);
-  static final $12 = (($) {
+  static final $dsr0 = sq.Squadron.converter.value<int>();
+  static final $dsr1 = sq.Squadron.converter.nullable(_$X.$dsr0);
+  static final $dsr2 = sq.Squadron.converter.list<int>(_$X.$dsr0);
+  static final $dsr3 = sq.Squadron.converter.value<String>();
+  static final $dsr4 = sq.Squadron.converter.nullable(_$X.$dsr3);
+  static final $dsr5 = sq.Squadron.converter.value<bool>();
+  static final $dsr6 = sq.Squadron.converter.list<String>(_$X.$dsr3);
+  static final $dsr7 = sq.Squadron.converter.nullable(_$X.$dsr6);
+  static final $dsr8 = sq.Squadron.converter.value<double>();
+  static final $dsr9 = sq.Squadron.converter
+      .map<int, double>(kcast: _$X.$dsr0, vcast: _$X.$dsr8);
+  static final $dsr10 = sq.Squadron.converter.nullable(_$X.$dsr9);
+  static final $dsr11 = (($) =>
+      (const sq.TypedDataMarshaler<typed_data.ByteData>()).unmarshal($));
+  static final $dsr12 = sq.Squadron.converter.nullable(_$X.$dsr11);
+  static final $dsr13 = sq.Squadron.converter
+      .map<int, typed_data.ByteData>(kcast: _$X.$dsr0, vcast: _$X.$dsr11);
+  static final $dsr14 = sq.Squadron.converter.nullable(_$X.$dsr13);
+  static final $sr15 = sq.Squadron.converter.list();
+  static final $sr16 = sq.Squadron.converter.nullable(_$X.$sr15);
+  static final $sr17 = sq.Squadron.converter.map();
+  static final $sr18 = sq.Squadron.converter.nullable(_$X.$sr17);
+  static final $sr19 =
+      (($) => (const sq.TypedDataMarshaler<typed_data.ByteData>()).marshal($));
+  static final $sr20 = sq.Squadron.converter.nullable(_$X.$sr19);
+  static final $sr21 = sq.Squadron.converter.map(vcast: _$X.$sr19);
+  static final $sr22 = sq.Squadron.converter.nullable(_$X.$sr21);
+  static final $dsr23 = sq.Squadron.converter.value<typed_data.ByteBuffer>();
+  static final $dsr24 = sq.Squadron.converter.nullable(_$X.$dsr23);
+  static final $sr25 =
+      (($) => (const sq.TypedDataMarshaler<typed_data.Int8List>()).marshal($));
+  static final $sr26 = sq.Squadron.converter.nullable(_$X.$sr25);
+  static final $dsr27 = (($) =>
+      (const sq.TypedDataMarshaler<typed_data.Int8List>()).unmarshal($));
+  static final $dsr28 = sq.Squadron.converter.nullable(_$X.$dsr27);
+  static final $sr29 =
+      (((int, {List<int> items}) $) => [$.$1, _$X.$sr15($.items)]);
+  static final $dsr30 = (($) {
     $ as List;
-    return (_$X.$0($[0]), items: _$X.$2($[1]));
+    return (_$X.$dsr0($[0]), items: _$X.$dsr2($[1]));
   });
-  static final $13 = sq.Squadron.converter.list<dynamic>();
-  static final $14 = (($) {
+  static final $dsr31 = sq.Squadron.converter.list<dynamic>();
+  static final $dsr32 = (($) {
     $ as List;
-    return (_$X.$0($[0]), _$X.$13($[1]));
+    return (_$X.$dsr0($[0]), _$X.$dsr31($[1]));
   });
-  static final $15 = (($) {
+  static final $dsr33 = (($) {
     $ as List;
-    return (count: _$X.$0($[0]), items: _$X.$13($[1]));
+    return (count: _$X.$dsr0($[0]), items: _$X.$dsr31($[1]));
   });
-  static final $16 =
-      ((({int count, List<dynamic> items}) $) => [$.count, _$X.$4($.items)]);
-  static final $17 = (((int, List<dynamic>) $) => [$.$1, _$X.$4($.$2)]);
-  static final $18 = sq.Squadron.converter.value<String>();
-  static final $19 = (const marshaler.BigIntMarshaler()).unmarshal;
-  static final $20 = (const marshaler.BigIntMarshaler()).marshal;
+  static final $sr34 =
+      ((({int count, List<dynamic> items}) $) => [$.count, _$X.$sr15($.items)]);
+  static final $sr35 = (((int, List<dynamic>) $) => [$.$1, _$X.$sr15($.$2)]);
+  static final $dsr36 = (const marshaler.BigIntMarshaler()).unmarshal;
+  static final $sr37 = (const marshaler.BigIntMarshaler()).marshal;
 }

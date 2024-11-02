@@ -152,6 +152,19 @@ class TestOptNullDefNamedField {
     final bool isLandscape = true, // Default named parameter
   }) async =>
       null;
+
+  @sq.squadronMethod
+  FutureOr<typed_data.ByteBuffer?> bar(
+    final List<int> bytes, {
+    final String? title,
+    final bool isLandscape = true,
+    final List<String>? columns,
+    final Map<int, double>? columnWidths,
+    final typed_data.ByteData? fontData,
+    final Map<int, typed_data.ByteData>? titleFonts,
+    final Map<int, typed_data.ByteData>? dataFonts,
+  }) async =>
+      null;
 }
 
 @sq.SquadronService()

@@ -2,7 +2,8 @@ part of 'managed_type.dart';
 
 class _ManagedTypedDataType extends ManagedType {
   _ManagedTypedDataType._(String prefix, this.dartType, TypeManager typeManager)
-      : super._(prefix, dartType, typeManager);
+      : _marshaler = typeManager.TTypedDataMarshaler,
+        super._(prefix, dartType, typeManager);
 
   @override
   final DartType dartType;
@@ -10,16 +11,18 @@ class _ManagedTypedDataType extends ManagedType {
   @override
   void setMarshaler(TypeManager typeManager) {}
 
+  final ManagedType _marshaler;
+
   @override
   String getSerializer(Converters converters) {
     final typeName = getTypeName(NullabilitySuffix.none);
-    return '((\$) => (\$ as $typeName).buffer)';
+    return '((\$) => (const ${_marshaler.getTypeName(NullabilitySuffix.none)}<$typeName>()).marshal(\$))';
   }
 
   @override
   String getDeserializer(Converters converters) {
     final typeName = getTypeName(NullabilitySuffix.none);
-    return '${converters.instance}.typedData<$typeName>()';
+    return '((\$) => (const ${_marshaler.getTypeName(NullabilitySuffix.none)}<$typeName>()).unmarshal(\$))';
   }
 
   @override

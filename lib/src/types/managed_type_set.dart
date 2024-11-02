@@ -14,14 +14,14 @@ class _ManagedSetType extends ManagedType {
   String getSerializer(Converters converters) {
     final itemType = typeArguments.single;
     final itemSerializer = converters.getSerializerOf(itemType, null);
-    return '${converters.instance}.set<$itemType>($itemSerializer)';
+    return '${converters.instance}.set($itemSerializer)';
   }
 
   @override
   String getDeserializer(Converters converters) {
     final itemType = typeArguments.single;
     final itemDeserializer = converters.getDeserializerOf(itemType, null);
-    return '${converters.instance}.set($itemDeserializer)';
+    return '${converters.instance}.set<$itemType>($itemDeserializer)';
   }
 
   @override
