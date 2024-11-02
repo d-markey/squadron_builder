@@ -1,3 +1,7 @@
+## 6.1.1
+
+- Update serializers/deserializers when `Squadron.converter` is modified.
+
 ## 6.1.0
 
 - Use marshalers for `TypedData`.

@@ -3,7 +3,7 @@
 part of '../fib_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.1.0
+// Generator: WorkerGenerator 6.1.1
 // **************************************************************************
 
 /// WorkerService class for FibService
@@ -13,7 +13,7 @@ class _$FibServiceWorkerService extends FibService implements WorkerService {
   @dc.override
   late final dc.Map<dc.int, CommandHandler> operations =
       dc.Map.unmodifiable(<dc.int, CommandHandler>{
-    _$fibonacciId: ($) => fibonacci(_$X.$dsr0($.args[0])),
+    _$fibonacciId: ($) => fibonacci(_$X.$impl.$dsr0($.args[0])),
   });
 
   static const dc.int _$fibonacciId = 1;
@@ -40,7 +40,8 @@ base class FibServiceWorker extends Worker implements FibService {
 
   @dc.override
   Future<dc.int> fibonacci(dc.int i) =>
-      send(_$FibServiceWorkerService._$fibonacciId, args: [i]).then(_$X.$dsr0);
+      send(_$FibServiceWorkerService._$fibonacciId, args: [i])
+          .then(_$X.$impl.$dsr0);
 }
 
 /// Worker pool for FibService
@@ -80,6 +81,18 @@ base class FibServiceWorkerPool extends WorkerPool<FibServiceWorker>
   Future<dc.int> fibonacci(dc.int i) => execute((w) => w.fibonacci(i));
 }
 
-sealed class _$X {
-  static final $dsr0 = Squadron.converter.value<dc.int>();
+final class _$X {
+  _$X._();
+
+  static _$X? _impl;
+
+  static _$X get $impl {
+    if (_impl == null) {
+      Squadron.onConverterChanged(() => _impl = _$X._());
+      _impl = _$X._();
+    }
+    return _impl!;
+  }
+
+  late final $dsr0 = Squadron.converter.value<dc.int>();
 }

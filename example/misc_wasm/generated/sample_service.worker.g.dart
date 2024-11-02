@@ -3,7 +3,7 @@
 part of '../sample_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.1.0
+// Generator: WorkerGenerator 6.1.1
 // **************************************************************************
 
 /// WorkerService class for SampleService
@@ -14,7 +14,8 @@ class _$SampleServiceWorkerService extends SampleService
   @override
   late final Map<int, CommandHandler> operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$computeId: ($) => compute(_$X.$dsr0($.args[0])).then(_$X.$sr1),
+    _$computeId: ($) =>
+        compute(_$X.$impl.$dsr0($.args[0])).then(_$X.$impl.$sr1),
   });
 
   static const int _$computeId = 1;
@@ -36,8 +37,8 @@ base class SampleServiceWorker extends Worker implements SampleService {
 
   @override
   Future<DataOut> compute(DataIn input) =>
-      send(_$SampleServiceWorkerService._$computeId, args: [_$X.$sr2(input)])
-          .then(_$X.$dsr3);
+      send(_$SampleServiceWorkerService._$computeId,
+          args: [_$X.$impl.$sr2(input)]).then(_$X.$impl.$dsr3);
 }
 
 /// Worker pool for SampleService
@@ -67,9 +68,21 @@ base class SampleServiceWorkerPool extends WorkerPool<SampleServiceWorker>
   Future<DataOut> compute(DataIn input) => execute((w) => w.compute(input));
 }
 
-sealed class _$X {
-  static final $dsr0 = (($) => DataIn.unmarshal($));
-  static final $sr1 = (($) => ($ as DataOut).marshal());
-  static final $sr2 = (($) => ($ as DataIn).marshal());
-  static final $dsr3 = (($) => DataOut.unmarshal($));
+final class _$X {
+  _$X._();
+
+  static _$X? _impl;
+
+  static _$X get $impl {
+    if (_impl == null) {
+      Squadron.onConverterChanged(() => _impl = _$X._());
+      _impl = _$X._();
+    }
+    return _impl!;
+  }
+
+  late final $dsr0 = (($) => DataIn.unmarshal($));
+  late final $sr1 = (($) => ($ as DataOut).marshal());
+  late final $sr2 = (($) => ($ as DataIn).marshal());
+  late final $dsr3 = (($) => DataOut.unmarshal($));
 }

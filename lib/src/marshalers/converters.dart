@@ -5,14 +5,15 @@ import '../types/managed_type.dart';
 import 'marshaler.dart';
 
 class Converters {
-  Converters([this._name = '_\$X']);
+  Converters([this._name = '_\$X']) : impl = '$_name.\$impl';
 
   final String _name;
+  final String impl;
 
   final _converters = <String, String>{};
 
-  String _instance = 'Squadron.converter';
-  String get instance => _instance;
+  String _singleton = 'Squadron.converter';
+  String get instance => _singleton;
 
   String _squadronAlias = '';
 
@@ -20,7 +21,7 @@ class Converters {
 
   set squadronAlias(String value) {
     _squadronAlias = value;
-    _instance = '${value.isEmpty ? '' : '$value.'}Squadron.converter';
+    _singleton = '${value.isEmpty ? '' : '$value.'}Squadron.converter';
   }
 
   String getSerializerOf(ManagedType type, Marshaler? marshaler) {
@@ -34,11 +35,11 @@ class Converters {
     );
     if (type.nullabilitySuffix != NullabilitySuffix.none) {
       serializer = _converters.putIfAbsent(
-        '$instance.nullable($_name.$serializer)',
+        '$instance.nullable($serializer)',
         () => '\$sr${_converters.length}',
       );
     }
-    return '$_name.$serializer';
+    return serializer;
   }
 
   String getDeserializerOf(ManagedType type, Marshaler? marshaler) {
@@ -54,19 +55,32 @@ class Converters {
     );
     if (type.nullabilitySuffix != NullabilitySuffix.none) {
       deserializer = _converters.putIfAbsent(
-        '$instance.nullable($_name.$deserializer)',
+        '$instance.nullable($deserializer)',
         () => '\$dsr${_converters.length}',
       );
     }
-    return '$_name.$deserializer';
+    return deserializer;
   }
 
   int get count => _converters.length;
 
   String get code => _converters.isEmpty
       ? ''
-      : '''sealed class $_name {
-  ${_converters.entries.map((e) => 'static final ${e.value} = ${e.key};').join('\n')}
+      : '''final class $_name {
+
+  $_name._();
+
+  static $_name? _impl;
+
+  static $_name get \$impl {
+    if (_impl == null) {
+      ${squadronAlias.isEmpty ? '' : '$squadronAlias.'}Squadron.onConverterChanged(() => _impl = $_name._());
+      _impl = $_name._();
+    }
+    return _impl!;
+  }
+
+  ${_converters.entries.map((e) => 'late final ${e.value} = ${e.key};').join('\n')}
 }
 ''';
 }

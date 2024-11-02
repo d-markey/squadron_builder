@@ -3,7 +3,7 @@
 part of '../fibonacci_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.1.0
+// Generator: WorkerGenerator 6.1.1
 // **************************************************************************
 
 /// WorkerService class for FibonacciService
@@ -14,15 +14,15 @@ class _$FibonacciServiceWorkerService extends FibonacciService
   @override
   late final Map<int, CommandHandler> operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$fibonacciId: ($) => fibonacci(_$X.$dsr0($.args[0])),
-    _$fibonacciList0Id: ($) async => _$X
-        .$sr2(await fibonacciList0(_$X.$dsr0($.args[0]), _$X.$dsr0($.args[1]))),
-    _$fibonacciList1Id: ($) async => _$X
-        .$sr3(await fibonacciList1(_$X.$dsr0($.args[0]), _$X.$dsr0($.args[1]))),
-    _$fibonacciList2Id: ($) async => _$X
-        .$sr4(await fibonacciList2(_$X.$dsr0($.args[0]), _$X.$dsr0($.args[1]))),
-    _$fibonacciStreamId: ($) => fibonacciStream(_$X.$dsr0($.args[0]),
-        end: _$X.$dsr5($.args[1]), token: $.cancelToken),
+    _$fibonacciId: ($) => fibonacci(_$X.$impl.$dsr0($.args[0])),
+    _$fibonacciList0Id: ($) async => _$X.$impl.$sr2(await fibonacciList0(
+        _$X.$impl.$dsr0($.args[0]), _$X.$impl.$dsr0($.args[1]))),
+    _$fibonacciList1Id: ($) async => _$X.$impl.$sr3(await fibonacciList1(
+        _$X.$impl.$dsr0($.args[0]), _$X.$impl.$dsr0($.args[1]))),
+    _$fibonacciList2Id: ($) async => _$X.$impl.$sr4(await fibonacciList2(
+        _$X.$impl.$dsr0($.args[0]), _$X.$impl.$dsr0($.args[1]))),
+    _$fibonacciStreamId: ($) => fibonacciStream(_$X.$impl.$dsr0($.args[0]),
+        end: _$X.$impl.$dsr5($.args[1]), token: $.cancelToken),
   });
 
   static const int _$fibonacciId = 1;
@@ -34,7 +34,7 @@ class _$FibonacciServiceWorkerService extends FibonacciService
 
 /// Service initializer for FibonacciService
 WorkerService $FibonacciServiceInitializer(WorkerRequest $$) =>
-    _$FibonacciServiceWorkerService(trace: _$X.$dsr6($$.args[0]));
+    _$FibonacciServiceWorkerService(trace: _$X.$impl.$dsr6($$.args[0]));
 
 /// Worker for FibonacciService
 base class FibonacciServiceWorker extends Worker implements FibonacciService {
@@ -54,28 +54,28 @@ base class FibonacciServiceWorker extends Worker implements FibonacciService {
   @override
   Future<int?> fibonacci(int i) =>
       send(_$FibonacciServiceWorkerService._$fibonacciId, args: [i])
-          .then(_$X.$dsr5);
+          .then(_$X.$impl.$dsr5);
 
   @override
   Future<Iterable<int>?> fibonacciList0(int s, int e) =>
       send(_$FibonacciServiceWorkerService._$fibonacciList0Id, args: [s, e])
-          .then(_$X.$dsr8);
+          .then(_$X.$impl.$dsr8);
 
   @override
   Future<List<int>> fibonacciList1(int s, int e) =>
       send(_$FibonacciServiceWorkerService._$fibonacciList1Id, args: [s, e])
-          .then(_$X.$dsr9);
+          .then(_$X.$impl.$dsr9);
 
   @override
   Future<List<int>> fibonacciList2(int s, int e) =>
       send(_$FibonacciServiceWorkerService._$fibonacciList2Id, args: [s, e])
-          .then(_$X.$dsr10);
+          .then(_$X.$impl.$dsr10);
 
   @override
   Stream<int> fibonacciStream(int start, {int? end, CancelationToken? token}) =>
       stream(_$FibonacciServiceWorkerService._$fibonacciStreamId,
               args: [start, end], token: token)
-          .map(_$X.$dsr0);
+          .map(_$X.$impl.$dsr0);
 
   @override
   // ignore: unused_element
@@ -135,16 +135,28 @@ base class FibonacciServiceWorkerPool extends WorkerPool<FibonacciServiceWorker>
   Logger? get _logger => throw UnimplementedError();
 }
 
-sealed class _$X {
-  static final $dsr0 = Squadron.converter.value<int>();
-  static final $sr1 = Squadron.converter.list();
-  static final $sr2 = Squadron.converter.nullable(_$X.$sr1);
-  static final $sr3 = (($) => (const ListIntMarshaler()).marshal($));
-  static final $sr4 = (($) => listIntMarshaler.marshal($));
-  static final $dsr5 = Squadron.converter.nullable(_$X.$dsr0);
-  static final $dsr6 = Squadron.converter.value<bool>();
-  static final $dsr7 = Squadron.converter.list<int>(_$X.$dsr0);
-  static final $dsr8 = Squadron.converter.nullable(_$X.$dsr7);
-  static final $dsr9 = (($) => (const ListIntMarshaler()).unmarshal($));
-  static final $dsr10 = (($) => listIntMarshaler.unmarshal($));
+final class _$X {
+  _$X._();
+
+  static _$X? _impl;
+
+  static _$X get $impl {
+    if (_impl == null) {
+      Squadron.onConverterChanged(() => _impl = _$X._());
+      _impl = _$X._();
+    }
+    return _impl!;
+  }
+
+  late final $dsr0 = Squadron.converter.value<int>();
+  late final $sr1 = Squadron.converter.list();
+  late final $sr2 = Squadron.converter.nullable($sr1);
+  late final $sr3 = (($) => (const ListIntMarshaler()).marshal($));
+  late final $sr4 = (($) => listIntMarshaler.marshal($));
+  late final $dsr5 = Squadron.converter.nullable($dsr0);
+  late final $dsr6 = Squadron.converter.value<bool>();
+  late final $dsr7 = Squadron.converter.list<int>($dsr0);
+  late final $dsr8 = Squadron.converter.nullable($dsr7);
+  late final $dsr9 = (($) => (const ListIntMarshaler()).unmarshal($));
+  late final $dsr10 = (($) => listIntMarshaler.unmarshal($));
 }

@@ -69,7 +69,7 @@ class SquadronParameter {
 
   String serialized(Converters converters) {
     final serializer = converters.getSerializerOf(managedType, marshaler);
-    return serializer.isEmpty ? name : '$serializer($name)';
+    return serializer.isEmpty ? name : '${converters.impl}.$serializer($name)';
   }
 
   String deserialized(Converters converters, String variableName) {
@@ -82,7 +82,7 @@ class SquadronParameter {
       value = '$variableName.args[$serIdx]';
       final deserializer = converters.getDeserializerOf(managedType, marshaler);
       if (deserializer.isNotEmpty) {
-        value = '$deserializer($value)';
+        value = '${converters.impl}.$deserializer($value)';
       }
     }
     return isNamed ? '$name: $value' : value;

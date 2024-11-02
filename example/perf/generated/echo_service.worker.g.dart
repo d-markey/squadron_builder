@@ -3,7 +3,7 @@
 part of '../echo_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.1.0
+// Generator: WorkerGenerator 6.1.1
 // **************************************************************************
 
 /// WorkerService class for EchoService
@@ -14,17 +14,17 @@ class _$EchoServiceWorkerService extends EchoService implements WorkerService {
   @override
   late final Map<int, CommandHandler> operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$explicitEchoWithExplicitResultId: ($) async => _$X.$sr1(
-        await explicitEchoWithExplicitResult(_$X.$dsr0($.args[0]),
+    _$explicitEchoWithExplicitResultId: ($) async => _$X.$impl.$sr1(
+        await explicitEchoWithExplicitResult(_$X.$impl.$dsr0($.args[0]),
             token: $.cancelToken)),
-    _$explicitEchoWithJsonResultId: ($) async =>
-        _$X.$sr3(await explicitEchoWithJsonResult(_$X.$dsr2($.args[0]))),
-    _$jsonEchoWithExplicitResultId: ($) async =>
-        _$X.$sr5(await jsonEchoWithExplicitResult(_$X.$dsr4($.args[0]))),
-    _$jsonEchoWithJsonResultId: ($) async =>
-        _$X.$sr6(await jsonEchoWithJsonResult(_$X.$dsr4($.args[0]))),
-    _$jsonEncodeEchoId: ($) async =>
-        _$X.$sr8(await jsonEncodeEcho(_$X.$dsr7($.args[0]), $.cancelToken)),
+    _$explicitEchoWithJsonResultId: ($) async => _$X.$impl
+        .$sr3(await explicitEchoWithJsonResult(_$X.$impl.$dsr2($.args[0]))),
+    _$jsonEchoWithExplicitResultId: ($) async => _$X.$impl
+        .$sr5(await jsonEchoWithExplicitResult(_$X.$impl.$dsr4($.args[0]))),
+    _$jsonEchoWithJsonResultId: ($) async => _$X.$impl
+        .$sr6(await jsonEchoWithJsonResult(_$X.$impl.$dsr4($.args[0]))),
+    _$jsonEncodeEchoId: ($) async => _$X.$impl
+        .$sr8(await jsonEncodeEcho(_$X.$impl.$dsr7($.args[0]), $.cancelToken)),
   });
 
   static const int _$explicitEchoWithExplicitResultId = 1;
@@ -36,7 +36,8 @@ class _$EchoServiceWorkerService extends EchoService implements WorkerService {
 
 /// Service initializer for EchoService
 WorkerService $EchoServiceInitializer(WorkerRequest $$) =>
-    _$EchoServiceWorkerService(_$X.$dsr9($$.args[0]), _$X.$dsr11($$.args[1]));
+    _$EchoServiceWorkerService(
+        _$X.$impl.$dsr9($$.args[0]), _$X.$impl.$dsr11($$.args[1]));
 
 /// Worker for EchoService
 base class EchoServiceWorker extends Worker implements EchoService {
@@ -46,7 +47,7 @@ base class EchoServiceWorker extends Worker implements EchoService {
       PlatformThreadHook? threadHook,
       ExceptionManager? exceptionManager])
       : super($EchoServiceActivator(Squadron.platformType),
-            args: [trace, _$X.$sr13(workloadDelay)]);
+            args: [trace, _$X.$impl.$sr13(workloadDelay)]);
 
   EchoServiceWorker.vm(
       [bool trace = false,
@@ -54,41 +55,41 @@ base class EchoServiceWorker extends Worker implements EchoService {
       PlatformThreadHook? threadHook,
       ExceptionManager? exceptionManager])
       : super($EchoServiceActivator(SquadronPlatformType.vm),
-            args: [trace, _$X.$sr13(workloadDelay)]);
+            args: [trace, _$X.$impl.$sr13(workloadDelay)]);
 
   @override
   xxx.Future<srv.ServiceResponse<String>> explicitEchoWithExplicitResult(
           srv.ServiceRequest request,
           {CancelationToken? token}) =>
       send(_$EchoServiceWorkerService._$explicitEchoWithExplicitResultId,
-              args: [_$X.$sr14(request)], token: token)
-          .then(_$X.$dsr15);
+              args: [_$X.$impl.$sr14(request)], token: token)
+          .then(_$X.$impl.$dsr15);
 
   @override
   xxx.Future<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
           srv.ServiceRequest request) =>
       send(_$EchoServiceWorkerService._$explicitEchoWithJsonResultId,
-          args: [_$X.$sr16(request)]).then(_$X.$dsr17);
+          args: [_$X.$impl.$sr16(request)]).then(_$X.$impl.$dsr17);
 
   @override
   xxx.Future<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
           srv.ServiceRequest request) =>
       send(_$EchoServiceWorkerService._$jsonEchoWithExplicitResultId,
-          args: [_$X.$sr18(request)]).then(_$X.$dsr19);
+          args: [_$X.$impl.$sr18(request)]).then(_$X.$impl.$dsr19);
 
   @override
   xxx.Future<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
           srv.ServiceRequest request) =>
       send(_$EchoServiceWorkerService._$jsonEchoWithJsonResultId,
-          args: [_$X.$sr18(request)]).then(_$X.$dsr20);
+          args: [_$X.$impl.$sr18(request)]).then(_$X.$impl.$dsr20);
 
   @override
   xxx.Future<srv.ServiceResponse<String>> jsonEncodeEcho(
           srv.ServiceRequest request,
           [CancelationToken? token]) =>
       send(_$EchoServiceWorkerService._$jsonEncodeEchoId,
-              args: [_$X.$sr21(request)], token: token)
-          .then(_$X.$dsr22);
+              args: [_$X.$impl.$sr21(request)], token: token)
+          .then(_$X.$impl.$dsr22);
 
   @override
   void _simulateWorkload() => throw UnimplementedError();
@@ -168,34 +169,45 @@ base class EchoServiceWorkerPool extends WorkerPool<EchoServiceWorker>
   Duration get _delay => throw UnimplementedError();
 }
 
-sealed class _$X {
-  static final $dsr0 =
+final class _$X {
+  _$X._();
+
+  static _$X? _impl;
+
+  static _$X get $impl {
+    if (_impl == null) {
+      Squadron.onConverterChanged(() => _impl = _$X._());
+      _impl = _$X._();
+    }
+    return _impl!;
+  }
+
+  late final $dsr0 =
       (($) => ServiceRequestGenericToString.instance.unmarshal($));
-  static final $sr1 =
+  late final $sr1 =
       (($) => ServiceResponseOfStringToByteBuffer.instance.marshal($));
-  static final $dsr2 = (($) => (const ServiceRequestToString()).unmarshal($));
-  static final $sr3 = (($) => ($ as srv.ServiceResponse<String>).toJson());
-  static final $dsr4 = (($) => srv.ServiceRequest.fromJson($));
-  static final $sr5 =
+  late final $dsr2 = (($) => (const ServiceRequestToString()).unmarshal($));
+  late final $sr3 = (($) => ($ as srv.ServiceResponse<String>).toJson());
+  late final $dsr4 = (($) => srv.ServiceRequest.fromJson($));
+  late final $sr5 =
       (($) => (const ServiceResponseOfStringToByteBuffer()).marshal($));
-  static final $sr6 = Squadron.converter.nullable(_$X.$sr3);
-  static final $dsr7 = (($) => ServiceRequestToString.instance.unmarshal($));
-  static final $sr8 = (($) => (const ServiceResponseToJson()).marshal($));
-  static final $dsr9 = Squadron.converter.value<bool>();
-  static final $dsr10 = (($) => cfg.ServiceConfig<int>.fromJson($));
-  static final $dsr11 = Squadron.converter.nullable(_$X.$dsr10);
-  static final $sr12 = (($) => ($ as cfg.ServiceConfig<int>).toJson());
-  static final $sr13 = Squadron.converter.nullable(_$X.$sr12);
-  static final $sr14 =
-      (($) => ServiceRequestGenericToString.instance.marshal($));
-  static final $dsr15 =
+  late final $sr6 = Squadron.converter.nullable($sr3);
+  late final $dsr7 = (($) => ServiceRequestToString.instance.unmarshal($));
+  late final $sr8 = (($) => (const ServiceResponseToJson()).marshal($));
+  late final $dsr9 = Squadron.converter.value<bool>();
+  late final $dsr10 = (($) => cfg.ServiceConfig<int>.fromJson($));
+  late final $dsr11 = Squadron.converter.nullable($dsr10);
+  late final $sr12 = (($) => ($ as cfg.ServiceConfig<int>).toJson());
+  late final $sr13 = Squadron.converter.nullable($sr12);
+  late final $sr14 = (($) => ServiceRequestGenericToString.instance.marshal($));
+  late final $dsr15 =
       (($) => ServiceResponseOfStringToByteBuffer.instance.unmarshal($));
-  static final $sr16 = (($) => (const ServiceRequestToString()).marshal($));
-  static final $dsr17 = (($) => srv.ServiceResponse<String>.fromJson($));
-  static final $sr18 = (($) => ($ as srv.ServiceRequest).toJson());
-  static final $dsr19 =
+  late final $sr16 = (($) => (const ServiceRequestToString()).marshal($));
+  late final $dsr17 = (($) => srv.ServiceResponse<String>.fromJson($));
+  late final $sr18 = (($) => ($ as srv.ServiceRequest).toJson());
+  late final $dsr19 =
       (($) => (const ServiceResponseOfStringToByteBuffer()).unmarshal($));
-  static final $dsr20 = Squadron.converter.nullable(_$X.$dsr17);
-  static final $sr21 = (($) => ServiceRequestToString.instance.marshal($));
-  static final $dsr22 = (($) => (const ServiceResponseToJson()).unmarshal($));
+  late final $dsr20 = Squadron.converter.nullable($dsr17);
+  late final $sr21 = (($) => ServiceRequestToString.instance.marshal($));
+  late final $dsr22 = (($) => (const ServiceResponseToJson()).unmarshal($));
 }

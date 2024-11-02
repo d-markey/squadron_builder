@@ -3,7 +3,7 @@
 part of '../json_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.1.0
+// Generator: WorkerGenerator 6.1.1
 // **************************************************************************
 
 /// WorkerService class for JsonService
@@ -14,7 +14,7 @@ class _$JsonServiceWorkerService extends JsonService
   @override
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$decodeId: ($) => decode(_$X.$dsr0($.args[0])),
+    _$decodeId: ($) => decode(_$X.$impl.$dsr0($.args[0])),
   });
 
   static const int _$decodeId = 1;
@@ -68,6 +68,18 @@ base class JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
   Future<dynamic> decode(String source) => execute((w) => w.decode(source));
 }
 
-sealed class _$X {
-  static final $dsr0 = sq.Squadron.converter.value<String>();
+final class _$X {
+  _$X._();
+
+  static _$X? _impl;
+
+  static _$X get $impl {
+    if (_impl == null) {
+      sq.Squadron.onConverterChanged(() => _impl = _$X._());
+      _impl = _$X._();
+    }
+    return _impl!;
+  }
+
+  late final $dsr0 = sq.Squadron.converter.value<String>();
 }
