@@ -80,6 +80,9 @@ sq.EntryPoint $getTestOptNullDefNamedFieldActivator(
         sq.SquadronPlatformType platform) =>
     throw UnimplementedError();
 
+sq.EntryPoint $getTestTypedDataActivator(sq.SquadronPlatformType platform) =>
+    throw UnimplementedError();
+
 sq.EntryPoint $getTestOptNullNamedPrivateFieldActivator(
         sq.SquadronPlatformType platform) =>
     throw UnimplementedError();

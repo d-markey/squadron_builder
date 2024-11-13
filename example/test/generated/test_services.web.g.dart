@@ -66,6 +66,9 @@ void main() {
   /// Web entry point for TestOptNullDefNamedField
   sq.run($TestOptNullDefNamedFieldInitializer);
 
+  /// Web entry point for TestTypedData
+  sq.run($TestTypedDataInitializer);
+
   /// Web entry point for TestOptNullNamedPrivateField
   sq.run($TestOptNullNamedPrivateFieldInitializer);
 
@@ -326,6 +329,18 @@ sq.EntryPoint $getTestOptDefNamedFieldActivator(
 
 sq.EntryPoint $getTestOptNullDefNamedFieldActivator(
     sq.SquadronPlatformType platform) {
+  if (platform.isJs) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.js');
+  } else if (platform.isWasm) {
+    return sq.Squadron.uri(
+        'example/test/generated/test_services.web.g.dart.wasm');
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
+
+sq.EntryPoint $getTestTypedDataActivator(sq.SquadronPlatformType platform) {
   if (platform.isJs) {
     return sq.Squadron.uri(
         'example/test/generated/test_services.web.g.dart.js');

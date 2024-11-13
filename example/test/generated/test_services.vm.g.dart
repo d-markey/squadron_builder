@@ -270,6 +270,19 @@ sq.EntryPoint $getTestOptNullDefNamedFieldActivator(
   }
 }
 
+void _start$TestTypedData(sq.WorkerRequest command) {
+  /// VM entry point for TestTypedData
+  sq.run($TestTypedDataInitializer, command);
+}
+
+sq.EntryPoint $getTestTypedDataActivator(sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestTypedData;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
+
 void _start$TestOptNullNamedPrivateField(sq.WorkerRequest command) {
   /// VM entry point for TestOptNullNamedPrivateField
   sq.run($TestOptNullNamedPrivateFieldInitializer, command);

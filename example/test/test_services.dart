@@ -145,13 +145,16 @@ class TestOptNullDefNamedField {
   TestOptNullDefNamedField({this.arg1 = 0});
 
   final int? arg1;
+}
 
+@sq.SquadronService()
+class TestTypedData {
   @sq.squadronMethod
-  FutureOr<typed_data.ByteBuffer?> foo(
+  FutureOr<typed_data.Uint8List?> foo(
     final List<int> bytes, {
     final bool isLandscape = true, // Default named parameter
   }) async =>
-      null;
+      typed_data.Uint8List.fromList(bytes);
 
   @sq.squadronMethod
   FutureOr<typed_data.ByteBuffer?> bar(

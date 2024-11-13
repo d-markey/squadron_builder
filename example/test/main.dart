@@ -1,12 +1,9 @@
-void main() {
-  final a = A();
-  print(a.b());
-}
+import 'package:using/using.dart';
 
-class A {
-  int b() => 1;
-}
+import 'test_services.dart';
 
-extension AE on A {
-  int b() => 2;
+void main() async {
+  await TestTypedDataWorker().useAsync((w) async {
+    print(await w.foo([1, 2, 3, 7, 11]));
+  });
 }

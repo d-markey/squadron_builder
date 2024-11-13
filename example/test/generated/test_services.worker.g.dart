@@ -1919,21 +1919,7 @@ class _$TestOptNullDefNamedFieldWorkerService extends TestOptNullDefNamedField
 
   @override
   late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{
-    _$barId: ($) => bar(_$X.$impl.$dsr2($.args[0]),
-        title: _$X.$impl.$dsr4($.args[1]),
-        isLandscape: _$X.$impl.$dsr5($.args[2]),
-        columns: _$X.$impl.$dsr7($.args[3]),
-        columnWidths: _$X.$impl.$dsr10($.args[4]),
-        fontData: _$X.$impl.$dsr12($.args[5]),
-        titleFonts: _$X.$impl.$dsr14($.args[6]),
-        dataFonts: _$X.$impl.$dsr14($.args[7])),
-    _$fooId: ($) => foo(_$X.$impl.$dsr2($.args[0]),
-        isLandscape: _$X.$impl.$dsr5($.args[1])),
-  });
-
-  static const int _$barId = 1;
-  static const int _$fooId = 2;
+      Map.unmodifiable(<int, sq.CommandHandler>{});
 }
 
 /// Service initializer for TestOptNullDefNamedField
@@ -1975,32 +1961,6 @@ base class TestOptNullDefNamedFieldWorker extends sq.Worker
 
   @override
   final int? arg1;
-
-  @override
-  Future<typed_data.ByteBuffer?> bar(List<int> bytes,
-          {String? title,
-          bool isLandscape = true,
-          List<String>? columns,
-          Map<int, double>? columnWidths,
-          typed_data.ByteData? fontData,
-          Map<int, typed_data.ByteData>? titleFonts,
-          Map<int, typed_data.ByteData>? dataFonts}) =>
-      send(_$TestOptNullDefNamedFieldWorkerService._$barId, args: [
-        _$X.$impl.$sr15(bytes),
-        title,
-        isLandscape,
-        _$X.$impl.$sr16(columns),
-        _$X.$impl.$sr18(columnWidths),
-        _$X.$impl.$sr20(fontData),
-        _$X.$impl.$sr22(titleFonts),
-        _$X.$impl.$sr22(dataFonts)
-      ]).then(_$X.$impl.$dsr24);
-
-  @override
-  Future<typed_data.ByteBuffer?> foo(List<int> bytes,
-          {bool isLandscape = true}) =>
-      send(_$TestOptNullDefNamedFieldWorkerService._$fooId,
-          args: [_$X.$impl.$sr15(bytes), isLandscape]).then(_$X.$impl.$dsr24);
 }
 
 /// Worker pool for TestOptNullDefNamedField
@@ -2065,6 +2025,128 @@ base class TestOptNullDefNamedFieldWorkerPool
 
   @override
   final int? arg1;
+}
+
+/// WorkerService class for TestTypedData
+class _$TestTypedDataWorkerService extends TestTypedData
+    implements sq.WorkerService {
+  _$TestTypedDataWorkerService() : super();
+
+  @override
+  late final Map<int, sq.CommandHandler> operations =
+      Map.unmodifiable(<int, sq.CommandHandler>{
+    _$barId: ($) => bar(_$X.$impl.$dsr2($.args[0]),
+        title: _$X.$impl.$dsr4($.args[1]),
+        isLandscape: _$X.$impl.$dsr5($.args[2]),
+        columns: _$X.$impl.$dsr7($.args[3]),
+        columnWidths: _$X.$impl.$dsr10($.args[4]),
+        fontData: _$X.$impl.$dsr12($.args[5]),
+        titleFonts: _$X.$impl.$dsr14($.args[6]),
+        dataFonts: _$X.$impl.$dsr14($.args[7])),
+    _$fooId: ($) async => _$X.$impl.$sr16(await foo(_$X.$impl.$dsr2($.args[0]),
+        isLandscape: _$X.$impl.$dsr5($.args[1]))),
+  });
+
+  static const int _$barId = 1;
+  static const int _$fooId = 2;
+}
+
+/// Service initializer for TestTypedData
+sq.WorkerService $TestTypedDataInitializer(sq.WorkerRequest $$) =>
+    _$TestTypedDataWorkerService();
+
+/// Worker for TestTypedData
+base class TestTypedDataWorker extends sq.Worker implements TestTypedData {
+  TestTypedDataWorker(
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($TestTypedDataActivator(sq.Squadron.platformType));
+
+  TestTypedDataWorker.vm(
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($TestTypedDataActivator(sq.SquadronPlatformType.vm));
+
+  TestTypedDataWorker.js(
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($TestTypedDataActivator(sq.SquadronPlatformType.js),
+            threadHook: threadHook, exceptionManager: exceptionManager);
+
+  TestTypedDataWorker.wasm(
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($TestTypedDataActivator(sq.SquadronPlatformType.wasm));
+
+  @override
+  Future<typed_data.ByteBuffer?> bar(List<int> bytes,
+          {String? title,
+          bool isLandscape = true,
+          List<String>? columns,
+          Map<int, double>? columnWidths,
+          typed_data.ByteData? fontData,
+          Map<int, typed_data.ByteData>? titleFonts,
+          Map<int, typed_data.ByteData>? dataFonts}) =>
+      send(_$TestTypedDataWorkerService._$barId, args: [
+        _$X.$impl.$sr17(bytes),
+        title,
+        isLandscape,
+        _$X.$impl.$sr18(columns),
+        _$X.$impl.$sr20(columnWidths),
+        _$X.$impl.$sr22(fontData),
+        _$X.$impl.$sr24(titleFonts),
+        _$X.$impl.$sr24(dataFonts)
+      ]).then(_$X.$impl.$dsr26);
+
+  @override
+  Future<typed_data.Uint8List?> foo(List<int> bytes,
+          {bool isLandscape = true}) =>
+      send(_$TestTypedDataWorkerService._$fooId,
+          args: [_$X.$impl.$sr17(bytes), isLandscape]).then(_$X.$impl.$dsr28);
+}
+
+/// Worker pool for TestTypedData
+base class TestTypedDataWorkerPool extends sq.WorkerPool<TestTypedDataWorker>
+    implements TestTypedData {
+  TestTypedDataWorkerPool(
+      {sq.ConcurrencySettings? concurrencySettings,
+      sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super(
+          (sq.ExceptionManager exceptionManager) => TestTypedDataWorker(
+              threadHook: threadHook, exceptionManager: exceptionManager),
+          concurrencySettings: concurrencySettings,
+        );
+
+  TestTypedDataWorkerPool.vm(
+      {sq.ConcurrencySettings? concurrencySettings,
+      sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super(
+          (sq.ExceptionManager exceptionManager) => TestTypedDataWorker.vm(
+              threadHook: threadHook, exceptionManager: exceptionManager),
+          concurrencySettings: concurrencySettings,
+        );
+
+  TestTypedDataWorkerPool.js(
+      {sq.ConcurrencySettings? concurrencySettings,
+      sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super(
+          (sq.ExceptionManager exceptionManager) => TestTypedDataWorker.js(
+              threadHook: threadHook, exceptionManager: exceptionManager),
+          concurrencySettings: concurrencySettings,
+        );
+
+  TestTypedDataWorkerPool.wasm(
+      {sq.ConcurrencySettings? concurrencySettings,
+      sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super(
+          (sq.ExceptionManager exceptionManager) => TestTypedDataWorker.wasm(
+              threadHook: threadHook, exceptionManager: exceptionManager),
+          concurrencySettings: concurrencySettings,
+        );
 
   @override
   Future<typed_data.ByteBuffer?> bar(List<int> bytes,
@@ -2085,7 +2167,7 @@ base class TestOptNullDefNamedFieldWorkerPool
           dataFonts: dataFonts));
 
   @override
-  Future<typed_data.ByteBuffer?> foo(List<int> bytes,
+  Future<typed_data.Uint8List?> foo(List<int> bytes,
           {bool isLandscape = true}) =>
       execute((w) => w.foo(bytes, isLandscape: isLandscape));
 }
@@ -2466,7 +2548,7 @@ class _$TestPrefixedImportTypeWorkerService extends TestPrefixedImportType
   @override
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$getTypedDataId: ($) async => _$X.$impl.$sr26(await getTypedData()),
+    _$getTypedDataId: ($) async => _$X.$impl.$sr30(await getTypedData()),
   });
 
   static const int _$getTypedDataId = 1;
@@ -2474,7 +2556,7 @@ class _$TestPrefixedImportTypeWorkerService extends TestPrefixedImportType
 
 /// Service initializer for TestPrefixedImportType
 sq.WorkerService $TestPrefixedImportTypeInitializer(sq.WorkerRequest $$) =>
-    _$TestPrefixedImportTypeWorkerService(_$X.$impl.$dsr27($$.args[0]));
+    _$TestPrefixedImportTypeWorkerService(_$X.$impl.$dsr31($$.args[0]));
 
 /// Worker for TestPrefixedImportType
 base class TestPrefixedImportTypeWorker extends sq.Worker
@@ -2483,19 +2565,19 @@ base class TestPrefixedImportTypeWorker extends sq.Worker
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.Squadron.platformType),
-            args: [_$X.$impl.$sr25(typedData)]);
+            args: [_$X.$impl.$sr29(typedData)]);
 
   TestPrefixedImportTypeWorker.vm(this.typedData,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.SquadronPlatformType.vm),
-            args: [_$X.$impl.$sr25(typedData)]);
+            args: [_$X.$impl.$sr29(typedData)]);
 
   TestPrefixedImportTypeWorker.js(this.typedData,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.SquadronPlatformType.js),
-            args: [_$X.$impl.$sr25(typedData)],
+            args: [_$X.$impl.$sr29(typedData)],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -2503,7 +2585,7 @@ base class TestPrefixedImportTypeWorker extends sq.Worker
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.SquadronPlatformType.wasm),
-            args: [_$X.$impl.$sr25(typedData)]);
+            args: [_$X.$impl.$sr29(typedData)]);
 
   @override
   final typed_data.Int8List typedData;
@@ -2511,7 +2593,7 @@ base class TestPrefixedImportTypeWorker extends sq.Worker
   @override
   Future<typed_data.Int8List?> getTypedData() =>
       send(_$TestPrefixedImportTypeWorkerService._$getTypedDataId)
-          .then(_$X.$impl.$dsr28);
+          .then(_$X.$impl.$dsr32);
 }
 
 /// Worker pool for TestPrefixedImportType
@@ -2775,11 +2857,11 @@ class _$TestRecordTypesWorkerService extends TestRecordTypes
   @override
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$bothId: ($) async => _$X.$impl.$sr29(await both()),
-    _$inputId: ($) => input(_$X.$impl.$dsr30($.args[0]),
-        _$X.$impl.$dsr32($.args[1]), _$X.$impl.$dsr33($.args[2])),
-    _$namedId: ($) => named().then(_$X.$impl.$sr34),
-    _$unnamedId: ($) async => _$X.$impl.$sr35(await unnamed()),
+    _$bothId: ($) async => _$X.$impl.$sr33(await both()),
+    _$inputId: ($) => input(_$X.$impl.$dsr34($.args[0]),
+        _$X.$impl.$dsr36($.args[1]), _$X.$impl.$dsr37($.args[2])),
+    _$namedId: ($) => named().then(_$X.$impl.$sr38),
+    _$unnamedId: ($) async => _$X.$impl.$sr39(await unnamed()),
   });
 
   static const int _$bothId = 1;
@@ -2817,24 +2899,24 @@ base class TestRecordTypesWorker extends sq.Worker implements TestRecordTypes {
 
   @override
   Future<(int, {List<int> items})> both() =>
-      send(_$TestRecordTypesWorkerService._$bothId).then(_$X.$impl.$dsr30);
+      send(_$TestRecordTypesWorkerService._$bothId).then(_$X.$impl.$dsr34);
 
   @override
   Future<bool> input((int, {List<int> items}) both, (int, List<dynamic>) pos,
           ({int count, List<dynamic> items}) named) =>
       send(_$TestRecordTypesWorkerService._$inputId, args: [
-        _$X.$impl.$sr29(both),
-        _$X.$impl.$sr35(pos),
-        _$X.$impl.$sr34(named)
+        _$X.$impl.$sr33(both),
+        _$X.$impl.$sr39(pos),
+        _$X.$impl.$sr38(named)
       ]).then(_$X.$impl.$dsr5);
 
   @override
   Future<({int count, List<dynamic> items})> named() =>
-      send(_$TestRecordTypesWorkerService._$namedId).then(_$X.$impl.$dsr33);
+      send(_$TestRecordTypesWorkerService._$namedId).then(_$X.$impl.$dsr37);
 
   @override
   Future<(int, List<dynamic>)> unnamed() =>
-      send(_$TestRecordTypesWorkerService._$unnamedId).then(_$X.$impl.$dsr32);
+      send(_$TestRecordTypesWorkerService._$unnamedId).then(_$X.$impl.$dsr36);
 }
 
 /// Worker pool for TestRecordTypes
@@ -3028,8 +3110,8 @@ class _$TestBigIntWorkerService extends TestBigInt implements sq.WorkerService {
   @override
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$addId: ($) async => _$X.$impl.$sr37(
-        await add(_$X.$impl.$dsr36($.args[0]), _$X.$impl.$dsr36($.args[1]))),
+    _$addId: ($) async => _$X.$impl.$sr41(
+        await add(_$X.$impl.$dsr40($.args[0]), _$X.$impl.$dsr40($.args[1]))),
   });
 
   static const int _$addId = 1;
@@ -3065,7 +3147,7 @@ base class TestBigIntWorker extends sq.Worker implements TestBigInt {
   @override
   Future<BigInt> add(BigInt a, BigInt b) => send(
       _$TestBigIntWorkerService._$addId,
-      args: [_$X.$impl.$sr37(a), _$X.$impl.$sr37(b)]).then(_$X.$impl.$dsr36);
+      args: [_$X.$impl.$sr41(a), _$X.$impl.$sr41(b)]).then(_$X.$impl.$dsr40);
 }
 
 /// Worker pool for TestBigInt
@@ -3146,40 +3228,46 @@ final class _$X {
   late final $dsr13 = sq.Squadron.converter
       .map<int, typed_data.ByteData>(kcast: $dsr0, vcast: $dsr11);
   late final $dsr14 = sq.Squadron.converter.nullable($dsr13);
-  late final $sr15 = sq.Squadron.converter.list();
+  late final $sr15 =
+      (($) => (const sq.TypedDataMarshaler<typed_data.Uint8List>()).marshal($));
   late final $sr16 = sq.Squadron.converter.nullable($sr15);
-  late final $sr17 = sq.Squadron.converter.map();
+  late final $sr17 = sq.Squadron.converter.list();
   late final $sr18 = sq.Squadron.converter.nullable($sr17);
-  late final $sr19 =
-      (($) => (const sq.TypedDataMarshaler<typed_data.ByteData>()).marshal($));
+  late final $sr19 = sq.Squadron.converter.map();
   late final $sr20 = sq.Squadron.converter.nullable($sr19);
-  late final $sr21 = sq.Squadron.converter.map(vcast: $sr19);
+  late final $sr21 =
+      (($) => (const sq.TypedDataMarshaler<typed_data.ByteData>()).marshal($));
   late final $sr22 = sq.Squadron.converter.nullable($sr21);
-  late final $dsr23 = sq.Squadron.converter.value<typed_data.ByteBuffer>();
-  late final $dsr24 = sq.Squadron.converter.nullable($dsr23);
-  late final $sr25 =
-      (($) => (const sq.TypedDataMarshaler<typed_data.Int8List>()).marshal($));
-  late final $sr26 = sq.Squadron.converter.nullable($sr25);
+  late final $sr23 = sq.Squadron.converter.map(vcast: $sr21);
+  late final $sr24 = sq.Squadron.converter.nullable($sr23);
+  late final $dsr25 = sq.Squadron.converter.value<typed_data.ByteBuffer>();
+  late final $dsr26 = sq.Squadron.converter.nullable($dsr25);
   late final $dsr27 = (($) =>
-      (const sq.TypedDataMarshaler<typed_data.Int8List>()).unmarshal($));
+      (const sq.TypedDataMarshaler<typed_data.Uint8List>()).unmarshal($));
   late final $dsr28 = sq.Squadron.converter.nullable($dsr27);
-  late final $sr29 = (((int, {List<int> items}) $) => [$.$1, $sr15($.items)]);
-  late final $dsr30 = (($) {
+  late final $sr29 =
+      (($) => (const sq.TypedDataMarshaler<typed_data.Int8List>()).marshal($));
+  late final $sr30 = sq.Squadron.converter.nullable($sr29);
+  late final $dsr31 = (($) =>
+      (const sq.TypedDataMarshaler<typed_data.Int8List>()).unmarshal($));
+  late final $dsr32 = sq.Squadron.converter.nullable($dsr31);
+  late final $sr33 = (((int, {List<int> items}) $) => [$.$1, $sr17($.items)]);
+  late final $dsr34 = (($) {
     $ as List;
     return ($dsr0($[0]), items: $dsr2($[1]));
   });
-  late final $dsr31 = sq.Squadron.converter.list<dynamic>();
-  late final $dsr32 = (($) {
+  late final $dsr35 = sq.Squadron.converter.list<dynamic>();
+  late final $dsr36 = (($) {
     $ as List;
-    return ($dsr0($[0]), $dsr31($[1]));
+    return ($dsr0($[0]), $dsr35($[1]));
   });
-  late final $dsr33 = (($) {
+  late final $dsr37 = (($) {
     $ as List;
-    return (count: $dsr0($[0]), items: $dsr31($[1]));
+    return (count: $dsr0($[0]), items: $dsr35($[1]));
   });
-  late final $sr34 =
-      ((({int count, List<dynamic> items}) $) => [$.count, $sr15($.items)]);
-  late final $sr35 = (((int, List<dynamic>) $) => [$.$1, $sr15($.$2)]);
-  late final $dsr36 = (const marshaler.BigIntMarshaler()).unmarshal;
-  late final $sr37 = (const marshaler.BigIntMarshaler()).marshal;
+  late final $sr38 =
+      ((({int count, List<dynamic> items}) $) => [$.count, $sr17($.items)]);
+  late final $sr39 = (((int, List<dynamic>) $) => [$.$1, $sr17($.$2)]);
+  late final $dsr40 = (const marshaler.BigIntMarshaler()).unmarshal;
+  late final $sr41 = (const marshaler.BigIntMarshaler()).marshal;
 }

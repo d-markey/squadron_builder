@@ -74,6 +74,9 @@ const $TestOptDefNamedFieldActivator = $getTestOptDefNamedFieldActivator;
 const $TestOptNullDefNamedFieldActivator =
     $getTestOptNullDefNamedFieldActivator;
 
+/// Service activator for TestTypedData
+const $TestTypedDataActivator = $getTestTypedDataActivator;
+
 /// Service activator for TestOptNullNamedPrivateField
 const $TestOptNullNamedPrivateFieldActivator =
     $getTestOptNullNamedPrivateFieldActivator;
