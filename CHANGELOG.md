@@ -1,3 +1,7 @@
+## 6.1.2
+
+- Fix pub.dev issues.
+
 ## 6.1.1
 
 - Update serializers/deserializers when `Squadron.converter` is modified.
