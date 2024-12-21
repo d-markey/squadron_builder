@@ -37,16 +37,13 @@ class TypeManager with _ImportedTypesMixin {
     });
   }
 
-  void checkImportsFor(String message, List<ImportedType> requiredTypes) {
-    if (requiredTypes.isNotEmpty) {
-      final missingImports = requiredTypes.map((t) => t.pckUri).toSet()
-        ..removeWhere((pckUri) =>
-            library.importedLibraries.any((l) => l.isFromPackage(pckUri)));
-      if (missingImports.isNotEmpty) {
-        throw InvalidGenerationSourceError(
-            '$message: ${missingImports.map((s) => s.endsWith('/') ? s.substring(0, s.length - 1) : s).join(', ')}');
-      }
-    }
+  List<String> checkRequiredImports(List<ImportedType> requiredTypes) {
+    final missingImports = requiredTypes.map((t) => t.pckUri).toSet()
+      ..removeWhere((pckUri) =>
+          library.importedLibraries.any((l) => l.isFromPackage(pckUri)));
+    return missingImports
+        .map((s) => s.endsWith('/') ? s.substring(0, s.length - 1) : s)
+        .toList();
   }
 
   final LibraryElement library;

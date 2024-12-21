@@ -18,6 +18,7 @@ mixin _ImportedTypesMixin {
       'PerfCounter': ImportedType.unset,
       'ConcurrencySettings': ImportedType.unset,
       'ExceptionManager': ImportedType.unset,
+      'TaskTerminatedException': ImportedType.unset,
       'PlatformThreadHook': ImportedType.unset,
       'SquadronMarshaler': ImportedType.unset,
       'TypedDataMarshaler': ImportedType.unset,
@@ -100,6 +101,9 @@ mixin _ImportedTypesMixin {
   // ignore: non_constant_identifier_names
   ImportedType get TExceptionManager =>
       _importedTypes[PckUri.squadron]!['ExceptionManager']!;
+  // ignore: non_constant_identifier_names
+  ImportedType get TTaskTerminatedException =>
+      _importedTypes[PckUri.squadron]!['TaskTerminatedException']!;
   // ignore: non_constant_identifier_names
   ImportedType get TPlatformThreadHook =>
       _importedTypes[PckUri.squadron]!['PlatformThreadHook']!;

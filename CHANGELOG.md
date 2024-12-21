@@ -1,3 +1,9 @@
+## 6.1.3
+
+- Update version constraints for package `source_gen`.
+- Implement `terminate()` in disposable worker/worker pool.
+- Update examples.
+
 ## 6.1.2
 
 - Fix pub.dev issues.

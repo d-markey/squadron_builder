@@ -3,7 +3,7 @@
 part of '../hello_world.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.1.1
+// Generator: WorkerGenerator 6.1.3
 // **************************************************************************
 
 /// WorkerService class for HelloWorld
@@ -14,10 +14,10 @@ base class _$HelloWorldWorkerService extends HelloWorld
   @override
   late final Map<int, CommandHandler> operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$helloId: ($) => hello(_$X.$impl.$dsr1($.args[0]), $.cancelToken),
+    _$sayHelloId: ($) => sayHello(_$X.$impl.$dsr1($.args[0])),
   });
 
-  static const int _$helloId = 1;
+  static const int _$sayHelloId = 1;
 }
 
 /// Service initializer for HelloWorld
@@ -44,10 +44,9 @@ base class HelloWorldWorker extends Worker implements HelloWorld {
       : super($HelloWorldActivator(SquadronPlatformType.wasm));
 
   @override
-  xxx.Future<String?> hello(
-          [String? name = 'world', CancelationToken? token]) =>
-      send(_$HelloWorldWorkerService._$helloId, args: [name], token: token)
-          .then(_$X.$impl.$dsr1);
+  Future<String> sayHello([String? name]) =>
+      send(_$HelloWorldWorkerService._$sayHelloId, args: [name])
+          .then(_$X.$impl.$dsr0);
 }
 
 /// Worker pool for HelloWorld
@@ -94,9 +93,7 @@ base class HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
         );
 
   @override
-  xxx.Future<String?> hello(
-          [String? name = 'world', CancelationToken? token]) =>
-      execute((w) => w.hello(name, token));
+  Future<String> sayHello([String? name]) => execute((w) => w.sayHello(name));
 }
 
 final class _$X {

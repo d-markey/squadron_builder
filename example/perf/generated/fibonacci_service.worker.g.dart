@@ -3,7 +3,7 @@
 part of '../fibonacci_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.1.1
+// Generator: WorkerGenerator 6.1.3
 // **************************************************************************
 
 /// WorkerService class for FibonacciService

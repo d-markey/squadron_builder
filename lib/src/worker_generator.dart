@@ -81,14 +81,17 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     typeManager.initialize();
 
     if (_withFinalizers) {
-      typeManager.checkImportsFor(
-          'To generate finalization code, your library must import the following:',
-          [
-            typeManager.TReleasable,
-            typeManager.TCancelationToken,
-            typeManager.TLogger,
-            typeManager.TFutureOr
-          ]);
+      final missingImports = typeManager.checkRequiredImports([
+        typeManager.TReleasable,
+        typeManager.TCancelationToken,
+        typeManager.TLogger,
+        typeManager.TFutureOr
+      ]);
+      if (missingImports.isNotEmpty) {
+        log.warning(
+          'To generate finalizable workers, your library is missing the following imports: ${missingImports.join(', ')}',
+        );
+      }
     }
 
     final assets = WorkerAssets(buildStep, service);

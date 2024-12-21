@@ -1,51 +1,29 @@
-import 'dart:isolate';
-
-import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
 
 import 'hello_world.dart';
 
 void main() async {
-  final logger = Logger(
-    filter: ProductionFilter(),
-    output: ConsoleOutput(),
-    printer: SimplePrinter(),
+  print('Program running in main thread $threadId');
+
+  final workerPool = HelloWorldWorkerPool(
+    concurrencySettings: ConcurrencySettings.threeCpuThreads,
   );
+  await workerPool.start();
 
-  logger.i('main() running in Isolate ${Isolate.current.hashCode.hex}');
+  try {
+    final tasks = <Future<String>>[];
+    for (var name in ['Mia', 'Bob', 'Eva', 'Ada', 'Max', 'Joy', 'Ray', 'Ben']) {
+      tasks.add(workerPool.sayHello(name));
+    }
 
-  final names = [null, 'Mary', 'John', 'Joe', 'Rick', 'Bill', 'Henry'];
+    for (var res in await Future.wait(tasks)) {
+      print('    --> $res');
+    }
 
-  final futures = <Future>[];
-  final worker = HelloWorldWorker();
-  for (var name in names) {
-    futures.add(worker.hello(name).then(logger.i));
+    final stats = workerPool.stats.toList();
+    print('${tasks.length} tasks handled by ${stats.length} workers.');
+  } finally {
+    // make sure all workers/worker pools are stopped
+    workerPool.stop();
   }
-  await Future.wait(futures);
-  worker.stop();
-  print('  * Stats for worker ${worker.hashCode}: ${worker.stats.dump()}');
-
-  print('');
-
-  final concurrency = ConcurrencySettings(
-    minWorkers: 3,
-    maxWorkers: 3,
-    maxParallel: 1,
-  );
-  final pool = HelloWorldWorkerPool(concurrencySettings: concurrency);
-  await pool.start();
-  futures.clear();
-  for (var name in names) {
-    futures.add(pool.hello(name).then(logger.i));
-  }
-  await Future.wait(futures);
-  print(pool.fullStats
-      .map((s) => '  * Stats for pool worker ${s.workerHashCode}: ${s.dump()}')
-      .join('\n'));
-  pool.stop();
-}
-
-extension DebugStats on WorkerStat {
-  String dump() =>
-      'totalWorkload=$totalWorkload (max $maxWorkload) - upTime=$upTime - idleTime=$idleTime - status=$status';
 }

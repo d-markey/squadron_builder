@@ -158,7 +158,7 @@ class WorkerAssets {
 
   /// Proxy for base worker/worker pool method
   String _forwardOverride(String decl, String target, String impl) =>
-      '$_override ${decl.replaceAll('@Worker@', _worker)} => $target.$impl;';
+      '$_override ${decl.replaceAll('@TWorker@', _worker)} => $target.$impl;';
 }
 
 // Unimplemented member

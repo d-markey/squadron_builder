@@ -23,6 +23,7 @@ extension SquadronOverrides on TypeManager {
       // worker control
       '$TFuture<$TChannel> start()': 'start()',
       'void stop()': 'stop()',
+      'void terminate([$TTaskTerminatedException? ex])': 'terminate(ex)',
       '$TChannel? getSharedChannel()': 'getSharedChannel()',
       // worker tasks
       '$TFuture<$TDynamic> send($TInt command, {$TList args = const [], $TCancelationToken? token, $TBool inspectRequest = false, $TBool inspectResponse = false})':
@@ -58,20 +59,21 @@ extension SquadronOverrides on TypeManager {
       // pool & task control
       'void cancel([$TTask? task, $TString? message])': 'cancel(task, message)',
       '$TFutureOr<void> start()': 'start()',
-      '$TInt stop([$TBool Function(@Worker@ worker)? predicate])':
+      '$TInt stop([$TBool Function(@TWorker@ worker)? predicate])':
           'stop(predicate)',
-      '$TObject registerWorkerPoolListener(void Function(@Worker@ worker, $TBool removed) listener)':
+      'void terminate([$TTaskTerminatedException? ex])': 'terminate(ex)',
+      '$TObject registerWorkerPoolListener(void Function(@TWorker@ worker, $TBool removed) listener)':
           'registerWorkerPoolListener(listener)',
-      'void unregisterWorkerPoolListener({void Function(@Worker@ worker, $TBool removed)? listener, $TObject? token})':
+      'void unregisterWorkerPoolListener({void Function(@TWorker@ worker, $TBool removed)? listener, $TObject? token})':
           'unregisterWorkerPoolListener(listener: listener, token: token)',
       // pool tasks
-      '$TFuture<T> execute<T>($TFuture<T> Function(@Worker@ worker) task, {$TPerfCounter? counter})':
+      '$TFuture<T> execute<T>($TFuture<T> Function(@TWorker@ worker) task, {$TPerfCounter? counter})':
           'execute<T>(task, counter: counter)',
-      '$TStream<T> stream<T>($TStream<T> Function(@Worker@ worker) task, {$TPerfCounter? counter})':
+      '$TStream<T> stream<T>($TStream<T> Function(@TWorker@ worker) task, {$TPerfCounter? counter})':
           'stream<T>(task, counter: counter)',
-      '$TStreamTask<T> scheduleStreamTask<T>($TStream<T> Function(@Worker@ worker) task, {$TPerfCounter? counter})':
+      '$TStreamTask<T> scheduleStreamTask<T>($TStream<T> Function(@TWorker@ worker) task, {$TPerfCounter? counter})':
           'scheduleStreamTask<T>(task, counter: counter)',
-      '$TValueTask<T> scheduleValueTask<T>($TFuture<T> Function(@Worker@ worker) task, {$TPerfCounter? counter})':
+      '$TValueTask<T> scheduleValueTask<T>($TFuture<T> Function(@TWorker@ worker) task, {$TPerfCounter? counter})':
           'scheduleValueTask<T>(task, counter: counter)',
       // finalization token
       '$TObject get _detachToken': '_detachToken',

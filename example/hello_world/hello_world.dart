@@ -1,8 +1,9 @@
-import 'dart:async' as xxx;
-import 'dart:isolate';
+import 'dart:async';
 
 import 'package:cancelation_token/cancelation_token.dart';
+import 'package:logger/web.dart';
 import 'package:squadron/squadron.dart';
+import 'package:using/using.dart';
 
 import 'generated/hello_world.activator.g.dart';
 
@@ -11,11 +12,8 @@ part 'generated/hello_world.worker.g.dart';
 @SquadronService(baseUrl: '~/workers', targetPlatform: TargetPlatform.all)
 base class HelloWorld {
   @squadronMethod
-  xxx.FutureOr<String?> hello(
-      [String? name = 'world', CancelationToken? token]) {
+  FutureOr<String> sayHello([String? name]) {
     name = name?.trim() ?? '';
-    return name.isEmpty
-        ? 'Hello, World! from Isolate ${Isolate.current.hashCode.hex}'
-        : 'Hello, $name! from Isolate ${Isolate.current.hashCode.hex}';
+    return 'Hello, ${name.isEmpty ? 'World' : name} from thread $threadId!';
   }
 }
