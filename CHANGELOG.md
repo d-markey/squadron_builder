@@ -1,3 +1,7 @@
+## 6.1.4
+
+- Update version constraints for package `analyzer`.
+
 ## 6.1.3
 
 - Update version constraints for package `source_gen`.
