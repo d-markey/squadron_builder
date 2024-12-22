@@ -5,11 +5,11 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart';
 
+import '../version.dart';
 import 'assets/worker_assets.dart';
 import 'build_step_events.dart';
 import 'readers/squadron_service_reader.dart';
 import 'types/type_manager.dart';
-import 'version.dart';
 
 /// Alias for a code formatting function.
 typedef Formatter = String Function(String source);

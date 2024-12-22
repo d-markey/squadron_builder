@@ -1,8 +1,12 @@
-## 6.1.4
+## 6.1.5
+
+- Revert version constraints for packages `source_gen` and `analyzer`.
+
+## 6.1.4 (retracted)
 
 - Update version constraints for package `analyzer`.
 
-## 6.1.3
+## 6.1.3 (retracted)
 
 - Update version constraints for package `source_gen`.
 - Implement `terminate()` in disposable worker/worker pool.
