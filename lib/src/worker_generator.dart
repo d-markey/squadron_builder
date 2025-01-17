@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:pub_semver/pub_semver.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart';
 
@@ -12,7 +13,7 @@ import 'readers/squadron_service_reader.dart';
 import 'types/type_manager.dart';
 
 /// Alias for a code formatting function.
-typedef Formatter = String Function(String source);
+typedef Formatter = String Function(String source, Version languageVersion);
 
 /// Code generator for Squadron workers.
 class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
@@ -57,7 +58,7 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     }
 
     // done, trigger code generation for additional assets if any
-    _buildStepEventStream.add(BuildStepDoneEvent(buildStep));
+    _buildStepEventStream.add(BuildStepDoneEvent(buildStep, library.element));
 
     return code;
   }
@@ -141,7 +142,7 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
         log.fine('      Generating code for additional asset ${asset.path}...');
         var code = insertHeader(result.getCode(asset)).join('\n\n');
         try {
-          code = _formatOutput(code);
+          code = _formatOutput(code, done.languageVersion);
         } catch (ex) {
           log.severe(
               'An exception occurred while formatting code for ${asset.path}: $ex');
@@ -155,4 +156,4 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
   String toString() => '$runtimeType $version';
 }
 
-String _noFormatting(String source) => source;
+String _noFormatting(String source, Version languageVersion) => source;

@@ -57,7 +57,8 @@ extension SquadronOverrides on TypeManager {
       '$TInt get totalWorkload': 'totalWorkload',
       '$TInt get workload': 'workload',
       // pool & task control
-      'void cancel([$TTask? task, $TString? message])': 'cancel(task, message)',
+      'void cancelAll([$TString? message])': 'cancelAll(message)',
+      'void cancel($TTask task, [$TString? message])': 'cancel(task, message)',
       '$TFutureOr<void> start()': 'start()',
       '$TInt stop([$TBool Function(@TWorker@ worker)? predicate])':
           'stop(predicate)',

@@ -54,7 +54,7 @@ class TypeManager with _ImportedTypesMixin {
 
   String getPrefixFor(LibraryElement? lib) {
     if (lib == null) return '';
-    return library.prefixes
+    return library.definingCompilationUnit.libraryImportPrefixes
             .where((p) => p.imports.any((i) => i.importedLibrary == lib))
             .firstOrNull
             ?.name ??

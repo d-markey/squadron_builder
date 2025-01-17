@@ -1,9 +1,10 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.1.3
+// Generator: WorkerGenerator 6.2.0
 // **************************************************************************
 
 /// WorkerService class for TestParameterLess

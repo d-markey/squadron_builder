@@ -18,8 +18,8 @@ class _ExplicitMarshaler extends Marshaler {
 
     final variable = _marshaler.variable;
     if (variable != null) {
-      if (variable.enclosingElement is InterfaceElement) {
-        _instance = '${variable.enclosingElement!.name!}.${variable.name}';
+      if (variable.enclosingElement3 is InterfaceElement) {
+        _instance = '${variable.enclosingElement3!.name!}.${variable.name}';
       } else {
         _instance = variable.name;
       }

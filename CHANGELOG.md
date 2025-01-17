@@ -1,3 +1,9 @@
+## 6.2.0
+
+- Set Dart SDK minimum version to 3.6.0.
+- Upgrade dependency versions (source_gen --> 2.0.0, analyzers --> 7.1.0).
+- Adapt source code where necessary.
+
 ## 6.1.5
 
 - Revert version constraints for packages `source_gen` and `analyzer`.

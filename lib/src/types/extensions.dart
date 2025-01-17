@@ -39,11 +39,14 @@ extension LibraryElementExt on LibraryElement {
   bool isFromPackage(String pckUri) => location?.isFromPackage(pckUri) ?? false;
 
   LibraryImportElement? getImport(String pckUri) =>
-      libraryImports.where((i) => i.isFromPackage(pckUri)).firstOrNull;
+      definingCompilationUnit.libraryImports
+          .where((i) => i.isFromPackage(pckUri))
+          .firstOrNull;
 
   String? getPrefixFor(String pckUri) {
-    final import =
-        libraryImports.where((i) => i.isFromPackage(pckUri)).firstOrNull;
+    final import = definingCompilationUnit.libraryImports
+        .where((i) => i.isFromPackage(pckUri))
+        .firstOrNull;
     if (import == null) return null;
     return import.prefix?.element.name ?? '';
   }

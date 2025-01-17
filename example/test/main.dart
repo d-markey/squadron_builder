@@ -1,9 +1,19 @@
-import 'package:using/using.dart';
+import 'package:squadron/squadron.dart';
 
 import 'test_services.dart';
 
 void main() async {
-  await TestTypedDataWorker().useAsync((w) async {
-    print(await w.foo([1, 2, 3, 7, 11]));
-  });
+  TestTypedDataWorkerPool? pool = TestTypedDataWorkerPool(
+      concurrencySettings: ConcurrencySettings.threeCpuThreads);
+
+  await Future.wait(
+    Iterable.generate(
+      6,
+      (i) => pool.foo([1, 2, 3, 7, 11]).then(print),
+    ),
+  );
+
+  pool.terminate();
+
+  print('Done.');
 }

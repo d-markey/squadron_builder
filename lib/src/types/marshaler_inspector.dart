@@ -32,7 +32,8 @@ class MarshalerInspector extends SimpleElementVisitor {
       element.visitChildren(this);
 
       // also check methods/getters defined in extensions of this type
-      final extensions = typeManager.library.accessibleExtensions
+      final extensions = typeManager
+          .library.definingCompilationUnit.accessibleExtensions
           .where((e) => e.extendedType == type.dartType)
           .toList();
       if (extensions.isNotEmpty) {
@@ -47,8 +48,8 @@ class MarshalerInspector extends SimpleElementVisitor {
 
       // get loader name if static methods are implemented via extensions
       final loader = isMarshaler
-          ? _unmarshal!.enclosingElement!
-          : (isJson ? _fromJson!.enclosingElement! : null);
+          ? _unmarshal!.enclosingElement3!
+          : (isJson ? _fromJson!.enclosingElement3! : null);
       String? loaderTypeName;
       if (loader is ExtensionElement) {
         final prefix = typeManager.getPrefixFor(loader.library);

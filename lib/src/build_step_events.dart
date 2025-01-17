@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 /// Class for build step events (additional assets)
 @internal
@@ -161,7 +162,10 @@ class BuildStepCodeEvent extends BuildStepEvent {
 /// Code event emitted when a library has been fully processed
 @internal
 class BuildStepDoneEvent extends BuildStepEvent {
-  BuildStepDoneEvent(super.buildStep);
+  BuildStepDoneEvent(super.buildStep, LibraryElement lib)
+      : languageVersion = lib.languageVersion.package;
+
+  final Version languageVersion;
 }
 
 extension on AssetId {
