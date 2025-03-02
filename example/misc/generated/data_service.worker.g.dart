@@ -4,7 +4,7 @@
 part of '../data_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.2.0
+// Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
 /// WorkerService class for DataService
@@ -14,16 +14,32 @@ class _$DataServiceWorkerService extends DataService implements WorkerService {
   @override
   late final Map<int, CommandHandler> operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$doSomethingId: ($) async =>
-        _$X.$impl.$sr1(await doSomething(_$X.$impl.$dsr0($.args[0]))),
+    _$doSomethingId: ($req_) async {
+      Data $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await doSomething(
+          (($_) => ext_d.DataMarshalerExt.unmarshal($_, $mc))($req_.args[0]),
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return (($_) => ($_ as Data).marshal($mc))($res_);
+      } finally {}
+    },
   });
 
   static const int _$doSomethingId = 1;
 }
 
 /// Service initializer for DataService
-WorkerService $DataServiceInitializer(WorkerRequest $$) =>
-    _$DataServiceWorkerService();
+WorkerService $DataServiceInitializer(WorkerRequest $req_) {
+  // ignore: unused_local_variable
+  final $mc = MarshalingContext();
+  return _$DataServiceWorkerService();
+}
 
 /// Worker for DataService
 base class DataServiceWorker extends Worker implements DataService {
@@ -45,9 +61,24 @@ base class DataServiceWorker extends Worker implements DataService {
       : super($DataServiceActivator(SquadronPlatformType.wasm));
 
   @override
-  Future<Data> doSomething(Data input) =>
-      send(_$DataServiceWorkerService._$doSomethingId,
-          args: [_$X.$impl.$sr1(input)]).then(_$X.$impl.$dsr0);
+  Future<Data> doSomething(Data input) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      $res_ = await send(
+        _$DataServiceWorkerService._$doSomethingId,
+        args: [
+          (($_) => ($_ as Data).marshal($mc))(input),
+        ],
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      return (($_) => ext_d.DataMarshalerExt.unmarshal($_, $mc))($res_);
+    } finally {}
+  }
 }
 
 /// Worker pool for DataService
@@ -95,21 +126,4 @@ base class DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
 
   @override
   Future<Data> doSomething(Data input) => execute((w) => w.doSomething(input));
-}
-
-final class _$X {
-  _$X._();
-
-  static _$X? _impl;
-
-  static _$X get $impl {
-    if (_impl == null) {
-      Squadron.onConverterChanged(() => _impl = _$X._());
-      _impl = _$X._();
-    }
-    return _impl!;
-  }
-
-  late final $dsr0 = (($) => ext_d.DataMarshalerExt.unmarshal($));
-  late final $sr1 = (($) => ($ as Data).marshal());
 }

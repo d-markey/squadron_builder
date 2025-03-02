@@ -21,7 +21,8 @@ mixin _ImportedTypesMixin {
       'TaskTerminatedException': ImportedType.unset,
       'PlatformThreadHook': ImportedType.unset,
       'SquadronMarshaler': ImportedType.unset,
-      'TypedDataMarshaler': ImportedType.unset,
+      'MarshalingContext': ImportedType.unset,
+      'Converter': ImportedType.unset,
       'CommandHandler': ImportedType.unset,
       'Task': ImportedType.unset,
       'ValueTask': ImportedType.unset,
@@ -111,8 +112,10 @@ mixin _ImportedTypesMixin {
   ImportedType get TSquadronMarshaler =>
       _importedTypes[PckUri.squadron]!['SquadronMarshaler']!;
   // ignore: non_constant_identifier_names
-  ImportedType get TTypedDataMarshaler =>
-      _importedTypes[PckUri.squadron]!['TypedDataMarshaler']!;
+  ImportedType get TMarshalingContext =>
+      _importedTypes[PckUri.squadron]!['MarshalingContext']!;
+  // ignore: non_constant_identifier_names
+  ImportedType get TConverter => _importedTypes[PckUri.squadron]!['Converter']!;
   // ignore: non_constant_identifier_names
   ImportedType get TCommandHandler =>
       _importedTypes[PckUri.squadron]!['CommandHandler']!;

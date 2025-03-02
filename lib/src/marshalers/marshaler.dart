@@ -1,12 +1,10 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 
 import '../types/extensions.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
-import 'converters.dart';
 
 part 'marshaler_explicit.dart';
 part 'marshaler_json.dart';
@@ -17,22 +15,39 @@ abstract class Marshaler {
 
   bool targets(ManagedType type);
 
-  String serialize(ManagedType type, Converters converters, String expr) =>
-      '${converters.getSerializerOf(type, this)}($expr)';
+  String serializerOf(ManagedType type);
+  String deserializerOf(ManagedType type);
 
-  String deserialize(ManagedType type, Converters converters, String expr) =>
-      '${converters.getDeserializerOf(type, this)}($expr)';
+  String serialize(String expr, ManagedType type) {
+    final serialize = serializerOf(type);
+    return serialize.isEmpty ? expr : '$serialize($expr)';
+  }
 
-  String serializerOf(ManagedType type, Converters converters);
-  String deserializerOf(ManagedType type, Converters converters);
+  String deserialize(String expr, ManagedType type) {
+    final deserialize = deserializerOf(type);
+    return deserialize.isEmpty ? expr : '$deserialize($expr)';
+  }
 
-  static Marshaler self(String typeName, String? loaderTypeName) =>
-      _SelfMarshaler(typeName, loaderTypeName);
+  static Marshaler self(
+          String typeName,
+          String? loaderTypeName,
+          ManagedType? pivotType,
+          ParameterElement? marshalingContext,
+          ParameterElement? unmarshalingContext) =>
+      _SelfMarshaler(typeName, loaderTypeName, pivotType, marshalingContext,
+          unmarshalingContext);
 
-  static Marshaler json(String typeName, String? loaderTypeName) =>
-      _JsonMarshaler(typeName, loaderTypeName);
+  static Marshaler json(
+          String typeName, String? loaderTypeName, ManagedType? pivotType) =>
+      _JsonMarshaler(typeName, loaderTypeName, pivotType);
 
   static Marshaler explicit(TypeManager typeManager, DartObject marshaler,
           ManagedType marshalerType) =>
       _ExplicitMarshaler(typeManager, marshaler, marshalerType);
+}
+
+enum ContextAwareness {
+  none,
+  optional,
+  named,
 }

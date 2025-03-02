@@ -1,10 +1,10 @@
 import 'dart:async' as xxx;
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:cancelation_token/cancelation_token.dart';
 import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
-import 'package:using/using.dart';
 
 import 'generated/echo_service.activator.g.dart';
 import 'marshalers.dart';

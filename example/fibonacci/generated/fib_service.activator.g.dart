@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.2.0
+// Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
 import 'fib_service.stub.g.dart'

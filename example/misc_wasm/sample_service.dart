@@ -1,9 +1,6 @@
 import 'dart:async';
 
-import 'package:cancelation_token/cancelation_token.dart';
-import 'package:logger/web.dart';
 import 'package:squadron/squadron.dart';
-import 'package:using/using.dart';
 
 import 'generated/sample_service.activator.g.dart';
 
@@ -28,9 +25,11 @@ class DataIn {
 
   final dynamic payload;
 
-  SomeTransferable marshal() => SomeTransferable(payload);
+  SomeTransferable marshal({MarshalingContext? context}) =>
+      SomeTransferable(payload);
 
-  DataIn.unmarshal(SomeTransferable transferable) : this(transferable.data);
+  DataIn.unmarshal(SomeTransferable transferable, {MarshalingContext? context})
+      : this(transferable.data);
 
   Map toJson() => {'pld': payload};
 

@@ -9,7 +9,6 @@ import 'package:logger/web.dart';
 import 'package:squadron/squadron.dart' as sq;
 import 'package:using/using.dart';
 
-import 'bigint_marshaler.dart' as marshaler;
 import 'generated/test_services.activator.g.dart';
 
 part 'generated/test_services.worker.g.dart';
@@ -287,10 +286,5 @@ class TestBigInt {
   TestBigInt();
 
   @sq.squadronMethod
-  @marshaler.BigIntMarshaler()
-  FutureOr<BigInt> add(
-    @marshaler.BigIntMarshaler() BigInt a,
-    @marshaler.BigIntMarshaler() BigInt b,
-  ) =>
-      a + b;
+  FutureOr<BigInt> add(BigInt a, BigInt b) => a + b;
 }

@@ -4,7 +4,7 @@
 part of '../hello_world.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.2.0
+// Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
 /// WorkerService class for HelloWorld
@@ -15,15 +15,32 @@ base class _$HelloWorldWorkerService extends HelloWorld
   @override
   late final Map<int, CommandHandler> operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$sayHelloId: ($) => sayHello(_$X.$impl.$dsr1($.args[0])),
+    _$sayHelloId: ($req_) async {
+      String $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await sayHello(
+          $mc.nvalue<String>()($req_.args[0]),
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return $res_;
+      } finally {}
+    },
   });
 
   static const int _$sayHelloId = 1;
 }
 
 /// Service initializer for HelloWorld
-WorkerService $HelloWorldInitializer(WorkerRequest $$) =>
-    _$HelloWorldWorkerService();
+WorkerService $HelloWorldInitializer(WorkerRequest $req_) {
+  // ignore: unused_local_variable
+  final $mc = MarshalingContext();
+  return _$HelloWorldWorkerService();
+}
 
 /// Worker for HelloWorld
 base class HelloWorldWorker extends Worker implements HelloWorld {
@@ -45,9 +62,24 @@ base class HelloWorldWorker extends Worker implements HelloWorld {
       : super($HelloWorldActivator(SquadronPlatformType.wasm));
 
   @override
-  Future<String> sayHello([String? name]) =>
-      send(_$HelloWorldWorkerService._$sayHelloId, args: [name])
-          .then(_$X.$impl.$dsr0);
+  Future<String> sayHello([String? name]) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      $res_ = await send(
+        _$HelloWorldWorkerService._$sayHelloId,
+        args: [
+          name,
+        ],
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      return $mc.value<String>()($res_);
+    } finally {}
+  }
 }
 
 /// Worker pool for HelloWorld
@@ -95,21 +127,4 @@ base class HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
 
   @override
   Future<String> sayHello([String? name]) => execute((w) => w.sayHello(name));
-}
-
-final class _$X {
-  _$X._();
-
-  static _$X? _impl;
-
-  static _$X get $impl {
-    if (_impl == null) {
-      Squadron.onConverterChanged(() => _impl = _$X._());
-      _impl = _$X._();
-    }
-    return _impl!;
-  }
-
-  late final $dsr0 = Squadron.converter.value<String>();
-  late final $dsr1 = Squadron.converter.nullable($dsr0);
 }

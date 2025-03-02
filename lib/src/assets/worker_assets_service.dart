@@ -19,11 +19,14 @@ extension on WorkerAssets {
       ''';
   }
 
-  static const _input = r'$$';
+  static const _initReq = r'$req_';
 
   /// Service initializer
   String _generateServiceInitializer() => '''/// Service initializer for $_name
-        $TWorkerService $_serviceInitializer($TWorkerRequest $_input)
-            => $_workerService(${_service.parameters.deserialize(_input)});
+        $TWorkerService $_serviceInitializer($TWorkerRequest $_initReq) {
+            // ignore: unused_local_variable
+            final \$mc = ${_typeManager.TMarshalingContext}();
+            return $_workerService(${_service.parameters.deserialize(_initReq)});
+        }
       ''';
 }

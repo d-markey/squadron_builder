@@ -4,7 +4,7 @@
 part of '../fib_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.2.0
+// Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
 /// WorkerService class for FibService
@@ -14,15 +14,32 @@ class _$FibServiceWorkerService extends FibService implements WorkerService {
   @dc.override
   late final dc.Map<dc.int, CommandHandler> operations =
       dc.Map.unmodifiable(<dc.int, CommandHandler>{
-    _$fibonacciId: ($) => fibonacci(_$X.$impl.$dsr0($.args[0])),
+    _$fibonacciId: ($req_) async {
+      dc.int $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await fibonacci(
+          $mc.value<dc.int>()($req_.args[0]),
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return $res_;
+      } finally {}
+    },
   });
 
   static const dc.int _$fibonacciId = 1;
 }
 
 /// Service initializer for FibService
-WorkerService $FibServiceInitializer(WorkerRequest $$) =>
-    _$FibServiceWorkerService();
+WorkerService $FibServiceInitializer(WorkerRequest $req_) {
+  // ignore: unused_local_variable
+  final $mc = MarshalingContext();
+  return _$FibServiceWorkerService();
+}
 
 /// Worker for FibService
 base class FibServiceWorker extends Worker implements FibService {
@@ -40,9 +57,24 @@ base class FibServiceWorker extends Worker implements FibService {
             threadHook: threadHook, exceptionManager: exceptionManager);
 
   @dc.override
-  Future<dc.int> fibonacci(dc.int i) =>
-      send(_$FibServiceWorkerService._$fibonacciId, args: [i])
-          .then(_$X.$impl.$dsr0);
+  Future<dc.int> fibonacci(dc.int i) async {
+    dc.dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      $res_ = await send(
+        _$FibServiceWorkerService._$fibonacciId,
+        args: [
+          i,
+        ],
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      return $mc.value<dc.int>()($res_);
+    } finally {}
+  }
 }
 
 /// Worker pool for FibService
@@ -80,20 +112,4 @@ base class FibServiceWorkerPool extends WorkerPool<FibServiceWorker>
 
   @dc.override
   Future<dc.int> fibonacci(dc.int i) => execute((w) => w.fibonacci(i));
-}
-
-final class _$X {
-  _$X._();
-
-  static _$X? _impl;
-
-  static _$X get $impl {
-    if (_impl == null) {
-      Squadron.onConverterChanged(() => _impl = _$X._());
-      _impl = _$X._();
-    }
-    return _impl!;
-  }
-
-  late final $dsr0 = Squadron.converter.value<dc.int>();
 }

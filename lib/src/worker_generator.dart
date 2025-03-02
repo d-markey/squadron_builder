@@ -45,17 +45,12 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
     log.info(
         'BuildStep ${buildStep.hashCode.hex} for ${buildStep.inputId.path}');
     // get a typemanager for the library
-    final typeManager = _typeManagers.putIfAbsent(
+    /*final typeManager =*/ _typeManagers.putIfAbsent(
         buildStep, () => TypeManager(library.element));
 
     // generate code
     log.fine('   Generating code...');
-    var code = (await super.generate(library, buildStep)).trim();
-    if (code.isNotEmpty) {
-      final n = typeManager.converters.count;
-      log.fine('   Adding $n converter${(n == 1) ? '' : 's'}...');
-      code += '\n\n${typeManager.converters.code}';
-    }
+    final code = (await super.generate(library, buildStep)).trim();
 
     // done, trigger code generation for additional assets if any
     _buildStepEventStream.add(BuildStepDoneEvent(buildStep, library.element));

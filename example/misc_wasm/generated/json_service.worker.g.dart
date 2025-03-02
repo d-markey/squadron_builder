@@ -4,7 +4,7 @@
 part of '../json_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.2.0
+// Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
 /// WorkerService class for JsonService
@@ -15,15 +15,32 @@ class _$JsonServiceWorkerService extends JsonService
   @override
   late final Map<int, sq.CommandHandler> operations =
       Map.unmodifiable(<int, sq.CommandHandler>{
-    _$decodeId: ($) => decode(_$X.$impl.$dsr0($.args[0])),
+    _$decodeId: ($req_) async {
+      Object $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = sq.MarshalingContext();
+        $res_ = await decode(
+          $mc.value<String>()($req_.args[0]),
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = sq.MarshalingContext();
+        return $res_;
+      } finally {}
+    },
   });
 
   static const int _$decodeId = 1;
 }
 
 /// Service initializer for JsonService
-sq.WorkerService $JsonServiceInitializer(sq.WorkerRequest $$) =>
-    _$JsonServiceWorkerService();
+sq.WorkerService $JsonServiceInitializer(sq.WorkerRequest $req_) {
+  // ignore: unused_local_variable
+  final $mc = sq.MarshalingContext();
+  return _$JsonServiceWorkerService();
+}
 
 /// Worker for JsonService
 base class JsonServiceWorker extends sq.Worker implements JsonService {
@@ -38,8 +55,24 @@ base class JsonServiceWorker extends sq.Worker implements JsonService {
       : super($JsonServiceActivator(sq.SquadronPlatformType.wasm));
 
   @override
-  Future<dynamic> decode(String source) =>
-      send(_$JsonServiceWorkerService._$decodeId, args: [source]);
+  Future<Object> decode(String source) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = sq.MarshalingContext.none;
+      $res_ = await send(
+        _$JsonServiceWorkerService._$decodeId,
+        args: [
+          source,
+        ],
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = sq.MarshalingContext.none;
+      return $mc.value<Object>()($res_);
+    } finally {}
+  }
 }
 
 /// Worker pool for JsonService
@@ -66,21 +99,5 @@ base class JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
         );
 
   @override
-  Future<dynamic> decode(String source) => execute((w) => w.decode(source));
-}
-
-final class _$X {
-  _$X._();
-
-  static _$X? _impl;
-
-  static _$X get $impl {
-    if (_impl == null) {
-      sq.Squadron.onConverterChanged(() => _impl = _$X._());
-      _impl = _$X._();
-    }
-    return _impl!;
-  }
-
-  late final $dsr0 = sq.Squadron.converter.value<String>();
+  Future<Object> decode(String source) => execute((w) => w.decode(source));
 }

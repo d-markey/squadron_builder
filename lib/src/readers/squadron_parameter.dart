@@ -1,7 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/nullability_suffix.dart';
 
-import '../marshalers/converters.dart';
 import '../marshalers/marshaler.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
@@ -9,7 +7,7 @@ import '../types/type_manager.dart';
 class SquadronParameter {
   SquadronParameter._(
       this.name,
-      this.managedType,
+      this.type,
       this.field,
       this.isNamed,
       this.isOptional,
@@ -51,7 +49,7 @@ class SquadronParameter {
   }
 
   final String name;
-  final ManagedType managedType;
+  final ManagedType type;
   final FieldElement? field;
   final bool isNamed;
   final bool isOptional;
@@ -61,58 +59,39 @@ class SquadronParameter {
   final int serIdx;
   final Marshaler? marshaler;
 
+  bool get mayBeNull =>
+      (isOptional || (isNamed && required.isEmpty)) && defaultValue == null;
+
   bool get isPublicField => field != null && !field!.name.startsWith('_');
 
   String argument() => isNamed ? '$name: $name' : name;
 
   String namedArgument() => '$name: $name';
 
-  String serialized(Converters converters) {
-    final serializer = converters.getSerializerOf(managedType, marshaler);
-    return serializer.isEmpty ? name : '${converters.impl}.$serializer($name)';
-  }
+  String serialized() =>
+      '${marshaler?.serialize(name, type) ?? type.serialize(name)},';
 
-  String deserialized(Converters converters, String variableName) {
+  String deserialized(String variableName) {
     String value;
     if (isCancelationToken) {
-      final nonNull =
-          (managedType.nullabilitySuffix == NullabilitySuffix.none) ? '!' : '';
+      final nonNull = type.isNullable ? '' : '!';
       value = '$variableName.cancelToken$nonNull';
     } else {
       value = '$variableName.args[$serIdx]';
-      final deserializer = converters.getDeserializerOf(managedType, marshaler);
-      if (deserializer.isNotEmpty) {
-        value = '${converters.impl}.$deserializer($value)';
-      }
+      value = marshaler?.deserialize(value, type) ?? type.deserialize(value);
     }
-    return isNamed ? '$name: $value' : value;
+    return isNamed ? '$name: $value,' : '$value,';
   }
 
   @override
   String toString() {
-    NullabilitySuffix? nullabilitySuffix;
-    if (serIdx < 0) {
-      // programmatically added: may be null
-      if ((isOptional || (isNamed && required.isEmpty)) &&
-          defaultValue == null) {
-        nullabilitySuffix = NullabilitySuffix.question;
-      }
-    }
-    final typeName = managedType.getTypeName(nullabilitySuffix);
-    return '$required${isPublicField ? 'this.' : '$typeName '}$name${defaultValue == null ? '' : ' = $defaultValue'}';
+    final realType = (serIdx < 0 && mayBeNull) ? type.nullable : type;
+    return '$required${isPublicField ? 'this.' : '$realType '}$name${defaultValue == null ? '' : ' = $defaultValue'}';
   }
 
   String toStringNoField() {
-    NullabilitySuffix? nullabilitySuffix;
-    if (serIdx < 0) {
-      // programmatically added: may be null
-      if ((isOptional || (isNamed && required.isEmpty)) &&
-          defaultValue == null) {
-        nullabilitySuffix = NullabilitySuffix.question;
-      }
-    }
-    final typeName = managedType.getTypeName(nullabilitySuffix);
-    return '$required$typeName $name${defaultValue == null ? '' : ' = $defaultValue'}';
+    final realType = (serIdx < 0 && mayBeNull) ? type.nullable : type;
+    return '$required$realType $name${defaultValue == null ? '' : ' = $defaultValue'}';
   }
 
   bool get isSuperParam => serIdx >= 0;
@@ -123,11 +102,7 @@ class SquadronParameter {
       return '${required}super.$name${defaultValue == null ? '' : ' = $defaultValue'}';
     }
     // programmatically added: may be null
-    NullabilitySuffix? nullabilitySuffix;
-    if ((isOptional || (isNamed && required.isEmpty)) && defaultValue == null) {
-      nullabilitySuffix = NullabilitySuffix.question;
-    }
-    final typeName = managedType.getTypeName(nullabilitySuffix);
-    return '$required$typeName $name${defaultValue == null ? '' : ' = $defaultValue'}';
+    final realType = mayBeNull ? type.nullable : type;
+    return '$required$realType $name${defaultValue == null ? '' : ' = $defaultValue'}';
   }
 }

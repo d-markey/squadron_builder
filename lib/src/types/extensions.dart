@@ -3,7 +3,6 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
 
-import 'imported_type.dart';
 import 'managed_type.dart';
 
 @internal

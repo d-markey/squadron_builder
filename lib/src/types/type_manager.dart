@@ -3,11 +3,9 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../marshalers/converters.dart';
 import '../marshalers/marshaler.dart';
 import '../readers/annotations_reader.dart';
 import 'extensions.dart';
-import 'imported_type.dart';
 import 'managed_type.dart';
 
 part 'type_manager_imported_types.dart';
@@ -27,7 +25,7 @@ class TypeManager with _ImportedTypesMixin {
     if (squadronAlias == null) {
       throw InvalidGenerationSourceError('Missing import of Squadron library.');
     }
-    converters.squadronAlias = squadronAlias;
+    this.squadronAlias = squadronAlias;
 
     // initialize managed imported types
     _importedTypes.updateAll((pckUri, types) {
@@ -48,8 +46,6 @@ class TypeManager with _ImportedTypesMixin {
 
   final LibraryElement library;
 
-  final converters = Converters();
-
   bool _initialized = false;
 
   String getPrefixFor(LibraryElement? lib) {
@@ -61,7 +57,7 @@ class TypeManager with _ImportedTypesMixin {
         '';
   }
 
-  String get squadronAlias => converters.squadronAlias;
+  late final String squadronAlias;
 
   late final String dartCorePrefix;
   late final String override = '@${dartCorePrefix}override';
@@ -70,9 +66,7 @@ class TypeManager with _ImportedTypesMixin {
 
   ManagedType handleDartType(DartType type) {
     var managedType = _cache[type];
-    if (managedType != null) {
-      return managedType;
-    }
+    if (managedType != null) return managedType;
 
     if (type is RecordType) {
       managedType = ManagedType.record(type, this);
@@ -81,14 +75,23 @@ class TypeManager with _ImportedTypesMixin {
       final typeLib = type.element?.library;
       managedType = ManagedType(getPrefixFor(typeLib), type, this);
       _cache[type] = managedType;
-      managedType.setMarshaler(this);
+      findMarshaler(managedType);
     }
 
     return managedType;
   }
 
-  String getTypeName(DartType type) =>
-      handleDartType(type).getTypeName(type.nullabilitySuffix);
+  void findMarshaler(ManagedType type) {
+    final element = type.dartType?.element;
+    if (element == null) return;
+    final marshalerLoader = MarshalerInspector(this);
+    final marshaler = marshalerLoader.getMarshalerFor(type);
+    if (marshaler != null) {
+      type.setMarshaler(marshaler);
+    }
+  }
+
+  String getTypeName(DartType type) => handleDartType(type).getTypeName();
 
   bool _isMarshaler(DartObject obj) =>
       obj.type?.isA(TSquadronMarshaler) ?? false;

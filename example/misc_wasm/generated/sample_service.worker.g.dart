@@ -4,7 +4,7 @@
 part of '../sample_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.2.0
+// Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
 /// WorkerService class for SampleService
@@ -15,16 +15,32 @@ class _$SampleServiceWorkerService extends SampleService
   @override
   late final Map<int, CommandHandler> operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$computeId: ($) =>
-        compute(_$X.$impl.$dsr0($.args[0])).then(_$X.$impl.$sr1),
+    _$computeId: ($req_) async {
+      DataOut $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await compute(
+          (($_) => DataIn.unmarshal($_, context: $mc))($req_.args[0]),
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return (($_) => ($_ as DataOut).marshal())($res_);
+      } finally {}
+    },
   });
 
   static const int _$computeId = 1;
 }
 
 /// Service initializer for SampleService
-WorkerService $SampleServiceInitializer(WorkerRequest $$) =>
-    _$SampleServiceWorkerService();
+WorkerService $SampleServiceInitializer(WorkerRequest $req_) {
+  // ignore: unused_local_variable
+  final $mc = MarshalingContext();
+  return _$SampleServiceWorkerService();
+}
 
 /// Worker for SampleService
 base class SampleServiceWorker extends Worker implements SampleService {
@@ -37,9 +53,24 @@ base class SampleServiceWorker extends Worker implements SampleService {
       : super($SampleServiceActivator(SquadronPlatformType.wasm));
 
   @override
-  Future<DataOut> compute(DataIn input) =>
-      send(_$SampleServiceWorkerService._$computeId,
-          args: [_$X.$impl.$sr2(input)]).then(_$X.$impl.$dsr3);
+  Future<DataOut> compute(DataIn input) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      $res_ = await send(
+        _$SampleServiceWorkerService._$computeId,
+        args: [
+          (($_) => ($_ as DataIn).marshal(context: $mc))(input),
+        ],
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      return (($_) => DataOut.unmarshal($_))($res_);
+    } finally {}
+  }
 }
 
 /// Worker pool for SampleService
@@ -67,23 +98,4 @@ base class SampleServiceWorkerPool extends WorkerPool<SampleServiceWorker>
 
   @override
   Future<DataOut> compute(DataIn input) => execute((w) => w.compute(input));
-}
-
-final class _$X {
-  _$X._();
-
-  static _$X? _impl;
-
-  static _$X get $impl {
-    if (_impl == null) {
-      Squadron.onConverterChanged(() => _impl = _$X._());
-      _impl = _$X._();
-    }
-    return _impl!;
-  }
-
-  late final $dsr0 = (($) => DataIn.unmarshal($));
-  late final $sr1 = (($) => ($ as DataOut).marshal());
-  late final $sr2 = (($) => ($ as DataIn).marshal());
-  late final $dsr3 = (($) => DataOut.unmarshal($));
 }

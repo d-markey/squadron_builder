@@ -1,45 +1,62 @@
 part of 'managed_type.dart';
 
 class _ManagedMapType extends ManagedType {
-  _ManagedMapType._(String prefix, this.dartType, TypeManager typeManager)
-      : super._(prefix, dartType, typeManager);
+  _ManagedMapType._(String prefix, this.dartType, TypeManager typeManager,
+      NullabilitySuffix nullabilitySuffix)
+      : super._(prefix, dartType, typeManager, nullabilitySuffix) {
+    if (typeArguments.first.dartType is DynamicType) {
+      typeArguments.first = typeManager.TObject.nullable;
+    }
+    if (typeArguments.last.dartType is DynamicType) {
+      typeArguments.last = typeManager.TObject.nullable;
+    }
+  }
+
+  @override
+  _ManagedMapType _forceNullability(bool nullable) => _ManagedMapType._(
+      prefix,
+      dartType,
+      typeManager,
+      nullable ? NullabilitySuffix.question : NullabilitySuffix.none);
 
   @override
   final ParameterizedType dartType;
 
   @override
-  void setMarshaler(TypeManager typeManager) {}
-
-  @override
-  String getSerializer(Converters converters) {
+  String getSerializer() {
     final args = <String>[];
 
     final keyType = typeArguments.first;
-    final keySerializer = converters.getSerializerOf(keyType, null);
+    final keySerializer = keyType.nonNullable.getSerializer();
     if (keySerializer.isNotEmpty) args.add('kcast: $keySerializer');
 
     final valueType = typeArguments.last;
-    final valueSerializer = converters.getSerializerOf(valueType, null);
+    final valueSerializer = valueType.nonNullable.getSerializer();
     if (valueSerializer.isNotEmpty) args.add('vcast: $valueSerializer');
 
-    return '${converters.instance}.map(${args.join(', ')})';
+    final serializer =
+        '\$mc.${valueType.isNullable ? 'n' : ''}map(${args.join(', ')})';
+    return isNullable
+        ? '${typeManager.TConverter}.allowNull($serializer)'
+        : serializer;
   }
 
   @override
-  String getDeserializer(Converters converters) {
+  String getDeserializer() {
     final args = <String>[];
 
     final keyType = typeArguments.first;
-    final keyDeserializer = converters.getDeserializerOf(keyType, null);
+    final keyDeserializer = keyType.nonNullable.getSerializer();
     if (keyDeserializer.isNotEmpty) args.add('kcast: $keyDeserializer');
 
     final valueType = typeArguments.last;
-    final valueDeserializer = converters.getDeserializerOf(valueType, null);
+    final valueDeserializer = valueType.nonNullable.getDeserializer();
     if (valueDeserializer.isNotEmpty) args.add('vcast: $valueDeserializer');
 
-    return '${converters.instance}.map<$keyType, $valueType>(${args.join(', ')})';
+    final deserializer =
+        '\$mc.${valueType.isNullable ? 'n' : ''}map<$keyType, $valueType>(${args.join(', ')})';
+    return isNullable
+        ? '${typeManager.TConverter}.allowNull($deserializer)'
+        : deserializer;
   }
-
-  @override
-  NullabilitySuffix get nullabilitySuffix => dartType.nullabilitySuffix;
 }

@@ -4,7 +4,7 @@
 part of '../fibonacci_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.2.0
+// Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
 /// WorkerService class for FibonacciService
@@ -15,15 +15,86 @@ class _$FibonacciServiceWorkerService extends FibonacciService
   @override
   late final Map<int, CommandHandler> operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$fibonacciId: ($) => fibonacci(_$X.$impl.$dsr0($.args[0])),
-    _$fibonacciList0Id: ($) async => _$X.$impl.$sr2(await fibonacciList0(
-        _$X.$impl.$dsr0($.args[0]), _$X.$impl.$dsr0($.args[1]))),
-    _$fibonacciList1Id: ($) async => _$X.$impl.$sr3(await fibonacciList1(
-        _$X.$impl.$dsr0($.args[0]), _$X.$impl.$dsr0($.args[1]))),
-    _$fibonacciList2Id: ($) async => _$X.$impl.$sr4(await fibonacciList2(
-        _$X.$impl.$dsr0($.args[0]), _$X.$impl.$dsr0($.args[1]))),
-    _$fibonacciStreamId: ($) => fibonacciStream(_$X.$impl.$dsr0($.args[0]),
-        end: _$X.$impl.$dsr5($.args[1]), token: $.cancelToken),
+    _$fibonacciId: ($req_) async {
+      int? $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await fibonacci(
+          $mc.value<int>()($req_.args[0]),
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return $res_;
+      } finally {}
+    },
+    _$fibonacciList0Id: ($req_) async {
+      Iterable<int>? $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await fibonacciList0(
+          $mc.value<int>()($req_.args[0]),
+          $mc.value<int>()($req_.args[1]),
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return Converter.allowNull($mc.list())($res_);
+      } finally {}
+    },
+    _$fibonacciList1Id: ($req_) async {
+      List<int> $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await fibonacciList1(
+          $mc.value<int>()($req_.args[0]),
+          $mc.value<int>()($req_.args[1]),
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return (($_) => (const ListIntMarshaler()).marshal($_, $mc))($res_);
+      } finally {}
+    },
+    _$fibonacciList2Id: ($req_) async {
+      List<int> $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await fibonacciList2(
+          $mc.value<int>()($req_.args[0]),
+          $mc.value<int>()($req_.args[1]),
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return (($_) => listIntMarshaler.marshal($_, $mc))($res_);
+      } finally {}
+    },
+    _$fibonacciStreamId: ($req_) {
+      Stream<int> $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = fibonacciStream(
+          $mc.value<int>()($req_.args[0]),
+          end: $mc.nvalue<int>()($req_.args[1]),
+          token: $req_.cancelToken,
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return $res_;
+      } finally {}
+    },
   });
 
   static const int _$fibonacciId = 1;
@@ -34,8 +105,13 @@ class _$FibonacciServiceWorkerService extends FibonacciService
 }
 
 /// Service initializer for FibonacciService
-WorkerService $FibonacciServiceInitializer(WorkerRequest $$) =>
-    _$FibonacciServiceWorkerService(trace: _$X.$impl.$dsr6($$.args[0]));
+WorkerService $FibonacciServiceInitializer(WorkerRequest $req_) {
+  // ignore: unused_local_variable
+  final $mc = MarshalingContext();
+  return _$FibonacciServiceWorkerService(
+    trace: $mc.value<bool>()($req_.args[0]),
+  );
+}
 
 /// Worker for FibonacciService
 base class FibonacciServiceWorker extends Worker implements FibonacciService {
@@ -43,40 +119,124 @@ base class FibonacciServiceWorker extends Worker implements FibonacciService {
       {bool trace = false,
       PlatformThreadHook? threadHook,
       ExceptionManager? exceptionManager})
-      : super($FibonacciServiceActivator(Squadron.platformType), args: [trace]);
+      : super($FibonacciServiceActivator(Squadron.platformType), args: [
+          trace,
+        ]);
 
   FibonacciServiceWorker.vm(
       {bool trace = false,
       PlatformThreadHook? threadHook,
       ExceptionManager? exceptionManager})
-      : super($FibonacciServiceActivator(SquadronPlatformType.vm),
-            args: [trace]);
+      : super($FibonacciServiceActivator(SquadronPlatformType.vm), args: [
+          trace,
+        ]);
 
   @override
-  Future<int?> fibonacci(int i) =>
-      send(_$FibonacciServiceWorkerService._$fibonacciId, args: [i])
-          .then(_$X.$impl.$dsr5);
+  Future<int?> fibonacci(int i) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      $res_ = await send(
+        _$FibonacciServiceWorkerService._$fibonacciId,
+        args: [
+          i,
+        ],
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      return $mc.nvalue<int>()($res_);
+    } finally {}
+  }
 
   @override
-  Future<Iterable<int>?> fibonacciList0(int s, int e) =>
-      send(_$FibonacciServiceWorkerService._$fibonacciList0Id, args: [s, e])
-          .then(_$X.$impl.$dsr8);
+  Future<Iterable<int>?> fibonacciList0(int s, int e) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      $res_ = await send(
+        _$FibonacciServiceWorkerService._$fibonacciList0Id,
+        args: [
+          s,
+          e,
+        ],
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      return Converter.allowNull($mc.list<int>($mc.value<int>()))($res_);
+    } finally {}
+  }
 
   @override
-  Future<List<int>> fibonacciList1(int s, int e) =>
-      send(_$FibonacciServiceWorkerService._$fibonacciList1Id, args: [s, e])
-          .then(_$X.$impl.$dsr9);
+  Future<List<int>> fibonacciList1(int s, int e) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      $res_ = await send(
+        _$FibonacciServiceWorkerService._$fibonacciList1Id,
+        args: [
+          s,
+          e,
+        ],
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext();
+      return (($_) => (const ListIntMarshaler())
+          .unmarshal($mc.value<ByteBuffer>()($_), $mc))($res_);
+    } finally {}
+  }
 
   @override
-  Future<List<int>> fibonacciList2(int s, int e) =>
-      send(_$FibonacciServiceWorkerService._$fibonacciList2Id, args: [s, e])
-          .then(_$X.$impl.$dsr10);
+  Future<List<int>> fibonacciList2(int s, int e) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      $res_ = await send(
+        _$FibonacciServiceWorkerService._$fibonacciList2Id,
+        args: [
+          s,
+          e,
+        ],
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext();
+      return (($_) =>
+          listIntMarshaler.unmarshal($mc.value<ByteBuffer>()($_), $mc))($res_);
+    } finally {}
+  }
 
   @override
-  Stream<int> fibonacciStream(int start, {int? end, CancelationToken? token}) =>
-      stream(_$FibonacciServiceWorkerService._$fibonacciStreamId,
-              args: [start, end], token: token)
-          .map(_$X.$impl.$dsr0);
+  Stream<int> fibonacciStream(int start, {int? end, CancelationToken? token}) {
+    Stream $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      $res_ = stream(
+        _$FibonacciServiceWorkerService._$fibonacciStreamId,
+        args: [
+          start,
+          end,
+        ],
+        token: token,
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      return $res_.map($mc.value<int>());
+    } finally {}
+  }
 
   @override
   // ignore: unused_element
@@ -134,30 +294,4 @@ base class FibonacciServiceWorkerPool extends WorkerPool<FibonacciServiceWorker>
   @override
   // ignore: unused_element
   Logger? get _logger => throw UnimplementedError();
-}
-
-final class _$X {
-  _$X._();
-
-  static _$X? _impl;
-
-  static _$X get $impl {
-    if (_impl == null) {
-      Squadron.onConverterChanged(() => _impl = _$X._());
-      _impl = _$X._();
-    }
-    return _impl!;
-  }
-
-  late final $dsr0 = Squadron.converter.value<int>();
-  late final $sr1 = Squadron.converter.list();
-  late final $sr2 = Squadron.converter.nullable($sr1);
-  late final $sr3 = (($) => (const ListIntMarshaler()).marshal($));
-  late final $sr4 = (($) => listIntMarshaler.marshal($));
-  late final $dsr5 = Squadron.converter.nullable($dsr0);
-  late final $dsr6 = Squadron.converter.value<bool>();
-  late final $dsr7 = Squadron.converter.list<int>($dsr0);
-  late final $dsr8 = Squadron.converter.nullable($dsr7);
-  late final $dsr9 = (($) => (const ListIntMarshaler()).unmarshal($));
-  late final $dsr10 = (($) => listIntMarshaler.unmarshal($));
 }

@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:squadron/squadron.dart';
+
 import 'data.dart';
 
 extension DataMarshalerExt on Data {
-  Uint8List marshal() {
+  Uint8List marshal([MarshalingContext? context]) {
     final str = utf8.encode(c);
     final buffer = Uint8List(4 + 1 + str.length);
     buffer.writeInt(0, a);
@@ -13,7 +15,7 @@ extension DataMarshalerExt on Data {
     return buffer;
   }
 
-  static Data unmarshal(Uint8List buffer) => Data(
+  static Data unmarshal(Uint8List buffer, [MarshalingContext? context]) => Data(
         buffer.readInt(0),
         (buffer[4] != 0),
         utf8.decode(buffer.sublist(5)),

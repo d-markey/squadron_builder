@@ -24,6 +24,9 @@ class SquadronParameters {
 
   final _params = <SquadronParameter>[];
 
+  bool get requiresMarshaling => _params.any((p) => p.marshaler != null);
+  bool get requireContext => _params.any((p) => p.marshaler != null);
+
   bool get isEmpty => _params.isEmpty;
   bool get isNotEmpty => !isEmpty;
 
@@ -72,9 +75,9 @@ class SquadronParameters {
         SquadronParameter.from(param, isToken, marshaler, serIdx, typeManager));
   }
 
-  SquadronParameter addOptional(String name, ManagedType managedType) =>
+  SquadronParameter addOptional(String name, ManagedType type) =>
       _register(SquadronParameter.opt(
-          name, managedType, _hasNamedParameters || !_hasOptionalParameters));
+          name, type, _hasNamedParameters || !_hasOptionalParameters));
 
   SquadronParameter _register(SquadronParameter param) {
     if ((param.isNamed && _hasOptionalParameters) ||
@@ -103,12 +106,11 @@ class SquadronParameters {
   String serialize() => _params
       // cancelation token is passed separately when invoking the worker
       .where((p) => !p.isCancelationToken)
-      .map((p) => p.serialized(typeManager.converters))
-      .join(', ');
+      .map((p) => p.serialized())
+      .join();
 
-  String deserialize(String jsonObj) => _params
-      .map((p) => p.deserialized(typeManager.converters, jsonObj))
-      .join(', ');
+  String deserialize(String args) =>
+      _params.map((p) => p.deserialized(args)).join();
 
   @override
   String toString() {

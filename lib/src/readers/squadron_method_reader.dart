@@ -46,17 +46,14 @@ class SquadronMethodReader extends DartMethodReader {
 
   bool get needsSerialization => _resultMarshaler != null;
 
-  String get serializer {
-    final ser =
-        typeManager.converters.getSerializerOf(valueType, _resultMarshaler);
-    return ser.isEmpty ? '' : '${typeManager.converters.impl}.$ser';
-  }
+  String get serializer =>
+      _resultMarshaler?.serializerOf(valueType) ?? valueType.getSerializer();
 
-  String get deserializer {
-    final deser =
-        typeManager.converters.getDeserializerOf(valueType, _resultMarshaler);
-    return deser.isEmpty ? '' : '${typeManager.converters.impl}.$deser';
-  }
+  String get deserializer =>
+      _resultMarshaler?.deserializerOf(valueType) ??
+      valueType.getDeserializer();
+
+  bool get requiresUnmarshaling => _resultMarshaler != null;
 
   @override
   void _init(MethodElement method) {

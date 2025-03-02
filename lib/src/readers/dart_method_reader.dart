@@ -31,6 +31,14 @@ class DartMethodReader {
   bool get isStream => returnType.dartType?.isDartAsyncStream ?? false;
   bool get isFuture => returnType.dartType?.isDartAsyncFuture ?? false;
   bool get isFutureOr => returnType.dartType?.isDartAsyncFutureOr ?? false;
+  bool get hasNoReturnValue {
+    final type = (isFuture || isFutureOr || isStream)
+        ? returnType.typeArguments.single
+        : returnType;
+    return type.dartType is VoidType ||
+        type.dartType is NeverType ||
+        (type.dartType?.isDartCoreNull ?? false);
+  }
 
   void _init(MethodElement method) {
     if (method.typeParameters.isNotEmpty) {

@@ -6,33 +6,35 @@ import 'package:squadron/squadron.dart';
 import 'service_request.dart';
 import 'service_response.dart';
 
-class ListIntMarshaler implements SquadronMarshaler<List<int>, ByteBuffer> {
+class ListIntMarshaler extends SquadronMarshaler<List<int>, ByteBuffer> {
   const ListIntMarshaler();
 
   @override
-  ByteBuffer marshal(List<int> data) => Int32List.fromList(data).buffer;
+  ByteBuffer marshal(List<int> data, [MarshalingContext? context]) =>
+      Int32List.fromList(data).buffer;
 
   @override
-  List<int> unmarshal(ByteBuffer data) => data.asInt32List();
+  List<int> unmarshal(ByteBuffer data, [MarshalingContext? context]) =>
+      data.asInt32List();
 }
 
 const listIntMarshaler = ListIntMarshaler();
 
-class ServiceRequestToString
-    implements SquadronMarshaler<ServiceRequest, String> {
+class ServiceRequestToString extends SquadronMarshaler<ServiceRequest, String> {
   const ServiceRequestToString();
 
   @override
-  String marshal(ServiceRequest x) => x.payload;
+  String marshal(ServiceRequest x, [MarshalingContext? context]) => x.payload;
 
   @override
-  ServiceRequest unmarshal(String x) => ServiceRequest(x);
+  ServiceRequest unmarshal(String x, [MarshalingContext? context]) =>
+      ServiceRequest(x);
 
   static const instance = ServiceRequestToString();
 }
 
 abstract class ServiceRequestGeneric<T>
-    implements SquadronMarshaler<ServiceRequest, T> {
+    extends SquadronMarshaler<ServiceRequest, T> {
   const ServiceRequestGeneric();
 }
 
@@ -40,16 +42,17 @@ class ServiceRequestGenericToString extends ServiceRequestGeneric<String> {
   const ServiceRequestGenericToString();
 
   @override
-  String marshal(ServiceRequest x) => x.payload;
+  String marshal(ServiceRequest x, [MarshalingContext? context]) => x.payload;
 
   @override
-  ServiceRequest unmarshal(String x) => ServiceRequest(x);
+  ServiceRequest unmarshal(String x, [MarshalingContext? context]) =>
+      ServiceRequest(x);
 
   static const instance = ServiceRequestGenericToString();
 }
 
 class ServiceResponseOfStringToByteBuffer
-    implements SquadronMarshaler<ServiceResponse<String>, ByteBuffer> {
+    extends SquadronMarshaler<ServiceResponse<String>, ByteBuffer> {
   const ServiceResponseOfStringToByteBuffer();
 
   void _writeInt(Uint8List bytes, int offset, int value) {
@@ -60,7 +63,7 @@ class ServiceResponseOfStringToByteBuffer
   }
 
   @override
-  ByteBuffer marshal(ServiceResponse<String> x) {
+  ByteBuffer marshal(ServiceResponse<String> x, [MarshalingContext? context]) {
     var resbytes = utf8.encode(x.result);
     var reslen = resbytes.length;
     final totallen = 4 + reslen + 4;
@@ -78,7 +81,8 @@ class ServiceResponseOfStringToByteBuffer
       bytes[offset + 3];
 
   @override
-  ServiceResponse<String> unmarshal(ByteBuffer x) {
+  ServiceResponse<String> unmarshal(ByteBuffer x,
+      [MarshalingContext? context]) {
     final bytes = Uint8List.view(x);
     final reslen = _readInt(bytes, 0);
     final res = utf8.decode(bytes.sublist(4, 4 + reslen));
@@ -90,13 +94,15 @@ class ServiceResponseOfStringToByteBuffer
 }
 
 class ServiceResponseToJson
-    implements SquadronMarshaler<ServiceResponse<String>, String> {
+    extends SquadronMarshaler<ServiceResponse<String>, String> {
   const ServiceResponseToJson();
 
   @override
-  String marshal(ServiceResponse<String> data) => jsonEncode(data.toJson());
+  String marshal(ServiceResponse<String> data, [MarshalingContext? context]) =>
+      jsonEncode(data.toJson());
 
   @override
-  ServiceResponse<String> unmarshal(String data) =>
+  ServiceResponse<String> unmarshal(String data,
+          [MarshalingContext? context]) =>
       ServiceResponse<String>.fromJson(jsonDecode(data));
 }

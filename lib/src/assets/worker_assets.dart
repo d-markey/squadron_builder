@@ -92,6 +92,8 @@ class WorkerAssets {
   late final TLocalWorker = _typeManager.TLocalWorker;
   // ignore: non_constant_identifier_names
   late final TLocalWorkerClient = _typeManager.TLocalWorkerClient;
+  // ignore: non_constant_identifier_names
+  late final TMarshalingContext = _typeManager.TMarshalingContext;
 
   // ignore: non_constant_identifier_names
   late final TConcurrencySettings = _typeManager.TConcurrencySettings;
@@ -185,42 +187,70 @@ extension on SquadronMethodReader {
   String commandId() => 'static const ${typeManager.TInt} $id = $index;';
 
   String commandHandler() {
-    final req = r'$';
+    final req = r'$req_';
+
     final serviceCall = '$name(${parameters.deserialize(req)})';
     final typeParams =
         typeParameters.isEmpty ? '' : '<${typeParameters.join(', ')}>';
-    if (serializer.isEmpty) {
-      return '$id: $typeParams($req) => $serviceCall,';
-    } else if (isStream) {
-      return '$id: $typeParams($req) => $serviceCall.map($serializer),';
-    } else if (isFuture) {
-      return '$id: $typeParams($req) => $serviceCall.then($serializer),';
-    } else {
-      return '$id: $typeParams($req) async => $serializer(await $serviceCall),';
-    }
+    final convert = serializer;
+    final resType =
+        (isFuture || isFutureOr) ? returnType.typeArguments.first : returnType;
+    return hasNoReturnValue
+        ? '''$id: $typeParams($req) {
+      // ignore: unused_local_variable
+      final \$mc = ${typeManager.TMarshalingContext}();
+      return $serviceCall;
+    },'''
+        : '''$id: $typeParams($req) ${isStream ? '' : 'async '}{
+      $resType \$res_;
+      try {
+        // ignore: unused_local_variable
+        final \$mc = ${typeManager.TMarshalingContext}();
+        \$res_ = ${isStream ? '' : 'await '}$serviceCall;
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final \$mc = ${typeManager.TMarshalingContext}();
+        return ${convert.isEmpty ? '\$res_' : (isStream ? '\$res_.map($convert)' : '$convert(\$res_)')};
+      } finally {}
+    },''';
   }
 
   String workerMethod(String workerService) {
     final args = [
-      '$workerService.$id',
-      if (parameters.isNotEmpty) 'args: [ ${parameters.serialize()} ]',
+      '$workerService.$id,',
+      if (parameters.isNotEmpty) 'args: [ ${parameters.serialize()} ],',
       if (parameters.cancelationToken != null)
-        'token: ${parameters.cancelationToken}',
-      if (inspectRequest) 'inspectRequest: true',
-      if (inspectResponse) 'inspectResponse: true'
-    ].join(', ');
-    var deserialize = deserializer;
-    if (deserialize.isNotEmpty) {
-      deserialize = '$continuation($deserialize)';
-    }
-    final override = typeManager.override;
-    return '$override $declaration => $workerExecutor($args)$deserialize;';
+        'token: ${parameters.cancelationToken},',
+      if (inspectRequest) 'inspectRequest: true,',
+      if (inspectResponse) 'inspectResponse: true,'
+    ].join();
+    final convert = deserializer;
+    final inputContext = parameters.isEmpty
+        ? ''
+        : '''// ignore: unused_local_variable
+      final \$mc = ${parameters.requiresMarshaling ? '${typeManager.TMarshalingContext}()' : '${typeManager.TMarshalingContext}.none'};''';
+    final outputContext = hasNoReturnValue
+        ? ''
+        : '''// ignore: unused_local_variable
+        final \$mc = ${requiresUnmarshaling ? '${typeManager.TMarshalingContext}()' : '${typeManager.TMarshalingContext}.none'};''';
+    return hasNoReturnValue
+        ? '''${typeManager.override} $declaration {
+      $inputContext return $workerExecutor($args);
+    }'''
+        : '''${typeManager.override} $declaration ${isStream ? '' : 'async '}{
+      ${isStream ? typeManager.TStream : typeManager.TDynamic} \$res_;
+      try {
+        $inputContext \$res_ = ${isStream ? '' : 'await '}$workerExecutor($args);
+      } finally {}
+      try {
+        $outputContext return ${convert.isEmpty ? '\$res_' : (isStream ? '\$res_.map($convert)' : '$convert(\$res_)')};
+      } finally {}
+    }''';
   }
 
-  String poolMethod() {
-    final override = typeManager.override;
-    return '$override $declaration => $poolExecutor((w) => w.$name(${parameters.asArguments()}));';
-  }
+  String poolMethod() =>
+      '${typeManager.override} $declaration => $poolExecutor((w) => w.$name(${parameters.asArguments()}));';
 }
 
 extension on FieldElement {

@@ -4,7 +4,7 @@
 part of '../echo_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 6.2.0
+// Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
 /// WorkerService class for EchoService
@@ -15,17 +15,89 @@ class _$EchoServiceWorkerService extends EchoService implements WorkerService {
   @override
   late final Map<int, CommandHandler> operations =
       Map.unmodifiable(<int, CommandHandler>{
-    _$explicitEchoWithExplicitResultId: ($) async => _$X.$impl.$sr1(
-        await explicitEchoWithExplicitResult(_$X.$impl.$dsr0($.args[0]),
-            token: $.cancelToken)),
-    _$explicitEchoWithJsonResultId: ($) async => _$X.$impl
-        .$sr3(await explicitEchoWithJsonResult(_$X.$impl.$dsr2($.args[0]))),
-    _$jsonEchoWithExplicitResultId: ($) async => _$X.$impl
-        .$sr5(await jsonEchoWithExplicitResult(_$X.$impl.$dsr4($.args[0]))),
-    _$jsonEchoWithJsonResultId: ($) async => _$X.$impl
-        .$sr6(await jsonEchoWithJsonResult(_$X.$impl.$dsr4($.args[0]))),
-    _$jsonEncodeEchoId: ($) async => _$X.$impl
-        .$sr8(await jsonEncodeEcho(_$X.$impl.$dsr7($.args[0]), $.cancelToken)),
+    _$explicitEchoWithExplicitResultId: ($req_) async {
+      srv.ServiceResponse<String> $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await explicitEchoWithExplicitResult(
+          (($_) => ServiceRequestGenericToString.instance
+              .unmarshal($mc.value<String>()($_), $mc))($req_.args[0]),
+          token: $req_.cancelToken,
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return (($_) => ServiceResponseOfStringToByteBuffer.instance
+            .marshal($_, $mc))($res_);
+      } finally {}
+    },
+    _$explicitEchoWithJsonResultId: ($req_) async {
+      srv.ServiceResponse<String> $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await explicitEchoWithJsonResult(
+          (($_) => (const ServiceRequestToString())
+              .unmarshal($mc.value<String>()($_), $mc))($req_.args[0]),
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return (($_) => ($_ as srv.ServiceResponse<String>).toJson())($res_);
+      } finally {}
+    },
+    _$jsonEchoWithExplicitResultId: ($req_) async {
+      srv.ServiceResponse<String> $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await jsonEchoWithExplicitResult(
+          (($_) => srv.ServiceRequest.fromJson($_))($req_.args[0]),
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return (($_) => (const ServiceResponseOfStringToByteBuffer())
+            .marshal($_, $mc))($res_);
+      } finally {}
+    },
+    _$jsonEchoWithJsonResultId: ($req_) async {
+      srv.ServiceResponse<String>? $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await jsonEchoWithJsonResult(
+          (($_) => srv.ServiceRequest.fromJson($_))($req_.args[0]),
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return (($_) => ($_ as srv.ServiceResponse<String>?)?.toJson())($res_);
+      } finally {}
+    },
+    _$jsonEncodeEchoId: ($req_) async {
+      srv.ServiceResponse<String> $res_;
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        $res_ = await jsonEncodeEcho(
+          (($_) => ServiceRequestToString.instance
+              .unmarshal($mc.value<String>()($_), $mc))($req_.args[0]),
+          $req_.cancelToken,
+        );
+      } finally {}
+      try {
+        // ignore: unused_local_variable
+        final $mc = MarshalingContext();
+        return (($_) =>
+            (const ServiceResponseToJson()).marshal($_, $mc))($res_);
+      } finally {}
+    },
   });
 
   static const int _$explicitEchoWithExplicitResultId = 1;
@@ -36,9 +108,15 @@ class _$EchoServiceWorkerService extends EchoService implements WorkerService {
 }
 
 /// Service initializer for EchoService
-WorkerService $EchoServiceInitializer(WorkerRequest $$) =>
-    _$EchoServiceWorkerService(
-        _$X.$impl.$dsr9($$.args[0]), _$X.$impl.$dsr11($$.args[1]));
+WorkerService $EchoServiceInitializer(WorkerRequest $req_) {
+  // ignore: unused_local_variable
+  final $mc = MarshalingContext();
+  return _$EchoServiceWorkerService(
+    $mc.value<bool>()($req_.args[0]),
+    Converter.allowNull<cfg.ServiceConfig<int>>(
+        ($_) => cfg.ServiceConfig<int>.fromJson($_))($req_.args[1]),
+  );
+}
 
 /// Worker for EchoService
 base class EchoServiceWorker extends Worker implements EchoService {
@@ -47,50 +125,134 @@ base class EchoServiceWorker extends Worker implements EchoService {
       cfg.ServiceConfig<int>? workloadDelay,
       PlatformThreadHook? threadHook,
       ExceptionManager? exceptionManager])
-      : super($EchoServiceActivator(Squadron.platformType),
-            args: [trace, _$X.$impl.$sr13(workloadDelay)]);
+      : super($EchoServiceActivator(Squadron.platformType), args: [
+          trace,
+          (($_) => ($_ as cfg.ServiceConfig<int>?)?.toJson())(workloadDelay),
+        ]);
 
   EchoServiceWorker.vm(
       [bool trace = false,
       cfg.ServiceConfig<int>? workloadDelay,
       PlatformThreadHook? threadHook,
       ExceptionManager? exceptionManager])
-      : super($EchoServiceActivator(SquadronPlatformType.vm),
-            args: [trace, _$X.$impl.$sr13(workloadDelay)]);
+      : super($EchoServiceActivator(SquadronPlatformType.vm), args: [
+          trace,
+          (($_) => ($_ as cfg.ServiceConfig<int>?)?.toJson())(workloadDelay),
+        ]);
 
   @override
   xxx.Future<srv.ServiceResponse<String>> explicitEchoWithExplicitResult(
-          srv.ServiceRequest request,
-          {CancelationToken? token}) =>
-      send(_$EchoServiceWorkerService._$explicitEchoWithExplicitResultId,
-              args: [_$X.$impl.$sr14(request)], token: token)
-          .then(_$X.$impl.$dsr15);
+      srv.ServiceRequest request,
+      {CancelationToken? token}) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext();
+      $res_ = await send(
+        _$EchoServiceWorkerService._$explicitEchoWithExplicitResultId,
+        args: [
+          (($_) =>
+              ServiceRequestGenericToString.instance.marshal($_, $mc))(request),
+        ],
+        token: token,
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext();
+      return (($_) => ServiceResponseOfStringToByteBuffer.instance
+          .unmarshal($mc.value<ByteBuffer>()($_), $mc))($res_);
+    } finally {}
+  }
 
   @override
   xxx.Future<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
-          srv.ServiceRequest request) =>
-      send(_$EchoServiceWorkerService._$explicitEchoWithJsonResultId,
-          args: [_$X.$impl.$sr16(request)]).then(_$X.$impl.$dsr17);
+      srv.ServiceRequest request) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext();
+      $res_ = await send(
+        _$EchoServiceWorkerService._$explicitEchoWithJsonResultId,
+        args: [
+          (($_) => (const ServiceRequestToString()).marshal($_, $mc))(request),
+        ],
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      return (($_) => srv.ServiceResponse<String>.fromJson($_))($res_);
+    } finally {}
+  }
 
   @override
   xxx.Future<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
-          srv.ServiceRequest request) =>
-      send(_$EchoServiceWorkerService._$jsonEchoWithExplicitResultId,
-          args: [_$X.$impl.$sr18(request)]).then(_$X.$impl.$dsr19);
+      srv.ServiceRequest request) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      $res_ = await send(
+        _$EchoServiceWorkerService._$jsonEchoWithExplicitResultId,
+        args: [
+          (($_) => ($_ as srv.ServiceRequest).toJson())(request),
+        ],
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext();
+      return (($_) => (const ServiceResponseOfStringToByteBuffer())
+          .unmarshal($mc.value<ByteBuffer>()($_), $mc))($res_);
+    } finally {}
+  }
 
   @override
   xxx.Future<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
-          srv.ServiceRequest request) =>
-      send(_$EchoServiceWorkerService._$jsonEchoWithJsonResultId,
-          args: [_$X.$impl.$sr18(request)]).then(_$X.$impl.$dsr20);
+      srv.ServiceRequest request) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      $res_ = await send(
+        _$EchoServiceWorkerService._$jsonEchoWithJsonResultId,
+        args: [
+          (($_) => ($_ as srv.ServiceRequest).toJson())(request),
+        ],
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext.none;
+      return Converter.allowNull<srv.ServiceResponse<String>>(
+          ($_) => srv.ServiceResponse<String>.fromJson($_))($res_);
+    } finally {}
+  }
 
   @override
   xxx.Future<srv.ServiceResponse<String>> jsonEncodeEcho(
-          srv.ServiceRequest request,
-          [CancelationToken? token]) =>
-      send(_$EchoServiceWorkerService._$jsonEncodeEchoId,
-              args: [_$X.$impl.$sr21(request)], token: token)
-          .then(_$X.$impl.$dsr22);
+      srv.ServiceRequest request,
+      [CancelationToken? token]) async {
+    dynamic $res_;
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext();
+      $res_ = await send(
+        _$EchoServiceWorkerService._$jsonEncodeEchoId,
+        args: [
+          (($_) => ServiceRequestToString.instance.marshal($_, $mc))(request),
+        ],
+        token: token,
+      );
+    } finally {}
+    try {
+      // ignore: unused_local_variable
+      final $mc = MarshalingContext();
+      return (($_) => (const ServiceResponseToJson())
+          .unmarshal($mc.value<String>()($_), $mc))($res_);
+    } finally {}
+  }
 
   @override
   void _simulateWorkload() => throw UnimplementedError();
@@ -168,47 +330,4 @@ base class EchoServiceWorkerPool extends WorkerPool<EchoServiceWorker>
   @override
   // ignore: unused_element
   Duration get _delay => throw UnimplementedError();
-}
-
-final class _$X {
-  _$X._();
-
-  static _$X? _impl;
-
-  static _$X get $impl {
-    if (_impl == null) {
-      Squadron.onConverterChanged(() => _impl = _$X._());
-      _impl = _$X._();
-    }
-    return _impl!;
-  }
-
-  late final $dsr0 =
-      (($) => ServiceRequestGenericToString.instance.unmarshal($));
-  late final $sr1 =
-      (($) => ServiceResponseOfStringToByteBuffer.instance.marshal($));
-  late final $dsr2 = (($) => (const ServiceRequestToString()).unmarshal($));
-  late final $sr3 = (($) => ($ as srv.ServiceResponse<String>).toJson());
-  late final $dsr4 = (($) => srv.ServiceRequest.fromJson($));
-  late final $sr5 =
-      (($) => (const ServiceResponseOfStringToByteBuffer()).marshal($));
-  late final $sr6 = Squadron.converter.nullable($sr3);
-  late final $dsr7 = (($) => ServiceRequestToString.instance.unmarshal($));
-  late final $sr8 = (($) => (const ServiceResponseToJson()).marshal($));
-  late final $dsr9 = Squadron.converter.value<bool>();
-  late final $dsr10 = (($) => cfg.ServiceConfig<int>.fromJson($));
-  late final $dsr11 = Squadron.converter.nullable($dsr10);
-  late final $sr12 = (($) => ($ as cfg.ServiceConfig<int>).toJson());
-  late final $sr13 = Squadron.converter.nullable($sr12);
-  late final $sr14 = (($) => ServiceRequestGenericToString.instance.marshal($));
-  late final $dsr15 =
-      (($) => ServiceResponseOfStringToByteBuffer.instance.unmarshal($));
-  late final $sr16 = (($) => (const ServiceRequestToString()).marshal($));
-  late final $dsr17 = (($) => srv.ServiceResponse<String>.fromJson($));
-  late final $sr18 = (($) => ($ as srv.ServiceRequest).toJson());
-  late final $dsr19 =
-      (($) => (const ServiceResponseOfStringToByteBuffer()).unmarshal($));
-  late final $dsr20 = Squadron.converter.nullable($dsr17);
-  late final $sr21 = (($) => ServiceRequestToString.instance.marshal($));
-  late final $dsr22 = (($) => (const ServiceResponseToJson()).unmarshal($));
 }

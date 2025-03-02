@@ -1,14 +1,24 @@
 part of 'managed_type.dart';
 
-class ManagedRecordType extends ManagedType {
-  ManagedRecordType._(this.dartType, TypeManager typeManager)
-      : positional = dartType.positionalFields
+class _ManagedRecordType extends ManagedType {
+  _ManagedRecordType._(
+    this.dartType,
+    TypeManager typeManager,
+    NullabilitySuffix nullabilitySuffix,
+  )   : positional = dartType.positionalFields
             .map((t) => typeManager.handleDartType(t.type))
             .toList(),
         named = Map.fromEntries(dartType.namedFields.map(
           (t) => MapEntry(t.name, typeManager.handleDartType(t.type)),
         )),
-        super._('', dartType, typeManager);
+        super._('', dartType, typeManager, nullabilitySuffix);
+
+  @override
+  _ManagedRecordType _forceNullability(bool nullable) => _ManagedRecordType._(
+        dartType,
+        typeManager,
+        nullable ? NullabilitySuffix.question : NullabilitySuffix.none,
+      );
 
   @override
   final RecordType dartType;
@@ -17,28 +27,20 @@ class ManagedRecordType extends ManagedType {
   final Map<String, ManagedType> named;
 
   @override
-  void setMarshaler(TypeManager typeManager) {}
-
-  @override
-  String getSerializer(Converters converters) {
-    String $serialize(ManagedType type, String field) {
-      final value = '\$.$field';
-      final serializer = converters.getSerializerOf(type, null);
-      return serializer.isEmpty ? value : '$serializer($value)';
-    }
+  String getSerializer() {
+    String $serialize(ManagedType type, String field) =>
+        '${type.getSerializer()}(\$.$field),';
 
     return '((${getTypeName()} \$) => [${[
       ...positional.indexed.map((f) => $serialize(f.$2, '\$${f.$1 + 1}')),
       ...named.entries.map((f) => $serialize(f.value, f.key)),
-    ].join(', ')}])';
+    ].join()}])';
   }
 
   @override
-  String getDeserializer(Converters converters) {
+  String getDeserializer() {
     String $deserialize(ManagedType type, int idx, [String field = '']) {
-      final value = '\$[$idx]';
-      final deserializer = converters.getDeserializerOf(type, null);
-      final res = deserializer.isEmpty ? value : '$deserializer($value)';
+      final res = '${type.getDeserializer()}(\$[$idx]),';
       return field.isEmpty ? res : '$field: $res';
     }
 
@@ -46,25 +48,19 @@ class ManagedRecordType extends ManagedType {
     return '((\$) { \$ as List; return (${[
       ...positional.map((f) => $deserialize(f, idx++)),
       ...named.entries.map((f) => $deserialize(f.value, idx++, f.key)),
-    ].join(', ')}); })';
+    ].join()}); })';
   }
 
   @override
-  String getTypeName([NullabilitySuffix? forcedNullabilitySuffix]) {
-    final suffix = (forcedNullabilitySuffix ?? nullabilitySuffix).suffix;
-    final p = positional.map((t) => t.getTypeName()).join(', ');
-    final n = named.entries
-        .map((t) => '${t.value.getTypeName()} ${t.key}')
-        .join(', ');
-    if (p.isEmpty) {
-      return '({$n})$suffix';
-    } else if (n.isEmpty) {
-      return '($p)$suffix';
+  String getTypeName() {
+    final p = positional.join(', ');
+    final n = named.entries.map((t) => '${t.value} ${t.key}').join(', ');
+    if (n.isEmpty) {
+      return '($p)${nullabilitySuffix.suffix}';
+    } else if (p.isEmpty) {
+      return '({$n})${nullabilitySuffix.suffix}';
     } else {
-      return '($p, {$n})$suffix';
+      return '($p, {$n})${nullabilitySuffix.suffix}';
     }
   }
-
-  @override
-  NullabilitySuffix get nullabilitySuffix => dartType.nullabilitySuffix;
 }
