@@ -7,76 +7,77 @@ part of '../json_service.dart';
 // Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
-/// WorkerService class for JsonService
-class _$JsonServiceWorkerService extends JsonService
-    implements sq.WorkerService {
-  _$JsonServiceWorkerService() : super();
-
-  @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{
-    _$decodeId: ($req_) async {
-      Object $res_;
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        $res_ = await decode(
-          $mc.value<String>()($req_.args[0]),
-        );
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        return $res_;
-      } finally {}
-    },
-  });
+/// WorkerService operations for JsonService
+extension _$JsonService$Operations on JsonService {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({
+        _$decodeId: ($req) async {
+          final Object $res;
+          try {
+            final $mc = _$X(contextAware: false);
+            $res = await decode($mc.$de0($req.args[0]));
+          } finally {}
+          return $res;
+        },
+      });
 
   static const int _$decodeId = 1;
 }
 
-/// Service initializer for JsonService
-sq.WorkerService $JsonServiceInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$JsonServiceWorkerService();
-}
-
-/// Worker for JsonService
-base class JsonServiceWorker extends sq.Worker implements JsonService {
-  JsonServiceWorker(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super($JsonServiceActivator(sq.Squadron.platformType));
-
-  JsonServiceWorker.wasm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super($JsonServiceActivator(sq.SquadronPlatformType.wasm));
-
+/// Invoker for JsonService, implements the public interface to invoke the
+/// remote service.
+mixin _$JsonService$Invoker on sq.Invoker implements JsonService {
   @override
-  Future<Object> decode(String source) async {
-    dynamic $res_;
+  Future<Object?> decode(String source) async {
+    final dynamic $res = await send(
+      _$JsonService$Operations._$decodeId,
+      args: [source],
+    );
     try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      $res_ = await send(
-        _$JsonServiceWorkerService._$decodeId,
-        args: [
-          source,
-        ],
-      );
-    } finally {}
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      return $mc.value<Object>()($res_);
+      final $mc = _$X(contextAware: false);
+      return $mc.$de1($res);
     } finally {}
   }
 }
 
+/// Facade for JsonService, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$JsonService$Facade implements JsonService {}
+
+/// WorkerService class for JsonService
+class _$JsonService$WorkerService extends JsonService
+    implements sq.WorkerService {
+  _$JsonService$WorkerService() : super();
+
+  sq.OperationsMap? _operations;
+
+  @override
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
+}
+
+/// Service initializer for JsonService
+sq.WorkerService $JsonServiceInitializer(sq.WorkerRequest $req) =>
+    _$JsonService$WorkerService();
+
+/// Worker for JsonService
+base class JsonServiceWorker extends sq.Worker
+    with _$JsonService$Invoker, _$JsonService$Facade
+    implements JsonService {
+  JsonServiceWorker(
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($JsonServiceActivator(sq.Squadron.platformType),
+            threadHook: threadHook, exceptionManager: exceptionManager);
+
+  JsonServiceWorker.wasm(
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($JsonServiceActivator(sq.SquadronPlatformType.wasm),
+            threadHook: threadHook, exceptionManager: exceptionManager);
+}
+
 /// Worker pool for JsonService
 base class JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
+    with _$JsonService$Facade
     implements JsonService {
   JsonServiceWorkerPool(
       {sq.ConcurrencySettings? concurrencySettings,
@@ -99,5 +100,11 @@ base class JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
         );
 
   @override
-  Future<Object> decode(String source) => execute((w) => w.decode(source));
+  Future<Object?> decode(String source) => execute((w) => w.decode(source));
+}
+
+final class _$X extends sq.MarshalingContext {
+  _$X({super.contextAware});
+  late final $de0 = value<String>();
+  late final $de1 = nvalue<Object>();
 }

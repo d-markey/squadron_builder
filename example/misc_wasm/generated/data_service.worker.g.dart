@@ -7,73 +7,81 @@ part of '../data_service.dart';
 // Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
-/// WorkerService class for DataService
-class _$DataServiceWorkerService extends DataService implements WorkerService {
-  _$DataServiceWorkerService() : super();
-
-  @override
-  late final Map<int, CommandHandler> operations =
-      Map.unmodifiable(<int, CommandHandler>{
-    _$doSomethingId: ($req_) async {
-      Data $res_;
-      try {
-        // ignore: unused_local_variable
-        final $mc = MarshalingContext();
-        $res_ = await doSomething(
-          (($_) => Data.unmarshal($_))($req_.args[0]),
-        );
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final $mc = MarshalingContext();
-        return (($_) => ($_ as Data).marshal())($res_);
-      } finally {}
-    },
-  });
+/// WorkerService operations for DataService
+extension _$DataService$Operations on DataService {
+  OperationsMap _$getOperations() => Map.unmodifiable({
+        _$doSomethingId: ($req) async {
+          final Data $res;
+          try {
+            final $mc = _$X(contextAware: false);
+            $res = await doSomething($mc.$de0($req.args[0]));
+          } finally {}
+          try {
+            final $mc = _$X(contextAware: false);
+            return $mc.$se1($res);
+          } finally {}
+        },
+      });
 
   static const int _$doSomethingId = 1;
 }
 
-/// Service initializer for DataService
-WorkerService $DataServiceInitializer(WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = MarshalingContext();
-  return _$DataServiceWorkerService();
-}
-
-/// Worker for DataService
-base class DataServiceWorker extends Worker implements DataService {
-  DataServiceWorker(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($DataServiceActivator(Squadron.platformType));
-
-  DataServiceWorker.wasm(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($DataServiceActivator(SquadronPlatformType.wasm));
-
+/// Invoker for DataService, implements the public interface to invoke the
+/// remote service.
+mixin _$DataService$Invoker on Invoker implements DataService {
   @override
   Future<Data> doSomething(Data input) async {
-    dynamic $res_;
+    final dynamic $res;
     try {
-      // ignore: unused_local_variable
-      final $mc = MarshalingContext.none;
-      $res_ = await send(
-        _$DataServiceWorkerService._$doSomethingId,
-        args: [
-          (($_) => ($_ as Data).marshal())(input),
-        ],
+      final $mc = _$X(contextAware: false);
+      $res = await send(
+        _$DataService$Operations._$doSomethingId,
+        args: [$mc.$se1(input)],
       );
     } finally {}
     try {
-      // ignore: unused_local_variable
-      final $mc = MarshalingContext.none;
-      return (($_) => Data.unmarshal($_))($res_);
+      final $mc = _$X(contextAware: false);
+      return $mc.$de0($res);
     } finally {}
   }
 }
 
+/// Facade for DataService, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$DataService$Facade implements DataService {}
+
+/// WorkerService class for DataService
+class _$DataService$WorkerService extends DataService implements WorkerService {
+  _$DataService$WorkerService() : super();
+
+  OperationsMap? _operations;
+
+  @override
+  OperationsMap get operations => (_operations ??= _$getOperations());
+}
+
+/// Service initializer for DataService
+WorkerService $DataServiceInitializer(WorkerRequest $req) =>
+    _$DataService$WorkerService();
+
+/// Worker for DataService
+base class DataServiceWorker extends Worker
+    with _$DataService$Invoker, _$DataService$Facade
+    implements DataService {
+  DataServiceWorker(
+      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
+      : super($DataServiceActivator(Squadron.platformType),
+            threadHook: threadHook, exceptionManager: exceptionManager);
+
+  DataServiceWorker.wasm(
+      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
+      : super($DataServiceActivator(SquadronPlatformType.wasm),
+            threadHook: threadHook, exceptionManager: exceptionManager);
+}
+
 /// Worker pool for DataService
 base class DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
+    with _$DataService$Facade
     implements DataService {
   DataServiceWorkerPool(
       {ConcurrencySettings? concurrencySettings,
@@ -97,4 +105,10 @@ base class DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
 
   @override
   Future<Data> doSomething(Data input) => execute((w) => w.doSomething(input));
+}
+
+final class _$X extends MarshalingContext {
+  _$X({super.contextAware});
+  late final $de0 = (($_) => Data.unmarshal($_));
+  late final $se1 = (($_) => ($_ as Data).marshal());
 }

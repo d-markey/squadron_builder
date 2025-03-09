@@ -7,9 +7,9 @@ class _ManagedSetType extends ManagedType {
     TypeManager typeManager,
     NullabilitySuffix nullabilitySuffix,
   ) : super._(prefix, dartType, typeManager, nullabilitySuffix) {
-    if (typeArguments.first.dartType is DynamicType) {
-      typeArguments.first = typeManager.TObject;
-    }
+    // if (typeArguments.first.dartType is DynamicType) {
+    //   typeArguments.first = typeManager.TObject;
+    // }
   }
 
   @override
@@ -24,24 +24,28 @@ class _ManagedSetType extends ManagedType {
   final ParameterizedType dartType;
 
   @override
-  String getSerializer() {
-    final itemType = typeArguments.first;
-    final itemSerializer = itemType.nonNullable.getSerializer();
+  DeSer? getSerializer(SerializationContext context) {
+    final item = typeArguments.first;
+    final convert = item.nonNullable.getSerializer(context);
     final serializer =
-        '\$mc.${itemType.isNullable ? 'n' : ''}set($itemSerializer)';
-    return isNullable
-        ? '${typeManager.TConverter}.allowNull($serializer)'
-        : serializer;
+        '${item.isNullable ? 'n' : ''}set<${item.nonNullable}>(${convert.code})';
+    return DeSer(
+      isNullable ? '${context.allowNull}($serializer)' : serializer,
+      true,
+      convert.contextAware,
+    );
   }
 
   @override
-  String getDeserializer() {
-    final itemType = typeArguments.first;
-    final itemDeserializer = itemType.nonNullable.getDeserializer();
+  DeSer? getDeserializer(SerializationContext context) {
+    final item = typeArguments.first;
+    final convert = item.nonNullable.getDeserializer(context);
     final deserializer =
-        '\$mc.${itemType.isNullable ? 'n' : ''}set($itemDeserializer)';
-    return isNullable
-        ? '${typeManager.TConverter}.allowNull($deserializer)'
-        : deserializer;
+        '${item.isNullable ? 'n' : ''}set<${item.nonNullable}>(${convert.code})';
+    return DeSer(
+      isNullable ? '${context.allowNull}($deserializer)' : deserializer,
+      true,
+      convert.contextAware,
+    );
   }
 }

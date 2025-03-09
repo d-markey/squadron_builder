@@ -6,16 +6,17 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 
 import '../marshalers/marshaler.dart';
+import '../marshalers/serialization_context.dart';
 import 'extensions.dart';
 import 'type_manager.dart';
 
+part '../marshalers/marshaler_inspector.dart';
 part 'imported_type.dart';
 part 'managed_type_impl.dart';
 part 'managed_type_iterable.dart';
 part 'managed_type_map.dart';
 part 'managed_type_record.dart';
 part 'managed_type_set.dart';
-part 'marshaler_inspector.dart';
 
 typedef MarshalerBuilder = Marshaler Function(ManagedType);
 
@@ -50,18 +51,8 @@ abstract class ManagedType {
 
   ManagedType _forceNullability(bool nullable);
 
-  String getSerializer();
-  String getDeserializer();
-
-  String serialize(String expr) {
-    final serialize = getSerializer();
-    return serialize.isEmpty ? expr : '$serialize($expr)';
-  }
-
-  String deserialize(String expr) {
-    final deserialize = getDeserializer();
-    return deserialize.isEmpty ? expr : '$deserialize($expr)';
-  }
+  DeSer? getSerializer(SerializationContext context);
+  DeSer? getDeserializer(SerializationContext context);
 
   factory ManagedType(
       String alias, DartType dartType, TypeManager typeManager) {
@@ -125,5 +116,7 @@ abstract class ManagedType {
 }
 
 extension ManagedTypeExt on ManagedType {
-  bool get isNullable => nullabilitySuffix != NullabilitySuffix.none;
+  bool get isNullable =>
+      (dartType is DynamicType) ||
+      (nullabilitySuffix != NullabilitySuffix.none);
 }

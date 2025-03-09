@@ -49,24 +49,11 @@ base class ImportedType implements ManagedType {
   DartType? get dartType => null;
 
   @override
-  String getDeserializer() =>
-      '\$mc.${isNullable ? 'n' : ''}value<$nonNullable>()';
+  DeSer? getSerializer(SerializationContext context) => null;
 
   @override
-  String getSerializer() =>
-      '\$mc.${isNullable ? 'n' : ''}value<$nonNullable>()';
-
-  @override
-  String serialize(String expr) {
-    final serialize = getSerializer();
-    return serialize.isEmpty ? expr : '$serialize($expr)';
-  }
-
-  @override
-  String deserialize(String expr) {
-    final deserialize = getDeserializer();
-    return deserialize.isEmpty ? expr : '$deserialize($expr)';
-  }
+  DeSer? getDeserializer(SerializationContext context) =>
+      DeSer('${isNullable ? 'n' : ''}value<$nonNullable>()', true, false);
 
   @override
   String getTypeName() => (baseName == 'dynamic')

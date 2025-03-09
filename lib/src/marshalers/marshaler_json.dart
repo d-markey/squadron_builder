@@ -12,11 +12,19 @@ class _JsonMarshaler extends Marshaler {
   bool targets(ManagedType type) => type.getTypeName() == typeName;
 
   @override
-  String serializerOf(ManagedType type) =>
-      '((\$_) => (\$_ as $type)${type.isNullable ? '?' : ''}.toJson())';
+  DeSer serializerOf(SerializationContext context, ManagedType type) => DeSer(
+        '((\$_) => (\$_ as $type)${type.isNullable ? '?' : ''}.toJson())',
+        true,
+        false,
+      );
 
   @override
-  String deserializerOf(ManagedType type) => type.isNullable
-      ? '${type.typeManager.TConverter}.allowNull<${type.nonNullable}>((\$_) => $loaderTypeName.fromJson(\$_))'
-      : '((\$_) => $loaderTypeName.fromJson(\$_))';
+  DeSer deserializerOf(SerializationContext context, ManagedType type) {
+    final deserializer = '((\$_) => $loaderTypeName.fromJson(\$_))';
+    return DeSer(
+      type.isNullable ? '${context.allowNull}$deserializer' : deserializer,
+      true,
+      false,
+    );
+  }
 }

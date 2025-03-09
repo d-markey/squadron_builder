@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:cancelation_token/cancelation_token.dart';
 import 'package:logger/logger.dart';
-import 'package:squadron/squadron.dart';
+import 'package:squadron/squadron.dart' as sq;
 
 import 'generated/echo_service.activator.g.dart';
 import 'marshalers.dart';
@@ -14,7 +14,7 @@ import 'service_response.dart' as srv;
 
 part 'generated/echo_service.worker.g.dart';
 
-@SquadronService(targetPlatform: TargetPlatform.vm)
+@sq.SquadronService(targetPlatform: sq.TargetPlatform.vm)
 class EchoService {
   EchoService([bool trace = false, cfg.ServiceConfig<int>? workloadDelay])
       : _delay = Duration(microseconds: workloadDelay?.value ?? 50),
@@ -30,7 +30,7 @@ class EchoService {
 
   final Duration _delay;
 
-  @squadronMethod
+  @sq.squadronMethod
   xxx.FutureOr<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
       srv.ServiceRequest request) {
     _logger?.t('jsonEchoWithJsonResult(${jsonEncode(request.toJson())})');
@@ -38,7 +38,7 @@ class EchoService {
     return srv.ServiceResponse('${request.payload} done');
   }
 
-  @squadronMethod
+  @sq.squadronMethod
   xxx.FutureOr<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
       @ServiceRequestToString() srv.ServiceRequest request) {
     _logger?.t('explicitEchoWithJsonResult(${jsonEncode(request.toJson())})');
@@ -46,7 +46,7 @@ class EchoService {
     return srv.ServiceResponse('${request.payload} done');
   }
 
-  @squadronMethod
+  @sq.squadronMethod
   @ServiceResponseOfStringToByteBuffer()
   xxx.FutureOr<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
       srv.ServiceRequest request) {
@@ -55,7 +55,7 @@ class EchoService {
     return srv.ServiceResponse('${request.payload} done');
   }
 
-  @squadronMethod
+  @sq.squadronMethod
   @ServiceResponseOfStringToByteBuffer.instance
   xxx.FutureOr<srv.ServiceResponse<String>> explicitEchoWithExplicitResult(
       @ServiceRequestGenericToString.instance srv.ServiceRequest request,
@@ -66,7 +66,7 @@ class EchoService {
     return srv.ServiceResponse('${request.payload} done');
   }
 
-  @squadronMethod
+  @sq.squadronMethod
   @ServiceResponseToJson()
   xxx.FutureOr<srv.ServiceResponse<String>> jsonEncodeEcho(
       @ServiceRequestToString.instance srv.ServiceRequest request,

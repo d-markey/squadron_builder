@@ -29,7 +29,7 @@ class DeviationMonitor {
 
   final Duration resolution;
   final Logger? logger;
-  bool noisy = true;
+  bool noisy = false;
   Timer? _timer;
 
   var _last = DateTime.now();

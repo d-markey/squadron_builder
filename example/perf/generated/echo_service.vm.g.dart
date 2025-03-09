@@ -5,16 +5,16 @@
 // Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
-import 'package:squadron/squadron.dart';
+import 'package:squadron/squadron.dart' as sq;
 
 import '../echo_service.dart';
 
-void _start$EchoService(WorkerRequest command) {
+void _start$EchoService(sq.WorkerRequest command) {
   /// VM entry point for EchoService
-  run($EchoServiceInitializer, command);
+  sq.run($EchoServiceInitializer, command);
 }
 
-EntryPoint $getEchoServiceActivator(SquadronPlatformType platform) {
+sq.EntryPoint $getEchoServiceActivator(sq.SquadronPlatformType platform) {
   if (platform.isVm) {
     return _start$EchoService;
   } else {

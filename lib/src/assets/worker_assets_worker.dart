@@ -4,19 +4,19 @@ extension on WorkerAssets {
   /// Worker
   String _generateWorker(List<SquadronMethodReader> commands,
       List<DartMethodReader> unimplemented, bool finalizable) {
-    final serialized = _service.parameters.serialize();
+    final serialized = _service.parameters.serializeForActivation(_context);
     var activationArgs = serialized.isEmpty
         ? '$_serviceActivator($TSquadron.platformType)'
-        : '$_serviceActivator($TSquadron.platformType), args: [$serialized]';
+        : '$_serviceActivator($TSquadron.platformType), args: $serialized';
     var vmActivationArgs = serialized.isEmpty
         ? '$_serviceActivator($TSquadronPlatformType.vm)'
-        : '$_serviceActivator($TSquadronPlatformType.vm), args: [$serialized]';
+        : '$_serviceActivator($TSquadronPlatformType.vm), args: $serialized';
     var jsActivationArgs = serialized.isEmpty
         ? '$_serviceActivator($TSquadronPlatformType.js)'
-        : '$_serviceActivator($TSquadronPlatformType.js), args: [$serialized]';
+        : '$_serviceActivator($TSquadronPlatformType.js), args: $serialized';
     var wasmActivationArgs = serialized.isEmpty
         ? '$_serviceActivator($TSquadronPlatformType.wasm)'
-        : '$_serviceActivator($TSquadronPlatformType.wasm), args: [$serialized]';
+        : '$_serviceActivator($TSquadronPlatformType.wasm), args: $serialized';
 
     var params = _service.parameters;
     params = params.clone();
@@ -24,14 +24,20 @@ extension on WorkerAssets {
     final exceptionManager =
         params.addOptional('exceptionManager', TExceptionManager);
 
+    activationArgs +=
+        ', ${threadHook.namedArgument()}, ${exceptionManager.namedArgument()}';
+    vmActivationArgs +=
+        ', ${threadHook.namedArgument()}, ${exceptionManager.namedArgument()}';
     jsActivationArgs +=
+        ', ${threadHook.namedArgument()}, ${exceptionManager.namedArgument()}';
+    wasmActivationArgs +=
         ', ${threadHook.namedArgument()}, ${exceptionManager.namedArgument()}';
 
     final worker = finalizable ? '_\$$_worker' : _worker;
 
     var workerCode = '''
         /// Worker for $_name
-        base class $worker extends $TWorker implements $_name {
+        base class $worker extends $TWorker with $_serviceInvoker, $_serviceFacade implements $_name {
           
           $worker($params) : super(\$$activationArgs);
 
@@ -42,12 +48,6 @@ extension on WorkerAssets {
           ${_service.wasm ? '$worker.wasm($params) : super(\$$wasmActivationArgs);' : ''}
 
           ${_service.fields.values.map((f) => f.override(_typeManager)).join('\n\n')}
-
-          ${commands.map((cmd) => cmd.workerMethod(_workerService)).join('\n\n')}
-
-          ${unimplemented.map((m) => m.unimplemented()).join('\n\n')}
-
-          ${_service.accessors.where((a) => !a.isOperationMap).map((a) => a.unimplemented(_typeManager)).join('\n\n')}
 
           ${finalizable ? 'final $TObject _detachToken = $TObject();' : ''}
         }
@@ -97,12 +97,12 @@ extension on WorkerAssets {
 
           ${unimplemented.map((cmd) => cmd.forwardTo(instance)).join('\n\n')}
 
-          ${_service.accessors.where((a) => !a.isOperationMap).map((a) => a.forwardTo(instance, _typeManager)).join('\n\n')}
+          ${_service.accessors.where((a) => !a.isOperationsMap).map((a) => a.forwardTo(instance, _typeManager)).join('\n\n')}
 
           ${_typeManager.getWorkerOverrides().entries.map((e) => _forwardOverride(e.key, instance, e.value)).join('\n\n')}
 
           $_override
-          final $TMap<$TInt, $TCommandHandler> operations = $TWorkerService.noOperations;
+          final $TOperationsMap operations = $TWorkerService.noOperations;
         }
       ''';
     }

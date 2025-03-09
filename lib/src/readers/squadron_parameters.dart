@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:squadron_builder/src/marshalers/serialization_context.dart';
 
 import '../marshalers/marshaler.dart';
 import '../types/extensions.dart';
@@ -23,9 +24,6 @@ class SquadronParameters {
   final TypeManager typeManager;
 
   final _params = <SquadronParameter>[];
-
-  bool get requiresMarshaling => _params.any((p) => p.marshaler != null);
-  bool get requireContext => _params.any((p) => p.marshaler != null);
 
   bool get isEmpty => _params.isEmpty;
   bool get isNotEmpty => !isEmpty;
@@ -103,14 +101,88 @@ class SquadronParameters {
   String asNonSuperArguments() =>
       _params.where((p) => !p.isSuperParam).map((p) => p.argument()).join(', ');
 
-  String serialize() => _params
-      // cancelation token is passed separately when invoking the worker
-      .where((p) => !p.isCancelationToken)
-      .map((p) => p.serialized())
-      .join();
+  DeSer? serialize(SerializationContext context) {
+    var needsContext = false, contextAware = false;
+    final args = StringBuffer();
+    for (var i = 0; i < _params.length; i++) {
+      final param = _params[i];
+      if (param.isCancelationToken) continue;
+      if (args.isNotEmpty) args.write(',');
+      final castor = context.getSerializer(param.type, param.marshaler);
+      if (castor == null) {
+        args.write(param.name);
+      } else {
+        needsContext |= castor.needsContext;
+        contextAware |= castor.contextAware;
+        args.write(SerializationContext.instanceName);
+        args.write('.');
+        args.write(castor.code);
+        args.write('(');
+        args.write(param.name);
+        args.write(')');
+      }
+    }
+    return args.isEmpty ? null : DeSer('[$args]', needsContext, contextAware);
+  }
 
-  String deserialize(String args) =>
-      _params.map((p) => p.deserialized(args)).join();
+  String serializeForActivation(SerializationContext context) {
+    if (_params.isEmpty) return '';
+    bool? needsContext;
+    var contextAware = false;
+    final args = StringBuffer();
+    for (var i = 0; i < _params.length; i++) {
+      final param = _params[i];
+      if (args.isNotEmpty) args.write(',');
+      final castor = context.getSerializer(param.type, param.marshaler);
+      if (castor == null) {
+        args.write(param.name);
+      } else {
+        needsContext = (needsContext ?? false) || castor.needsContext;
+        contextAware |= castor.contextAware;
+        args.write(SerializationContext.instanceName);
+        args.write('.');
+        args.write(castor.code);
+        args.write('(');
+        args.write(param.name);
+        args.write(')');
+      }
+    }
+    return (needsContext == null)
+        ? '[$args]'
+        : '''(() {
+              ${context.initialize(true, contextAware)};
+              return [$args];
+            })()''';
+  }
+
+  DeSer? deserialize(SerializationContext context, String req) {
+    if (_params.isEmpty) return null;
+    var needsContext = false, contextAware = false;
+    final deserialized = StringBuffer();
+    for (var i = 0; i < _params.length; i++) {
+      final param = _params[i];
+      final arg = '$req.args[$i]';
+      if (deserialized.isNotEmpty) deserialized.write(',');
+      if (param.isNamed) {
+        deserialized.write(param.name);
+        deserialized.write(':');
+      }
+      final castor = context.getDeserializer(param.type, param.marshaler);
+      if (castor == null) {
+        deserialized.write(arg);
+      } else {
+        needsContext |= castor.needsContext;
+        contextAware |= castor.contextAware;
+        deserialized.write(SerializationContext.instanceName);
+        deserialized.write('.');
+        deserialized.write(castor.code);
+        deserialized.write('(');
+        deserialized.write(arg);
+        deserialized.write(')');
+      }
+    }
+    return DeSer(deserialized.toString(), needsContext, contextAware);
+  }
 
   @override
   String toString() {

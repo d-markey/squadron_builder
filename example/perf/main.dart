@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:logger/logger.dart';
 import 'package:squadron/squadron.dart';
@@ -13,14 +14,15 @@ import 'service_request.dart';
 final logger = Logger(
   filter: ProductionFilter(),
   output: ConsoleOutput(),
-  printer: SimplePrinter(),
+  printer: LinePrinter(),
   level: Level.info,
 );
 
 void main() async {
   // start a periodic timer to measure timer deviation while executing the different scenarios.
   final resolution = Duration(milliseconds: 20);
-  final deviationMonitor = await installDeviationMonitor(resolution);
+  final deviationMonitor =
+      await installDeviationMonitor(resolution, test: true);
 
   // service parameters
   final trace = false;
@@ -39,25 +41,33 @@ void main() async {
   displaySummaries(resolution, serviceCounters, workerCounters, poolCounters);
 }
 
-Future<DeviationMonitor> installDeviationMonitor(Duration resolution) async {
+Future<DeviationMonitor> installDeviationMonitor(
+  Duration resolution, {
+  bool test = false,
+}) async {
   final deviationMonitor = DeviationMonitor(resolution, logger);
 
-  // test timer deviation monitor
-  deviationMonitor.start();
-  final impactLevel = 10;
+  if (test) {
+    // test timer deviation monitor
+    deviationMonitor.noisy = true;
+    deviationMonitor.start();
+    final impactLevel = 5;
 
-  // asynchronous, should have no impact
-  await Future.delayed(resolution * impactLevel);
-  // synchronous, should trigger a deviation by approx (impactLevel - 1) * 100 % (eg. ~900% for impactLevel = 10)
-  final sw = Stopwatch()..start();
-  while (sw.elapsedMilliseconds < resolution.inMilliseconds * impactLevel) {
-    // CPU loop
+    // asynchronous, should have no impact
+    await Future.delayed(resolution * impactLevel);
+
+    // synchronous, should trigger a deviation by approx (impactLevel - 1) * 100 % (eg. ~400% for impactLevel = 5)
+    final sw = Stopwatch()..start();
+    while (sw.elapsedMilliseconds < resolution.inMilliseconds * impactLevel) {
+      // CPU loop
+    }
+
+    // asynchronous, should have no impact
+    await Future.delayed(resolution * impactLevel);
+
+    deviationMonitor.stop();
+    deviationMonitor.noisy = false;
   }
-  // asynchronous, should have no impact
-  await Future.delayed(resolution * impactLevel);
-
-  deviationMonitor.stop();
-  deviationMonitor.noisy = false;
   return deviationMonitor;
 }
 
@@ -389,5 +399,36 @@ extension Futurizer<X> on FutureOr<X> {
   Future<Y> then<Y>(FutureOr<Y> Function(X) action) {
     final value = this;
     return (value is X) ? action(value).future : value.then(action);
+  }
+}
+
+class LinePrinter extends SimplePrinter {
+  @override
+  List<String> log(LogEvent event) {
+    final logEvents = _splitEvent(event);
+    if (event.error != null || event.stackTrace != null) {
+      logEvents.add(LogEvent(
+        event.level,
+        'ERROR/STACKTRACE:',
+        time: event.time,
+        error: event.error,
+        stackTrace: event.stackTrace,
+      ));
+    }
+    return logEvents.map(super.log).reduce((l, s) => l..addAll(s));
+  }
+
+  List<LogEvent> _splitEvent(LogEvent event) {
+    final msg = event.message is Function ? event.message() : event.message;
+    final Iterable<String> lines;
+    if (msg is Map || msg is Iterable) {
+      final encoder = const JsonEncoder.withIndent(null);
+      lines = encoder.convert(msg).split('\n');
+    } else {
+      lines = msg.toString().split('\n');
+    }
+    return lines
+        .map((s) => LogEvent(event.level, s, time: event.time))
+        .toList();
   }
 }

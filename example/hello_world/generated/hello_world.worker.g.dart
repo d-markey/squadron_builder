@@ -7,50 +7,70 @@ part of '../hello_world.dart';
 // Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
-/// WorkerService class for HelloWorld
-base class _$HelloWorldWorkerService extends HelloWorld
-    implements WorkerService {
-  _$HelloWorldWorkerService() : super();
-
-  @override
-  late final Map<int, CommandHandler> operations =
-      Map.unmodifiable(<int, CommandHandler>{
-    _$sayHelloId: ($req_) async {
-      String $res_;
-      try {
-        // ignore: unused_local_variable
-        final $mc = MarshalingContext();
-        $res_ = await sayHello(
-          $mc.nvalue<String>()($req_.args[0]),
-        );
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final $mc = MarshalingContext();
-        return $res_;
-      } finally {}
-    },
-  });
+/// WorkerService operations for HelloWorld
+extension _$HelloWorld$Operations on HelloWorld {
+  OperationsMap _$getOperations() => Map.unmodifiable({
+        _$sayHelloId: ($req) async {
+          final String $res;
+          try {
+            final $mc = _$X(contextAware: false);
+            $res = await sayHello($mc.$de0($req.args[0]));
+          } finally {}
+          return $res;
+        },
+      });
 
   static const int _$sayHelloId = 1;
 }
 
-/// Service initializer for HelloWorld
-WorkerService $HelloWorldInitializer(WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = MarshalingContext();
-  return _$HelloWorldWorkerService();
+/// Invoker for HelloWorld, implements the public interface to invoke the
+/// remote service.
+base mixin _$HelloWorld$Invoker on Invoker implements HelloWorld {
+  @override
+  Future<String> sayHello([String? name]) async {
+    final dynamic $res = await send(
+      _$HelloWorld$Operations._$sayHelloId,
+      args: [name],
+    );
+    try {
+      final $mc = _$X(contextAware: false);
+      return $mc.$de1($res);
+    } finally {}
+  }
 }
 
+/// Facade for HelloWorld, implements other details of the service not related to
+/// invoking the remote service.
+base mixin _$HelloWorld$Facade implements HelloWorld {}
+
+/// WorkerService class for HelloWorld
+base class _$HelloWorld$WorkerService extends HelloWorld
+    implements WorkerService {
+  _$HelloWorld$WorkerService() : super();
+
+  OperationsMap? _operations;
+
+  @override
+  OperationsMap get operations => (_operations ??= _$getOperations());
+}
+
+/// Service initializer for HelloWorld
+WorkerService $HelloWorldInitializer(WorkerRequest $req) =>
+    _$HelloWorld$WorkerService();
+
 /// Worker for HelloWorld
-base class HelloWorldWorker extends Worker implements HelloWorld {
+base class HelloWorldWorker extends Worker
+    with _$HelloWorld$Invoker, _$HelloWorld$Facade
+    implements HelloWorld {
   HelloWorldWorker(
       {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($HelloWorldActivator(Squadron.platformType));
+      : super($HelloWorldActivator(Squadron.platformType),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 
   HelloWorldWorker.vm(
       {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($HelloWorldActivator(SquadronPlatformType.vm));
+      : super($HelloWorldActivator(SquadronPlatformType.vm),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 
   HelloWorldWorker.js(
       {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
@@ -59,31 +79,13 @@ base class HelloWorldWorker extends Worker implements HelloWorld {
 
   HelloWorldWorker.wasm(
       {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($HelloWorldActivator(SquadronPlatformType.wasm));
-
-  @override
-  Future<String> sayHello([String? name]) async {
-    dynamic $res_;
-    try {
-      // ignore: unused_local_variable
-      final $mc = MarshalingContext.none;
-      $res_ = await send(
-        _$HelloWorldWorkerService._$sayHelloId,
-        args: [
-          name,
-        ],
-      );
-    } finally {}
-    try {
-      // ignore: unused_local_variable
-      final $mc = MarshalingContext.none;
-      return $mc.value<String>()($res_);
-    } finally {}
-  }
+      : super($HelloWorldActivator(SquadronPlatformType.wasm),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 }
 
 /// Worker pool for HelloWorld
 base class HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
+    with _$HelloWorld$Facade
     implements HelloWorld {
   HelloWorldWorkerPool(
       {ConcurrencySettings? concurrencySettings,
@@ -127,4 +129,10 @@ base class HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
 
   @override
   Future<String> sayHello([String? name]) => execute((w) => w.sayHello(name));
+}
+
+final class _$X extends MarshalingContext {
+  _$X({super.contextAware});
+  late final $de0 = nvalue<String>();
+  late final $de1 = value<String>();
 }

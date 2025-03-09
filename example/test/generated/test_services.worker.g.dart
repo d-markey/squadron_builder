@@ -7,35 +7,49 @@ part of '../test_services.dart';
 // Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
+/// WorkerService operations for TestParameterLess
+extension _$TestParameterLess$Operations on TestParameterLess {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestParameterLess, implements the public interface to invoke the
+/// remote service.
+mixin _$TestParameterLess$Invoker on sq.Invoker implements TestParameterLess {}
+
+/// Facade for TestParameterLess, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestParameterLess$Facade implements TestParameterLess {}
+
 /// WorkerService class for TestParameterLess
-class _$TestParameterLessWorkerService extends TestParameterLess
+class _$TestParameterLess$WorkerService extends TestParameterLess
     implements sq.WorkerService {
-  _$TestParameterLessWorkerService() : super();
+  _$TestParameterLess$WorkerService() : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestParameterLess
-sq.WorkerService $TestParameterLessInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestParameterLessWorkerService();
-}
+sq.WorkerService $TestParameterLessInitializer(sq.WorkerRequest $req) =>
+    _$TestParameterLess$WorkerService();
 
 /// Worker for TestParameterLess
 base class TestParameterLessWorker extends sq.Worker
+    with _$TestParameterLess$Invoker, _$TestParameterLess$Facade
     implements TestParameterLess {
   TestParameterLessWorker(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestParameterLessActivator(sq.Squadron.platformType));
+      : super($TestParameterLessActivator(sq.Squadron.platformType),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 
   TestParameterLessWorker.vm(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestParameterLessActivator(sq.SquadronPlatformType.vm));
+      : super($TestParameterLessActivator(sq.SquadronPlatformType.vm),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 
   TestParameterLessWorker.js(
       {sq.PlatformThreadHook? threadHook,
@@ -46,12 +60,15 @@ base class TestParameterLessWorker extends sq.Worker
   TestParameterLessWorker.wasm(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestParameterLessActivator(sq.SquadronPlatformType.wasm));
+      : super($TestParameterLessActivator(sq.SquadronPlatformType.wasm),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestParameterLess
-base class TestParameterLessWorkerPool extends sq
-    .WorkerPool<TestParameterLessWorker> implements TestParameterLess {
+base class TestParameterLessWorkerPool
+    extends sq.WorkerPool<TestParameterLessWorker>
+    with _$TestParameterLess$Facade
+    implements TestParameterLess {
   TestParameterLessWorkerPool(
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -94,63 +111,78 @@ base class TestParameterLessWorkerPool extends sq
         );
 }
 
+/// WorkerService operations for TestReqPositional
+extension _$TestReqPositional$Operations on TestReqPositional {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestReqPositional, implements the public interface to invoke the
+/// remote service.
+mixin _$TestReqPositional$Invoker on sq.Invoker implements TestReqPositional {}
+
+/// Facade for TestReqPositional, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestReqPositional$Facade implements TestReqPositional {}
+
 /// WorkerService class for TestReqPositional
-class _$TestReqPositionalWorkerService extends TestReqPositional
+class _$TestReqPositional$WorkerService extends TestReqPositional
     implements sq.WorkerService {
-  _$TestReqPositionalWorkerService(super.arg1) : super();
+  _$TestReqPositional$WorkerService(super.arg1) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestReqPositional
-sq.WorkerService $TestReqPositionalInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestReqPositionalWorkerService(
-    $mc.value<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestReqPositionalInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestReqPositional$WorkerService($mc.$de0($req.args[0]));
 }
 
 /// Worker for TestReqPositional
 base class TestReqPositionalWorker extends sq.Worker
+    with _$TestReqPositional$Invoker, _$TestReqPositional$Facade
     implements TestReqPositional {
   TestReqPositionalWorker(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestReqPositionalActivator(sq.Squadron.platformType), args: [
-          arg1,
-        ]);
+      : super($TestReqPositionalActivator(sq.Squadron.platformType),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestReqPositionalWorker.vm(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestReqPositionalActivator(sq.SquadronPlatformType.vm), args: [
-          arg1,
-        ]);
+      : super($TestReqPositionalActivator(sq.SquadronPlatformType.vm),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestReqPositionalWorker.js(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
   TestReqPositionalWorker.wasm(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestReqPositionalActivator(sq.SquadronPlatformType.wasm), args: [
-          arg1,
-        ]);
+      : super($TestReqPositionalActivator(sq.SquadronPlatformType.wasm),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestReqPositional
-base class TestReqPositionalWorkerPool extends sq
-    .WorkerPool<TestReqPositionalWorker> implements TestReqPositional {
+base class TestReqPositionalWorkerPool
+    extends sq.WorkerPool<TestReqPositionalWorker>
+    with _$TestReqPositional$Facade
+    implements TestReqPositional {
   TestReqPositionalWorkerPool(int arg1,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -199,53 +231,65 @@ base class TestReqPositionalWorkerPool extends sq
         );
 }
 
+/// WorkerService operations for TestOptNullPositional
+extension _$TestOptNullPositional$Operations on TestOptNullPositional {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptNullPositional, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullPositional$Invoker on sq.Invoker
+    implements TestOptNullPositional {}
+
+/// Facade for TestOptNullPositional, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullPositional$Facade implements TestOptNullPositional {}
+
 /// WorkerService class for TestOptNullPositional
-class _$TestOptNullPositionalWorkerService extends TestOptNullPositional
+class _$TestOptNullPositional$WorkerService extends TestOptNullPositional
     implements sq.WorkerService {
-  _$TestOptNullPositionalWorkerService([super.arg1]) : super();
+  _$TestOptNullPositional$WorkerService([super.arg1]) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptNullPositional
-sq.WorkerService $TestOptNullPositionalInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullPositionalWorkerService(
-    $mc.nvalue<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestOptNullPositionalInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullPositional$WorkerService($mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullPositional
 base class TestOptNullPositionalWorker extends sq.Worker
+    with _$TestOptNullPositional$Invoker, _$TestOptNullPositional$Facade
     implements TestOptNullPositional {
   TestOptNullPositionalWorker(
       [int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
-      : super($TestOptNullPositionalActivator(sq.Squadron.platformType), args: [
-          arg1,
-        ]);
+      : super($TestOptNullPositionalActivator(sq.Squadron.platformType),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullPositionalWorker.vm(
       [int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullPositionalActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullPositionalWorker.js(
       [int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullPositionalActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -254,14 +298,16 @@ base class TestOptNullPositionalWorker extends sq.Worker
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullPositionalActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestOptNullPositional
-base class TestOptNullPositionalWorkerPool extends sq
-    .WorkerPool<TestOptNullPositionalWorker> implements TestOptNullPositional {
+base class TestOptNullPositionalWorkerPool
+    extends sq.WorkerPool<TestOptNullPositionalWorker>
+    with _$TestOptNullPositional$Facade
+    implements TestOptNullPositional {
   TestOptNullPositionalWorkerPool(
       [int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
@@ -310,53 +356,65 @@ base class TestOptNullPositionalWorkerPool extends sq
         );
 }
 
+/// WorkerService operations for TestOptDefPositional
+extension _$TestOptDefPositional$Operations on TestOptDefPositional {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptDefPositional, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptDefPositional$Invoker on sq.Invoker
+    implements TestOptDefPositional {}
+
+/// Facade for TestOptDefPositional, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptDefPositional$Facade implements TestOptDefPositional {}
+
 /// WorkerService class for TestOptDefPositional
-class _$TestOptDefPositionalWorkerService extends TestOptDefPositional
+class _$TestOptDefPositional$WorkerService extends TestOptDefPositional
     implements sq.WorkerService {
-  _$TestOptDefPositionalWorkerService([super.arg1 = 0]) : super();
+  _$TestOptDefPositional$WorkerService([super.arg1 = 0]) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptDefPositional
-sq.WorkerService $TestOptDefPositionalInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptDefPositionalWorkerService(
-    $mc.value<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestOptDefPositionalInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptDefPositional$WorkerService($mc.$de0($req.args[0]));
 }
 
 /// Worker for TestOptDefPositional
 base class TestOptDefPositionalWorker extends sq.Worker
+    with _$TestOptDefPositional$Invoker, _$TestOptDefPositional$Facade
     implements TestOptDefPositional {
   TestOptDefPositionalWorker(
       [int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
-      : super($TestOptDefPositionalActivator(sq.Squadron.platformType), args: [
-          arg1,
-        ]);
+      : super($TestOptDefPositionalActivator(sq.Squadron.platformType),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptDefPositionalWorker.vm(
       [int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptDefPositionalActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptDefPositionalWorker.js(
       [int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptDefPositionalActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -365,14 +423,16 @@ base class TestOptDefPositionalWorker extends sq.Worker
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptDefPositionalActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestOptDefPositional
-base class TestOptDefPositionalWorkerPool extends sq
-    .WorkerPool<TestOptDefPositionalWorker> implements TestOptDefPositional {
+base class TestOptDefPositionalWorkerPool
+    extends sq.WorkerPool<TestOptDefPositionalWorker>
+    with _$TestOptDefPositional$Facade
+    implements TestOptDefPositional {
   TestOptDefPositionalWorkerPool(
       [int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
@@ -419,54 +479,65 @@ base class TestOptDefPositionalWorkerPool extends sq
         );
 }
 
+/// WorkerService operations for TestOptNullDefPositional
+extension _$TestOptNullDefPositional$Operations on TestOptNullDefPositional {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptNullDefPositional, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullDefPositional$Invoker on sq.Invoker
+    implements TestOptNullDefPositional {}
+
+/// Facade for TestOptNullDefPositional, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullDefPositional$Facade implements TestOptNullDefPositional {}
+
 /// WorkerService class for TestOptNullDefPositional
-class _$TestOptNullDefPositionalWorkerService extends TestOptNullDefPositional
+class _$TestOptNullDefPositional$WorkerService extends TestOptNullDefPositional
     implements sq.WorkerService {
-  _$TestOptNullDefPositionalWorkerService([super.arg1 = 0]) : super();
+  _$TestOptNullDefPositional$WorkerService([super.arg1 = 0]) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptNullDefPositional
-sq.WorkerService $TestOptNullDefPositionalInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullDefPositionalWorkerService(
-    $mc.nvalue<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestOptNullDefPositionalInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullDefPositional$WorkerService($mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullDefPositional
 base class TestOptNullDefPositionalWorker extends sq.Worker
+    with _$TestOptNullDefPositional$Invoker, _$TestOptNullDefPositional$Facade
     implements TestOptNullDefPositional {
   TestOptNullDefPositionalWorker(
       [int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullDefPositionalActivator(sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefPositionalWorker.vm(
       [int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullDefPositionalActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefPositionalWorker.js(
       [int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullDefPositionalActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -475,14 +546,15 @@ base class TestOptNullDefPositionalWorker extends sq.Worker
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullDefPositionalActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestOptNullDefPositional
 base class TestOptNullDefPositionalWorkerPool
     extends sq.WorkerPool<TestOptNullDefPositionalWorker>
+    with _$TestOptNullDefPositional$Facade
     implements TestOptNullDefPositional {
   TestOptNullDefPositionalWorkerPool(
       [int? arg1 = 0,
@@ -533,51 +605,62 @@ base class TestOptNullDefPositionalWorkerPool
         );
 }
 
+/// WorkerService operations for TestReqPositionalField
+extension _$TestReqPositionalField$Operations on TestReqPositionalField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestReqPositionalField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestReqPositionalField$Invoker on sq.Invoker
+    implements TestReqPositionalField {}
+
+/// Facade for TestReqPositionalField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestReqPositionalField$Facade implements TestReqPositionalField {}
+
 /// WorkerService class for TestReqPositionalField
-class _$TestReqPositionalFieldWorkerService extends TestReqPositionalField
+class _$TestReqPositionalField$WorkerService extends TestReqPositionalField
     implements sq.WorkerService {
-  _$TestReqPositionalFieldWorkerService(super.arg1) : super();
+  _$TestReqPositionalField$WorkerService(super.arg1) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestReqPositionalField
-sq.WorkerService $TestReqPositionalFieldInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestReqPositionalFieldWorkerService(
-    $mc.value<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestReqPositionalFieldInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestReqPositionalField$WorkerService($mc.$de0($req.args[0]));
 }
 
 /// Worker for TestReqPositionalField
 base class TestReqPositionalFieldWorker extends sq.Worker
+    with _$TestReqPositionalField$Invoker, _$TestReqPositionalField$Facade
     implements TestReqPositionalField {
   TestReqPositionalFieldWorker(this.arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalFieldActivator(sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestReqPositionalFieldWorker.vm(this.arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalFieldActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestReqPositionalFieldWorker.js(this.arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalFieldActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -585,9 +668,9 @@ base class TestReqPositionalFieldWorker extends sq.Worker
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalFieldActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   @override
   final int arg1;
@@ -596,6 +679,7 @@ base class TestReqPositionalFieldWorker extends sq.Worker
 /// Worker pool for TestReqPositionalField
 base class TestReqPositionalFieldWorkerPool
     extends sq.WorkerPool<TestReqPositionalFieldWorker>
+    with _$TestReqPositionalField$Facade
     implements TestReqPositionalField {
   TestReqPositionalFieldWorkerPool(this.arg1,
       {sq.ConcurrencySettings? concurrencySettings,
@@ -645,55 +729,69 @@ base class TestReqPositionalFieldWorkerPool
   final int arg1;
 }
 
+/// WorkerService operations for TestOptNullPositionalField
+extension _$TestOptNullPositionalField$Operations
+    on TestOptNullPositionalField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptNullPositionalField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullPositionalField$Invoker on sq.Invoker
+    implements TestOptNullPositionalField {}
+
+/// Facade for TestOptNullPositionalField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullPositionalField$Facade
+    implements TestOptNullPositionalField {}
+
 /// WorkerService class for TestOptNullPositionalField
-class _$TestOptNullPositionalFieldWorkerService
+class _$TestOptNullPositionalField$WorkerService
     extends TestOptNullPositionalField implements sq.WorkerService {
-  _$TestOptNullPositionalFieldWorkerService([super.arg1]) : super();
+  _$TestOptNullPositionalField$WorkerService([super.arg1]) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptNullPositionalField
-sq.WorkerService $TestOptNullPositionalFieldInitializer(
-    sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullPositionalFieldWorkerService(
-    $mc.nvalue<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestOptNullPositionalFieldInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullPositionalField$WorkerService($mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullPositionalField
 base class TestOptNullPositionalFieldWorker extends sq.Worker
+    with
+        _$TestOptNullPositionalField$Invoker,
+        _$TestOptNullPositionalField$Facade
     implements TestOptNullPositionalField {
   TestOptNullPositionalFieldWorker(
       [this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullPositionalFieldActivator(sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullPositionalFieldWorker.vm(
       [this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullPositionalFieldActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullPositionalFieldWorker.js(
       [this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullPositionalFieldActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -703,9 +801,9 @@ base class TestOptNullPositionalFieldWorker extends sq.Worker
       sq.ExceptionManager? exceptionManager])
       : super(
             $TestOptNullPositionalFieldActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   @override
   final int? arg1;
@@ -714,6 +812,7 @@ base class TestOptNullPositionalFieldWorker extends sq.Worker
 /// Worker pool for TestOptNullPositionalField
 base class TestOptNullPositionalFieldWorkerPool
     extends sq.WorkerPool<TestOptNullPositionalFieldWorker>
+    with _$TestOptNullPositionalField$Facade
     implements TestOptNullPositionalField {
   TestOptNullPositionalFieldWorkerPool(
       [this.arg1,
@@ -767,54 +866,65 @@ base class TestOptNullPositionalFieldWorkerPool
   final int? arg1;
 }
 
+/// WorkerService operations for TestOptDefPositionalField
+extension _$TestOptDefPositionalField$Operations on TestOptDefPositionalField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptDefPositionalField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptDefPositionalField$Invoker on sq.Invoker
+    implements TestOptDefPositionalField {}
+
+/// Facade for TestOptDefPositionalField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptDefPositionalField$Facade implements TestOptDefPositionalField {}
+
 /// WorkerService class for TestOptDefPositionalField
-class _$TestOptDefPositionalFieldWorkerService extends TestOptDefPositionalField
-    implements sq.WorkerService {
-  _$TestOptDefPositionalFieldWorkerService([super.arg1 = 0]) : super();
+class _$TestOptDefPositionalField$WorkerService
+    extends TestOptDefPositionalField implements sq.WorkerService {
+  _$TestOptDefPositionalField$WorkerService([super.arg1 = 0]) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptDefPositionalField
-sq.WorkerService $TestOptDefPositionalFieldInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptDefPositionalFieldWorkerService(
-    $mc.value<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestOptDefPositionalFieldInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptDefPositionalField$WorkerService($mc.$de0($req.args[0]));
 }
 
 /// Worker for TestOptDefPositionalField
 base class TestOptDefPositionalFieldWorker extends sq.Worker
+    with _$TestOptDefPositionalField$Invoker, _$TestOptDefPositionalField$Facade
     implements TestOptDefPositionalField {
   TestOptDefPositionalFieldWorker(
       [this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptDefPositionalFieldActivator(sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptDefPositionalFieldWorker.vm(
       [this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptDefPositionalFieldActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptDefPositionalFieldWorker.js(
       [this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptDefPositionalFieldActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -823,9 +933,9 @@ base class TestOptDefPositionalFieldWorker extends sq.Worker
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptDefPositionalFieldActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   @override
   final int arg1;
@@ -834,6 +944,7 @@ base class TestOptDefPositionalFieldWorker extends sq.Worker
 /// Worker pool for TestOptDefPositionalField
 base class TestOptDefPositionalFieldWorkerPool
     extends sq.WorkerPool<TestOptDefPositionalFieldWorker>
+    with _$TestOptDefPositionalField$Facade
     implements TestOptDefPositionalField {
   TestOptDefPositionalFieldWorkerPool(
       [this.arg1 = 0,
@@ -887,37 +998,54 @@ base class TestOptDefPositionalFieldWorkerPool
   final int arg1;
 }
 
+/// WorkerService operations for TestOptNullDefPositionalField
+extension _$TestOptNullDefPositionalField$Operations
+    on TestOptNullDefPositionalField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptNullDefPositionalField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullDefPositionalField$Invoker on sq.Invoker
+    implements TestOptNullDefPositionalField {}
+
+/// Facade for TestOptNullDefPositionalField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullDefPositionalField$Facade
+    implements TestOptNullDefPositionalField {}
+
 /// WorkerService class for TestOptNullDefPositionalField
-class _$TestOptNullDefPositionalFieldWorkerService
+class _$TestOptNullDefPositionalField$WorkerService
     extends TestOptNullDefPositionalField implements sq.WorkerService {
-  _$TestOptNullDefPositionalFieldWorkerService([super.arg1 = 0]) : super();
+  _$TestOptNullDefPositionalField$WorkerService([super.arg1 = 0]) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptNullDefPositionalField
 sq.WorkerService $TestOptNullDefPositionalFieldInitializer(
-    sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullDefPositionalFieldWorkerService(
-    $mc.nvalue<int>()($req_.args[0]),
-  );
+    sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullDefPositionalField$WorkerService($mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullDefPositionalField
 base class TestOptNullDefPositionalFieldWorker extends sq.Worker
+    with
+        _$TestOptNullDefPositionalField$Invoker,
+        _$TestOptNullDefPositionalField$Facade
     implements TestOptNullDefPositionalField {
   TestOptNullDefPositionalFieldWorker(
       [this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : super($TestOptNullDefPositionalFieldActivator(sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefPositionalFieldWorker.vm(
       [this.arg1 = 0,
@@ -925,9 +1053,9 @@ base class TestOptNullDefPositionalFieldWorker extends sq.Worker
       sq.ExceptionManager? exceptionManager])
       : super(
             $TestOptNullDefPositionalFieldActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefPositionalFieldWorker.js(
       [this.arg1 = 0,
@@ -935,9 +1063,7 @@ base class TestOptNullDefPositionalFieldWorker extends sq.Worker
       sq.ExceptionManager? exceptionManager])
       : super(
             $TestOptNullDefPositionalFieldActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -948,9 +1074,9 @@ base class TestOptNullDefPositionalFieldWorker extends sq.Worker
       : super(
             $TestOptNullDefPositionalFieldActivator(
                 sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   @override
   final int? arg1;
@@ -959,6 +1085,7 @@ base class TestOptNullDefPositionalFieldWorker extends sq.Worker
 /// Worker pool for TestOptNullDefPositionalField
 base class TestOptNullDefPositionalFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefPositionalFieldWorker>
+    with _$TestOptNullDefPositionalField$Facade
     implements TestOptNullDefPositionalField {
   TestOptNullDefPositionalFieldWorkerPool(
       [this.arg1 = 0,
@@ -1012,54 +1139,73 @@ base class TestOptNullDefPositionalFieldWorkerPool
   final int? arg1;
 }
 
+/// WorkerService operations for TestReqPositionalPrivateField
+extension _$TestReqPositionalPrivateField$Operations
+    on TestReqPositionalPrivateField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestReqPositionalPrivateField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestReqPositionalPrivateField$Invoker on sq.Invoker
+    implements TestReqPositionalPrivateField {}
+
+/// Facade for TestReqPositionalPrivateField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestReqPositionalPrivateField$Facade
+    implements TestReqPositionalPrivateField {
+  @override
+  // ignore: unused_element
+  int get _arg1 => throw UnimplementedError();
+}
+
 /// WorkerService class for TestReqPositionalPrivateField
-class _$TestReqPositionalPrivateFieldWorkerService
+class _$TestReqPositionalPrivateField$WorkerService
     extends TestReqPositionalPrivateField implements sq.WorkerService {
-  _$TestReqPositionalPrivateFieldWorkerService(super.arg1) : super();
+  _$TestReqPositionalPrivateField$WorkerService(super.arg1) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestReqPositionalPrivateField
 sq.WorkerService $TestReqPositionalPrivateFieldInitializer(
-    sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestReqPositionalPrivateFieldWorkerService(
-    $mc.value<int>()($req_.args[0]),
-  );
+    sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestReqPositionalPrivateField$WorkerService($mc.$de0($req.args[0]));
 }
 
 /// Worker for TestReqPositionalPrivateField
 base class TestReqPositionalPrivateFieldWorker extends sq.Worker
+    with
+        _$TestReqPositionalPrivateField$Invoker,
+        _$TestReqPositionalPrivateField$Facade
     implements TestReqPositionalPrivateField {
   TestReqPositionalPrivateFieldWorker(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestReqPositionalPrivateFieldActivator(sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestReqPositionalPrivateFieldWorker.vm(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super(
             $TestReqPositionalPrivateFieldActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestReqPositionalPrivateFieldWorker.js(int arg1,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super(
             $TestReqPositionalPrivateFieldActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -1069,18 +1215,15 @@ base class TestReqPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestReqPositionalPrivateFieldActivator(
                 sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
-
-  @override
-  // ignore: unused_element
-  int get _arg1 => throw UnimplementedError();
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestReqPositionalPrivateField
 base class TestReqPositionalPrivateFieldWorkerPool
     extends sq.WorkerPool<TestReqPositionalPrivateFieldWorker>
+    with _$TestReqPositionalPrivateField$Facade
     implements TestReqPositionalPrivateField {
   TestReqPositionalPrivateFieldWorkerPool(int arg1,
       {sq.ConcurrencySettings? concurrencySettings,
@@ -1125,34 +1268,52 @@ base class TestReqPositionalPrivateFieldWorkerPool
                   threadHook: threadHook, exceptionManager: exceptionManager),
           concurrencySettings: concurrencySettings,
         );
+}
 
+/// WorkerService operations for TestOptNullPositionalPrivateField
+extension _$TestOptNullPositionalPrivateField$Operations
+    on TestOptNullPositionalPrivateField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptNullPositionalPrivateField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullPositionalPrivateField$Invoker on sq.Invoker
+    implements TestOptNullPositionalPrivateField {}
+
+/// Facade for TestOptNullPositionalPrivateField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullPositionalPrivateField$Facade
+    implements TestOptNullPositionalPrivateField {
   @override
   // ignore: unused_element
-  int get _arg1 => throw UnimplementedError();
+  int? get _arg1 => throw UnimplementedError();
 }
 
 /// WorkerService class for TestOptNullPositionalPrivateField
-class _$TestOptNullPositionalPrivateFieldWorkerService
+class _$TestOptNullPositionalPrivateField$WorkerService
     extends TestOptNullPositionalPrivateField implements sq.WorkerService {
-  _$TestOptNullPositionalPrivateFieldWorkerService([super.arg1]) : super();
+  _$TestOptNullPositionalPrivateField$WorkerService([super.arg1]) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptNullPositionalPrivateField
 sq.WorkerService $TestOptNullPositionalPrivateFieldInitializer(
-    sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullPositionalPrivateFieldWorkerService(
-    $mc.nvalue<int>()($req_.args[0]),
-  );
+    sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullPositionalPrivateField$WorkerService(
+      $mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullPositionalPrivateField
 base class TestOptNullPositionalPrivateFieldWorker extends sq.Worker
+    with
+        _$TestOptNullPositionalPrivateField$Invoker,
+        _$TestOptNullPositionalPrivateField$Facade
     implements TestOptNullPositionalPrivateField {
   TestOptNullPositionalPrivateFieldWorker(
       [int? arg1,
@@ -1161,9 +1322,9 @@ base class TestOptNullPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptNullPositionalPrivateFieldActivator(
                 sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullPositionalPrivateFieldWorker.vm(
       [int? arg1,
@@ -1172,9 +1333,9 @@ base class TestOptNullPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptNullPositionalPrivateFieldActivator(
                 sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullPositionalPrivateFieldWorker.js(
       [int? arg1,
@@ -1183,9 +1344,7 @@ base class TestOptNullPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptNullPositionalPrivateFieldActivator(
                 sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -1196,18 +1355,15 @@ base class TestOptNullPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptNullPositionalPrivateFieldActivator(
                 sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
-
-  @override
-  // ignore: unused_element
-  int? get _arg1 => throw UnimplementedError();
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestOptNullPositionalPrivateField
 base class TestOptNullPositionalPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptNullPositionalPrivateFieldWorker>
+    with _$TestOptNullPositionalPrivateField$Facade
     implements TestOptNullPositionalPrivateField {
   TestOptNullPositionalPrivateFieldWorkerPool(
       [int? arg1,
@@ -1256,34 +1412,52 @@ base class TestOptNullPositionalPrivateFieldWorkerPool
                   arg1, threadHook, exceptionManager),
           concurrencySettings: concurrencySettings,
         );
+}
 
+/// WorkerService operations for TestOptDefPositionalPrivateField
+extension _$TestOptDefPositionalPrivateField$Operations
+    on TestOptDefPositionalPrivateField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptDefPositionalPrivateField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptDefPositionalPrivateField$Invoker on sq.Invoker
+    implements TestOptDefPositionalPrivateField {}
+
+/// Facade for TestOptDefPositionalPrivateField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptDefPositionalPrivateField$Facade
+    implements TestOptDefPositionalPrivateField {
   @override
   // ignore: unused_element
-  int? get _arg1 => throw UnimplementedError();
+  int get _arg1 => throw UnimplementedError();
 }
 
 /// WorkerService class for TestOptDefPositionalPrivateField
-class _$TestOptDefPositionalPrivateFieldWorkerService
+class _$TestOptDefPositionalPrivateField$WorkerService
     extends TestOptDefPositionalPrivateField implements sq.WorkerService {
-  _$TestOptDefPositionalPrivateFieldWorkerService([super.arg1 = 0]) : super();
+  _$TestOptDefPositionalPrivateField$WorkerService([super.arg1 = 0]) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptDefPositionalPrivateField
 sq.WorkerService $TestOptDefPositionalPrivateFieldInitializer(
-    sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptDefPositionalPrivateFieldWorkerService(
-    $mc.value<int>()($req_.args[0]),
-  );
+    sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptDefPositionalPrivateField$WorkerService(
+      $mc.$de0($req.args[0]));
 }
 
 /// Worker for TestOptDefPositionalPrivateField
 base class TestOptDefPositionalPrivateFieldWorker extends sq.Worker
+    with
+        _$TestOptDefPositionalPrivateField$Invoker,
+        _$TestOptDefPositionalPrivateField$Facade
     implements TestOptDefPositionalPrivateField {
   TestOptDefPositionalPrivateFieldWorker(
       [int arg1 = 0,
@@ -1292,9 +1466,9 @@ base class TestOptDefPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptDefPositionalPrivateFieldActivator(
                 sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptDefPositionalPrivateFieldWorker.vm(
       [int arg1 = 0,
@@ -1303,9 +1477,9 @@ base class TestOptDefPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptDefPositionalPrivateFieldActivator(
                 sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptDefPositionalPrivateFieldWorker.js(
       [int arg1 = 0,
@@ -1314,9 +1488,7 @@ base class TestOptDefPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptDefPositionalPrivateFieldActivator(
                 sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -1327,18 +1499,15 @@ base class TestOptDefPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptDefPositionalPrivateFieldActivator(
                 sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
-
-  @override
-  // ignore: unused_element
-  int get _arg1 => throw UnimplementedError();
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestOptDefPositionalPrivateField
 base class TestOptDefPositionalPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptDefPositionalPrivateFieldWorker>
+    with _$TestOptDefPositionalPrivateField$Facade
     implements TestOptDefPositionalPrivateField {
   TestOptDefPositionalPrivateFieldWorkerPool(
       [int arg1 = 0,
@@ -1387,35 +1556,53 @@ base class TestOptDefPositionalPrivateFieldWorkerPool
                   arg1, threadHook, exceptionManager),
           concurrencySettings: concurrencySettings,
         );
+}
 
+/// WorkerService operations for TestOptNullDefPositionalPrivateField
+extension _$TestOptNullDefPositionalPrivateField$Operations
+    on TestOptNullDefPositionalPrivateField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptNullDefPositionalPrivateField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullDefPositionalPrivateField$Invoker on sq.Invoker
+    implements TestOptNullDefPositionalPrivateField {}
+
+/// Facade for TestOptNullDefPositionalPrivateField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullDefPositionalPrivateField$Facade
+    implements TestOptNullDefPositionalPrivateField {
   @override
   // ignore: unused_element
-  int get _arg1 => throw UnimplementedError();
+  int? get _arg1 => throw UnimplementedError();
 }
 
 /// WorkerService class for TestOptNullDefPositionalPrivateField
-class _$TestOptNullDefPositionalPrivateFieldWorkerService
+class _$TestOptNullDefPositionalPrivateField$WorkerService
     extends TestOptNullDefPositionalPrivateField implements sq.WorkerService {
-  _$TestOptNullDefPositionalPrivateFieldWorkerService([super.arg1 = 0])
+  _$TestOptNullDefPositionalPrivateField$WorkerService([super.arg1 = 0])
       : super();
 
+  sq.OperationsMap? _operations;
+
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptNullDefPositionalPrivateField
 sq.WorkerService $TestOptNullDefPositionalPrivateFieldInitializer(
-    sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullDefPositionalPrivateFieldWorkerService(
-    $mc.nvalue<int>()($req_.args[0]),
-  );
+    sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullDefPositionalPrivateField$WorkerService(
+      $mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullDefPositionalPrivateField
 base class TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
+    with
+        _$TestOptNullDefPositionalPrivateField$Invoker,
+        _$TestOptNullDefPositionalPrivateField$Facade
     implements TestOptNullDefPositionalPrivateField {
   TestOptNullDefPositionalPrivateFieldWorker(
       [int? arg1 = 0,
@@ -1424,9 +1611,9 @@ base class TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptNullDefPositionalPrivateFieldActivator(
                 sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefPositionalPrivateFieldWorker.vm(
       [int? arg1 = 0,
@@ -1435,9 +1622,9 @@ base class TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptNullDefPositionalPrivateFieldActivator(
                 sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefPositionalPrivateFieldWorker.js(
       [int? arg1 = 0,
@@ -1446,9 +1633,7 @@ base class TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptNullDefPositionalPrivateFieldActivator(
                 sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -1459,18 +1644,15 @@ base class TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptNullDefPositionalPrivateFieldActivator(
                 sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
-
-  @override
-  // ignore: unused_element
-  int? get _arg1 => throw UnimplementedError();
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestOptNullDefPositionalPrivateField
 base class TestOptNullDefPositionalPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefPositionalPrivateFieldWorker>
+    with _$TestOptNullDefPositionalPrivateField$Facade
     implements TestOptNullDefPositionalPrivateField {
   TestOptNullDefPositionalPrivateFieldWorkerPool(
       [int? arg1 = 0,
@@ -1519,58 +1701,66 @@ base class TestOptNullDefPositionalPrivateFieldWorkerPool
                   arg1, threadHook, exceptionManager),
           concurrencySettings: concurrencySettings,
         );
-
-  @override
-  // ignore: unused_element
-  int? get _arg1 => throw UnimplementedError();
 }
 
+/// WorkerService operations for TestOptNullNamed
+extension _$TestOptNullNamed$Operations on TestOptNullNamed {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptNullNamed, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullNamed$Invoker on sq.Invoker implements TestOptNullNamed {}
+
+/// Facade for TestOptNullNamed, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullNamed$Facade implements TestOptNullNamed {}
+
 /// WorkerService class for TestOptNullNamed
-class _$TestOptNullNamedWorkerService extends TestOptNullNamed
+class _$TestOptNullNamed$WorkerService extends TestOptNullNamed
     implements sq.WorkerService {
-  _$TestOptNullNamedWorkerService({super.arg1}) : super();
+  _$TestOptNullNamed$WorkerService({super.arg1}) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptNullNamed
-sq.WorkerService $TestOptNullNamedInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullNamedWorkerService(
-    arg1: $mc.nvalue<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestOptNullNamedInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullNamed$WorkerService(arg1: $mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullNamed
 base class TestOptNullNamedWorker extends sq.Worker
+    with _$TestOptNullNamed$Invoker, _$TestOptNullNamed$Facade
     implements TestOptNullNamed {
   TestOptNullNamedWorker(
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestOptNullNamedActivator(sq.Squadron.platformType), args: [
-          arg1,
-        ]);
+      : super($TestOptNullNamedActivator(sq.Squadron.platformType),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullNamedWorker.vm(
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestOptNullNamedActivator(sq.SquadronPlatformType.vm), args: [
-          arg1,
-        ]);
+      : super($TestOptNullNamedActivator(sq.SquadronPlatformType.vm),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullNamedWorker.js(
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullNamedActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -1578,14 +1768,17 @@ base class TestOptNullNamedWorker extends sq.Worker
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestOptNullNamedActivator(sq.SquadronPlatformType.wasm), args: [
-          arg1,
-        ]);
+      : super($TestOptNullNamedActivator(sq.SquadronPlatformType.wasm),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestOptNullNamed
 base class TestOptNullNamedWorkerPool
-    extends sq.WorkerPool<TestOptNullNamedWorker> implements TestOptNullNamed {
+    extends sq.WorkerPool<TestOptNullNamedWorker>
+    with _$TestOptNullNamed$Facade
+    implements TestOptNullNamed {
   TestOptNullNamedWorkerPool(
       {int? arg1,
       sq.ConcurrencySettings? concurrencySettings,
@@ -1639,51 +1832,64 @@ base class TestOptNullNamedWorkerPool
         );
 }
 
+/// WorkerService operations for TestOptDefNamed
+extension _$TestOptDefNamed$Operations on TestOptDefNamed {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptDefNamed, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptDefNamed$Invoker on sq.Invoker implements TestOptDefNamed {}
+
+/// Facade for TestOptDefNamed, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptDefNamed$Facade implements TestOptDefNamed {}
+
 /// WorkerService class for TestOptDefNamed
-class _$TestOptDefNamedWorkerService extends TestOptDefNamed
+class _$TestOptDefNamed$WorkerService extends TestOptDefNamed
     implements sq.WorkerService {
-  _$TestOptDefNamedWorkerService({super.arg1 = 0}) : super();
+  _$TestOptDefNamed$WorkerService({super.arg1 = 0}) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptDefNamed
-sq.WorkerService $TestOptDefNamedInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptDefNamedWorkerService(
-    arg1: $mc.value<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestOptDefNamedInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptDefNamed$WorkerService(arg1: $mc.$de0($req.args[0]));
 }
 
 /// Worker for TestOptDefNamed
-base class TestOptDefNamedWorker extends sq.Worker implements TestOptDefNamed {
+base class TestOptDefNamedWorker extends sq.Worker
+    with _$TestOptDefNamed$Invoker, _$TestOptDefNamed$Facade
+    implements TestOptDefNamed {
   TestOptDefNamedWorker(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestOptDefNamedActivator(sq.Squadron.platformType), args: [
-          arg1,
-        ]);
+      : super($TestOptDefNamedActivator(sq.Squadron.platformType),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptDefNamedWorker.vm(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestOptDefNamedActivator(sq.SquadronPlatformType.vm), args: [
-          arg1,
-        ]);
+      : super($TestOptDefNamedActivator(sq.SquadronPlatformType.vm),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptDefNamedWorker.js(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -1691,14 +1897,17 @@ base class TestOptDefNamedWorker extends sq.Worker implements TestOptDefNamed {
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestOptDefNamedActivator(sq.SquadronPlatformType.wasm), args: [
-          arg1,
-        ]);
+      : super($TestOptDefNamedActivator(sq.SquadronPlatformType.wasm),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestOptDefNamed
 base class TestOptDefNamedWorkerPool
-    extends sq.WorkerPool<TestOptDefNamedWorker> implements TestOptDefNamed {
+    extends sq.WorkerPool<TestOptDefNamedWorker>
+    with _$TestOptDefNamed$Facade
+    implements TestOptDefNamed {
   TestOptDefNamedWorkerPool(
       {int arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
@@ -1752,52 +1961,65 @@ base class TestOptDefNamedWorkerPool
         );
 }
 
+/// WorkerService operations for TestOptNullDefNamed
+extension _$TestOptNullDefNamed$Operations on TestOptNullDefNamed {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptNullDefNamed, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullDefNamed$Invoker on sq.Invoker
+    implements TestOptNullDefNamed {}
+
+/// Facade for TestOptNullDefNamed, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullDefNamed$Facade implements TestOptNullDefNamed {}
+
 /// WorkerService class for TestOptNullDefNamed
-class _$TestOptNullDefNamedWorkerService extends TestOptNullDefNamed
+class _$TestOptNullDefNamed$WorkerService extends TestOptNullDefNamed
     implements sq.WorkerService {
-  _$TestOptNullDefNamedWorkerService({super.arg1 = 0}) : super();
+  _$TestOptNullDefNamed$WorkerService({super.arg1 = 0}) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptNullDefNamed
-sq.WorkerService $TestOptNullDefNamedInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullDefNamedWorkerService(
-    arg1: $mc.nvalue<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestOptNullDefNamedInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullDefNamed$WorkerService(arg1: $mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullDefNamed
 base class TestOptNullDefNamedWorker extends sq.Worker
+    with _$TestOptNullDefNamed$Invoker, _$TestOptNullDefNamed$Facade
     implements TestOptNullDefNamed {
   TestOptNullDefNamedWorker(
       {int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestOptNullDefNamedActivator(sq.Squadron.platformType), args: [
-          arg1,
-        ]);
+      : super($TestOptNullDefNamedActivator(sq.Squadron.platformType),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefNamedWorker.vm(
       {int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestOptNullDefNamedActivator(sq.SquadronPlatformType.vm), args: [
-          arg1,
-        ]);
+      : super($TestOptNullDefNamedActivator(sq.SquadronPlatformType.vm),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefNamedWorker.js(
       {int? arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullDefNamedActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -1806,14 +2028,16 @@ base class TestOptNullDefNamedWorker extends sq.Worker
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullDefNamedActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestOptNullDefNamed
-base class TestOptNullDefNamedWorkerPool extends sq
-    .WorkerPool<TestOptNullDefNamedWorker> implements TestOptNullDefNamed {
+base class TestOptNullDefNamedWorkerPool
+    extends sq.WorkerPool<TestOptNullDefNamedWorker>
+    with _$TestOptNullDefNamed$Facade
+    implements TestOptNullDefNamed {
   TestOptNullDefNamedWorkerPool(
       {int? arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
@@ -1870,53 +2094,65 @@ base class TestOptNullDefNamedWorkerPool extends sq
         );
 }
 
+/// WorkerService operations for TestOptNullNamedField
+extension _$TestOptNullNamedField$Operations on TestOptNullNamedField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptNullNamedField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullNamedField$Invoker on sq.Invoker
+    implements TestOptNullNamedField {}
+
+/// Facade for TestOptNullNamedField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullNamedField$Facade implements TestOptNullNamedField {}
+
 /// WorkerService class for TestOptNullNamedField
-class _$TestOptNullNamedFieldWorkerService extends TestOptNullNamedField
+class _$TestOptNullNamedField$WorkerService extends TestOptNullNamedField
     implements sq.WorkerService {
-  _$TestOptNullNamedFieldWorkerService({super.arg1}) : super();
+  _$TestOptNullNamedField$WorkerService({super.arg1}) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptNullNamedField
-sq.WorkerService $TestOptNullNamedFieldInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullNamedFieldWorkerService(
-    arg1: $mc.nvalue<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestOptNullNamedFieldInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullNamedField$WorkerService(arg1: $mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullNamedField
 base class TestOptNullNamedFieldWorker extends sq.Worker
+    with _$TestOptNullNamedField$Invoker, _$TestOptNullNamedField$Facade
     implements TestOptNullNamedField {
   TestOptNullNamedFieldWorker(
       {this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestOptNullNamedFieldActivator(sq.Squadron.platformType), args: [
-          arg1,
-        ]);
+      : super($TestOptNullNamedFieldActivator(sq.Squadron.platformType),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullNamedFieldWorker.vm(
       {this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullNamedFieldActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullNamedFieldWorker.js(
       {this.arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullNamedFieldActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -1925,17 +2161,19 @@ base class TestOptNullNamedFieldWorker extends sq.Worker
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullNamedFieldActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   @override
   final int? arg1;
 }
 
 /// Worker pool for TestOptNullNamedField
-base class TestOptNullNamedFieldWorkerPool extends sq
-    .WorkerPool<TestOptNullNamedFieldWorker> implements TestOptNullNamedField {
+base class TestOptNullNamedFieldWorkerPool
+    extends sq.WorkerPool<TestOptNullNamedFieldWorker>
+    with _$TestOptNullNamedField$Facade
+    implements TestOptNullNamedField {
   TestOptNullNamedFieldWorkerPool(
       {this.arg1,
       sq.ConcurrencySettings? concurrencySettings,
@@ -1995,53 +2233,65 @@ base class TestOptNullNamedFieldWorkerPool extends sq
   final int? arg1;
 }
 
+/// WorkerService operations for TestOptDefNamedField
+extension _$TestOptDefNamedField$Operations on TestOptDefNamedField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptDefNamedField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptDefNamedField$Invoker on sq.Invoker
+    implements TestOptDefNamedField {}
+
+/// Facade for TestOptDefNamedField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptDefNamedField$Facade implements TestOptDefNamedField {}
+
 /// WorkerService class for TestOptDefNamedField
-class _$TestOptDefNamedFieldWorkerService extends TestOptDefNamedField
+class _$TestOptDefNamedField$WorkerService extends TestOptDefNamedField
     implements sq.WorkerService {
-  _$TestOptDefNamedFieldWorkerService({super.arg1 = 0}) : super();
+  _$TestOptDefNamedField$WorkerService({super.arg1 = 0}) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptDefNamedField
-sq.WorkerService $TestOptDefNamedFieldInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptDefNamedFieldWorkerService(
-    arg1: $mc.value<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestOptDefNamedFieldInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptDefNamedField$WorkerService(arg1: $mc.$de0($req.args[0]));
 }
 
 /// Worker for TestOptDefNamedField
 base class TestOptDefNamedFieldWorker extends sq.Worker
+    with _$TestOptDefNamedField$Invoker, _$TestOptDefNamedField$Facade
     implements TestOptDefNamedField {
   TestOptDefNamedFieldWorker(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestOptDefNamedFieldActivator(sq.Squadron.platformType), args: [
-          arg1,
-        ]);
+      : super($TestOptDefNamedFieldActivator(sq.Squadron.platformType),
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptDefNamedFieldWorker.vm(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedFieldActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptDefNamedFieldWorker.js(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedFieldActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -2050,17 +2300,19 @@ base class TestOptDefNamedFieldWorker extends sq.Worker
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedFieldActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   @override
   final int arg1;
 }
 
 /// Worker pool for TestOptDefNamedField
-base class TestOptDefNamedFieldWorkerPool extends sq
-    .WorkerPool<TestOptDefNamedFieldWorker> implements TestOptDefNamedField {
+base class TestOptDefNamedFieldWorkerPool
+    extends sq.WorkerPool<TestOptDefNamedFieldWorker>
+    with _$TestOptDefNamedField$Facade
+    implements TestOptDefNamedField {
   TestOptDefNamedFieldWorkerPool(
       {this.arg1 = 0,
       sq.ConcurrencySettings? concurrencySettings,
@@ -2120,54 +2372,65 @@ base class TestOptDefNamedFieldWorkerPool extends sq
   final int arg1;
 }
 
+/// WorkerService operations for TestOptNullDefNamedField
+extension _$TestOptNullDefNamedField$Operations on TestOptNullDefNamedField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptNullDefNamedField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullDefNamedField$Invoker on sq.Invoker
+    implements TestOptNullDefNamedField {}
+
+/// Facade for TestOptNullDefNamedField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullDefNamedField$Facade implements TestOptNullDefNamedField {}
+
 /// WorkerService class for TestOptNullDefNamedField
-class _$TestOptNullDefNamedFieldWorkerService extends TestOptNullDefNamedField
+class _$TestOptNullDefNamedField$WorkerService extends TestOptNullDefNamedField
     implements sq.WorkerService {
-  _$TestOptNullDefNamedFieldWorkerService({super.arg1 = 0}) : super();
+  _$TestOptNullDefNamedField$WorkerService({super.arg1 = 0}) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptNullDefNamedField
-sq.WorkerService $TestOptNullDefNamedFieldInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullDefNamedFieldWorkerService(
-    arg1: $mc.nvalue<int>()($req_.args[0]),
-  );
+sq.WorkerService $TestOptNullDefNamedFieldInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullDefNamedField$WorkerService(arg1: $mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullDefNamedField
 base class TestOptNullDefNamedFieldWorker extends sq.Worker
+    with _$TestOptNullDefNamedField$Invoker, _$TestOptNullDefNamedField$Facade
     implements TestOptNullDefNamedField {
   TestOptNullDefNamedFieldWorker(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullDefNamedFieldActivator(sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefNamedFieldWorker.vm(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullDefNamedFieldActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefNamedFieldWorker.js(
       {this.arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullDefNamedFieldActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -2176,9 +2439,9 @@ base class TestOptNullDefNamedFieldWorker extends sq.Worker
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullDefNamedFieldActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   @override
   final int? arg1;
@@ -2187,6 +2450,7 @@ base class TestOptNullDefNamedFieldWorker extends sq.Worker
 /// Worker pool for TestOptNullDefNamedField
 base class TestOptNullDefNamedFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefNamedFieldWorker>
+    with _$TestOptNullDefNamedField$Facade
     implements TestOptNullDefNamedField {
   TestOptNullDefNamedFieldWorkerPool(
       {this.arg1 = 0,
@@ -2248,80 +2512,126 @@ base class TestOptNullDefNamedFieldWorkerPool
   final int? arg1;
 }
 
-/// WorkerService class for TestTypedData
-class _$TestTypedDataWorkerService extends TestTypedData
-    implements sq.WorkerService {
-  _$TestTypedDataWorkerService() : super();
-
-  @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{
-    _$barId: ($req_) async {
-      typed_data.ByteBuffer? $res_;
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        $res_ = await bar(
-          $mc.list<int>($mc.value<int>())($req_.args[0]),
-          title: $mc.nvalue<String>()($req_.args[1]),
-          isLandscape: $mc.value<bool>()($req_.args[2]),
-          columns: sq.Converter.allowNull(
-              $mc.list<String>($mc.value<String>()))($req_.args[3]),
-          columnWidths: sq.Converter.allowNull(
-              $mc.map<int, double>(vcast: $mc.value<double>()))($req_.args[4]),
-          fontData: $mc.nvalue<typed_data.ByteData>()($req_.args[5]),
-          titleFonts: sq.Converter.allowNull($mc.map<int, typed_data.ByteData>(
-              vcast: $mc.value<typed_data.ByteData>()))($req_.args[6]),
-          dataFonts: sq.Converter.allowNull($mc.map<int, typed_data.ByteData>(
-              vcast: $mc.value<typed_data.ByteData>()))($req_.args[7]),
-        );
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        return $res_;
-      } finally {}
-    },
-    _$fooId: ($req_) async {
-      typed_data.Uint8List? $res_;
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        $res_ = await foo(
-          $mc.list<int>($mc.value<int>())($req_.args[0]),
-          isLandscape: $mc.value<bool>()($req_.args[1]),
-        );
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        return $res_;
-      } finally {}
-    },
-  });
+/// WorkerService operations for TestTypedData
+extension _$TestTypedData$Operations on TestTypedData {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({
+        _$barId: ($req) async {
+          final typed_data.ByteBuffer? $res;
+          try {
+            final $mc = _$X(contextAware: false);
+            $res = await bar($mc.$de2($req.args[0]),
+                title: $mc.$de3($req.args[1]),
+                isLandscape: $mc.$de4($req.args[2]),
+                columns: $mc.$de5($req.args[3]),
+                columnWidths: $mc.$de6($req.args[4]),
+                fontData: $mc.$de7($req.args[5]),
+                titleFonts: $mc.$de8($req.args[6]),
+                dataFonts: $mc.$de8($req.args[7]));
+          } finally {}
+          return $res;
+        },
+        _$fooId: ($req) async {
+          final typed_data.Uint8List? $res;
+          try {
+            final $mc = _$X(contextAware: false);
+            $res = await foo($mc.$de2($req.args[0]),
+                isLandscape: $mc.$de4($req.args[1]));
+          } finally {}
+          return $res;
+        },
+      });
 
   static const int _$barId = 1;
   static const int _$fooId = 2;
 }
 
-/// Service initializer for TestTypedData
-sq.WorkerService $TestTypedDataInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestTypedDataWorkerService();
+/// Invoker for TestTypedData, implements the public interface to invoke the
+/// remote service.
+mixin _$TestTypedData$Invoker on sq.Invoker implements TestTypedData {
+  @override
+  Future<typed_data.ByteBuffer?> bar(List<int> bytes,
+      {String? title,
+      bool isLandscape = true,
+      List<String>? columns,
+      Map<int, double>? columnWidths,
+      typed_data.ByteData? fontData,
+      Map<int, typed_data.ByteData>? titleFonts,
+      Map<int, typed_data.ByteData>? dataFonts}) async {
+    final dynamic $res;
+    try {
+      final $mc = _$X(contextAware: false);
+      $res = await send(
+        _$TestTypedData$Operations._$barId,
+        args: [
+          $mc.$se9(bytes),
+          title,
+          isLandscape,
+          $mc.$se10(columns),
+          $mc.$se11(columnWidths),
+          fontData,
+          $mc.$se11(titleFonts),
+          $mc.$se11(dataFonts)
+        ],
+      );
+    } finally {}
+    try {
+      final $mc = _$X(contextAware: false);
+      return $mc.$de12($res);
+    } finally {}
+  }
+
+  @override
+  Future<typed_data.Uint8List?> foo(List<int> bytes,
+      {bool isLandscape = true}) async {
+    final dynamic $res;
+    try {
+      final $mc = _$X(contextAware: false);
+      $res = await send(
+        _$TestTypedData$Operations._$fooId,
+        args: [$mc.$se9(bytes), isLandscape],
+      );
+    } finally {}
+    try {
+      final $mc = _$X(contextAware: false);
+      return $mc.$de13($res);
+    } finally {}
+  }
 }
 
+/// Facade for TestTypedData, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestTypedData$Facade implements TestTypedData {}
+
+/// WorkerService class for TestTypedData
+class _$TestTypedData$WorkerService extends TestTypedData
+    implements sq.WorkerService {
+  _$TestTypedData$WorkerService() : super();
+
+  sq.OperationsMap? _operations;
+
+  @override
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
+}
+
+/// Service initializer for TestTypedData
+sq.WorkerService $TestTypedDataInitializer(sq.WorkerRequest $req) =>
+    _$TestTypedData$WorkerService();
+
 /// Worker for TestTypedData
-base class TestTypedDataWorker extends sq.Worker implements TestTypedData {
+base class TestTypedDataWorker extends sq.Worker
+    with _$TestTypedData$Invoker, _$TestTypedData$Facade
+    implements TestTypedData {
   TestTypedDataWorker(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestTypedDataActivator(sq.Squadron.platformType));
+      : super($TestTypedDataActivator(sq.Squadron.platformType),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 
   TestTypedDataWorker.vm(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestTypedDataActivator(sq.SquadronPlatformType.vm));
+      : super($TestTypedDataActivator(sq.SquadronPlatformType.vm),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 
   TestTypedDataWorker.js(
       {sq.PlatformThreadHook? threadHook,
@@ -2332,67 +2642,13 @@ base class TestTypedDataWorker extends sq.Worker implements TestTypedData {
   TestTypedDataWorker.wasm(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestTypedDataActivator(sq.SquadronPlatformType.wasm));
-
-  @override
-  Future<typed_data.ByteBuffer?> bar(List<int> bytes,
-      {String? title,
-      bool isLandscape = true,
-      List<String>? columns,
-      Map<int, double>? columnWidths,
-      typed_data.ByteData? fontData,
-      Map<int, typed_data.ByteData>? titleFonts,
-      Map<int, typed_data.ByteData>? dataFonts}) async {
-    dynamic $res_;
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      $res_ = await send(
-        _$TestTypedDataWorkerService._$barId,
-        args: [
-          $mc.list()(bytes),
-          title,
-          isLandscape,
-          sq.Converter.allowNull($mc.list())(columns),
-          sq.Converter.allowNull($mc.map())(columnWidths),
-          fontData,
-          sq.Converter.allowNull($mc.map())(titleFonts),
-          sq.Converter.allowNull($mc.map())(dataFonts),
-        ],
-      );
-    } finally {}
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      return $mc.nvalue<typed_data.ByteBuffer>()($res_);
-    } finally {}
-  }
-
-  @override
-  Future<typed_data.Uint8List?> foo(List<int> bytes,
-      {bool isLandscape = true}) async {
-    dynamic $res_;
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      $res_ = await send(
-        _$TestTypedDataWorkerService._$fooId,
-        args: [
-          $mc.list()(bytes),
-          isLandscape,
-        ],
-      );
-    } finally {}
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      return $mc.nvalue<typed_data.Uint8List>()($res_);
-    } finally {}
-  }
+      : super($TestTypedDataActivator(sq.SquadronPlatformType.wasm),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestTypedData
 base class TestTypedDataWorkerPool extends sq.WorkerPool<TestTypedDataWorker>
+    with _$TestTypedData$Facade
     implements TestTypedData {
   TestTypedDataWorkerPool(
       {sq.ConcurrencySettings? concurrencySettings,
@@ -2458,37 +2714,59 @@ base class TestTypedDataWorkerPool extends sq.WorkerPool<TestTypedDataWorker>
       execute((w) => w.foo(bytes, isLandscape: isLandscape));
 }
 
+/// WorkerService operations for TestOptNullNamedPrivateField
+extension _$TestOptNullNamedPrivateField$Operations
+    on TestOptNullNamedPrivateField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptNullNamedPrivateField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullNamedPrivateField$Invoker on sq.Invoker
+    implements TestOptNullNamedPrivateField {}
+
+/// Facade for TestOptNullNamedPrivateField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullNamedPrivateField$Facade
+    implements TestOptNullNamedPrivateField {
+  @override
+  // ignore: unused_element
+  int? get _arg1 => throw UnimplementedError();
+}
+
 /// WorkerService class for TestOptNullNamedPrivateField
-class _$TestOptNullNamedPrivateFieldWorkerService
+class _$TestOptNullNamedPrivateField$WorkerService
     extends TestOptNullNamedPrivateField implements sq.WorkerService {
-  _$TestOptNullNamedPrivateFieldWorkerService({super.arg1}) : super();
+  _$TestOptNullNamedPrivateField$WorkerService({super.arg1}) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptNullNamedPrivateField
 sq.WorkerService $TestOptNullNamedPrivateFieldInitializer(
-    sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullNamedPrivateFieldWorkerService(
-    arg1: $mc.nvalue<int>()($req_.args[0]),
-  );
+    sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullNamedPrivateField$WorkerService(
+      arg1: $mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullNamedPrivateField
 base class TestOptNullNamedPrivateFieldWorker extends sq.Worker
+    with
+        _$TestOptNullNamedPrivateField$Invoker,
+        _$TestOptNullNamedPrivateField$Facade
     implements TestOptNullNamedPrivateField {
   TestOptNullNamedPrivateFieldWorker(
       {int? arg1,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptNullNamedPrivateFieldActivator(sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullNamedPrivateFieldWorker.vm(
       {int? arg1,
@@ -2496,9 +2774,9 @@ base class TestOptNullNamedPrivateFieldWorker extends sq.Worker
       sq.ExceptionManager? exceptionManager})
       : super(
             $TestOptNullNamedPrivateFieldActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullNamedPrivateFieldWorker.js(
       {int? arg1,
@@ -2506,9 +2784,7 @@ base class TestOptNullNamedPrivateFieldWorker extends sq.Worker
       sq.ExceptionManager? exceptionManager})
       : super(
             $TestOptNullNamedPrivateFieldActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -2519,18 +2795,15 @@ base class TestOptNullNamedPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptNullNamedPrivateFieldActivator(
                 sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
-
-  @override
-  // ignore: unused_element
-  int? get _arg1 => throw UnimplementedError();
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestOptNullNamedPrivateField
 base class TestOptNullNamedPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptNullNamedPrivateFieldWorker>
+    with _$TestOptNullNamedPrivateField$Facade
     implements TestOptNullNamedPrivateField {
   TestOptNullNamedPrivateFieldWorkerPool(
       {int? arg1,
@@ -2587,61 +2860,77 @@ base class TestOptNullNamedPrivateFieldWorkerPool
                   exceptionManager: exceptionManager),
           concurrencySettings: concurrencySettings,
         );
+}
 
+/// WorkerService operations for TestOptDefNamedPrivateField
+extension _$TestOptDefNamedPrivateField$Operations
+    on TestOptDefNamedPrivateField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptDefNamedPrivateField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptDefNamedPrivateField$Invoker on sq.Invoker
+    implements TestOptDefNamedPrivateField {}
+
+/// Facade for TestOptDefNamedPrivateField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptDefNamedPrivateField$Facade
+    implements TestOptDefNamedPrivateField {
   @override
   // ignore: unused_element
-  int? get _arg1 => throw UnimplementedError();
+  int get _arg1 => throw UnimplementedError();
 }
 
 /// WorkerService class for TestOptDefNamedPrivateField
-class _$TestOptDefNamedPrivateFieldWorkerService
+class _$TestOptDefNamedPrivateField$WorkerService
     extends TestOptDefNamedPrivateField implements sq.WorkerService {
-  _$TestOptDefNamedPrivateFieldWorkerService({super.arg1 = 0}) : super();
+  _$TestOptDefNamedPrivateField$WorkerService({super.arg1 = 0}) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptDefNamedPrivateField
 sq.WorkerService $TestOptDefNamedPrivateFieldInitializer(
-    sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptDefNamedPrivateFieldWorkerService(
-    arg1: $mc.value<int>()($req_.args[0]),
-  );
+    sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptDefNamedPrivateField$WorkerService(
+      arg1: $mc.$de0($req.args[0]));
 }
 
 /// Worker for TestOptDefNamedPrivateField
 base class TestOptDefNamedPrivateFieldWorker extends sq.Worker
+    with
+        _$TestOptDefNamedPrivateField$Invoker,
+        _$TestOptDefNamedPrivateField$Facade
     implements TestOptDefNamedPrivateField {
   TestOptDefNamedPrivateFieldWorker(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedPrivateFieldActivator(sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptDefNamedPrivateFieldWorker.vm(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedPrivateFieldActivator(sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptDefNamedPrivateFieldWorker.js(
       {int arg1 = 0,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestOptDefNamedPrivateFieldActivator(sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -2651,18 +2940,15 @@ base class TestOptDefNamedPrivateFieldWorker extends sq.Worker
       sq.ExceptionManager? exceptionManager})
       : super(
             $TestOptDefNamedPrivateFieldActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
-
-  @override
-  // ignore: unused_element
-  int get _arg1 => throw UnimplementedError();
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestOptDefNamedPrivateField
 base class TestOptDefNamedPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptDefNamedPrivateFieldWorker>
+    with _$TestOptDefNamedPrivateField$Facade
     implements TestOptDefNamedPrivateField {
   TestOptDefNamedPrivateFieldWorkerPool(
       {int arg1 = 0,
@@ -2719,34 +3005,52 @@ base class TestOptDefNamedPrivateFieldWorkerPool
                   exceptionManager: exceptionManager),
           concurrencySettings: concurrencySettings,
         );
+}
 
+/// WorkerService operations for TestOptNullDefNamedPrivateField
+extension _$TestOptNullDefNamedPrivateField$Operations
+    on TestOptNullDefNamedPrivateField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
+
+/// Invoker for TestOptNullDefNamedPrivateField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullDefNamedPrivateField$Invoker on sq.Invoker
+    implements TestOptNullDefNamedPrivateField {}
+
+/// Facade for TestOptNullDefNamedPrivateField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullDefNamedPrivateField$Facade
+    implements TestOptNullDefNamedPrivateField {
   @override
   // ignore: unused_element
-  int get _arg1 => throw UnimplementedError();
+  int? get _arg1 => throw UnimplementedError();
 }
 
 /// WorkerService class for TestOptNullDefNamedPrivateField
-class _$TestOptNullDefNamedPrivateFieldWorkerService
+class _$TestOptNullDefNamedPrivateField$WorkerService
     extends TestOptNullDefNamedPrivateField implements sq.WorkerService {
-  _$TestOptNullDefNamedPrivateFieldWorkerService({super.arg1 = 0}) : super();
+  _$TestOptNullDefNamedPrivateField$WorkerService({super.arg1 = 0}) : super();
+
+  sq.OperationsMap? _operations;
 
   @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
 }
 
 /// Service initializer for TestOptNullDefNamedPrivateField
 sq.WorkerService $TestOptNullDefNamedPrivateFieldInitializer(
-    sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullDefNamedPrivateFieldWorkerService(
-    arg1: $mc.nvalue<int>()($req_.args[0]),
-  );
+    sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullDefNamedPrivateField$WorkerService(
+      arg1: $mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullDefNamedPrivateField
 base class TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
+    with
+        _$TestOptNullDefNamedPrivateField$Invoker,
+        _$TestOptNullDefNamedPrivateField$Facade
     implements TestOptNullDefNamedPrivateField {
   TestOptNullDefNamedPrivateFieldWorker(
       {int? arg1 = 0,
@@ -2754,9 +3058,9 @@ base class TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
       sq.ExceptionManager? exceptionManager})
       : super(
             $TestOptNullDefNamedPrivateFieldActivator(sq.Squadron.platformType),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefNamedPrivateFieldWorker.vm(
       {int? arg1 = 0,
@@ -2765,9 +3069,9 @@ base class TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptNullDefNamedPrivateFieldActivator(
                 sq.SquadronPlatformType.vm),
-            args: [
-              arg1,
-            ]);
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefNamedPrivateFieldWorker.js(
       {int? arg1 = 0,
@@ -2776,9 +3080,7 @@ base class TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptNullDefNamedPrivateFieldActivator(
                 sq.SquadronPlatformType.js),
-            args: [
-              arg1,
-            ],
+            args: [arg1],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -2789,18 +3091,15 @@ base class TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
       : super(
             $TestOptNullDefNamedPrivateFieldActivator(
                 sq.SquadronPlatformType.wasm),
-            args: [
-              arg1,
-            ]);
-
-  @override
-  // ignore: unused_element
-  int? get _arg1 => throw UnimplementedError();
+            args: [arg1],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestOptNullDefNamedPrivateField
 base class TestOptNullDefNamedPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefNamedPrivateFieldWorker>
+    with _$TestOptNullDefNamedPrivateField$Facade
     implements TestOptNullDefNamedPrivateField {
   TestOptNullDefNamedPrivateFieldWorkerPool(
       {int? arg1 = 0,
@@ -2857,73 +3156,79 @@ base class TestOptNullDefNamedPrivateFieldWorkerPool
                   exceptionManager: exceptionManager),
           concurrencySettings: concurrencySettings,
         );
-
-  @override
-  // ignore: unused_element
-  int? get _arg1 => throw UnimplementedError();
 }
 
-/// WorkerService class for TestPrefixedImportType
-class _$TestPrefixedImportTypeWorkerService extends TestPrefixedImportType
-    implements sq.WorkerService {
-  _$TestPrefixedImportTypeWorkerService(super.typedData) : super();
-
-  @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{
-    _$getTypedDataId: ($req_) async {
-      typed_data.Int8List? $res_;
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        $res_ = await getTypedData();
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        return $res_;
-      } finally {}
-    },
-  });
+/// WorkerService operations for TestPrefixedImportType
+extension _$TestPrefixedImportType$Operations on TestPrefixedImportType {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({
+        _$getTypedDataId: ($req) => getTypedData(),
+      });
 
   static const int _$getTypedDataId = 1;
 }
 
+/// Invoker for TestPrefixedImportType, implements the public interface to invoke the
+/// remote service.
+mixin _$TestPrefixedImportType$Invoker on sq.Invoker
+    implements TestPrefixedImportType {
+  @override
+  Future<typed_data.Int8List?> getTypedData() async {
+    final dynamic $res = await send(
+      _$TestPrefixedImportType$Operations._$getTypedDataId,
+    );
+    try {
+      final $mc = _$X(contextAware: false);
+      return $mc.$de14($res);
+    } finally {}
+  }
+}
+
+/// Facade for TestPrefixedImportType, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestPrefixedImportType$Facade implements TestPrefixedImportType {}
+
+/// WorkerService class for TestPrefixedImportType
+class _$TestPrefixedImportType$WorkerService extends TestPrefixedImportType
+    implements sq.WorkerService {
+  _$TestPrefixedImportType$WorkerService(super.typedData) : super();
+
+  sq.OperationsMap? _operations;
+
+  @override
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
+}
+
 /// Service initializer for TestPrefixedImportType
-sq.WorkerService $TestPrefixedImportTypeInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestPrefixedImportTypeWorkerService(
-    $mc.value<typed_data.Int8List>()($req_.args[0]),
-  );
+sq.WorkerService $TestPrefixedImportTypeInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestPrefixedImportType$WorkerService($mc.$de15($req.args[0]));
 }
 
 /// Worker for TestPrefixedImportType
 base class TestPrefixedImportTypeWorker extends sq.Worker
+    with _$TestPrefixedImportType$Invoker, _$TestPrefixedImportType$Facade
     implements TestPrefixedImportType {
   TestPrefixedImportTypeWorker(this.typedData,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.Squadron.platformType),
-            args: [
-              typedData,
-            ]);
+            args: [typedData],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestPrefixedImportTypeWorker.vm(this.typedData,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.SquadronPlatformType.vm),
-            args: [
-              typedData,
-            ]);
+            args: [typedData],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestPrefixedImportTypeWorker.js(this.typedData,
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.SquadronPlatformType.js),
-            args: [
-              typedData,
-            ],
+            args: [typedData],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -2931,32 +3236,18 @@ base class TestPrefixedImportTypeWorker extends sq.Worker
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestPrefixedImportTypeActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              typedData,
-            ]);
+            args: [typedData],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   @override
   final typed_data.Int8List typedData;
-
-  @override
-  Future<typed_data.Int8List?> getTypedData() async {
-    dynamic $res_;
-    try {
-      $res_ = await send(
-        _$TestPrefixedImportTypeWorkerService._$getTypedDataId,
-      );
-    } finally {}
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      return $mc.nvalue<typed_data.Int8List>()($res_);
-    } finally {}
-  }
 }
 
 /// Worker pool for TestPrefixedImportType
 base class TestPrefixedImportTypeWorkerPool
     extends sq.WorkerPool<TestPrefixedImportTypeWorker>
+    with _$TestPrefixedImportType$Facade
     implements TestPrefixedImportType {
   TestPrefixedImportTypeWorkerPool(this.typedData,
       {sq.ConcurrencySettings? concurrencySettings,
@@ -3010,54 +3301,82 @@ base class TestPrefixedImportTypeWorkerPool
       execute((w) => w.getTypedData());
 }
 
-/// WorkerService class for TestOptNullDefNamedPrivateNonFinalField
-class _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService
-    extends TestOptNullDefNamedPrivateNonFinalField
-    implements sq.WorkerService {
-  _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService({super.state = 0})
-      : super();
-
-  @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{
-    _$getStateId: ($req_) async {
-      int? $res_;
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        $res_ = await getState();
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        return $res_;
-      } finally {}
-    },
-    _$setStateId: ($req_) {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext();
-      return setState(
-        $mc.nvalue<int>()($req_.args[0]),
-      );
-    },
-  });
+/// WorkerService operations for TestOptNullDefNamedPrivateNonFinalField
+extension _$TestOptNullDefNamedPrivateNonFinalField$Operations
+    on TestOptNullDefNamedPrivateNonFinalField {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({
+        _$getStateId: ($req) => getState(),
+        _$setStateId: ($req) {
+          final $mc = _$X(contextAware: false);
+          return setState($mc.$de1($req.args[0]));
+        },
+      });
 
   static const int _$getStateId = 1;
   static const int _$setStateId = 2;
 }
 
+/// Invoker for TestOptNullDefNamedPrivateNonFinalField, implements the public interface to invoke the
+/// remote service.
+mixin _$TestOptNullDefNamedPrivateNonFinalField$Invoker on sq.Invoker
+    implements TestOptNullDefNamedPrivateNonFinalField {
+  @override
+  Future<int?> getState() async {
+    final dynamic $res = await send(
+      _$TestOptNullDefNamedPrivateNonFinalField$Operations._$getStateId,
+    );
+    try {
+      final $mc = _$X(contextAware: false);
+      return $mc.$de1($res);
+    } finally {}
+  }
+
+  @override
+  Future<void> setState(int? state) => send(
+        _$TestOptNullDefNamedPrivateNonFinalField$Operations._$setStateId,
+        args: [state],
+      );
+}
+
+/// Facade for TestOptNullDefNamedPrivateNonFinalField, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestOptNullDefNamedPrivateNonFinalField$Facade
+    implements TestOptNullDefNamedPrivateNonFinalField {
+  @override
+  // ignore: unused_element
+  int? get _state => throw UnimplementedError();
+
+  @override
+  // ignore: unused_element
+  set _state(void value) => throw UnimplementedError();
+}
+
+/// WorkerService class for TestOptNullDefNamedPrivateNonFinalField
+class _$TestOptNullDefNamedPrivateNonFinalField$WorkerService
+    extends TestOptNullDefNamedPrivateNonFinalField
+    implements sq.WorkerService {
+  _$TestOptNullDefNamedPrivateNonFinalField$WorkerService({super.state = 0})
+      : super();
+
+  sq.OperationsMap? _operations;
+
+  @override
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
+}
+
 /// Service initializer for TestOptNullDefNamedPrivateNonFinalField
 sq.WorkerService $TestOptNullDefNamedPrivateNonFinalFieldInitializer(
-    sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService(
-    state: $mc.nvalue<int>()($req_.args[0]),
-  );
+    sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestOptNullDefNamedPrivateNonFinalField$WorkerService(
+      state: $mc.$de1($req.args[0]));
 }
 
 /// Worker for TestOptNullDefNamedPrivateNonFinalField
 base class TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
+    with
+        _$TestOptNullDefNamedPrivateNonFinalField$Invoker,
+        _$TestOptNullDefNamedPrivateNonFinalField$Facade
     implements TestOptNullDefNamedPrivateNonFinalField {
   TestOptNullDefNamedPrivateNonFinalFieldWorker(
       {int? state = 0,
@@ -3066,9 +3385,9 @@ base class TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
       : super(
             $TestOptNullDefNamedPrivateNonFinalFieldActivator(
                 sq.Squadron.platformType),
-            args: [
-              state,
-            ]);
+            args: [state],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefNamedPrivateNonFinalFieldWorker.vm(
       {int? state = 0,
@@ -3077,9 +3396,9 @@ base class TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
       : super(
             $TestOptNullDefNamedPrivateNonFinalFieldActivator(
                 sq.SquadronPlatformType.vm),
-            args: [
-              state,
-            ]);
+            args: [state],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestOptNullDefNamedPrivateNonFinalFieldWorker.js(
       {int? state = 0,
@@ -3088,9 +3407,7 @@ base class TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
       : super(
             $TestOptNullDefNamedPrivateNonFinalFieldActivator(
                 sq.SquadronPlatformType.js),
-            args: [
-              state,
-            ],
+            args: [state],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -3101,98 +3418,23 @@ base class TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
       : super(
             $TestOptNullDefNamedPrivateNonFinalFieldActivator(
                 sq.SquadronPlatformType.wasm),
-            args: [
-              state,
-            ]);
-
-  @override
-  Future<int?> getState() async {
-    dynamic $res_;
-    try {
-      $res_ = await send(
-        _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService._$getStateId,
-      );
-    } finally {}
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      return $mc.nvalue<int>()($res_);
-    } finally {}
-  }
-
-  @override
-  Future<void> setState(int? state) {
-    // ignore: unused_local_variable
-    final $mc = sq.MarshalingContext.none;
-    return send(
-      _$TestOptNullDefNamedPrivateNonFinalFieldWorkerService._$setStateId,
-      args: [
-        state,
-      ],
-    );
-  }
-
-  @override
-  // ignore: unused_element
-  int? get _state => throw UnimplementedError();
-
-  @override
-  // ignore: unused_element
-  set _state(void value) => throw UnimplementedError();
-}
-
-/// WorkerService class for TestInstallable
-class _$TestInstallableWorkerService extends TestInstallable
-    implements sq.WorkerService {
-  _$TestInstallableWorkerService(super.delay) : super();
-
-  @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{});
-}
-
-/// Service initializer for TestInstallable
-sq.WorkerService $TestInstallableInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestInstallableWorkerService(
-    $mc.value<int>()($req_.args[0]),
-  );
-}
-
-/// Worker for TestInstallable
-base class TestInstallableWorker extends sq.Worker implements TestInstallable {
-  TestInstallableWorker(int delay,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super($TestInstallableActivator(sq.Squadron.platformType), args: [
-          delay,
-        ]);
-
-  TestInstallableWorker.vm(int delay,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super($TestInstallableActivator(sq.SquadronPlatformType.vm), args: [
-          delay,
-        ]);
-
-  TestInstallableWorker.js(int delay,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super($TestInstallableActivator(sq.SquadronPlatformType.js),
-            args: [
-              delay,
-            ],
+            args: [state],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
+}
 
-  TestInstallableWorker.wasm(int delay,
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super($TestInstallableActivator(sq.SquadronPlatformType.wasm), args: [
-          delay,
-        ]);
+/// WorkerService operations for TestInstallable
+extension _$TestInstallable$Operations on TestInstallable {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({});
+}
 
+/// Invoker for TestInstallable, implements the public interface to invoke the
+/// remote service.
+mixin _$TestInstallable$Invoker on sq.Invoker implements TestInstallable {}
+
+/// Facade for TestInstallable, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestInstallable$Facade implements TestInstallable {
   @override
   FutureOr<void> install() => throw UnimplementedError();
 
@@ -3204,9 +3446,65 @@ base class TestInstallableWorker extends sq.Worker implements TestInstallable {
   int get _delay => throw UnimplementedError();
 }
 
+/// WorkerService class for TestInstallable
+class _$TestInstallable$WorkerService extends TestInstallable
+    implements sq.WorkerService {
+  _$TestInstallable$WorkerService(super.delay) : super();
+
+  sq.OperationsMap? _operations;
+
+  @override
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
+}
+
+/// Service initializer for TestInstallable
+sq.WorkerService $TestInstallableInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestInstallable$WorkerService($mc.$de0($req.args[0]));
+}
+
+/// Worker for TestInstallable
+base class TestInstallableWorker extends sq.Worker
+    with _$TestInstallable$Invoker, _$TestInstallable$Facade
+    implements TestInstallable {
+  TestInstallableWorker(int delay,
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($TestInstallableActivator(sq.Squadron.platformType),
+            args: [delay],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
+
+  TestInstallableWorker.vm(int delay,
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($TestInstallableActivator(sq.SquadronPlatformType.vm),
+            args: [delay],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
+
+  TestInstallableWorker.js(int delay,
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($TestInstallableActivator(sq.SquadronPlatformType.js),
+            args: [delay],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
+
+  TestInstallableWorker.wasm(int delay,
+      {sq.PlatformThreadHook? threadHook,
+      sq.ExceptionManager? exceptionManager})
+      : super($TestInstallableActivator(sq.SquadronPlatformType.wasm),
+            args: [delay],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
+}
+
 /// Worker pool for TestInstallable
 base class TestInstallableWorkerPool
-    extends sq.WorkerPool<TestInstallableWorker> implements TestInstallable {
+    extends sq.WorkerPool<TestInstallableWorker>
+    with _$TestInstallable$Facade
+    implements TestInstallable {
   TestInstallableWorkerPool(int delay,
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -3252,110 +3550,42 @@ base class TestInstallableWorkerPool
               exceptionManager: exceptionManager),
           concurrencySettings: concurrencySettings,
         );
-
-  @override
-  FutureOr<void> install() => throw UnimplementedError();
-
-  @override
-  FutureOr<void> uninstall() => throw UnimplementedError();
-
-  @override
-  // ignore: unused_element
-  int get _delay => throw UnimplementedError();
 }
 
-/// WorkerService class for TestRecordTypes
-class _$TestRecordTypesWorkerService extends TestRecordTypes
-    implements sq.WorkerService {
-  _$TestRecordTypesWorkerService() : super();
-
-  @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{
-    _$bothId: ($req_) async {
-      (int, {List<int> items}) $res_;
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        $res_ = await both();
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        return (((int, {List<int> items}) $) => [
-              ($.$1),
-              $mc.list()($.items),
-            ])($res_);
-      } finally {}
-    },
-    _$inputId: ($req_) async {
-      bool $res_;
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        $res_ = await input(
-          (($) {
-            $ as List;
-            return (
-              $mc.value<int>()($[0]),
-              items: $mc.list<int>($mc.value<int>())($[1]),
-            );
-          })($req_.args[0]),
-          (($) {
-            $ as List;
-            return (
-              $mc.value<int>()($[0]),
-              $mc.nlist<Object>($mc.value<Object>())($[1]),
-            );
-          })($req_.args[1]),
-          (($) {
-            $ as List;
-            return (
-              count: $mc.value<int>()($[0]),
-              items: $mc.nlist<Object>($mc.value<Object>())($[1]),
-            );
-          })($req_.args[2]),
-        );
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        return $res_;
-      } finally {}
-    },
-    _$namedId: ($req_) async {
-      ({int count, List<Object?> items}) $res_;
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        $res_ = await named();
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        return ((({int count, List<Object?> items}) $) => [
-              ($.count),
-              $mc.nlist($mc.value<Object>())($.items),
-            ])($res_);
-      } finally {}
-    },
-    _$unnamedId: ($req_) async {
-      (int, List<Object?>) $res_;
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        $res_ = await unnamed();
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        return (((int, List<Object?>) $) => [
-              ($.$1),
-              $mc.nlist($mc.value<Object>())($.$2),
-            ])($res_);
-      } finally {}
-    },
-  });
+/// WorkerService operations for TestRecordTypes
+extension _$TestRecordTypes$Operations on TestRecordTypes {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({
+        _$bothId: ($req) async {
+          final (int, {List<int> items}) $res = await both();
+          try {
+            final $mc = _$X(contextAware: false);
+            return $mc.$se16($res);
+          } finally {}
+        },
+        _$inputId: ($req) async {
+          final bool $res;
+          try {
+            final $mc = _$X(contextAware: false);
+            $res = await input($mc.$de17($req.args[0]), $mc.$de18($req.args[1]),
+                $mc.$de19($req.args[2]));
+          } finally {}
+          return $res;
+        },
+        _$namedId: ($req) async {
+          final ({int count, List<Object?> items}) $res = await named();
+          try {
+            final $mc = _$X(contextAware: false);
+            return $mc.$se20($res);
+          } finally {}
+        },
+        _$unnamedId: ($req) async {
+          final (int, List<Object?>) $res = await unnamed();
+          try {
+            final $mc = _$X(contextAware: false);
+            return $mc.$se21($res);
+          } finally {}
+        },
+      });
 
   static const int _$bothId = 1;
   static const int _$inputId = 2;
@@ -3363,24 +3593,94 @@ class _$TestRecordTypesWorkerService extends TestRecordTypes
   static const int _$unnamedId = 4;
 }
 
-/// Service initializer for TestRecordTypes
-sq.WorkerService $TestRecordTypesInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestRecordTypesWorkerService();
+/// Invoker for TestRecordTypes, implements the public interface to invoke the
+/// remote service.
+mixin _$TestRecordTypes$Invoker on sq.Invoker implements TestRecordTypes {
+  @override
+  Future<(int, {List<int> items})> both() async {
+    final dynamic $res = await send(
+      _$TestRecordTypes$Operations._$bothId,
+    );
+    try {
+      final $mc = _$X(contextAware: false);
+      return $mc.$de17($res);
+    } finally {}
+  }
+
+  @override
+  Future<bool> input((int, {List<int> items}) both, (int, List<Object>) pos,
+      ({int count, List<Object> items}) named) async {
+    final dynamic $res;
+    try {
+      final $mc = _$X(contextAware: false);
+      $res = await send(
+        _$TestRecordTypes$Operations._$inputId,
+        args: [$mc.$se16(both), $mc.$se21(pos), $mc.$se20(named)],
+      );
+    } finally {}
+    try {
+      final $mc = _$X(contextAware: false);
+      return $mc.$de4($res);
+    } finally {}
+  }
+
+  @override
+  Future<({int count, List<Object> items})> named() async {
+    final dynamic $res = await send(
+      _$TestRecordTypes$Operations._$namedId,
+    );
+    try {
+      final $mc = _$X(contextAware: false);
+      return $mc.$de19($res);
+    } finally {}
+  }
+
+  @override
+  Future<(int, List<Object>)> unnamed() async {
+    final dynamic $res = await send(
+      _$TestRecordTypes$Operations._$unnamedId,
+    );
+    try {
+      final $mc = _$X(contextAware: false);
+      return $mc.$de18($res);
+    } finally {}
+  }
 }
 
+/// Facade for TestRecordTypes, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestRecordTypes$Facade implements TestRecordTypes {}
+
+/// WorkerService class for TestRecordTypes
+class _$TestRecordTypes$WorkerService extends TestRecordTypes
+    implements sq.WorkerService {
+  _$TestRecordTypes$WorkerService() : super();
+
+  sq.OperationsMap? _operations;
+
+  @override
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
+}
+
+/// Service initializer for TestRecordTypes
+sq.WorkerService $TestRecordTypesInitializer(sq.WorkerRequest $req) =>
+    _$TestRecordTypes$WorkerService();
+
 /// Worker for TestRecordTypes
-base class TestRecordTypesWorker extends sq.Worker implements TestRecordTypes {
+base class TestRecordTypesWorker extends sq.Worker
+    with _$TestRecordTypes$Invoker, _$TestRecordTypes$Facade
+    implements TestRecordTypes {
   TestRecordTypesWorker(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestRecordTypesActivator(sq.Squadron.platformType));
+      : super($TestRecordTypesActivator(sq.Squadron.platformType),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 
   TestRecordTypesWorker.vm(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestRecordTypesActivator(sq.SquadronPlatformType.vm));
+      : super($TestRecordTypesActivator(sq.SquadronPlatformType.vm),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 
   TestRecordTypesWorker.js(
       {sq.PlatformThreadHook? threadHook,
@@ -3391,107 +3691,15 @@ base class TestRecordTypesWorker extends sq.Worker implements TestRecordTypes {
   TestRecordTypesWorker.wasm(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestRecordTypesActivator(sq.SquadronPlatformType.wasm));
-
-  @override
-  Future<(int, {List<int> items})> both() async {
-    dynamic $res_;
-    try {
-      $res_ = await send(
-        _$TestRecordTypesWorkerService._$bothId,
-      );
-    } finally {}
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      return (($) {
-        $ as List;
-        return (
-          $mc.value<int>()($[0]),
-          items: $mc.list<int>($mc.value<int>())($[1]),
-        );
-      })($res_);
-    } finally {}
-  }
-
-  @override
-  Future<bool> input((int, {List<int> items}) both, (int, List<Object?>) pos,
-      ({int count, List<Object?> items}) named) async {
-    dynamic $res_;
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      $res_ = await send(
-        _$TestRecordTypesWorkerService._$inputId,
-        args: [
-          (((int, {List<int> items}) $) => [
-                ($.$1),
-                $mc.list()($.items),
-              ])(both),
-          (((int, List<Object?>) $) => [
-                ($.$1),
-                $mc.nlist($mc.value<Object>())($.$2),
-              ])(pos),
-          ((({int count, List<Object?> items}) $) => [
-                ($.count),
-                $mc.nlist($mc.value<Object>())($.items),
-              ])(named),
-        ],
-      );
-    } finally {}
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      return $mc.value<bool>()($res_);
-    } finally {}
-  }
-
-  @override
-  Future<({int count, List<Object?> items})> named() async {
-    dynamic $res_;
-    try {
-      $res_ = await send(
-        _$TestRecordTypesWorkerService._$namedId,
-      );
-    } finally {}
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      return (($) {
-        $ as List;
-        return (
-          count: $mc.value<int>()($[0]),
-          items: $mc.nlist<Object>($mc.value<Object>())($[1]),
-        );
-      })($res_);
-    } finally {}
-  }
-
-  @override
-  Future<(int, List<Object?>)> unnamed() async {
-    dynamic $res_;
-    try {
-      $res_ = await send(
-        _$TestRecordTypesWorkerService._$unnamedId,
-      );
-    } finally {}
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      return (($) {
-        $ as List;
-        return (
-          $mc.value<int>()($[0]),
-          $mc.nlist<Object>($mc.value<Object>())($[1]),
-        );
-      })($res_);
-    } finally {}
-  }
+      : super($TestRecordTypesActivator(sq.SquadronPlatformType.wasm),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestRecordTypes
 base class TestRecordTypesWorkerPool
-    extends sq.WorkerPool<TestRecordTypesWorker> implements TestRecordTypes {
+    extends sq.WorkerPool<TestRecordTypesWorker>
+    with _$TestRecordTypes$Facade
+    implements TestRecordTypes {
   TestRecordTypesWorkerPool(
       {sq.ConcurrencySettings? concurrencySettings,
       sq.PlatformThreadHook? threadHook,
@@ -3536,74 +3744,86 @@ base class TestRecordTypesWorkerPool
   Future<(int, {List<int> items})> both() => execute((w) => w.both());
 
   @override
-  Future<bool> input((int, {List<int> items}) both, (int, List<Object?>) pos,
-          ({int count, List<Object?> items}) named) =>
+  Future<bool> input((int, {List<int> items}) both, (int, List<Object>) pos,
+          ({int count, List<Object> items}) named) =>
       execute((w) => w.input(both, pos, named));
 
   @override
-  Future<({int count, List<Object?> items})> named() =>
+  Future<({int count, List<Object> items})> named() =>
       execute((w) => w.named());
 
   @override
-  Future<(int, List<Object?>)> unnamed() => execute((w) => w.unnamed());
+  Future<(int, List<Object>)> unnamed() => execute((w) => w.unnamed());
 }
 
-/// WorkerService class for TestRequiredSuperParam
-class _$TestRequiredSuperParamWorkerService extends TestRequiredSuperParam
-    implements sq.WorkerService {
-  _$TestRequiredSuperParamWorkerService({required super.path}) : super();
-
-  @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{
-    _$clearId: ($req_) {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext();
-      return clear();
-    },
-  });
+/// WorkerService operations for TestRequiredSuperParam
+extension _$TestRequiredSuperParam$Operations on TestRequiredSuperParam {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({
+        _$clearId: ($req) => clear(),
+      });
 
   static const int _$clearId = 1;
 }
 
+/// Invoker for TestRequiredSuperParam, implements the public interface to invoke the
+/// remote service.
+mixin _$TestRequiredSuperParam$Invoker on sq.Invoker
+    implements TestRequiredSuperParam {
+  @override
+  Future<void> clear() => send(
+        _$TestRequiredSuperParam$Operations._$clearId,
+      );
+}
+
+/// Facade for TestRequiredSuperParam, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestRequiredSuperParam$Facade implements TestRequiredSuperParam {}
+
+/// WorkerService class for TestRequiredSuperParam
+class _$TestRequiredSuperParam$WorkerService extends TestRequiredSuperParam
+    implements sq.WorkerService {
+  _$TestRequiredSuperParam$WorkerService({required super.path}) : super();
+
+  sq.OperationsMap? _operations;
+
+  @override
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
+}
+
 /// Service initializer for TestRequiredSuperParam
-sq.WorkerService $TestRequiredSuperParamInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestRequiredSuperParamWorkerService(
-    path: $mc.value<String>()($req_.args[0]),
-  );
+sq.WorkerService $TestRequiredSuperParamInitializer(sq.WorkerRequest $req) {
+  final $mc = _$X(contextAware: false);
+  return _$TestRequiredSuperParam$WorkerService(path: $mc.$de22($req.args[0]));
 }
 
 /// Worker for TestRequiredSuperParam
 base class TestRequiredSuperParamWorker extends sq.Worker
+    with _$TestRequiredSuperParam$Invoker, _$TestRequiredSuperParam$Facade
     implements TestRequiredSuperParam {
   TestRequiredSuperParamWorker(
       {required this.path,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestRequiredSuperParamActivator(sq.Squadron.platformType),
-            args: [
-              path,
-            ]);
+            args: [path],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestRequiredSuperParamWorker.vm(
       {required this.path,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestRequiredSuperParamActivator(sq.SquadronPlatformType.vm),
-            args: [
-              path,
-            ]);
+            args: [path],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   TestRequiredSuperParamWorker.js(
       {required this.path,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestRequiredSuperParamActivator(sq.SquadronPlatformType.js),
-            args: [
-              path,
-            ],
+            args: [path],
             threadHook: threadHook,
             exceptionManager: exceptionManager);
 
@@ -3612,24 +3832,18 @@ base class TestRequiredSuperParamWorker extends sq.Worker
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
       : super($TestRequiredSuperParamActivator(sq.SquadronPlatformType.wasm),
-            args: [
-              path,
-            ]);
+            args: [path],
+            threadHook: threadHook,
+            exceptionManager: exceptionManager);
 
   @override
   final String path;
-
-  @override
-  Future<void> clear() {
-    return send(
-      _$TestRequiredSuperParamWorkerService._$clearId,
-    );
-  }
 }
 
 /// Worker pool for TestRequiredSuperParam
 base class TestRequiredSuperParamWorkerPool
     extends sq.WorkerPool<TestRequiredSuperParamWorker>
+    with _$TestRequiredSuperParam$Facade
     implements TestRequiredSuperParam {
   TestRequiredSuperParamWorkerPool(
       {required this.path,
@@ -3694,52 +3908,72 @@ base class TestRequiredSuperParamWorkerPool
   Future<void> clear() => execute((w) => w.clear());
 }
 
-/// WorkerService class for TestBigInt
-class _$TestBigIntWorkerService extends TestBigInt implements sq.WorkerService {
-  _$TestBigIntWorkerService() : super();
-
-  @override
-  late final Map<int, sq.CommandHandler> operations =
-      Map.unmodifiable(<int, sq.CommandHandler>{
-    _$addId: ($req_) async {
-      BigInt $res_;
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        $res_ = await add(
-          $mc.value<BigInt>()($req_.args[0]),
-          $mc.value<BigInt>()($req_.args[1]),
-        );
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final $mc = sq.MarshalingContext();
-        return $res_;
-      } finally {}
-    },
-  });
+/// WorkerService operations for TestBigInt
+extension _$TestBigInt$Operations on TestBigInt {
+  sq.OperationsMap _$getOperations() => Map.unmodifiable({
+        _$addId: ($req) async {
+          final BigInt $res;
+          try {
+            final $mc = _$X(contextAware: false);
+            $res = await add($mc.$de23($req.args[0]), $mc.$de23($req.args[1]));
+          } finally {}
+          return $res;
+        },
+      });
 
   static const int _$addId = 1;
 }
 
-/// Service initializer for TestBigInt
-sq.WorkerService $TestBigIntInitializer(sq.WorkerRequest $req_) {
-  // ignore: unused_local_variable
-  final $mc = sq.MarshalingContext();
-  return _$TestBigIntWorkerService();
+/// Invoker for TestBigInt, implements the public interface to invoke the
+/// remote service.
+mixin _$TestBigInt$Invoker on sq.Invoker implements TestBigInt {
+  @override
+  Future<BigInt> add(BigInt a, BigInt b) async {
+    final dynamic $res = await send(
+      _$TestBigInt$Operations._$addId,
+      args: [a, b],
+    );
+    try {
+      final $mc = _$X(contextAware: false);
+      return $mc.$de23($res);
+    } finally {}
+  }
 }
 
+/// Facade for TestBigInt, implements other details of the service not related to
+/// invoking the remote service.
+mixin _$TestBigInt$Facade implements TestBigInt {}
+
+/// WorkerService class for TestBigInt
+class _$TestBigInt$WorkerService extends TestBigInt
+    implements sq.WorkerService {
+  _$TestBigInt$WorkerService() : super();
+
+  sq.OperationsMap? _operations;
+
+  @override
+  sq.OperationsMap get operations => (_operations ??= _$getOperations());
+}
+
+/// Service initializer for TestBigInt
+sq.WorkerService $TestBigIntInitializer(sq.WorkerRequest $req) =>
+    _$TestBigInt$WorkerService();
+
 /// Worker for TestBigInt
-base class TestBigIntWorker extends sq.Worker implements TestBigInt {
+base class TestBigIntWorker extends sq.Worker
+    with _$TestBigInt$Invoker, _$TestBigInt$Facade
+    implements TestBigInt {
   TestBigIntWorker(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestBigIntActivator(sq.Squadron.platformType));
+      : super($TestBigIntActivator(sq.Squadron.platformType),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 
   TestBigIntWorker.vm(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestBigIntActivator(sq.SquadronPlatformType.vm));
+      : super($TestBigIntActivator(sq.SquadronPlatformType.vm),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 
   TestBigIntWorker.js(
       {sq.PlatformThreadHook? threadHook,
@@ -3750,32 +3984,13 @@ base class TestBigIntWorker extends sq.Worker implements TestBigInt {
   TestBigIntWorker.wasm(
       {sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager})
-      : super($TestBigIntActivator(sq.SquadronPlatformType.wasm));
-
-  @override
-  Future<BigInt> add(BigInt a, BigInt b) async {
-    dynamic $res_;
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      $res_ = await send(
-        _$TestBigIntWorkerService._$addId,
-        args: [
-          a,
-          b,
-        ],
-      );
-    } finally {}
-    try {
-      // ignore: unused_local_variable
-      final $mc = sq.MarshalingContext.none;
-      return $mc.value<BigInt>()($res_);
-    } finally {}
-  }
+      : super($TestBigIntActivator(sq.SquadronPlatformType.wasm),
+            threadHook: threadHook, exceptionManager: exceptionManager);
 }
 
 /// Worker pool for TestBigInt
 base class TestBigIntWorkerPool extends sq.WorkerPool<TestBigIntWorker>
+    with _$TestBigInt$Facade
     implements TestBigInt {
   TestBigIntWorkerPool(
       {sq.ConcurrencySettings? concurrencySettings,
@@ -3819,4 +4034,61 @@ base class TestBigIntWorkerPool extends sq.WorkerPool<TestBigIntWorker>
 
   @override
   Future<BigInt> add(BigInt a, BigInt b) => execute((w) => w.add(a, b));
+}
+
+final class _$X extends sq.MarshalingContext {
+  _$X({super.contextAware});
+  late final $de0 = value<int>();
+  late final $de1 = nvalue<int>();
+  late final $de2 = list<int>(value<int>());
+  late final $de3 = nvalue<String>();
+  late final $de4 = value<bool>();
+  late final $de5 = sq.Converter.allowNull(list<String>(value<String>()));
+  late final $de6 =
+      sq.Converter.allowNull(map<int, double>(vcast: value<double>()));
+  late final $de7 = nvalue<typed_data.ByteData>();
+  late final $de8 = sq.Converter.allowNull(
+      map<int, typed_data.ByteData>(vcast: value<typed_data.ByteData>()));
+  late final $se9 = list<int>();
+  late final $se10 = sq.Converter.allowNull(list<String>());
+  late final $se11 = sq.Converter.allowNull(map());
+  late final $de12 = nvalue<typed_data.ByteBuffer>();
+  late final $de13 = nvalue<typed_data.Uint8List>();
+  late final $de14 = nvalue<typed_data.Int8List>();
+  late final $de15 = value<typed_data.Int8List>();
+  late final $se16 = (((int, {List<int> items}) $) => [
+        $.$1,
+        list<int>()($.items),
+      ]);
+  late final $de17 = (($) {
+    $ as List;
+    return (
+      value<int>()($[0]),
+      items: list<int>(value<int>())($[1]),
+    );
+  });
+  late final $de18 = (($) {
+    $ as List;
+    return (
+      value<int>()($[0]),
+      nlist<Object>(value<Object>())($[1]),
+    );
+  });
+  late final $de19 = (($) {
+    $ as List;
+    return (
+      count: value<int>()($[0]),
+      items: nlist<Object>(value<Object>())($[1]),
+    );
+  });
+  late final $se20 = ((({int count, List<Object> items}) $) => [
+        $.count,
+        nlist<Object>()($.items),
+      ]);
+  late final $se21 = (((int, List<Object>) $) => [
+        $.$1,
+        nlist<Object>()($.$2),
+      ]);
+  late final $de22 = value<String>();
+  late final $de23 = value<BigInt>();
 }

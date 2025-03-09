@@ -1,10 +1,10 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
 
 import '../types/extensions.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
+import 'serialization_context.dart';
 
 part 'marshaler_explicit.dart';
 part 'marshaler_json.dart';
@@ -15,18 +15,8 @@ abstract class Marshaler {
 
   bool targets(ManagedType type);
 
-  String serializerOf(ManagedType type);
-  String deserializerOf(ManagedType type);
-
-  String serialize(String expr, ManagedType type) {
-    final serialize = serializerOf(type);
-    return serialize.isEmpty ? expr : '$serialize($expr)';
-  }
-
-  String deserialize(String expr, ManagedType type) {
-    final deserialize = deserializerOf(type);
-    return deserialize.isEmpty ? expr : '$deserialize($expr)';
-  }
+  DeSer? serializerOf(SerializationContext context, ManagedType type);
+  DeSer? deserializerOf(SerializationContext context, ManagedType type);
 
   static Marshaler self(
           String typeName,
@@ -44,10 +34,4 @@ abstract class Marshaler {
   static Marshaler explicit(TypeManager typeManager, DartObject marshaler,
           ManagedType marshalerType) =>
       _ExplicitMarshaler(typeManager, marshaler, marshalerType);
-}
-
-enum ContextAwareness {
-  none,
-  optional,
-  named,
 }

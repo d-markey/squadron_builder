@@ -2,7 +2,7 @@ part of 'worker_assets.dart';
 
 extension on WorkerAssets {
   /// Worker pool
-  String _generateWorkerPool(List<SquadronMethodReader> commands,
+  String _generatePool(List<SquadronMethodReader> commands,
       List<DartMethodReader> unimplemented, bool finalizable) {
     final poolParams = _service.parameters.clone();
     final cs =
@@ -16,7 +16,7 @@ extension on WorkerAssets {
     final workerPool = finalizable ? '_\$$_workerPool' : _workerPool;
 
     var workerPoolCode = '''/// Worker pool for $_name
-        base class $workerPool extends $TWorkerPool<$_worker> implements $_name {
+        base class $workerPool extends $TWorkerPool<$_worker> with $_serviceFacade implements $_name {
 
           $workerPool($poolParams) : super(
               ($TExceptionManager exceptionManager) => $_worker(${serviceParams.asArguments()}),
@@ -41,10 +41,6 @@ extension on WorkerAssets {
           ${_service.fields.values.map((f) => f.override(_typeManager)).join('\n\n')}
 
           ${commands.map((cmd) => cmd.poolMethod()).join('\n\n')}
-
-          ${unimplemented.map((m) => m.unimplemented()).join('\n\n')}
-
-          ${_service.accessors.where((a) => !a.isOperationMap).map((a) => a.unimplemented(_typeManager)).join('\n\n')}
 
           ${finalizable ? 'final $TObject _detachToken = $TObject();' : ''}
         }
@@ -94,12 +90,12 @@ extension on WorkerAssets {
 
           ${unimplemented.map((cmd) => cmd.forwardTo(instance)).join('\n\n')}
 
-          ${_service.accessors.where((a) => !a.isOperationMap).map((a) => a.forwardTo(instance, _typeManager)).join('\n\n')}
+          ${_service.accessors.where((a) => !a.isOperationsMap).map((a) => a.forwardTo(instance, _typeManager)).join('\n\n')}
 
           ${_typeManager.getWorkerPoolOverrides().entries.map((e) => _forwardOverride(e.key, instance, e.value)).join('\n\n')}
 
           $_override
-          final $TMap<$TInt, $TCommandHandler> operations = $TWorkerService.noOperations;
+          final $TOperationsMap operations = $TWorkerService.noOperations;
         }''';
     }
 

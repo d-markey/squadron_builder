@@ -3,44 +3,31 @@ import 'package:analyzer/dart/element/element.dart';
 
 class AnnotationReader<T> {
   AnnotationReader(Element? element)
-      : _annotations = element?.findAnnotations<T>().toList() ?? const [];
+      : annotations = element?.findAnnotations<T>().toList() ?? const [];
 
-  final List<DartObject> _annotations;
-
-  bool get isEmpty => _annotations.isEmpty;
-
-  String? getString(String fieldName) {
-    String? value;
-    for (var a in _annotations) {
-      final v = a.getField(fieldName)?.toStringValue()?.trim() ?? '';
-      if (v.isNotEmpty) {
-        value = v;
-      }
+  AnnotationReader.single(Element? element)
+      : annotations = element?.findAnnotations<T>().toList() ?? const [] {
+    if (annotations.length > 1) {
+      throw UnsupportedError('Too many annotations for $element');
     }
-    return value;
   }
 
-  int getInt(String fieldName) {
-    var value = 0;
-    for (var a in _annotations) {
-      final v = a.getField(fieldName)?.toIntValue();
-      if (v != null) {
-        value = value | v;
-      }
-    }
-    return value;
-  }
+  final List<DartObject> annotations;
 
-  bool getBool(String fieldName) {
-    var value = false;
-    for (var a in _annotations) {
-      final v = a.getField(fieldName)?.toBoolValue();
-      if (v != null) {
-        value = value || v;
-      }
-    }
-    return value;
-  }
+  bool get isEmpty => annotations.isEmpty;
+}
+
+extension AnnotationReaderExt on DartObject? {
+  String getString(String fieldName) =>
+      this?.getField(fieldName)?.toStringValue()?.trim() ?? '';
+
+  int getInt(String fieldName) => this?.getField(fieldName)?.toIntValue() ?? 0;
+
+  bool getBool(String fieldName) =>
+      this?.getField(fieldName)?.toBoolValue() ?? false;
+
+  bool? getNullableBool(String fieldName) =>
+      this?.getField(fieldName)?.toBoolValue();
 }
 
 extension AnnotationExt on Element {

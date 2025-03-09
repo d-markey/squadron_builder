@@ -1,7 +1,8 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:squadron/squadron.dart';
+import 'package:squadron/squadron.dart' as squadron;
+import 'package:squadron_builder/src/marshalers/serialization_context.dart';
 
 import '../types/type_manager.dart';
 import 'annotations_reader.dart';
@@ -11,11 +12,12 @@ import 'squadron_parameters.dart';
 class SquadronServiceReader {
   SquadronServiceReader._(
       ClassElement clazz,
-      TypeManager typeManager,
+      this.typeManager,
+      this.context,
+      this.worker,
       this.local,
       this.pool,
       this.vm,
-      this.web,
       this.js,
       this.wasm,
       this.baseUrl)
@@ -33,15 +35,18 @@ class SquadronServiceReader {
   final methods = <MethodElement>[];
 
   final String name;
+  final bool worker;
   final bool local;
   final bool pool;
   final bool vm;
-  final bool web;
-  final bool wasm;
   final bool js;
+  final bool wasm;
   final String baseUrl;
 
-  TypeManager get typeManager => parameters.typeManager;
+  bool get web => js | wasm;
+
+  final TypeManager typeManager;
+  final SerializationContext context;
 
   void _load(ClassElement clazz) {
     if (clazz.isAbstract ||
@@ -86,24 +91,40 @@ class SquadronServiceReader {
             (a.isSetter && !fields.containsKey(a.name.replaceAll('=', ''))))));
   }
 
-  static SquadronServiceReader? load(
-      ClassElement clazz, TypeManager typeManager) {
-    final reader = AnnotationReader<SquadronService>(clazz);
+  static SquadronServiceReader? load(ClassElement clazz,
+      TypeManager typeManager, SerializationContext context) {
+    final reader = AnnotationReader<squadron.SquadronService>(clazz);
     if (reader.isEmpty) return null;
-    final local = reader.getBool('local');
-    final pool = reader.getBool('pool');
-    final targetPlatform = reader.getInt('targetPlatform');
 
-    final vm = targetPlatform.hasVm;
-    final js = targetPlatform.hasJs;
-    final wasm = targetPlatform.hasWasm;
-    final web = js | wasm;
+    var local = false;
+    var worker = false;
+    var pool = false;
+    var vm = false;
+    var js = false;
+    var wasm = false;
 
-    var baseUrl = reader.getString('baseUrl') ?? '';
+    var baseUrl = '';
+
+    for (var annotation in reader.annotations) {
+      if (annotation.getBool('local')) {
+        local = true;
+      } else {
+        worker = true;
+        final targetPlatform = annotation.getInt('targetPlatform');
+        if (targetPlatform.hasVm) vm = true;
+        if (targetPlatform.hasJs) js = true;
+        if (targetPlatform.hasWasm) wasm = true;
+        if (annotation.getBool('pool')) pool = true;
+        if (baseUrl.isEmpty) {
+          baseUrl = annotation.getString('baseUrl');
+        }
+      }
+    }
+
     if (baseUrl.isNotEmpty && baseUrl.endsWith('/')) {
       baseUrl = baseUrl.substring(0, baseUrl.length - 1);
     }
-    return SquadronServiceReader._(
-        clazz, typeManager, local, pool, vm, web, js, wasm, baseUrl);
+    return SquadronServiceReader._(clazz, typeManager, context, worker, local,
+        pool, vm, js, wasm, baseUrl);
   }
 }

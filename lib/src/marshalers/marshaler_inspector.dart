@@ -1,4 +1,4 @@
-part of 'managed_type.dart';
+part of '../types/managed_type.dart';
 
 class MarshalerInspector extends SimpleElementVisitor {
   MarshalerInspector(this.typeManager);

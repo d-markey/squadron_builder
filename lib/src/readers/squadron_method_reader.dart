@@ -2,12 +2,17 @@ part of 'dart_method_reader.dart';
 
 /// Reader for service methods implemented in a SquadronService
 class SquadronMethodReader extends DartMethodReader {
-  SquadronMethodReader._(MethodElement method, this.inspectRequest,
-      this.inspectResponse, TypeManager typeManager)
+  SquadronMethodReader._(
+      MethodElement method,
+      this.inspectRequest,
+      this.inspectResponse,
+      this.withContext,
+      TypeManager typeManager,
+      SerializationContext context)
       : id = '_\$${method.name}Id',
         patchedReturnType = _patchReturnType(method, typeManager),
         _resultMarshaler = typeManager.getExplicitMarshaler(method),
-        super._(method, typeManager);
+        super._(method, typeManager, context);
 
   static ManagedType _patchReturnType(
       MethodElement method, TypeManager typeManager) {
@@ -21,6 +26,7 @@ class SquadronMethodReader extends DartMethodReader {
 
   final bool inspectRequest;
   final bool inspectResponse;
+  final bool? withContext;
 
   int? _index;
   int get index => _index ?? -1;
@@ -44,16 +50,11 @@ class SquadronMethodReader extends DartMethodReader {
 
   final Marshaler? _resultMarshaler;
 
-  bool get needsSerialization => _resultMarshaler != null;
+  DeSer? getSerializer(SerializationContext context) =>
+      context.getSerializer(valueType, _resultMarshaler);
 
-  String get serializer =>
-      _resultMarshaler?.serializerOf(valueType) ?? valueType.getSerializer();
-
-  String get deserializer =>
-      _resultMarshaler?.deserializerOf(valueType) ??
-      valueType.getDeserializer();
-
-  bool get requiresUnmarshaling => _resultMarshaler != null;
+  DeSer? getDeserializer(SerializationContext context) =>
+      context.getDeserializer(valueType, _resultMarshaler);
 
   @override
   void _init(MethodElement method) {

@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 
 import '../_overrides.dart';
 import '../build_step_events.dart';
+import '../marshalers/serialization_context.dart';
 import '../readers/dart_method_reader.dart';
 import '../readers/squadron_service_reader.dart';
 import '../types/type_manager.dart';
@@ -25,29 +26,33 @@ part 'worker_assets_worker_pool.dart';
 class WorkerAssets {
   WorkerAssets(BuildStep buildStep, this._service)
       : _name = _service.name,
-        _workerService = '_\$${_service.name}WorkerService',
         _worker = '${_service.name}Worker',
         _workerPool = '${_service.name}WorkerPool',
+        _workerService = '_\$${_service.name}\$WorkerService',
+        _serviceOperations = '_\$${_service.name}\$Operations',
+        _serviceInvoker = '_\$${_service.name}\$Invoker',
+        _serviceFacade = '_\$${_service.name}\$Facade',
         _serviceInitializer = '\$${_service.name}Initializer',
         _serviceActivator = '${_service.name}Activator',
         _typeManager = _service.typeManager,
+        _context = _service.context,
         _squadronAlias = _service.typeManager.squadronAlias,
         _override = _service.typeManager.override {
-    if (!_service.local) {
-      // do not generate these for local workers
-      for (var output in buildStep.allowedOutputs) {
-        final path = output.path.toLowerCase();
-        if (_service.vm && path.endsWith('.vm.g.dart')) {
-          _vmOutput = output;
-        } else if (_service.web && path.endsWith('.web.g.dart')) {
-          _webOutput = output;
-        } else if (path.endsWith('.stub.g.dart')) {
-          _xplatOutput = output;
-        } else if (path.endsWith('.activator.g.dart')) {
-          _activatorOutput = output;
-        }
+    // if (!_service.local) {
+    // // do not generate these for local workers
+    for (var output in buildStep.allowedOutputs) {
+      final path = output.path.toLowerCase();
+      if (_service.vm && path.endsWith('.vm.g.dart')) {
+        _vmOutput = output;
+      } else if (_service.web && path.endsWith('.web.g.dart')) {
+        _webOutput = output;
+      } else if (path.endsWith('.stub.g.dart')) {
+        _xplatOutput = output;
+      } else if (path.endsWith('.activator.g.dart')) {
+        _activatorOutput = output;
       }
     }
+    // }
   }
 
   AssetId? _vmOutput;
@@ -63,13 +68,14 @@ class WorkerAssets {
       _squadronAlias.isEmpty ? '' : '$_squadronAlias.';
 
   final TypeManager _typeManager;
+  final SerializationContext _context;
 
   // ignore: non_constant_identifier_names
   late final TChannel = _typeManager.TChannel;
   // ignore: non_constant_identifier_names
   late final TPlatformChannel = _typeManager.TPlatformChannel;
   // ignore: non_constant_identifier_names
-  late final TCommandHandler = _typeManager.TCommandHandler;
+  late final TOperationsMap = _typeManager.TOperationsMap;
   // ignore: non_constant_identifier_names
   late final TWorkerService = _typeManager.TWorkerService;
   // ignore: non_constant_identifier_names
@@ -84,6 +90,8 @@ class WorkerAssets {
   late final TPlatformThreadHook = _typeManager.TPlatformThreadHook;
   // ignore: non_constant_identifier_names
   late final TExceptionManager = _typeManager.TExceptionManager;
+  // ignore: non_constant_identifier_names
+  late final TInvoker = _typeManager.TInvoker;
   // ignore: non_constant_identifier_names
   late final TWorker = _typeManager.TWorker;
   // ignore: non_constant_identifier_names
@@ -112,6 +120,9 @@ class WorkerAssets {
   late final TDynamic = _typeManager.TDynamic;
 
   final String _name;
+  final String _serviceOperations;
+  final String _serviceInvoker;
+  final String _serviceFacade;
   final String _workerService;
   final String _worker;
   final String _workerPool;
@@ -125,7 +136,8 @@ class WorkerAssets {
 
     for (var method in _service.methods) {
       // load command info
-      final command = DartMethodReader.load(method, _service.typeManager);
+      final command =
+          DartMethodReader.load(method, _service.typeManager, _service.context);
       if (command == null) {
         // ignore this one
         continue;
@@ -143,19 +155,20 @@ class WorkerAssets {
       commands[i].setIndex(i + 1);
     }
 
-    return Stream.fromIterable(_service.local
-        ? [
-            // local worker
-            _generateLocalWorker(commands, unimplemented),
-          ]
-        : [
-            // regular worker
-            _generateServiceClass(commands),
-            _generateServiceInitializer(),
-            _generateWorker(commands, unimplemented, withFinalizers),
-            if (_service.pool)
-              _generateWorkerPool(commands, unimplemented, withFinalizers),
-          ]);
+    return Stream.fromIterable([
+      _generateServiceOperations(commands),
+      _generateServiceMixins(commands, unimplemented),
+      // local worker
+      if (_service.local) _generateLocal(commands, unimplemented),
+      // regular worker
+      if (_service.worker) ...[
+        _generateServiceClass(commands),
+        _generateServiceInitializer(),
+        _generateWorker(commands, unimplemented, withFinalizers)
+      ],
+      // worker pool
+      if (_service.pool) _generatePool(commands, unimplemented, withFinalizers),
+    ]);
   }
 
   /// Proxy for base worker/worker pool method
@@ -173,80 +186,122 @@ String _unimplemented(TypeManager? typeManager, String decl,
 // extensions for forwarded or unimplemented members
 
 extension on DartMethodReader {
-  String forwardTo(String target) {
-    final override = typeManager.override;
-    return '$override $declaration => $target.$name(${parameters.asArguments()});';
-  }
+  String forwardTo(String target) =>
+      '${typeManager.override} $declaration => $target.$name(${parameters.asArguments()});';
 
-  String unimplemented() {
-    return _unimplemented(typeManager, declaration, override: true);
-  }
+  String unimplemented() =>
+      _unimplemented(typeManager, declaration, override: true);
 }
 
 extension on SquadronMethodReader {
   String commandId() => 'static const ${typeManager.TInt} $id = $index;';
 
   String commandHandler() {
-    final req = r'$req_';
+    final req = r'$req';
+    var commandDecl = '$id: ($req)';
 
-    final serviceCall = '$name(${parameters.deserialize(req)})';
-    final typeParams =
-        typeParameters.isEmpty ? '' : '<${typeParameters.join(', ')}>';
-    final convert = serializer;
+    final args = parameters.deserialize(context, req);
+    var callService = '$name(${args.code})';
+
+    final inputContext =
+        context.initialize(args.needsContext, args.contextAware);
+
+    if (!hasReturnValue) {
+      return inputContext.isEmpty
+          ? '$commandDecl => $callService,'
+          : '$commandDecl { $inputContext; return $callService; },';
+    }
+
+    final convert = getSerializer(context);
+    final outputContext =
+        context.initialize(convert != null, convert.contextAware);
+
+    if (inputContext.isEmpty && outputContext.isEmpty) {
+      return '$commandDecl => $callService,';
+    }
+
     final resType =
         (isFuture || isFutureOr) ? returnType.typeArguments.first : returnType;
-    return hasNoReturnValue
-        ? '''$id: $typeParams($req) {
-      // ignore: unused_local_variable
-      final \$mc = ${typeManager.TMarshalingContext}();
-      return $serviceCall;
-    },'''
-        : '''$id: $typeParams($req) ${isStream ? '' : 'async '}{
-      $resType \$res_;
-      try {
-        // ignore: unused_local_variable
-        final \$mc = ${typeManager.TMarshalingContext}();
-        \$res_ = ${isStream ? '' : 'await '}$serviceCall;
-      } finally {}
-      try {
-        // ignore: unused_local_variable
-        final \$mc = ${typeManager.TMarshalingContext}();
-        return ${convert.isEmpty ? '\$res_' : (isStream ? '\$res_.map($convert)' : '$convert(\$res_)')};
-      } finally {}
-    },''';
+    print('*** $returnType / $resType');
+    var res = '\$res', resDecl = 'final $resType $res';
+    if (!isStream) {
+      commandDecl = '$commandDecl async';
+      callService = 'await $callService';
+    }
+
+    callService = inputContext.isEmpty
+        ? '$resDecl = $callService;'
+        : '$resDecl; try { $inputContext; $res = $callService; } finally {}';
+
+    if (convert != null) {
+      res = isStream
+          ? '$res.map(${SerializationContext.instanceName}.${convert.code})'
+          : '${SerializationContext.instanceName}.${convert.code}($res)';
+    }
+
+    final returnResult = outputContext.isEmpty
+        ? 'return $res;'
+        : 'try { $outputContext; return $res; } finally {}';
+
+    return '$commandDecl { $callService $returnResult },';
   }
 
   String workerMethod(String workerService) {
+    final serialized = parameters.serialize(context);
     final args = [
       '$workerService.$id,',
-      if (parameters.isNotEmpty) 'args: [ ${parameters.serialize()} ],',
+      if (serialized != null) 'args: ${serialized.code},',
       if (parameters.cancelationToken != null)
         'token: ${parameters.cancelationToken},',
       if (inspectRequest) 'inspectRequest: true,',
       if (inspectResponse) 'inspectResponse: true,'
     ].join();
-    final convert = deserializer;
-    final inputContext = parameters.isEmpty
-        ? ''
-        : '''// ignore: unused_local_variable
-      final \$mc = ${parameters.requiresMarshaling ? '${typeManager.TMarshalingContext}()' : '${typeManager.TMarshalingContext}.none'};''';
-    final outputContext = hasNoReturnValue
-        ? ''
-        : '''// ignore: unused_local_variable
-        final \$mc = ${requiresUnmarshaling ? '${typeManager.TMarshalingContext}()' : '${typeManager.TMarshalingContext}.none'};''';
-    return hasNoReturnValue
-        ? '''${typeManager.override} $declaration {
-      $inputContext return $workerExecutor($args);
-    }'''
-        : '''${typeManager.override} $declaration ${isStream ? '' : 'async '}{
-      ${isStream ? typeManager.TStream : typeManager.TDynamic} \$res_;
-      try {
-        $inputContext \$res_ = ${isStream ? '' : 'await '}$workerExecutor($args);
-      } finally {}
-      try {
-        $outputContext return ${convert.isEmpty ? '\$res_' : (isStream ? '\$res_.map($convert)' : '$convert(\$res_)')};
-      } finally {}
-    }''';
+
+    var methodDecl = '${typeManager.override} $declaration';
+    var callWorker = '$workerExecutor($args)';
+
+    final inputContext =
+        context.initialize(serialized.needsContext, serialized.contextAware);
+
+    if (!hasReturnValue) {
+      return inputContext.isEmpty
+          ? '$methodDecl => $callWorker;'
+          : '$methodDecl { $inputContext; return $callWorker; }';
+    }
+
+    final convert = getDeserializer(context);
+    final outputContext =
+        context.initialize(convert.needsContext, convert.contextAware);
+
+    if (inputContext.isEmpty && convert == null && outputContext.isEmpty) {
+      return '$methodDecl => $callWorker;';
+    }
+
+    String res = '\$res', resDecl;
+
+    if (!isStream) {
+      callWorker = 'await $callWorker';
+      methodDecl = '$methodDecl async';
+      resDecl = 'final ${typeManager.TDynamic} $res';
+    } else {
+      resDecl = 'final ${typeManager.TStream} $res';
+    }
+
+    callWorker = inputContext.isEmpty
+        ? '$resDecl = $callWorker;'
+        : '$resDecl; try { $inputContext; $res = $callWorker; } finally {}';
+
+    if (convert != null) {
+      res = isStream
+          ? '$res.map(${SerializationContext.instanceName}.${convert.code})'
+          : '${SerializationContext.instanceName}.${convert.code}($res)';
+    }
+
+    final returnResult = outputContext.isEmpty
+        ? 'return $res;'
+        : 'try { $outputContext; return $res; } finally {}';
+
+    return '$methodDecl { $callWorker $returnResult }';
   }
 
   String poolMethod() =>
@@ -274,7 +329,7 @@ extension on FieldElement {
 extension on PropertyAccessorElement {
   String get property => isGetter ? name : name.replaceAll('=', '');
 
-  bool get isOperationMap => property == 'operations';
+  bool get isOperationsMap => property == 'operations';
 
   String forwardTo(String target, TypeManager typeManager) {
     final type = typeManager.getTypeName(returnType);

@@ -1,42 +1,50 @@
 part of 'marshaler.dart';
 
 class _SelfMarshaler extends Marshaler {
-  _SelfMarshaler(this.typeName, String? loaderTypeName, this.pivotType,
-      this.marshalingContextParam, this.unmarshalingContextParam)
-      : loaderTypeName = loaderTypeName ?? typeName;
+  _SelfMarshaler(
+      this.typeName,
+      String? loaderTypeName,
+      this.pivotType,
+      ParameterElement? marshalingContext,
+      ParameterElement? unmarshalingContext)
+      : loaderTypeName = loaderTypeName ?? typeName,
+        marshalingContextArg = _getContextArg(marshalingContext),
+        unmarshalingContextArg = _getContextArg(unmarshalingContext);
+
+  static String _getContextArg(ParameterElement? ctx) =>
+      (ctx == null) ? '' : (ctx.isNamed ? '${ctx.name}: this' : 'this');
 
   final String typeName;
   final String loaderTypeName;
 
-  final ParameterElement? marshalingContextParam;
-  final ParameterElement? unmarshalingContextParam;
+  final String marshalingContextArg;
+  final String unmarshalingContextArg;
   final ManagedType? pivotType;
 
   @override
   bool targets(ManagedType type) => type.nonNullable.getTypeName() == typeName;
 
   @override
-  String serializerOf(ManagedType type) {
-    final nullCheck = type.isNullable ? '?' : '';
-    return (marshalingContextParam == null)
-        ? '((\$_) => (\$_ as $typeName)$nullCheck.marshal())'
-        : (marshalingContextParam!.isPositional
-            ? '((\$_) => (\$_ as $typeName)$nullCheck.marshal(\$mc))'
-            : '((\$_) => (\$_ as $typeName)$nullCheck.marshal(${marshalingContextParam!.name}: \$mc))');
-  }
+  DeSer serializerOf(SerializationContext context, ManagedType type) => DeSer(
+        '((\$_) => (\$_ as $typeName)${type.isNullable ? '?' : ''}.marshal($marshalingContextArg))',
+        true,
+        marshalingContextArg.isNotEmpty,
+      );
 
   @override
-  String deserializerOf(ManagedType type) {
-    return type.isNullable
-        ? ((unmarshalingContextParam == null)
-            ? '${type.typeManager.TConverter}.allowNull((\$_) => $loaderTypeName.unmarshal(\$_))'
-            : (unmarshalingContextParam!.isPositional
-                ? '${type.typeManager.TConverter}.allowNull((\$_) => $loaderTypeName.unmarshal(\$_, \$mc))'
-                : '${type.typeManager.TConverter}.allowNull((\$_) => $loaderTypeName.unmarshal(\$_, ${unmarshalingContextParam!.name}: \$mc))'))
-        : ((unmarshalingContextParam == null)
-            ? '((\$_) => $loaderTypeName.unmarshal(\$_))'
-            : (unmarshalingContextParam!.isPositional
-                ? '((\$_) => $loaderTypeName.unmarshal(\$_, \$mc))'
-                : '((\$_) => $loaderTypeName.unmarshal(\$_, ${unmarshalingContextParam!.name}: \$mc))'));
+  DeSer deserializerOf(SerializationContext context, ManagedType type) {
+    final convert = context.getDeserializer(pivotType, null);
+    final param = '\$_';
+    final arg = (convert == null) ? param : '${convert.code}($param)';
+
+    final deserializer = unmarshalingContextArg.isEmpty
+        ? '(($param) => $loaderTypeName.unmarshal($arg))'
+        : '(($param) => $loaderTypeName.unmarshal($arg, $unmarshalingContextArg))';
+
+    return DeSer(
+      type.isNullable ? '${context.allowNull}$deserializer' : deserializer,
+      true,
+      unmarshalingContextArg.isNotEmpty || convert.contextAware,
+    );
   }
 }

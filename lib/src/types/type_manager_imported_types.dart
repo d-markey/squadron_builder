@@ -9,6 +9,7 @@ mixin _ImportedTypesMixin {
       'Channel': ImportedType.unset,
       'PlatformChannel': ImportedType.unset,
       'WorkerService': ImportedType.unset,
+      'Invoker': ImportedType.unset,
       'Worker': ImportedType.unset,
       'WorkerPool': ImportedType.unset,
       'LocalWorker': ImportedType.unset,
@@ -23,7 +24,7 @@ mixin _ImportedTypesMixin {
       'SquadronMarshaler': ImportedType.unset,
       'MarshalingContext': ImportedType.unset,
       'Converter': ImportedType.unset,
-      'CommandHandler': ImportedType.unset,
+      'OperationsMap': ImportedType.unset,
       'Task': ImportedType.unset,
       'ValueTask': ImportedType.unset,
       'StreamTask': ImportedType.unset,
@@ -77,6 +78,8 @@ mixin _ImportedTypesMixin {
   ImportedType get TWorkerService =>
       _importedTypes[PckUri.squadron]!['WorkerService']!;
   // ignore: non_constant_identifier_names
+  ImportedType get TInvoker => _importedTypes[PckUri.squadron]!['Invoker']!;
+  // ignore: non_constant_identifier_names
   ImportedType get TWorker => _importedTypes[PckUri.squadron]!['Worker']!;
   // ignore: non_constant_identifier_names
   ImportedType get TWorkerPool =>
@@ -117,8 +120,8 @@ mixin _ImportedTypesMixin {
   // ignore: non_constant_identifier_names
   ImportedType get TConverter => _importedTypes[PckUri.squadron]!['Converter']!;
   // ignore: non_constant_identifier_names
-  ImportedType get TCommandHandler =>
-      _importedTypes[PckUri.squadron]!['CommandHandler']!;
+  ImportedType get TOperationsMap =>
+      _importedTypes[PckUri.squadron]!['OperationsMap']!;
   // ignore: non_constant_identifier_names
   ImportedType get TTask => _importedTypes[PckUri.squadron]!['Task']!;
   // ignore: non_constant_identifier_names

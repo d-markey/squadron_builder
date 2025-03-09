@@ -4,7 +4,8 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:squadron/squadron.dart';
+import 'package:squadron/squadron.dart' as squadron;
+import 'package:squadron_builder/src/marshalers/serialization_context.dart';
 
 import '../version.dart';
 import 'assets/worker_assets.dart';
@@ -16,7 +17,7 @@ import 'types/type_manager.dart';
 typedef Formatter = String Function(String source, Version languageVersion);
 
 /// Code generator for Squadron workers.
-class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
+class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
   WorkerGenerator({Formatter? formatOutput, bool withFinalizers = false})
       : _formatOutput = formatOutput ?? _noFormatting,
         _withFinalizers = withFinalizers {
@@ -39,18 +40,28 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
   final _results = <BuildStep, BuildStepCodeEvent>{};
 
   final _typeManagers = <BuildStep, TypeManager>{};
+  final _contexts = <BuildStep, SerializationContext>{};
 
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
     log.info(
         'BuildStep ${buildStep.hashCode.hex} for ${buildStep.inputId.path}');
     // get a typemanager for the library
-    /*final typeManager =*/ _typeManagers.putIfAbsent(
+    final typeManager = _typeManagers.putIfAbsent(
         buildStep, () => TypeManager(library.element));
+
+    final context = _contexts.putIfAbsent(
+        buildStep, () => SerializationContext('_\$X', typeManager));
 
     // generate code
     log.fine('   Generating code...');
-    final code = (await super.generate(library, buildStep)).trim();
+    var code = (await super.generate(library, buildStep)).trim();
+
+    if (code.isNotEmpty) {
+      final n = context.count;
+      log.fine('   Adding $n converter${(n == 1) ? '' : 's'}...');
+      code += '\n\n${context.code}';
+    }
 
     // done, trigger code generation for additional assets if any
     _buildStepEventStream.add(BuildStepDoneEvent(buildStep, library.element));
@@ -69,7 +80,13 @@ class WorkerGenerator extends GeneratorForAnnotation<SquadronService> {
       throw StateError('TypeManager not found for build step $buildStep');
     }
 
-    final service = SquadronServiceReader.load(classElt, typeManager);
+    final context = _contexts[buildStep];
+    if (context == null) {
+      throw StateError(
+          'SerializationContext not found for build step $buildStep');
+    }
+
+    final service = SquadronServiceReader.load(classElt, typeManager, context);
     if (service == null) return;
 
     log.fine('   Worker/WorkerPool generation started for ${classElt.name}...');

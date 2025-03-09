@@ -68,21 +68,6 @@ class SquadronParameter {
 
   String namedArgument() => '$name: $name';
 
-  String serialized() =>
-      '${marshaler?.serialize(name, type) ?? type.serialize(name)},';
-
-  String deserialized(String variableName) {
-    String value;
-    if (isCancelationToken) {
-      final nonNull = type.isNullable ? '' : '!';
-      value = '$variableName.cancelToken$nonNull';
-    } else {
-      value = '$variableName.args[$serIdx]';
-      value = marshaler?.deserialize(value, type) ?? type.deserialize(value);
-    }
-    return isNamed ? '$name: $value,' : '$value,';
-  }
-
   @override
   String toString() {
     final realType = (serIdx < 0 && mayBeNull) ? type.nullable : type;

@@ -26,10 +26,11 @@ class _ManagedTypeImpl extends ManagedType {
   }
 
   @override
-  String getSerializer() => attachedMarshaler?.serializerOf(this) ?? '';
+  DeSer? getSerializer(SerializationContext context) =>
+      attachedMarshaler?.serializerOf(context, this);
 
   @override
-  String getDeserializer() =>
-      attachedMarshaler?.deserializerOf(this) ??
-      '\$mc.${isNullable ? 'n' : ''}value<$nonNullable>()';
+  DeSer? getDeserializer(SerializationContext context) =>
+      attachedMarshaler?.deserializerOf(context, this) ??
+      DeSer('${isNullable ? 'n' : ''}value<$nonNullable>()', true, false);
 }

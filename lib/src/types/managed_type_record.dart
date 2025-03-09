@@ -27,28 +27,43 @@ class _ManagedRecordType extends ManagedType {
   final Map<String, ManagedType> named;
 
   @override
-  String getSerializer() {
-    String $serialize(ManagedType type, String field) =>
-        '${type.getSerializer()}(\$.$field),';
+  DeSer getSerializer(SerializationContext context) {
+    var needsContext = false, contextAware = false;
+    String $serialize(ManagedType type, String field) {
+      final serializer = type.getSerializer(context);
+      needsContext |= serializer.needsContext;
+      contextAware |= serializer.contextAware;
+      return (serializer == null)
+          ? '\$.$field,'
+          : '${serializer.code}(\$.$field),';
+    }
 
-    return '((${getTypeName()} \$) => [${[
+    final code = '((${getTypeName()} \$) => [${[
       ...positional.indexed.map((f) => $serialize(f.$2, '\$${f.$1 + 1}')),
       ...named.entries.map((f) => $serialize(f.value, f.key)),
     ].join()}])';
+    return DeSer(code, needsContext, contextAware);
   }
 
   @override
-  String getDeserializer() {
+  DeSer getDeserializer(SerializationContext context) {
+    var needsContext = false, contextAware = false;
     String $deserialize(ManagedType type, int idx, [String field = '']) {
-      final res = '${type.getDeserializer()}(\$[$idx]),';
+      final deserializer = type.getDeserializer(context);
+      needsContext |= deserializer.needsContext;
+      contextAware |= deserializer.contextAware;
+      final res = (deserializer == null)
+          ? '\$[$idx],'
+          : '${deserializer.code}(\$[$idx]),';
       return field.isEmpty ? res : '$field: $res';
     }
 
     var idx = 0;
-    return '((\$) { \$ as List; return (${[
+    final code = '((\$) { \$ as List; return (${[
       ...positional.map((f) => $deserialize(f, idx++)),
       ...named.entries.map((f) => $deserialize(f.value, idx++, f.key)),
     ].join()}); })';
+    return DeSer(code, needsContext, contextAware);
   }
 
   @override
