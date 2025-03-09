@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 
 import '../_overrides.dart';
 import '../build_step_events.dart';
+import '../marshalers/deser.dart';
 import '../marshalers/serialization_context.dart';
 import '../readers/dart_method_reader.dart';
 import '../readers/squadron_service_reader.dart';

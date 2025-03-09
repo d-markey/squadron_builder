@@ -11,7 +11,9 @@ class _ManagedTypeImpl extends ManagedType {
   @override
   _ManagedTypeImpl _forceNullability(bool nullable) => _ManagedTypeImpl._(
         prefix,
-        dartType,
+        (dartType is DynamicType && !nullable)
+            ? typeManager.library.typeProvider.objectType
+            : dartType,
         typeManager,
         nullable ? NullabilitySuffix.question : NullabilitySuffix.none,
       );

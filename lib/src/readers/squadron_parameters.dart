@@ -2,6 +2,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron_builder/src/marshalers/serialization_context.dart';
 
+import '../marshalers/deser.dart';
 import '../marshalers/marshaler.dart';
 import '../types/extensions.dart';
 import '../types/managed_type.dart';

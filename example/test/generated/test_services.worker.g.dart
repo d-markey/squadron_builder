@@ -3572,14 +3572,14 @@ extension _$TestRecordTypes$Operations on TestRecordTypes {
           return $res;
         },
         _$namedId: ($req) async {
-          final ({int count, List<Object?> items}) $res = await named();
+          final ({int count, List<dynamic> items}) $res = await named();
           try {
             final $mc = _$X(contextAware: false);
             return $mc.$se20($res);
           } finally {}
         },
         _$unnamedId: ($req) async {
-          final (int, List<Object?>) $res = await unnamed();
+          final (int, List<dynamic>) $res = await unnamed();
           try {
             final $mc = _$X(contextAware: false);
             return $mc.$se21($res);
@@ -3608,8 +3608,8 @@ mixin _$TestRecordTypes$Invoker on sq.Invoker implements TestRecordTypes {
   }
 
   @override
-  Future<bool> input((int, {List<int> items}) both, (int, List<Object>) pos,
-      ({int count, List<Object> items}) named) async {
+  Future<bool> input((int, {List<int> items}) both, (int, List<dynamic>) pos,
+      ({int count, List<dynamic> items}) named) async {
     final dynamic $res;
     try {
       final $mc = _$X(contextAware: false);
@@ -3625,7 +3625,7 @@ mixin _$TestRecordTypes$Invoker on sq.Invoker implements TestRecordTypes {
   }
 
   @override
-  Future<({int count, List<Object> items})> named() async {
+  Future<({int count, List<dynamic> items})> named() async {
     final dynamic $res = await send(
       _$TestRecordTypes$Operations._$namedId,
     );
@@ -3636,7 +3636,7 @@ mixin _$TestRecordTypes$Invoker on sq.Invoker implements TestRecordTypes {
   }
 
   @override
-  Future<(int, List<Object>)> unnamed() async {
+  Future<(int, List<dynamic>)> unnamed() async {
     final dynamic $res = await send(
       _$TestRecordTypes$Operations._$unnamedId,
     );
@@ -3744,16 +3744,16 @@ base class TestRecordTypesWorkerPool
   Future<(int, {List<int> items})> both() => execute((w) => w.both());
 
   @override
-  Future<bool> input((int, {List<int> items}) both, (int, List<Object>) pos,
-          ({int count, List<Object> items}) named) =>
+  Future<bool> input((int, {List<int> items}) both, (int, List<dynamic>) pos,
+          ({int count, List<dynamic> items}) named) =>
       execute((w) => w.input(both, pos, named));
 
   @override
-  Future<({int count, List<Object> items})> named() =>
+  Future<({int count, List<dynamic> items})> named() =>
       execute((w) => w.named());
 
   @override
-  Future<(int, List<Object>)> unnamed() => execute((w) => w.unnamed());
+  Future<(int, List<dynamic>)> unnamed() => execute((w) => w.unnamed());
 }
 
 /// WorkerService operations for TestRequiredSuperParam
@@ -4081,11 +4081,11 @@ final class _$X extends sq.MarshalingContext {
       items: nlist<Object>(value<Object>())($[1]),
     );
   });
-  late final $se20 = ((({int count, List<Object> items}) $) => [
+  late final $se20 = ((({int count, List<dynamic> items}) $) => [
         $.count,
         nlist<Object>()($.items),
       ]);
-  late final $se21 = (((int, List<Object>) $) => [
+  late final $se21 = (((int, List<dynamic>) $) => [
         $.$1,
         nlist<Object>()($.$2),
       ]);

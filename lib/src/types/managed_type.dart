@@ -5,6 +5,7 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 
+import '../marshalers/deser.dart';
 import '../marshalers/marshaler.dart';
 import '../marshalers/serialization_context.dart';
 import 'extensions.dart';
@@ -35,6 +36,8 @@ abstract class ManagedType {
   final List<ManagedType> typeArguments;
   final TypeManager typeManager;
   final NullabilitySuffix nullabilitySuffix;
+
+  bool get isDynamic => dartType is DynamicType;
 
   Marshaler? _attachedMarshaler;
   Marshaler? get attachedMarshaler => _attachedMarshaler;
@@ -99,9 +102,7 @@ abstract class ManagedType {
       if (dartType is VoidType) {
         return '${prefix}void';
       } else if (dartType is DynamicType) {
-        return (nullabilitySuffix == NullabilitySuffix.none)
-            ? '${prefix}Object'
-            : '${prefix}dynamic';
+        return '${prefix}dynamic';
       }
       final a = typeArguments.isEmpty ? '' : '<${typeArguments.join(', ')}>';
       return '$prefix${dartType!.element!.name}$a${nullabilitySuffix.suffix}';
@@ -117,6 +118,5 @@ abstract class ManagedType {
 
 extension ManagedTypeExt on ManagedType {
   bool get isNullable =>
-      (dartType is DynamicType) ||
-      (nullabilitySuffix != NullabilitySuffix.none);
+      isDynamic || (nullabilitySuffix != NullabilitySuffix.none);
 }

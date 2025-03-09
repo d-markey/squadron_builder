@@ -9,16 +9,14 @@ base class ImportedType implements ManagedType {
           pckUri,
           alias.isEmpty ? '' : '$alias.',
           baseName,
-          (baseName == 'dynamic')
-              ? NullabilitySuffix.question
-              : NullabilitySuffix.none,
+          NullabilitySuffix.none,
         );
 
   @override
   ImportedType _forceNullability(bool nullable) => ImportedType._(
         pckUri,
         prefix,
-        (baseName == 'dynamic' && !nullable) ? 'Object' : baseName,
+        (isDynamic && !nullable) ? 'Object' : baseName,
         nullable ? NullabilitySuffix.question : NullabilitySuffix.none,
       );
 
@@ -35,6 +33,9 @@ base class ImportedType implements ManagedType {
 
   final String pckUri;
   final String baseName;
+
+  @override
+  bool get isDynamic => baseName == 'dynamic';
 
   @override
   Marshaler? _attachedMarshaler;
@@ -56,8 +57,8 @@ base class ImportedType implements ManagedType {
       DeSer('${isNullable ? 'n' : ''}value<$nonNullable>()', true, false);
 
   @override
-  String getTypeName() => (baseName == 'dynamic')
-      ? (isNullable ? '$prefix$baseName' : '${prefix}Object')
+  String getTypeName() => isDynamic
+      ? (isNullable ? '${prefix}dynamic' : '${prefix}Object')
       : '$prefix$baseName${nullabilitySuffix.suffix}';
 
   @override

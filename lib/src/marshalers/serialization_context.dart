@@ -2,6 +2,8 @@ import 'package:squadron_builder/src/marshalers/marshaler.dart';
 import 'package:squadron_builder/src/types/managed_type.dart';
 import 'package:squadron_builder/src/types/type_manager.dart';
 
+import 'deser.dart';
+
 class SerializationContext {
   static const instanceName = '\$mc';
 
@@ -50,23 +52,4 @@ class SerializationContext {
           $name({super.contextAware});
           ${_castors.entries.map((e) => 'late final ${e.value.code} = ${e.key};').join('\n')}
         }''';
-}
-
-class DeSer {
-  DeSer(this.code, this.needsContext, this.contextAware);
-
-  final String code;
-  final bool needsContext;
-  final bool contextAware;
-
-  DeSer mapTo(String code) => DeSer(code, needsContext, contextAware);
-
-  @override
-  String toString() => 'Castor($code, $needsContext, $contextAware)';
-}
-
-extension CastorExt on DeSer? {
-  String get code => this?.code ?? '';
-  bool get needsContext => this?.needsContext ?? false;
-  bool get contextAware => this?.contextAware ?? false;
 }

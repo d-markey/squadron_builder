@@ -4,6 +4,7 @@ import 'package:analyzer/dart/element/element.dart';
 import '../types/extensions.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
+import 'deser.dart';
 import 'serialization_context.dart';
 
 part 'marshaler_explicit.dart';

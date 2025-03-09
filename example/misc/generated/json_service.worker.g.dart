@@ -11,7 +11,7 @@ part of '../json_service.dart';
 extension _$JsonService$Operations on JsonService {
   sq.OperationsMap _$getOperations() => Map.unmodifiable({
         _$decodeId: ($req) async {
-          final Object $res;
+          final dynamic $res;
           try {
             final $mc = _$X(contextAware: false);
             $res = await decode($mc.$de0($req.args[0]));
@@ -27,7 +27,7 @@ extension _$JsonService$Operations on JsonService {
 /// remote service.
 mixin _$JsonService$Invoker on sq.Invoker implements JsonService {
   @override
-  Future<Object> decode(String source) async {
+  Future<dynamic> decode(String source) async {
     final dynamic $res = await send(
       _$JsonService$Operations._$decodeId,
       args: [source],
@@ -132,7 +132,7 @@ base class JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
         );
 
   @override
-  Future<Object> decode(String source) => execute((w) => w.decode(source));
+  Future<dynamic> decode(String source) => execute((w) => w.decode(source));
 }
 
 final class _$X extends sq.MarshalingContext {

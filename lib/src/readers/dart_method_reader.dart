@@ -3,6 +3,7 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart' as squadron;
 
+import '../marshalers/deser.dart';
 import '../marshalers/marshaler.dart';
 import '../marshalers/serialization_context.dart';
 import '../types/managed_type.dart';
