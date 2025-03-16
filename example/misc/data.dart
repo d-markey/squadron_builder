@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'data.freezed.dart';
 
 @freezed
-class Data with _$Data {
+abstract class Data with _$Data {
   const Data._();
 
   const factory Data(
