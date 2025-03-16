@@ -1,3 +1,7 @@
+## 7.0.0
+
+- Code Generator for Squadron 7.0: generate code for serialization contexts + local workers.
+
 ## 6.2.0
 
 - Set Dart SDK minimum version to 3.6.0.
