@@ -7,20 +7,21 @@ part of '../fib_service.dart';
 // Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
+/// Command ids used in operations map
+const dc.int _$fibonacciId = 1;
+
 /// WorkerService operations for FibService
-extension _$FibService$Operations on FibService {
-  OperationsMap _$getOperations() => dc.Map.unmodifiable({
+extension on FibService {
+  OperationsMap _$getOperations() => OperationsMap({
         _$fibonacciId: ($req) async {
           final dc.int $res;
           try {
-            final $mc = _$X(contextAware: false);
-            $res = await fibonacci($mc.$de0($req.args[0]));
+            final $dsr = _$Deser(contextAware: false);
+            $res = await fibonacci($dsr.$0($req.args[0]));
           } finally {}
           return $res;
         },
       });
-
-  static const dc.int _$fibonacciId = 1;
 }
 
 /// Invoker for FibService, implements the public interface to invoke the
@@ -28,18 +29,15 @@ extension _$FibService$Operations on FibService {
 mixin _$FibService$Invoker on Invoker implements FibService {
   @dc.override
   Future<dc.int> fibonacci(dc.int i) async {
-    final dc.dynamic $res = await send(
-      _$FibService$Operations._$fibonacciId,
-      args: [i],
-    );
+    final dc.dynamic $res = await send(_$fibonacciId, args: [i]);
     try {
-      final $mc = _$X(contextAware: false);
-      return $mc.$de0($res);
+      final $dsr = _$Deser(contextAware: false);
+      return $dsr.$0($res);
     } finally {}
   }
 }
 
-/// Facade for FibService, implements other details of the service not related to
+/// Facade for FibService, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$FibService$Facade implements FibService {
   @dc.override
@@ -47,7 +45,7 @@ mixin _$FibService$Facade implements FibService {
   dc.int get x => throw dc.UnimplementedError();
 }
 
-/// Operation map for FibService
+/// Local worker extension for FibService
 extension $FibServiceLocalWorkerExt on FibService {
   // Get a fresh local worker instance.
   LocalWorker<FibService> getLocalWorker(
@@ -67,10 +65,10 @@ final class $LocalFibServiceClient extends LocalWorkerClient
 class _$FibService$WorkerService extends FibService implements WorkerService {
   _$FibService$WorkerService() : super();
 
-  OperationsMap? _operations;
+  OperationsMap? _$ops;
 
   @dc.override
-  OperationsMap get operations => (_operations ??= _$getOperations());
+  OperationsMap get operations => (_$ops ??= _$getOperations());
 }
 
 /// Service initializer for FibService
@@ -78,64 +76,378 @@ WorkerService $FibServiceInitializer(WorkerRequest $req) =>
     _$FibService$WorkerService();
 
 /// Worker for FibService
-base class FibServiceWorker extends Worker
+base class _$FibServiceWorker extends Worker
     with _$FibService$Invoker, _$FibService$Facade
     implements FibService {
-  FibServiceWorker(
+  _$FibServiceWorker(
       {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
       : super($FibServiceActivator(Squadron.platformType),
             threadHook: threadHook, exceptionManager: exceptionManager);
 
-  FibServiceWorker.vm(
+  _$FibServiceWorker.vm(
       {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
       : super($FibServiceActivator(SquadronPlatformType.vm),
             threadHook: threadHook, exceptionManager: exceptionManager);
 
-  FibServiceWorker.js(
+  _$FibServiceWorker.js(
       {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
       : super($FibServiceActivator(SquadronPlatformType.js),
             threadHook: threadHook, exceptionManager: exceptionManager);
+
+  @dc.override
+  dc.List? getStartArgs() => null;
+
+  final dc.Object _$detachToken = dc.Object();
+}
+
+/// Finalizable worker wrapper for FibService
+base class FibServiceWorker with Releasable implements _$FibServiceWorker {
+  FibServiceWorker._(this._$worker) {
+    _finalizer.attach(this, _$worker, detach: _$worker._$detachToken);
+  }
+
+  FibServiceWorker(
+      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
+      : this._(_$FibServiceWorker(
+            threadHook: threadHook, exceptionManager: exceptionManager));
+
+  FibServiceWorker.vm(
+      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
+      : this._(_$FibServiceWorker.vm(
+            threadHook: threadHook, exceptionManager: exceptionManager));
+
+  FibServiceWorker.js(
+      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
+      : this._(_$FibServiceWorker.js(
+            threadHook: threadHook, exceptionManager: exceptionManager));
+
+  final _$FibServiceWorker _$worker;
+
+  static final dc.Finalizer<_$FibServiceWorker> _finalizer =
+      dc.Finalizer<_$FibServiceWorker>((w) {
+    try {
+      _finalizer.detach(w._$detachToken);
+      w.release();
+    } catch (_) {
+      // finalizers must not throw
+    }
+  });
+
+  @dc.override
+  void release() {
+    try {
+      _$worker.release();
+      super.release();
+    } catch (_) {
+      // release should not throw
+    }
+  }
+
+  @dc.override
+  dc.List? getStartArgs() => null;
+
+  @dc.override
+  Future<dc.int> fibonacci(dc.int i) => _$worker.fibonacci(i);
+
+  @dc.override
+  dc.int get x => _$worker.x;
+
+  @dc.override
+  ExceptionManager get exceptionManager => _$worker.exceptionManager;
+
+  @dc.override
+  Logger? get channelLogger => _$worker.channelLogger;
+
+  @dc.override
+  set channelLogger(Logger? value) => _$worker.channelLogger = value;
+
+  @dc.override
+  dc.Duration get idleTime => _$worker.idleTime;
+
+  @dc.override
+  dc.bool get isStopped => _$worker.isStopped;
+
+  @dc.override
+  dc.bool get isConnected => _$worker.isConnected;
+
+  @dc.override
+  dc.int get maxWorkload => _$worker.maxWorkload;
+
+  @dc.override
+  WorkerStat get stats => _$worker.stats;
+
+  @dc.override
+  dc.String get status => _$worker.status;
+
+  @dc.override
+  dc.int get totalErrors => _$worker.totalErrors;
+
+  @dc.override
+  dc.int get totalWorkload => _$worker.totalWorkload;
+
+  @dc.override
+  dc.Duration get upTime => _$worker.upTime;
+
+  @dc.override
+  dc.int get workload => _$worker.workload;
+
+  @dc.override
+  Future<Channel> start() => _$worker.start();
+
+  @dc.override
+  void stop() => _$worker.stop();
+
+  @dc.override
+  void terminate([TaskTerminatedException? ex]) => _$worker.terminate(ex);
+
+  @dc.override
+  Channel? getSharedChannel() => _$worker.getSharedChannel();
+
+  @dc.override
+  Future<dc.dynamic> send(dc.int command,
+          {dc.List args = const [],
+          CancelationToken? token,
+          dc.bool inspectRequest = false,
+          dc.bool inspectResponse = false}) =>
+      _$worker.send(command,
+          args: args,
+          token: token,
+          inspectRequest: inspectRequest,
+          inspectResponse: inspectResponse);
+
+  @dc.override
+  Stream<dc.dynamic> stream(dc.int command,
+          {dc.List args = const [],
+          CancelationToken? token,
+          dc.bool inspectRequest = false,
+          dc.bool inspectResponse = false}) =>
+      _$worker.stream(command,
+          args: args,
+          token: token,
+          inspectRequest: inspectRequest,
+          inspectResponse: inspectResponse);
+
+  @dc.override
+  dc.Object get _$detachToken => _$worker._$detachToken;
+
+  @dc.override
+  final OperationsMap operations = WorkerService.noOperations;
 }
 
 /// Worker pool for FibService
-base class FibServiceWorkerPool extends WorkerPool<FibServiceWorker>
+base class _$FibServiceWorkerPool extends WorkerPool<FibServiceWorker>
     with _$FibService$Facade
     implements FibService {
-  FibServiceWorkerPool(
-      {ConcurrencySettings? concurrencySettings,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager})
+  _$FibServiceWorkerPool(
+      {PlatformThreadHook? threadHook,
+      ExceptionManager? exceptionManager,
+      ConcurrencySettings? concurrencySettings})
       : super(
-          (ExceptionManager exceptionManager) => FibServiceWorker(
-              threadHook: threadHook, exceptionManager: exceptionManager),
-          concurrencySettings: concurrencySettings,
-        );
+            (ExceptionManager exceptionManager) => FibServiceWorker(
+                threadHook: threadHook, exceptionManager: exceptionManager),
+            concurrencySettings: concurrencySettings,
+            exceptionManager: exceptionManager);
 
-  FibServiceWorkerPool.vm(
-      {ConcurrencySettings? concurrencySettings,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager})
+  _$FibServiceWorkerPool.vm(
+      {PlatformThreadHook? threadHook,
+      ExceptionManager? exceptionManager,
+      ConcurrencySettings? concurrencySettings})
       : super(
-          (ExceptionManager exceptionManager) => FibServiceWorker.vm(
-              threadHook: threadHook, exceptionManager: exceptionManager),
-          concurrencySettings: concurrencySettings,
-        );
+            (ExceptionManager exceptionManager) => FibServiceWorker.vm(
+                threadHook: threadHook, exceptionManager: exceptionManager),
+            concurrencySettings: concurrencySettings,
+            exceptionManager: exceptionManager);
 
-  FibServiceWorkerPool.js(
-      {ConcurrencySettings? concurrencySettings,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager})
+  _$FibServiceWorkerPool.js(
+      {PlatformThreadHook? threadHook,
+      ExceptionManager? exceptionManager,
+      ConcurrencySettings? concurrencySettings})
       : super(
-          (ExceptionManager exceptionManager) => FibServiceWorker.js(
-              threadHook: threadHook, exceptionManager: exceptionManager),
-          concurrencySettings: concurrencySettings,
-        );
+            (ExceptionManager exceptionManager) => FibServiceWorker.js(
+                threadHook: threadHook, exceptionManager: exceptionManager),
+            concurrencySettings: concurrencySettings,
+            exceptionManager: exceptionManager);
 
   @dc.override
   Future<dc.int> fibonacci(dc.int i) => execute((w) => w.fibonacci(i));
+
+  final dc.Object _$detachToken = dc.Object();
 }
 
-final class _$X extends MarshalingContext {
-  _$X({super.contextAware});
-  late final $de0 = value<dc.int>();
+/// Finalizable worker pool wrapper for FibService
+base class FibServiceWorkerPool
+    with Releasable
+    implements _$FibServiceWorkerPool {
+  FibServiceWorkerPool._(this._$pool) {
+    _finalizer.attach(this, _$pool, detach: _$pool._$detachToken);
+  }
+
+  FibServiceWorkerPool(
+      {PlatformThreadHook? threadHook,
+      ExceptionManager? exceptionManager,
+      ConcurrencySettings? concurrencySettings})
+      : this._(_$FibServiceWorkerPool(
+            threadHook: threadHook,
+            exceptionManager: exceptionManager,
+            concurrencySettings: concurrencySettings));
+
+  FibServiceWorkerPool.vm(
+      {PlatformThreadHook? threadHook,
+      ExceptionManager? exceptionManager,
+      ConcurrencySettings? concurrencySettings})
+      : this._(_$FibServiceWorkerPool.vm(
+            threadHook: threadHook,
+            exceptionManager: exceptionManager,
+            concurrencySettings: concurrencySettings));
+
+  FibServiceWorkerPool.js(
+      {PlatformThreadHook? threadHook,
+      ExceptionManager? exceptionManager,
+      ConcurrencySettings? concurrencySettings})
+      : this._(_$FibServiceWorkerPool.js(
+            threadHook: threadHook,
+            exceptionManager: exceptionManager,
+            concurrencySettings: concurrencySettings));
+
+  final _$FibServiceWorkerPool _$pool;
+
+  static final dc.Finalizer<_$FibServiceWorkerPool> _finalizer =
+      dc.Finalizer<_$FibServiceWorkerPool>((p) {
+    try {
+      _finalizer.detach(p._$detachToken);
+      p.release();
+    } catch (_) {
+      // finalizers must not throw
+    }
+  });
+
+  @dc.override
+  void release() {
+    try {
+      _$pool.release();
+      super.release();
+    } catch (_) {
+      // release should not throw
+    }
+  }
+
+  @dc.override
+  Future<dc.int> fibonacci(dc.int i) => _$pool.fibonacci(i);
+
+  @dc.override
+  dc.int get x => _$pool.x;
+
+  @dc.override
+  ExceptionManager get exceptionManager => _$pool.exceptionManager;
+
+  @dc.override
+  Logger? get channelLogger => _$pool.channelLogger;
+
+  @dc.override
+  set channelLogger(Logger? value) => _$pool.channelLogger = value;
+
+  @dc.override
+  ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
+
+  @dc.override
+  dc.Iterable<WorkerStat> get fullStats => _$pool.fullStats;
+
+  @dc.override
+  dc.int get maxConcurrency => _$pool.maxConcurrency;
+
+  @dc.override
+  dc.int get maxParallel => _$pool.maxParallel;
+
+  @dc.override
+  dc.int get maxSize => _$pool.maxSize;
+
+  @dc.override
+  dc.int get maxWorkers => _$pool.maxWorkers;
+
+  @dc.override
+  dc.int get maxWorkload => _$pool.maxWorkload;
+
+  @dc.override
+  dc.int get minWorkers => _$pool.minWorkers;
+
+  @dc.override
+  dc.int get pendingWorkload => _$pool.pendingWorkload;
+
+  @dc.override
+  dc.int get size => _$pool.size;
+
+  @dc.override
+  dc.Iterable<WorkerStat> get stats => _$pool.stats;
+
+  @dc.override
+  dc.bool get stopped => _$pool.stopped;
+
+  @dc.override
+  dc.int get totalErrors => _$pool.totalErrors;
+
+  @dc.override
+  dc.int get totalWorkload => _$pool.totalWorkload;
+
+  @dc.override
+  dc.int get workload => _$pool.workload;
+
+  @dc.override
+  void cancelAll([dc.String? message]) => _$pool.cancelAll(message);
+
+  @dc.override
+  void cancel(Task task, [dc.String? message]) => _$pool.cancel(task, message);
+
+  @dc.override
+  FutureOr<void> start() => _$pool.start();
+
+  @dc.override
+  dc.int stop([dc.bool Function(FibServiceWorker worker)? predicate]) =>
+      _$pool.stop(predicate);
+
+  @dc.override
+  void terminate([TaskTerminatedException? ex]) => _$pool.terminate(ex);
+
+  @dc.override
+  dc.Object registerWorkerPoolListener(
+          void Function(FibServiceWorker worker, dc.bool removed) listener) =>
+      _$pool.registerWorkerPoolListener(listener);
+
+  @dc.override
+  void unregisterWorkerPoolListener(
+          {void Function(FibServiceWorker worker, dc.bool removed)? listener,
+          dc.Object? token}) =>
+      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
+
+  @dc.override
+  Future<T> execute<T>(Future<T> Function(FibServiceWorker worker) task,
+          {PerfCounter? counter}) =>
+      _$pool.execute<T>(task, counter: counter);
+
+  @dc.override
+  Stream<T> stream<T>(Stream<T> Function(FibServiceWorker worker) task,
+          {PerfCounter? counter}) =>
+      _$pool.stream<T>(task, counter: counter);
+
+  @dc.override
+  StreamTask<T> scheduleStreamTask<T>(
+          Stream<T> Function(FibServiceWorker worker) task,
+          {PerfCounter? counter}) =>
+      _$pool.scheduleStreamTask<T>(task, counter: counter);
+
+  @dc.override
+  ValueTask<T> scheduleValueTask<T>(
+          Future<T> Function(FibServiceWorker worker) task,
+          {PerfCounter? counter}) =>
+      _$pool.scheduleValueTask<T>(task, counter: counter);
+
+  @dc.override
+  dc.Object get _$detachToken => _$pool._$detachToken;
+
+  @dc.override
+  final OperationsMap operations = WorkerService.noOperations;
+}
+
+final class _$Deser extends MarshalingContext {
+  _$Deser({super.contextAware});
+  late final $0 = value<dc.int>();
 }

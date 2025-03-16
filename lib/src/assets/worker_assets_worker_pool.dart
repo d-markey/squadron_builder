@@ -4,72 +4,64 @@ extension on WorkerAssets {
   /// Worker pool
   String _generatePool(List<SquadronMethodReader> commands,
       List<DartMethodReader> unimplemented, bool finalizable) {
-    final poolParams = _service.parameters.clone();
+    final workerParams = _service.parameters.clone();
+    workerParams.addOptional('threadHook', TPlatformThreadHook);
+    final em = workerParams.addOptional('exceptionManager', TExceptionManager);
+
+    final poolParams = workerParams.clone();
     final cs =
         poolParams.addOptional('concurrencySettings', TConcurrencySettings);
-    poolParams.addOptional('threadHook', TPlatformThreadHook);
-    poolParams.addOptional('exceptionManager', TExceptionManager);
-    final serviceParams = _service.parameters.clone();
-    serviceParams.addOptional('threadHook', TPlatformThreadHook);
-    serviceParams.addOptional('exceptionManager', TExceptionManager);
 
-    final workerPool = finalizable ? '_\$$_workerPool' : _workerPool;
+    final publicWorkerPool = '${_service.name}WorkerPool';
+    final workerPool = finalizable ? '_\$$publicWorkerPool' : publicWorkerPool;
 
-    var workerPoolCode = '''/// Worker pool for $_name
+    final exceptionManager = '$TExceptionManager exceptionManager';
+    final workerArgs = workerParams.asArguments();
+    final additionalArgs = '${cs.namedArgument()}, ${em.namedArgument()}';
+
+    final code = StringBuffer();
+    code.writeln('''/// Worker pool for $_name
         base class $workerPool extends $TWorkerPool<$_worker> with $_serviceFacade implements $_name {
+          $workerPool($poolParams) : super(($exceptionManager) => $_worker($workerArgs), $additionalArgs);
 
-          $workerPool($poolParams) : super(
-              ($TExceptionManager exceptionManager) => $_worker(${serviceParams.asArguments()}),
-              ${cs.namedArgument()},
-          );
+          ${_service.vm ? '$workerPool.vm($poolParams) : super(($exceptionManager) => $_worker.vm($workerArgs), $additionalArgs);' : ''}
 
-          ${_service.vm ? '''$workerPool.vm($poolParams) : super(
-              ($TExceptionManager exceptionManager) => $_worker.vm(${serviceParams.asArguments()}),
-              ${cs.namedArgument()},
-          );''' : ''}
+          ${_service.js ? '$workerPool.js($poolParams) : super(($exceptionManager) => $_worker.js($workerArgs), $additionalArgs);' : ''}
 
-          ${_service.js ? '''$workerPool.js($poolParams) : super(
-              ($TExceptionManager exceptionManager) => $_worker.js(${serviceParams.asArguments()}),
-              ${cs.namedArgument()},
-          );''' : ''}
+          ${_service.wasm ? '$workerPool.wasm($poolParams) : super(($exceptionManager) => $_worker.wasm($workerArgs), $additionalArgs);' : ''}
 
-          ${_service.wasm ? '''$workerPool.wasm($poolParams) : super(
-              ($TExceptionManager exceptionManager) => $_worker.wasm(${serviceParams.asArguments()}),
-              ${cs.namedArgument()},
-          );''' : ''}
+          ${_service.fields.values.map((f) => f.override(this)).join('\n\n')}
 
-          ${_service.fields.values.map((f) => f.override(_typeManager)).join('\n\n')}
+          ${commands.map((cmd) => cmd.poolMethod(this)).join('\n\n')}
 
-          ${commands.map((cmd) => cmd.poolMethod()).join('\n\n')}
-
-          ${finalizable ? 'final $TObject _detachToken = $TObject();' : ''}
+          ${finalizable ? 'final $TObject $DetachToken = $TObject();' : ''}
         }
-      ''';
+      ''');
 
     if (finalizable) {
-      final instance = r'_$pool';
-      workerPoolCode += '''/// Finalizable worker pool wrapper for $_name
-        base class $_workerPool with $TReleasable implements $workerPool {
+      final poolArgs = poolParams.asArguments();
+      code.writeln('''/// Finalizable worker pool wrapper for $_name
+        base class $publicWorkerPool with $TReleasable implements $workerPool {
           
-          $_workerPool._(this.$instance) {
-            _finalizer.attach(this, $instance, detach: $instance._detachToken);
+          $publicWorkerPool._(this.$Pool) {
+            _finalizer.attach(this, $Pool, detach: $Pool.$DetachToken);
           }
 
-          $_workerPool(${poolParams.toStringNoFields()}) : this._($workerPool(${poolParams.asArguments()}));
+          $publicWorkerPool(${poolParams.toStringNoFields()}) : this._($workerPool($poolArgs));
 
-          ${_service.vm ? '$_workerPool.vm(${poolParams.toStringNoFields()}) : this._($workerPool.vm(${poolParams.asArguments()}));' : ''}
+          ${_service.vm ? '$publicWorkerPool.vm(${poolParams.toStringNoFields()}) : this._($workerPool.vm($poolArgs));' : ''}
 
-          ${_service.js ? '$_workerPool.js(${poolParams.toStringNoFields()}) : this._($workerPool.js(${poolParams.asArguments()}));' : ''}
+          ${_service.js ? '$publicWorkerPool.js(${poolParams.toStringNoFields()}) : this._($workerPool.js($poolArgs));' : ''}
 
-          ${_service.wasm ? '$_workerPool.wasm(${poolParams.toStringNoFields()}) : this._($workerPool.wasm(${poolParams.asArguments()}));' : ''}
+          ${_service.wasm ? '$publicWorkerPool.wasm(${poolParams.toStringNoFields()}) : this._($workerPool.wasm($poolArgs));' : ''}
 
-          ${_service.fields.values.map((f) => f.forwardTo(instance, _typeManager)).join('\n\n')}
+          ${_service.fields.values.map((f) => f.forwardTo(Pool, this)).join('\n\n')}
 
-          final $workerPool $instance;
+          final $workerPool $Pool;
 
           static final $TFinalizer<$workerPool> _finalizer = $TFinalizer<$workerPool>((p) {
             try {
-              _finalizer.detach(p._detachToken);
+              _finalizer.detach(p.$DetachToken);
               p.release();
             } catch (_) {
               // finalizers must not throw
@@ -79,26 +71,26 @@ extension on WorkerAssets {
           $_override
           void release() {
             try {
-              $instance.release();
+              $Pool.release();
               super.release();
             } catch (_) {
               // release should not throw
             }
           }
 
-          ${commands.map((cmd) => cmd.forwardTo(instance)).join('\n\n')}
+          ${commands.map((cmd) => cmd.forwardTo(Pool, this)).join('\n\n')}
 
-          ${unimplemented.map((cmd) => cmd.forwardTo(instance)).join('\n\n')}
+          ${unimplemented.map((cmd) => cmd.forwardTo(Pool, this)).join('\n\n')}
 
-          ${_service.accessors.where((a) => !a.isOperationsMap).map((a) => a.forwardTo(instance, _typeManager)).join('\n\n')}
+          ${_service.accessors.where((a) => !a.isOperationsMap).map((a) => a.forwardTo(Pool, this)).join('\n\n')}
 
-          ${_typeManager.getWorkerPoolOverrides().entries.map((e) => _forwardOverride(e.key, instance, e.value)).join('\n\n')}
+          ${getWorkerPoolOverrides().entries.map((e) => _forwardOverride(e.key, Pool, e.value)).join('\n\n')}
 
           $_override
           final $TOperationsMap operations = $TWorkerService.noOperations;
-        }''';
+        }''');
     }
 
-    return workerPoolCode;
+    return code.toString();
   }
 }

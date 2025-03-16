@@ -15,6 +15,7 @@ class AnnotationReader<T> {
   final List<DartObject> annotations;
 
   bool get isEmpty => annotations.isEmpty;
+  bool get isNotEmpty => annotations.isNotEmpty;
 }
 
 extension AnnotationReaderExt on DartObject? {

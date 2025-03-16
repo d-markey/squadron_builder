@@ -8,10 +8,10 @@ class SquadronMethodReader extends DartMethodReader {
       this.inspectResponse,
       this.withContext,
       TypeManager typeManager,
-      SerializationContext context)
+      MarshalingContext context)
       : id = '_\$${method.name}Id',
         patchedReturnType = _patchReturnType(method, typeManager),
-        _resultMarshaler = typeManager.getExplicitMarshaler(method),
+        resultMarshaler = typeManager.getExplicitMarshaler(method),
         super._(method, typeManager, context);
 
   static ManagedType _patchReturnType(
@@ -46,15 +46,8 @@ class SquadronMethodReader extends DartMethodReader {
 
   String get workerExecutor => isStream ? 'stream' : 'send';
   String get poolExecutor => isStream ? 'stream' : 'execute';
-  String get continuation => isStream ? '.map' : '.then';
 
-  final Marshaler? _resultMarshaler;
-
-  DeSer? getSerializer(SerializationContext context) =>
-      context.getSerializer(valueType, _resultMarshaler);
-
-  DeSer? getDeserializer(SerializationContext context) =>
-      context.getDeserializer(valueType, _resultMarshaler);
+  final Marshaler? resultMarshaler;
 
   @override
   void _init(MethodElement method) {

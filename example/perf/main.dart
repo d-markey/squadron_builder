@@ -48,15 +48,21 @@ Future<DeviationMonitor> installDeviationMonitor(
   final deviationMonitor = DeviationMonitor(resolution, logger);
 
   if (test) {
+    final impactLevel = 3;
+    logger.i('''
+----------------------------------------------------------
+0. Testing deviation monitor (impactLevel = $impactLevel)
+----------------------------------------------------------
+''');
+
     // test timer deviation monitor
     deviationMonitor.noisy = true;
     deviationMonitor.start();
-    final impactLevel = 5;
 
     // asynchronous, should have no impact
     await Future.delayed(resolution * impactLevel);
 
-    // synchronous, should trigger a deviation by approx (impactLevel - 1) * 100 % (eg. ~400% for impactLevel = 5)
+    // synchronous, should trigger a deviation by approx (impactLevel - 1) * 100 % (eg. ~200% for impactLevel = 3)
     final sw = Stopwatch()..start();
     while (sw.elapsedMilliseconds < resolution.inMilliseconds * impactLevel) {
       // CPU loop
@@ -192,8 +198,13 @@ Future<instr.PerfCounters> runPools(DeviationMonitor monitor, bool trace,
       trace: trace,
       concurrencySettings: concurrency,
       threadHook: (w) => workerHook<FibonacciServiceWorkerPool>(w));
-  final echoPool = EchoServiceWorkerPool(trace, workloadDelay, concurrency,
-      (w) => workerHook<EchoServiceWorkerPool>(w));
+  final echoPool = EchoServiceWorkerPool(
+    trace,
+    workloadDelay,
+    (w) => workerHook<EchoServiceWorkerPool>(w),
+    null,
+    concurrency,
+  );
 
   await Future.wait([fibonacciPool.start().future, echoPool.start().future]);
 

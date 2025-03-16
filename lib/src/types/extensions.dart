@@ -6,6 +6,14 @@ import 'package:meta/meta.dart';
 import 'managed_type.dart';
 
 @internal
+extension CsvExt on StringBuffer {
+  void csv(String arg) {
+    if (isNotEmpty) write(', ');
+    write(arg);
+  }
+}
+
+@internal
 extension DartTypeExt on DartType {
   String get baseName => element?.name ?? '<anonymous>';
 

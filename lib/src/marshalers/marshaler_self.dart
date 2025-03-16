@@ -8,8 +8,8 @@ class _SelfMarshaler extends Marshaler {
       ParameterElement? marshalingContext,
       ParameterElement? unmarshalingContext)
       : loaderTypeName = loaderTypeName ?? typeName,
-        marshalingContextArg = _getContextArg(marshalingContext),
-        unmarshalingContextArg = _getContextArg(unmarshalingContext);
+        contextOut = _getContextArg(marshalingContext),
+        contextIn = _getContextArg(unmarshalingContext);
 
   static String _getContextArg(ParameterElement? ctx) =>
       (ctx == null) ? '' : (ctx.isNamed ? '${ctx.name}: this' : 'this');
@@ -17,34 +17,29 @@ class _SelfMarshaler extends Marshaler {
   final String typeName;
   final String loaderTypeName;
 
-  final String marshalingContextArg;
-  final String unmarshalingContextArg;
+  final String contextOut;
+  final String contextIn;
   final ManagedType? pivotType;
 
   @override
   bool targets(ManagedType type) => type.nonNullable.getTypeName() == typeName;
 
   @override
-  DeSer serializerOf(SerializationContext context, ManagedType type) => DeSer(
-        '((\$_) => (\$_ as $typeName)${type.isNullable ? '?' : ''}.marshal($marshalingContextArg))',
-        true,
-        marshalingContextArg.isNotEmpty,
-      );
+  DeSer? ser(MarshalingContext context, ManagedType? type) {
+    if (type == null) return null;
+    type.throwIfNullable();
+    final code = '(($Dollar) => ($Dollar as $typeName).marshal($contextOut))';
+    return DeSer(code, true, contextOut.isNotEmpty);
+  }
 
   @override
-  DeSer deserializerOf(SerializationContext context, ManagedType type) {
-    final convert = context.getDeserializer(pivotType, null);
-    final param = '\$_';
-    final arg = (convert == null) ? param : '${convert.code}($param)';
-
-    final deserializer = unmarshalingContextArg.isEmpty
-        ? '(($param) => $loaderTypeName.unmarshal($arg))'
-        : '(($param) => $loaderTypeName.unmarshal($arg, $unmarshalingContextArg))';
-
-    return DeSer(
-      type.isNullable ? '${context.allowNull}$deserializer' : deserializer,
-      true,
-      unmarshalingContextArg.isNotEmpty || convert.contextAware,
-    );
+  DeSer? deser(MarshalingContext context, ManagedType? type) {
+    if (type == null) return null;
+    type.throwIfNullable();
+    final convert = context.deser(pivotType);
+    var args = (convert == null) ? Dollar : '${convert.code}($Dollar)';
+    if (contextIn.isNotEmpty) args += ', $contextIn';
+    final code = '(($Dollar) => $loaderTypeName.unmarshal($args))';
+    return DeSer(code, true, contextIn.isNotEmpty || convert.contextAware);
   }
 }

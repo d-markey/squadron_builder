@@ -22,17 +22,56 @@ class _ManagedTypeImpl extends ManagedType {
   final DartType dartType;
 
   @override
-  void setMarshaler(Marshaler marshaler) {
+  void attachMarshaler(Marshaler marshaler) {
     nullable._attachedMarshaler = marshaler;
     nonNullable._attachedMarshaler = marshaler;
   }
 
   @override
-  DeSer? getSerializer(SerializationContext context) =>
-      attachedMarshaler?.serializerOf(context, this);
+  bool get isNumericType =>
+      dartType.isDartCoreDouble ||
+      dartType.isDartCoreInt ||
+      dartType.isDartCoreNum;
 
   @override
-  DeSer? getDeserializer(SerializationContext context) =>
-      attachedMarshaler?.deserializerOf(context, this) ??
-      DeSer('${isNullable ? 'n' : ''}value<$nonNullable>()', true, false);
+  bool get isPrimaryType =>
+      dartType.isDartCoreBool ||
+      dartType.isDartCoreDouble ||
+      dartType.isDartCoreInt ||
+      dartType.isDartCoreNum ||
+      dartType.isDartCoreString;
+
+  @override
+  DeSer? ser(MarshalingContext context, bool? withContext) {
+    throwIfNullable();
+    final ser = attachedMarshaler?.ser(context, this);
+    if (ser != null) return ser;
+    if (dartType.element is EnumElement) {
+      final code = '(($Dollar) => ($Dollar as $this).index)';
+      return DeSer(code, false, false);
+    } else {
+      return (withContext ?? false)
+          ? DeSer('value<$this>()', true, false)
+          : null;
+    }
+  }
+
+  @override
+  DeSer? deser(MarshalingContext context) {
+    throwIfNullable();
+    final deser = attachedMarshaler?.deser(context, this);
+    if (deser != null) return deser;
+    if (isDynamic) return null;
+    if (dartType.element is EnumElement) {
+      final convert = context.deser(typeManager.TInt);
+      final arg = (convert == null) ? Dollar : '${convert.code}($Dollar)';
+      final code = '(($Dollar) => $this.values[$arg])';
+      return DeSer(code, convert.needsContext, false);
+    } else {
+      final code = 'value<$this>()';
+      return DeSer(code, true, false);
+    }
+  }
 }
+
+enum X { A, B, C }

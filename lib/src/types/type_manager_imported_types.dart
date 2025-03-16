@@ -1,7 +1,9 @@
+// ignore_for_file: non_constant_identifier_names
+
 part of 'type_manager.dart';
 
 mixin _ImportedTypesMixin {
-  final Map<String, Map<String, ImportedType>> _importedTypes = {
+  final _importedTypes = {
     PckUri.squadron: {
       'EntryPoint': ImportedType.unset,
       'Squadron': ImportedType.unset,
@@ -58,117 +60,64 @@ mixin _ImportedTypesMixin {
       'Duration': ImportedType.unset,
       'Finalizer': ImportedType.unset,
       'UnimplementedError': ImportedType.unset,
+      'UnsupportedError': ImportedType.unset,
     },
   };
 
-  // ignore: non_constant_identifier_names
-  ImportedType get TEntryPoint =>
-      _importedTypes[PckUri.squadron]!['EntryPoint']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TSquadron => _importedTypes[PckUri.squadron]!['Squadron']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TSquadronPlatformType =>
-      _importedTypes[PckUri.squadron]!['SquadronPlatformType']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TChannel => _importedTypes[PckUri.squadron]!['Channel']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TPlatformChannel =>
-      _importedTypes[PckUri.squadron]!['PlatformChannel']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TWorkerService =>
-      _importedTypes[PckUri.squadron]!['WorkerService']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TInvoker => _importedTypes[PckUri.squadron]!['Invoker']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TWorker => _importedTypes[PckUri.squadron]!['Worker']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TWorkerPool =>
-      _importedTypes[PckUri.squadron]!['WorkerPool']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TLocalWorker =>
-      _importedTypes[PckUri.squadron]!['LocalWorker']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TLocalWorkerClient =>
-      _importedTypes[PckUri.squadron]!['LocalWorkerClient']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TWorkerRequest =>
-      _importedTypes[PckUri.squadron]!['WorkerRequest']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TWorkerStat =>
-      _importedTypes[PckUri.squadron]!['WorkerStat']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TPerfCounter =>
-      _importedTypes[PckUri.squadron]!['PerfCounter']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TConcurrencySettings =>
-      _importedTypes[PckUri.squadron]!['ConcurrencySettings']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TExceptionManager =>
-      _importedTypes[PckUri.squadron]!['ExceptionManager']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TTaskTerminatedException =>
-      _importedTypes[PckUri.squadron]!['TaskTerminatedException']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TPlatformThreadHook =>
-      _importedTypes[PckUri.squadron]!['PlatformThreadHook']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TSquadronMarshaler =>
-      _importedTypes[PckUri.squadron]!['SquadronMarshaler']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TMarshalingContext =>
-      _importedTypes[PckUri.squadron]!['MarshalingContext']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TConverter => _importedTypes[PckUri.squadron]!['Converter']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TOperationsMap =>
-      _importedTypes[PckUri.squadron]!['OperationsMap']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TTask => _importedTypes[PckUri.squadron]!['Task']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TValueTask => _importedTypes[PckUri.squadron]!['ValueTask']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TStreamTask =>
-      _importedTypes[PckUri.squadron]!['StreamTask']!;
+  late final _sq = _importedTypes[PckUri.squadron]!;
+  late final _cancelationToken = _importedTypes[PckUri.cancelationToken]!;
+  late final _using = _importedTypes[PckUri.using]!;
+  late final _logger = _importedTypes[PckUri.logger]!;
+  late final _dartTypedData = _importedTypes[PckUri.dartTypedData]!;
+  late final _dartAsync = _importedTypes[PckUri.dartAsync]!;
+  late final _dartCore = _importedTypes[PckUri.dartCore]!;
 
-  // ignore: non_constant_identifier_names
-  ImportedType get TCancelationToken =>
-      _importedTypes[PckUri.cancelationToken]!['CancelationToken']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TReleasable => _importedTypes[PckUri.using]!['Releasable']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TLogger => _importedTypes[PckUri.logger]!['Logger']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TTypedData =>
-      _importedTypes[PckUri.dartTypedData]!['TypedData']!;
+  ImportedType get TEntryPoint => _sq['EntryPoint']!;
+  ImportedType get TSquadron => _sq['Squadron']!;
+  ImportedType get TSquadronPlatformType => _sq['SquadronPlatformType']!;
+  ImportedType get TChannel => _sq['Channel']!;
+  ImportedType get TPlatformChannel => _sq['PlatformChannel']!;
+  ImportedType get TWorkerService => _sq['WorkerService']!;
+  ImportedType get TInvoker => _sq['Invoker']!;
+  ImportedType get TWorker => _sq['Worker']!;
+  ImportedType get TWorkerPool => _sq['WorkerPool']!;
+  ImportedType get TLocalWorker => _sq['LocalWorker']!;
+  ImportedType get TLocalWorkerClient => _sq['LocalWorkerClient']!;
+  ImportedType get TWorkerRequest => _sq['WorkerRequest']!;
+  ImportedType get TWorkerStat => _sq['WorkerStat']!;
+  ImportedType get TPerfCounter => _sq['PerfCounter']!;
+  ImportedType get TConcurrencySettings => _sq['ConcurrencySettings']!;
+  ImportedType get TExceptionManager => _sq['ExceptionManager']!;
+  ImportedType get TTaskTerminatedException => _sq['TaskTerminatedException']!;
+  ImportedType get TPlatformThreadHook => _sq['PlatformThreadHook']!;
+  ImportedType get TSquadronMarshaler => _sq['SquadronMarshaler']!;
+  ImportedType get TMarshalingContext => _sq['MarshalingContext']!;
+  ImportedType get TConverter => _sq['Converter']!;
+  ImportedType get TOperationsMap => _sq['OperationsMap']!;
+  ImportedType get TTask => _sq['Task']!;
+  ImportedType get TValueTask => _sq['ValueTask']!;
+  ImportedType get TStreamTask => _sq['StreamTask']!;
 
-  // ignore: non_constant_identifier_names
-  ImportedType get TFutureOr => _importedTypes[PckUri.dartAsync]!['FutureOr']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TFuture => _importedTypes[PckUri.dartAsync]!['Future']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TStream => _importedTypes[PckUri.dartAsync]!['Stream']!;
+  ImportedType get TCancelationToken => _cancelationToken['CancelationToken']!;
+  ImportedType get TReleasable => _using['Releasable']!;
+  ImportedType get TLogger => _logger['Logger']!;
 
-  // ignore: non_constant_identifier_names
-  ImportedType get TList => _importedTypes[PckUri.dartCore]!['List']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TIterable => _importedTypes[PckUri.dartCore]!['Iterable']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TMap => _importedTypes[PckUri.dartCore]!['Map']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TInt => _importedTypes[PckUri.dartCore]!['int']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TBool => _importedTypes[PckUri.dartCore]!['bool']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TDynamic => _importedTypes[PckUri.dartCore]!['dynamic']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TObject => _importedTypes[PckUri.dartCore]!['Object']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TString => _importedTypes[PckUri.dartCore]!['String']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TDuration => _importedTypes[PckUri.dartCore]!['Duration']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TFinalizer => _importedTypes[PckUri.dartCore]!['Finalizer']!;
-  // ignore: non_constant_identifier_names
-  ImportedType get TUnimplementedError =>
-      _importedTypes[PckUri.dartCore]!['UnimplementedError']!;
+  ImportedType get TTypedData => _dartTypedData['TypedData']!;
+
+  ImportedType get TFutureOr => _dartAsync['FutureOr']!;
+  ImportedType get TFuture => _dartAsync['Future']!;
+  ImportedType get TStream => _dartAsync['Stream']!;
+
+  ImportedType get TList => _dartCore['List']!;
+  ImportedType get TIterable => _dartCore['Iterable']!;
+  ImportedType get TMap => _dartCore['Map']!;
+  ImportedType get TInt => _dartCore['int']!;
+  ImportedType get TBool => _dartCore['bool']!;
+  ImportedType get TDynamic => _dartCore['dynamic']!;
+  ImportedType get TObject => _dartCore['Object']!;
+  ImportedType get TString => _dartCore['String']!;
+  ImportedType get TDuration => _dartCore['Duration']!;
+  ImportedType get TFinalizer => _dartCore['Finalizer']!;
+  ImportedType get TUnimplementedError => _dartCore['UnimplementedError']!;
+  ImportedType get TUnsupportedError => _dartCore['UnsupportedError']!;
 }

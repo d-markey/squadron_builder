@@ -7,7 +7,7 @@ import 'package:analyzer/dart/element/visitor.dart';
 
 import '../marshalers/deser.dart';
 import '../marshalers/marshaler.dart';
-import '../marshalers/serialization_context.dart';
+import '../marshalers/marshaling_context.dart';
 import 'extensions.dart';
 import 'type_manager.dart';
 
@@ -21,7 +21,7 @@ part 'managed_type_set.dart';
 
 typedef MarshalerBuilder = Marshaler Function(ManagedType);
 
-abstract class ManagedType {
+abstract class ManagedType with ManagedTypeMixin {
   ManagedType._(
     this.prefix,
     DartType? dartType,
@@ -35,14 +35,12 @@ abstract class ManagedType {
   DartType? get dartType;
   final List<ManagedType> typeArguments;
   final TypeManager typeManager;
+
+  @override
   final NullabilitySuffix nullabilitySuffix;
 
+  @override
   bool get isDynamic => dartType is DynamicType;
-
-  Marshaler? _attachedMarshaler;
-  Marshaler? get attachedMarshaler => _attachedMarshaler;
-
-  void setMarshaler(Marshaler marshaler) => throw UnimplementedError();
 
   ManagedType? _nullable;
   ManagedType get nullable =>
@@ -54,8 +52,8 @@ abstract class ManagedType {
 
   ManagedType _forceNullability(bool nullable);
 
-  DeSer? getSerializer(SerializationContext context);
-  DeSer? getDeserializer(SerializationContext context);
+  DeSer? ser(MarshalingContext context, bool? withContext);
+  DeSer? deser(MarshalingContext context);
 
   factory ManagedType(
       String alias, DartType dartType, TypeManager typeManager) {
@@ -97,15 +95,16 @@ abstract class ManagedType {
         dartType.nullabilitySuffix,
       );
 
-  String getTypeName() {
+  String getTypeName({bool omitPrefix = false}) {
+    final px = omitPrefix ? '' : prefix;
     try {
       if (dartType is VoidType) {
-        return '${prefix}void';
+        return '${px}void';
       } else if (dartType is DynamicType) {
-        return '${prefix}dynamic';
+        return '${px}dynamic';
       }
       final a = typeArguments.isEmpty ? '' : '<${typeArguments.join(', ')}>';
-      return '$prefix${dartType!.element!.name}$a${nullabilitySuffix.suffix}';
+      return '$px${dartType!.element!.name}$a${nullabilitySuffix.suffix}';
     } catch (ex) {
       throw Exception(
           'Error for dartType = $dartType / element = ${dartType?.element}');
@@ -116,7 +115,24 @@ abstract class ManagedType {
   String toString() => getTypeName();
 }
 
-extension ManagedTypeExt on ManagedType {
+mixin ManagedTypeMixin {
+  Marshaler? _attachedMarshaler;
+
+  Marshaler? get attachedMarshaler => _attachedMarshaler;
+
+  void attachMarshaler(Marshaler marshaler) => throw UnimplementedError();
+
+  NullabilitySuffix get nullabilitySuffix;
+
+  bool get isDynamic;
+
+  bool get isPrimaryType => false;
+  bool get isNumericType => false;
+
   bool get isNullable =>
       isDynamic || (nullabilitySuffix != NullabilitySuffix.none);
+
+  void throwIfNullable() {
+    if (isNullable) throw UnsupportedError('Unexpected nullable');
+  }
 }

@@ -145,8 +145,13 @@ class BuildStepCodeEvent extends BuildStepEvent {
             (key, value) => MapEntry(key, asset.relativePathTo(value)),
           ));
 
-  void importSquadron(AssetId asset, String alias) =>
-      _import(asset, 'package:squadron/squadron.dart', alias);
+  void importSquadron(AssetId asset, String alias) {
+    _import(asset, 'package:squadron/squadron.dart', alias);
+  }
+
+  void importDartCore(AssetId asset, String alias) {
+    if (alias.isNotEmpty) _import(asset, 'dart:core', alias);
+  }
 
   void addWebEntryPoint(AssetId asset, String webEntryPoint) {
     final webEntryPoints = _webEntryPoints.putIfAbsent(asset, () => {});

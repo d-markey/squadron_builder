@@ -27,34 +27,34 @@ class _ManagedRecordType extends ManagedType {
   final Map<String, ManagedType> named;
 
   @override
-  DeSer getSerializer(SerializationContext context) {
+  DeSer ser(MarshalingContext context, bool? withContext) {
     var needsContext = false, contextAware = false;
     String $serialize(ManagedType type, String field) {
-      final serializer = type.getSerializer(context);
+      final serializer = context.ser(type, withContext);
       needsContext |= serializer.needsContext;
       contextAware |= serializer.contextAware;
       return (serializer == null)
-          ? '\$.$field,'
-          : '${serializer.code}(\$.$field),';
+          ? '\$.$field'
+          : '${serializer.code}(\$.$field)';
     }
 
     final code = '((${getTypeName()} \$) => [${[
       ...positional.indexed.map((f) => $serialize(f.$2, '\$${f.$1 + 1}')),
       ...named.entries.map((f) => $serialize(f.value, f.key)),
-    ].join()}])';
+    ].join(',')}])';
     return DeSer(code, needsContext, contextAware);
   }
 
   @override
-  DeSer getDeserializer(SerializationContext context) {
+  DeSer deser(MarshalingContext context) {
     var needsContext = false, contextAware = false;
     String $deserialize(ManagedType type, int idx, [String field = '']) {
-      final deserializer = type.getDeserializer(context);
+      final deserializer = context.deser(type);
       needsContext |= deserializer.needsContext;
       contextAware |= deserializer.contextAware;
       final res = (deserializer == null)
-          ? '\$[$idx],'
-          : '${deserializer.code}(\$[$idx]),';
+          ? '\$[$idx]'
+          : '${deserializer.code}(\$[$idx])';
       return field.isEmpty ? res : '$field: $res';
     }
 
@@ -62,20 +62,25 @@ class _ManagedRecordType extends ManagedType {
     final code = '((\$) { \$ as List; return (${[
       ...positional.map((f) => $deserialize(f, idx++)),
       ...named.entries.map((f) => $deserialize(f.value, idx++, f.key)),
-    ].join()}); })';
+    ].join(',')}); })';
     return DeSer(code, needsContext, contextAware);
   }
 
   @override
-  String getTypeName() {
-    final p = positional.join(', ');
-    final n = named.entries.map((t) => '${t.value} ${t.key}').join(', ');
+  String getTypeName(
+      {bool omitPrefix = false, NullabilitySuffix? forcedNullabilitySuffix}) {
+    forcedNullabilitySuffix ??= nullabilitySuffix;
+    final p =
+        positional.map((p) => p.getTypeName(omitPrefix: omitPrefix)).join(', ');
+    final n = named.entries
+        .map((t) => '${t.value.getTypeName(omitPrefix: omitPrefix)} ${t.key}')
+        .join(', ');
     if (n.isEmpty) {
-      return '($p)${nullabilitySuffix.suffix}';
+      return '($p)${forcedNullabilitySuffix.suffix}';
     } else if (p.isEmpty) {
-      return '({$n})${nullabilitySuffix.suffix}';
+      return '({$n})${forcedNullabilitySuffix.suffix}';
     } else {
-      return '($p, {$n})${nullabilitySuffix.suffix}';
+      return '($p, {$n})${forcedNullabilitySuffix.suffix}';
     }
   }
 }

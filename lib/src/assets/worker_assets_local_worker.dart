@@ -4,14 +4,15 @@ extension on WorkerAssets {
   /// Local Worker
   String _generateLocal(List<SquadronMethodReader> commands,
       List<DartMethodReader> unimplemented) {
-    final localWorkerClient = '\$Local${_name}Client';
+    final localWorkerClient = WorkerAssets.getLocalWorkerClientFor(_name);
     final localWorkerExt = '\$${_name}LocalWorkerExt';
 
-    var localWorkerCode = '''
-        /// Operation map for $_name
+    return '''
+        /// Local worker extension for $_name
         extension $localWorkerExt on $_name {
           // Get a fresh local worker instance.
-          $TLocalWorker<$_name> getLocalWorker([$TExceptionManager? exceptionManager]) => $TLocalWorker.create(this, _\$getOperations(), exceptionManager);
+          $TLocalWorker<$_name> getLocalWorker([$TExceptionManager? exceptionManager]) =>
+            $TLocalWorker.create(this, _\$getOperations(), exceptionManager);
         }
 
         /// LocalWorkerClient for $_name
@@ -20,11 +21,9 @@ extension on WorkerAssets {
             with $_serviceInvoker, $_serviceFacade
             implements $_name {
 
-          $localWorkerClient($TPlatformChannel channelInfo) : super($TChannel.deserialize(channelInfo)!);
-
+          $localWorkerClient($TPlatformChannel channelInfo)
+            : super($TChannel.deserialize(channelInfo)!);
         }
       ''';
-
-    return localWorkerCode;
   }
 }

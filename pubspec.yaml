@@ -22,7 +22,7 @@ dependencies:
 
 dependency_overrides:
   squadron:
-    path: ../squadron-ids
+    path: ../squadron
 
 dev_dependencies:
   lints: ">=4.0.0"

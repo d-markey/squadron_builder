@@ -12,12 +12,14 @@ part 'type_manager_imported_types.dart';
 part 'type_manager_pck_uri.dart';
 
 class TypeManager with _ImportedTypesMixin {
-  TypeManager(this.library) {
-    final dartCoreAlias = library.getPrefixFor(PckUri.dartCore) ?? '';
-    dartCorePrefix = dartCoreAlias.isEmpty ? '' : '$dartCoreAlias.';
-  }
+  TypeManager(this.library)
+      : dartCoreAlias = library.getPrefixFor(PckUri.dartCore) ?? '';
 
-  void initialize() {
+  final LibraryElement library;
+  final String dartCoreAlias;
+  late final String squadronAlias;
+
+  void ensureInitialized() {
     if (_initialized) return;
     _initialized = true;
 
@@ -44,8 +46,6 @@ class TypeManager with _ImportedTypesMixin {
         .toList();
   }
 
-  final LibraryElement library;
-
   bool _initialized = false;
 
   String getPrefixFor(LibraryElement? lib) {
@@ -56,11 +56,6 @@ class TypeManager with _ImportedTypesMixin {
             ?.name ??
         '';
   }
-
-  late final String squadronAlias;
-
-  late final String dartCorePrefix;
-  late final String override = '@${dartCorePrefix}override';
 
   final _cache = <DartType, ManagedType>{};
 
@@ -87,7 +82,7 @@ class TypeManager with _ImportedTypesMixin {
     final marshalerLoader = MarshalerInspector(this);
     final marshaler = marshalerLoader.getMarshalerFor(type);
     if (marshaler != null) {
-      type.setMarshaler(marshaler);
+      type.attachMarshaler(marshaler);
     }
   }
 

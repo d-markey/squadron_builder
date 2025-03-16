@@ -2,7 +2,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart' as squadron;
-import 'package:squadron_builder/src/marshalers/serialization_context.dart';
+import 'package:squadron_builder/src/worker_generator.dart';
 
 import '../types/type_manager.dart';
 import 'annotations_reader.dart';
@@ -11,19 +11,18 @@ import 'squadron_parameters.dart';
 /// Reader for a Squadron service class
 class SquadronServiceReader {
   SquadronServiceReader._(
-      ClassElement clazz,
-      this.typeManager,
-      this.context,
-      this.worker,
-      this.local,
-      this.pool,
-      this.vm,
-      this.js,
-      this.wasm,
-      this.baseUrl)
-      : name = clazz.name,
+    ClassElement clazz,
+    this._typeManager,
+    this.worker,
+    this.local,
+    this.pool,
+    this.vm,
+    this.js,
+    this.wasm,
+    this.baseUrl,
+  )   : name = clazz.name,
         isBase = clazz.isBase,
-        parameters = SquadronParameters(typeManager) {
+        parameters = SquadronParameters(_typeManager) {
     _load(clazz);
   }
 
@@ -45,8 +44,7 @@ class SquadronServiceReader {
 
   bool get web => js | wasm;
 
-  final TypeManager typeManager;
-  final SerializationContext context;
+  final TypeManager _typeManager;
 
   void _load(ClassElement clazz) {
     if (clazz.isAbstract ||
@@ -75,7 +73,7 @@ class SquadronServiceReader {
           }
         }
 
-        final marshaler = typeManager.getExplicitMarshaler(param);
+        final marshaler = _typeManager.getExplicitMarshaler(param);
         final p = parameters.register(param, marshaler);
         if (p.isCancelationToken) {
           throw InvalidGenerationSourceError(
@@ -91,8 +89,8 @@ class SquadronServiceReader {
             (a.isSetter && !fields.containsKey(a.name.replaceAll('=', ''))))));
   }
 
-  static SquadronServiceReader? load(ClassElement clazz,
-      TypeManager typeManager, SerializationContext context) {
+  static SquadronServiceReader? load(
+      ClassElement clazz, GeneratorContext context) {
     final reader = AnnotationReader<squadron.SquadronService>(clazz);
     if (reader.isEmpty) return null;
 
@@ -124,7 +122,7 @@ class SquadronServiceReader {
     if (baseUrl.isNotEmpty && baseUrl.endsWith('/')) {
       baseUrl = baseUrl.substring(0, baseUrl.length - 1);
     }
-    return SquadronServiceReader._(clazz, typeManager, context, worker, local,
-        pool, vm, js, wasm, baseUrl);
+    return SquadronServiceReader._(
+        clazz, context.typeManager, worker, local, pool, vm, js, wasm, baseUrl);
   }
 }

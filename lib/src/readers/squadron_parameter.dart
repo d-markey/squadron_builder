@@ -1,26 +1,29 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:squadron/squadron.dart' as squadron;
 
 import '../marshalers/marshaler.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
+import 'annotations_reader.dart';
 
 class SquadronParameter {
   SquadronParameter._(
-      this.name,
-      this.type,
-      this.field,
-      this.isNamed,
-      this.isOptional,
-      bool isRequired,
-      this.isCancelationToken,
-      this.defaultValue,
-      this.marshaler,
-      this.serIdx)
-      : required = isRequired ? 'required ' : '';
+    this.name,
+    this.type,
+    this.field,
+    this.isNamed,
+    this.isOptional,
+    bool isRequired,
+    this.isCancelationToken,
+    this.defaultValue,
+    this.marshaler,
+    this.serIdx,
+    this.isLocalWorker,
+  ) : required = isRequired ? 'required ' : '';
 
   static SquadronParameter opt(String name, ManagedType type, bool named) =>
       SquadronParameter._(
-          name, type, null, named, !named, false, false, null, null, -1);
+          name, type, null, named, !named, false, false, null, null, -1, false);
 
   static SquadronParameter from(ParameterElement param, bool isToken,
       Marshaler? marshaler, int serIdx, TypeManager typeManager) {
@@ -35,17 +38,23 @@ class SquadronParameter {
         name = name.substring((1));
       }
     }
+
+    final reader = AnnotationReader<squadron.LocalWorkerParam>.single(param);
+    final isLocalWorker = reader.isNotEmpty;
+
     return SquadronParameter._(
-        name,
-        typeManager.handleDartType(type),
-        field,
-        param.isNamed,
-        param.isOptionalPositional,
-        param.isRequiredNamed,
-        isToken,
-        param.defaultValueCode,
-        marshaler,
-        serIdx);
+      name,
+      typeManager.handleDartType(type),
+      field,
+      param.isNamed,
+      param.isOptionalPositional,
+      param.isRequiredNamed,
+      isToken,
+      param.defaultValueCode,
+      marshaler,
+      serIdx,
+      isLocalWorker,
+    );
   }
 
   final String name;
@@ -58,6 +67,7 @@ class SquadronParameter {
   final String? defaultValue;
   final int serIdx;
   final Marshaler? marshaler;
+  final bool isLocalWorker;
 
   bool get mayBeNull =>
       (isOptional || (isNamed && required.isEmpty)) && defaultValue == null;

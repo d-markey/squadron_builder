@@ -1,12 +1,12 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'types/type_manager.dart';
+part of '../worker_assets.dart';
 
-extension SquadronOverrides on TypeManager {
-  Map<String, String> getWorkerOverrides() {
+extension SquadronOverrides on WorkerAssets {
+  Map<String, String> _getWorkerOverrides() {
     return {
       // state properties and statistics
-      '$TList get args': 'args',
+      // '$TList get args': 'args',
       '$TExceptionManager get exceptionManager': 'exceptionManager',
       '$TLogger? get channelLogger': 'channelLogger',
       'set channelLogger($TLogger? value)': 'channelLogger = value',
@@ -31,7 +31,7 @@ extension SquadronOverrides on TypeManager {
       '$TStream<$TDynamic> stream($TInt command, {$TList args = const [], $TCancelationToken? token, $TBool inspectRequest = false, $TBool inspectResponse = false})':
           'stream(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)',
       // finalization token
-      '$TObject get _detachToken': '_detachToken',
+      '$TObject get $DetachToken': DetachToken,
     };
   }
 
@@ -77,7 +77,7 @@ extension SquadronOverrides on TypeManager {
       '$TValueTask<T> scheduleValueTask<T>($TFuture<T> Function(@TWorker@ worker) task, {$TPerfCounter? counter})':
           'scheduleValueTask<T>(task, counter: counter)',
       // finalization token
-      '$TObject get _detachToken': '_detachToken',
+      '$TObject get $DetachToken': DetachToken,
     };
   }
 }

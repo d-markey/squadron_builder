@@ -11,7 +11,7 @@ part 'generated/hello_world.worker.g.dart';
 
 @SquadronService(baseUrl: '~/workers', targetPlatform: TargetPlatform.all)
 base class HelloWorld {
-  @squadronMethod
+  @SquadronMethod(withContext: true)
   FutureOr<String> sayHello([String? name]) {
     name = name?.trim() ?? '';
     return 'Hello, ${name.isEmpty ? 'World' : name} from thread $threadId!';

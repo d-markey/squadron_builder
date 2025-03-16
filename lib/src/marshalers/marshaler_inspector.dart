@@ -47,21 +47,26 @@ class MarshalerInspector extends SimpleElementVisitor {
       final isJson = !isMarshaler && (_toJson != null) && (_fromJson != null);
 
       // get loader name if static methods are implemented via extensions
-      final loader = isMarshaler
+      final loaderElt = isMarshaler
           ? _unmarshal!.enclosingElement3!
           : (isJson ? _fromJson!.enclosingElement3! : null);
-      String? loaderTypeName;
-      if (loader is ExtensionElement) {
-        final prefix = typeManager.getPrefixFor(loader.library);
-        loaderTypeName = '${prefix.isEmpty ? '' : '$prefix.'}${loader.name!}';
+      String? loader;
+      if (loaderElt is ExtensionElement) {
+        final prefix = typeManager.getPrefixFor(loaderElt.library);
+        loader = '${prefix.isEmpty ? '' : '$prefix.'}${loaderElt.name!}';
       }
 
       // return marshaler
       if (isMarshaler) {
-        return Marshaler.self(typeName, loaderTypeName, null,
-            _marshalingContext, _unmarshalingContext);
+        return Marshaler.self(
+          typeName,
+          loader,
+          null,
+          _marshalingContext,
+          _unmarshalingContext,
+        );
       } else if (isJson) {
-        return Marshaler.json(typeName, loaderTypeName, null);
+        return Marshaler.json(typeName, loader);
       } else {
         return null;
       }

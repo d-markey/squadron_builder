@@ -1,42 +1,39 @@
 // dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../data_service.dart';
+part of '../some_service.dart';
 
 // **************************************************************************
 // Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
 /// Command ids used in operations map
-const int _$doSomethingId = 1;
+const int _$getThreadIdId = 1;
+const int _$getThreadIdFromLocalId = 2;
 
-/// WorkerService operations for DataService
-extension on DataService {
+/// WorkerService operations for SomeService
+extension on SomeService {
   OperationsMap _$getOperations() => OperationsMap({
-        _$doSomethingId: ($req) async {
-          final Data $res;
-          try {
-            final $dsr = _$Deser(contextAware: false);
-            $res = await doSomething($dsr.$0($req.args[0]));
-          } finally {}
-          try {
-            final $sr = _$Ser(contextAware: false);
-            return $sr.$0($res);
-          } finally {}
-        },
+        _$getThreadIdId: ($req) => getThreadId(),
+        _$getThreadIdFromLocalId: ($req) => getThreadIdFromLocal(),
       });
 }
 
-/// Invoker for DataService, implements the public interface to invoke the
+/// Invoker for SomeService, implements the public interface to invoke the
 /// remote service.
-mixin _$DataService$Invoker on Invoker implements DataService {
+mixin _$SomeService$Invoker on Invoker implements SomeService {
   @override
-  Future<Data> doSomething(Data input) async {
-    final dynamic $res;
+  Future<String> getThreadId() async {
+    final dynamic $res = await send(_$getThreadIdId);
     try {
-      final $sr = _$Ser(contextAware: false);
-      $res = await send(_$doSomethingId, args: [$sr.$0(input)]);
+      final $dsr = _$Deser(contextAware: false);
+      return $dsr.$0($res);
     } finally {}
+  }
+
+  @override
+  Future<String> getThreadIdFromLocal() async {
+    final dynamic $res = await send(_$getThreadIdFromLocalId);
     try {
       final $dsr = _$Deser(contextAware: false);
       return $dsr.$0($res);
@@ -44,13 +41,13 @@ mixin _$DataService$Invoker on Invoker implements DataService {
   }
 }
 
-/// Facade for DataService, implements other details of the service unrelated to
+/// Facade for SomeService, implements other details of the service unrelated to
 /// invoking the remote service.
-mixin _$DataService$Facade implements DataService {}
+mixin _$SomeService$Facade implements SomeService {}
 
-/// WorkerService class for DataService
-class _$DataService$WorkerService extends DataService implements WorkerService {
-  _$DataService$WorkerService() : super();
+/// WorkerService class for SomeService
+class _$SomeService$WorkerService extends SomeService implements WorkerService {
+  _$SomeService$WorkerService({super.threadIdService}) : super();
 
   OperationsMap? _$ops;
 
@@ -58,50 +55,93 @@ class _$DataService$WorkerService extends DataService implements WorkerService {
   OperationsMap get operations => (_$ops ??= _$getOperations());
 }
 
-/// Service initializer for DataService
-WorkerService $DataServiceInitializer(WorkerRequest $req) =>
-    _$DataService$WorkerService();
+/// Service initializer for SomeService
+WorkerService $SomeServiceInitializer(WorkerRequest $req) {
+  final $dsr = _$Deser(contextAware: false);
+  return _$SomeService$WorkerService(
+      threadIdService: ($req.args[0] == null)
+          ? null
+          : id.$LocalThreadIdentityServiceClient($dsr.$1($req.args[0])));
+}
 
-/// Worker for DataService
-base class _$DataServiceWorker extends Worker
-    with _$DataService$Invoker, _$DataService$Facade
-    implements DataService {
-  _$DataServiceWorker(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($DataServiceActivator(Squadron.platformType),
+/// Worker for SomeService
+base class _$SomeServiceWorker extends Worker
+    with _$SomeService$Invoker, _$SomeService$Facade
+    implements SomeService {
+  _$SomeServiceWorker(
+      {this.threadIdService,
+      PlatformThreadHook? threadHook,
+      ExceptionManager? exceptionManager})
+      : _$startReq = [threadIdService],
+        super($SomeServiceActivator(Squadron.platformType),
             threadHook: threadHook, exceptionManager: exceptionManager);
 
-  _$DataServiceWorker.wasm(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($DataServiceActivator(SquadronPlatformType.wasm),
+  _$SomeServiceWorker.vm(
+      {this.threadIdService,
+      PlatformThreadHook? threadHook,
+      ExceptionManager? exceptionManager})
+      : _$startReq = [threadIdService],
+        super($SomeServiceActivator(SquadronPlatformType.vm),
             threadHook: threadHook, exceptionManager: exceptionManager);
+
+  final _$localWorkers = <LocalWorker?>[null];
+  final List _$startReq;
 
   @override
-  List? getStartArgs() => null;
+  List? getStartArgs() {
+    final p0 = _$startReq[0];
+    if (p0 is id.ThreadIdentityService) {
+      _$startReq[0] =
+          (_$localWorkers[0] = p0.getLocalWorker()).channel?.serialize();
+    }
+    return _$startReq;
+  }
+
+  @override
+  void stop() {
+    _$localWorkers[0]?.stop();
+    _$localWorkers[0] = null;
+    _$startReq[0] = threadIdService;
+    super.stop();
+  }
+
+  @override
+  final id.ThreadIdentityService? threadIdService;
 
   final Object _$detachToken = Object();
 }
 
-/// Finalizable worker wrapper for DataService
-base class DataServiceWorker with Releasable implements _$DataServiceWorker {
-  DataServiceWorker._(this._$worker) {
+/// Finalizable worker wrapper for SomeService
+base class SomeServiceWorker with Releasable implements _$SomeServiceWorker {
+  SomeServiceWorker._(this._$worker) {
     _finalizer.attach(this, _$worker, detach: _$worker._$detachToken);
   }
 
-  DataServiceWorker(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : this._(_$DataServiceWorker(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  SomeServiceWorker(
+      {id.ThreadIdentityService? threadIdService,
+      PlatformThreadHook? threadHook,
+      ExceptionManager? exceptionManager})
+      : this._(_$SomeServiceWorker(
+            threadIdService: threadIdService,
+            threadHook: threadHook,
+            exceptionManager: exceptionManager));
 
-  DataServiceWorker.wasm(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : this._(_$DataServiceWorker.wasm(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  SomeServiceWorker.vm(
+      {id.ThreadIdentityService? threadIdService,
+      PlatformThreadHook? threadHook,
+      ExceptionManager? exceptionManager})
+      : this._(_$SomeServiceWorker.vm(
+            threadIdService: threadIdService,
+            threadHook: threadHook,
+            exceptionManager: exceptionManager));
 
-  final _$DataServiceWorker _$worker;
+  @override
+  id.ThreadIdentityService? get threadIdService => _$worker.threadIdService;
 
-  static final Finalizer<_$DataServiceWorker> _finalizer =
-      Finalizer<_$DataServiceWorker>((w) {
+  final _$SomeServiceWorker _$worker;
+
+  static final Finalizer<_$SomeServiceWorker> _finalizer =
+      Finalizer<_$SomeServiceWorker>((w) {
     try {
       _finalizer.detach(w._$detachToken);
       w.release();
@@ -121,10 +161,19 @@ base class DataServiceWorker with Releasable implements _$DataServiceWorker {
   }
 
   @override
+  List<LocalWorker?> get _$localWorkers => const [];
+
+  @override
+  List<dynamic> get _$startReq => const [];
+
+  @override
   List? getStartArgs() => null;
 
   @override
-  Future<Data> doSomething(Data input) => _$worker.doSomething(input);
+  Future<String> getThreadId() => _$worker.getThreadId();
+
+  @override
+  Future<String> getThreadIdFromLocal() => _$worker.getThreadIdFromLocal();
 
   @override
   ExceptionManager get exceptionManager => _$worker.exceptionManager;
@@ -208,66 +257,86 @@ base class DataServiceWorker with Releasable implements _$DataServiceWorker {
   final OperationsMap operations = WorkerService.noOperations;
 }
 
-/// Worker pool for DataService
-base class _$DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
-    with _$DataService$Facade
-    implements DataService {
-  _$DataServiceWorkerPool(
-      {PlatformThreadHook? threadHook,
+/// Worker pool for SomeService
+base class _$SomeServiceWorkerPool extends WorkerPool<SomeServiceWorker>
+    with _$SomeService$Facade
+    implements SomeService {
+  _$SomeServiceWorkerPool(
+      {this.threadIdService,
+      PlatformThreadHook? threadHook,
       ExceptionManager? exceptionManager,
       ConcurrencySettings? concurrencySettings})
       : super(
-            (ExceptionManager exceptionManager) => DataServiceWorker(
-                threadHook: threadHook, exceptionManager: exceptionManager),
+            (ExceptionManager exceptionManager) => SomeServiceWorker(
+                threadIdService: threadIdService,
+                threadHook: threadHook,
+                exceptionManager: exceptionManager),
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  _$DataServiceWorkerPool.wasm(
-      {PlatformThreadHook? threadHook,
+  _$SomeServiceWorkerPool.vm(
+      {this.threadIdService,
+      PlatformThreadHook? threadHook,
       ExceptionManager? exceptionManager,
       ConcurrencySettings? concurrencySettings})
       : super(
-            (ExceptionManager exceptionManager) => DataServiceWorker.wasm(
-                threadHook: threadHook, exceptionManager: exceptionManager),
+            (ExceptionManager exceptionManager) => SomeServiceWorker.vm(
+                threadIdService: threadIdService,
+                threadHook: threadHook,
+                exceptionManager: exceptionManager),
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
   @override
-  Future<Data> doSomething(Data input) => execute((w) => w.doSomething(input));
+  final id.ThreadIdentityService? threadIdService;
+
+  @override
+  Future<String> getThreadId() => execute((w) => w.getThreadId());
+
+  @override
+  Future<String> getThreadIdFromLocal() =>
+      execute((w) => w.getThreadIdFromLocal());
 
   final Object _$detachToken = Object();
 }
 
-/// Finalizable worker pool wrapper for DataService
-base class DataServiceWorkerPool
+/// Finalizable worker pool wrapper for SomeService
+base class SomeServiceWorkerPool
     with Releasable
-    implements _$DataServiceWorkerPool {
-  DataServiceWorkerPool._(this._$pool) {
+    implements _$SomeServiceWorkerPool {
+  SomeServiceWorkerPool._(this._$pool) {
     _finalizer.attach(this, _$pool, detach: _$pool._$detachToken);
   }
 
-  DataServiceWorkerPool(
-      {PlatformThreadHook? threadHook,
+  SomeServiceWorkerPool(
+      {id.ThreadIdentityService? threadIdService,
+      PlatformThreadHook? threadHook,
       ExceptionManager? exceptionManager,
       ConcurrencySettings? concurrencySettings})
-      : this._(_$DataServiceWorkerPool(
+      : this._(_$SomeServiceWorkerPool(
+            threadIdService: threadIdService,
             threadHook: threadHook,
             exceptionManager: exceptionManager,
             concurrencySettings: concurrencySettings));
 
-  DataServiceWorkerPool.wasm(
-      {PlatformThreadHook? threadHook,
+  SomeServiceWorkerPool.vm(
+      {id.ThreadIdentityService? threadIdService,
+      PlatformThreadHook? threadHook,
       ExceptionManager? exceptionManager,
       ConcurrencySettings? concurrencySettings})
-      : this._(_$DataServiceWorkerPool.wasm(
+      : this._(_$SomeServiceWorkerPool.vm(
+            threadIdService: threadIdService,
             threadHook: threadHook,
             exceptionManager: exceptionManager,
             concurrencySettings: concurrencySettings));
 
-  final _$DataServiceWorkerPool _$pool;
+  @override
+  id.ThreadIdentityService? get threadIdService => _$pool.threadIdService;
 
-  static final Finalizer<_$DataServiceWorkerPool> _finalizer =
-      Finalizer<_$DataServiceWorkerPool>((p) {
+  final _$SomeServiceWorkerPool _$pool;
+
+  static final Finalizer<_$SomeServiceWorkerPool> _finalizer =
+      Finalizer<_$SomeServiceWorkerPool>((p) {
     try {
       _finalizer.detach(p._$detachToken);
       p.release();
@@ -287,7 +356,10 @@ base class DataServiceWorkerPool
   }
 
   @override
-  Future<Data> doSomething(Data input) => _$pool.doSomething(input);
+  Future<String> getThreadId() => _$pool.getThreadId();
+
+  @override
+  Future<String> getThreadIdFromLocal() => _$pool.getThreadIdFromLocal();
 
   @override
   ExceptionManager get exceptionManager => _$pool.exceptionManager;
@@ -353,7 +425,7 @@ base class DataServiceWorkerPool
   FutureOr<void> start() => _$pool.start();
 
   @override
-  int stop([bool Function(DataServiceWorker worker)? predicate]) =>
+  int stop([bool Function(SomeServiceWorker worker)? predicate]) =>
       _$pool.stop(predicate);
 
   @override
@@ -361,34 +433,34 @@ base class DataServiceWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(DataServiceWorker worker, bool removed) listener) =>
+          void Function(SomeServiceWorker worker, bool removed) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(DataServiceWorker worker, bool removed)? listener,
+          {void Function(SomeServiceWorker worker, bool removed)? listener,
           Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
-  Future<T> execute<T>(Future<T> Function(DataServiceWorker worker) task,
+  Future<T> execute<T>(Future<T> Function(SomeServiceWorker worker) task,
           {PerfCounter? counter}) =>
       _$pool.execute<T>(task, counter: counter);
 
   @override
-  Stream<T> stream<T>(Stream<T> Function(DataServiceWorker worker) task,
+  Stream<T> stream<T>(Stream<T> Function(SomeServiceWorker worker) task,
           {PerfCounter? counter}) =>
       _$pool.stream<T>(task, counter: counter);
 
   @override
   StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(DataServiceWorker worker) task,
+          Stream<T> Function(SomeServiceWorker worker) task,
           {PerfCounter? counter}) =>
       _$pool.scheduleStreamTask<T>(task, counter: counter);
 
   @override
   ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(DataServiceWorker worker) task,
+          Future<T> Function(SomeServiceWorker worker) task,
           {PerfCounter? counter}) =>
       _$pool.scheduleValueTask<T>(task, counter: counter);
 
@@ -401,10 +473,6 @@ base class DataServiceWorkerPool
 
 final class _$Deser extends MarshalingContext {
   _$Deser({super.contextAware});
-  late final $0 = (($) => Data.unmarshal($));
-}
-
-final class _$Ser extends MarshalingContext {
-  _$Ser({super.contextAware});
-  late final $0 = (($) => ($ as Data).marshal());
+  late final $0 = value<String>();
+  late final $1 = value<PlatformChannel>();
 }

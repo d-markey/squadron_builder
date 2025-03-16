@@ -5,9 +5,7 @@
 // Generator: WorkerGenerator 7.0.0
 // **************************************************************************
 
-import 'package:squadron/squadron.dart';
+import 'some_service.vm.g.dart';
 
-import 'dart:core' as dc;
-
-EntryPoint $getFibServiceActivator(SquadronPlatformType platform) =>
-    throw dc.UnimplementedError();
+/// Service activator for SomeService
+const $SomeServiceActivator = $getSomeServiceActivator;

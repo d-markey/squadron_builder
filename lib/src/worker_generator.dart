@@ -5,7 +5,7 @@ import 'package:build/build.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart' as squadron;
-import 'package:squadron_builder/src/marshalers/serialization_context.dart';
+import 'package:squadron_builder/src/marshalers/marshaling_context.dart';
 
 import '../version.dart';
 import 'assets/worker_assets.dart';
@@ -15,6 +15,11 @@ import 'types/type_manager.dart';
 
 /// Alias for a code formatting function.
 typedef Formatter = String Function(String source, Version languageVersion);
+
+typedef GeneratorContext = ({
+  TypeManager typeManager,
+  MarshalingContext marshalingContext
+});
 
 /// Code generator for Squadron workers.
 class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
@@ -38,67 +43,54 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
   final _buildStepEventStream = StreamController<BuildStepEvent>();
 
   final _results = <BuildStep, BuildStepCodeEvent>{};
-
-  final _typeManagers = <BuildStep, TypeManager>{};
-  final _contexts = <BuildStep, SerializationContext>{};
+  final _contexts = <BuildStep, GeneratorContext>{};
 
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
-    log.info(
-        'BuildStep ${buildStep.hashCode.hex} for ${buildStep.inputId.path}');
-    // get a typemanager for the library
-    final typeManager = _typeManagers.putIfAbsent(
-        buildStep, () => TypeManager(library.element));
-
+    // initialize build step
     final context = _contexts.putIfAbsent(
-        buildStep, () => SerializationContext('_\$X', typeManager));
+        buildStep,
+        () => (
+              typeManager: TypeManager(library.element),
+              marshalingContext: MarshalingContext()
+            ));
 
     // generate code
-    log.fine('   Generating code...');
-    var code = (await super.generate(library, buildStep)).trim();
-
-    if (code.isNotEmpty) {
-      final n = context.count;
-      log.fine('   Adding $n converter${(n == 1) ? '' : 's'}...');
-      code += '\n\n${context.code}';
-    }
+    final code = StringBuffer();
+    code.writeln(await super.generate(library, buildStep));
+    code.writeln(context.marshalingContext.code);
 
     // done, trigger code generation for additional assets if any
     _buildStepEventStream.add(BuildStepDoneEvent(buildStep, library.element));
 
-    return code;
+    return code.toString();
   }
 
   @override
   Stream<String> generateForAnnotatedElement(
-      Element element, ConstantReader annotation, BuildStep buildStep) async* {
+    Element element,
+    ConstantReader annotation,
+    BuildStep buildStep,
+  ) async* {
     final classElt = element;
     if (classElt is! ClassElement) return;
 
-    final typeManager = _typeManagers[buildStep];
-    if (typeManager == null) {
-      throw StateError('TypeManager not found for build step $buildStep');
-    }
-
     final context = _contexts[buildStep];
     if (context == null) {
-      throw StateError(
-          'SerializationContext not found for build step $buildStep');
+      throw StateError('Missing GeneratorContext for $buildStep');
     }
+    context.typeManager.ensureInitialized();
+    context.marshalingContext.ensureInitialized(context.typeManager);
 
-    final service = SquadronServiceReader.load(classElt, typeManager, context);
+    final service = SquadronServiceReader.load(classElt, context);
     if (service == null) return;
 
-    log.fine('   Worker/WorkerPool generation started for ${classElt.name}...');
-
-    typeManager.initialize();
-
     if (_withFinalizers) {
-      final missingImports = typeManager.checkRequiredImports([
-        typeManager.TReleasable,
-        typeManager.TCancelationToken,
-        typeManager.TLogger,
-        typeManager.TFutureOr
+      final missingImports = context.typeManager.checkRequiredImports([
+        context.typeManager.TReleasable,
+        context.typeManager.TCancelationToken,
+        context.typeManager.TLogger,
+        context.typeManager.TFutureOr
       ]);
       if (missingImports.isNotEmpty) {
         log.warning(
@@ -107,7 +99,7 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
       }
     }
 
-    final assets = WorkerAssets(buildStep, service);
+    final assets = WorkerAssets(buildStep, service, context);
 
     final codeEvent = BuildStepCodeEvent(buildStep, classElt);
     assets.generateVmCode(codeEvent);
@@ -136,22 +128,17 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
       _results[newResult.buildStep] = newResult;
     } else {
       // merge additional results as they come through
-      log.info(
-          'new result for ${newResult.buildStep} ${newResult.buildStep.hashCode.hex}');
       result.mergeWith(newResult);
     }
   }
 
   void _writeAssetCode(BuildStepDoneEvent done) {
     final result = _results[done.buildStep];
-    _typeManagers.remove(done.buildStep);
+    _contexts.remove(done.buildStep);
     if (result != null) {
-      log.fine(
-          '   Worker/WorkerPool generation completed for ${done.buildStep.inputId.path}');
       _results.remove(done.buildStep);
       final insertHeader = [_header].followedBy;
       for (var asset in result.assets) {
-        log.fine('      Generating code for additional asset ${asset.path}...');
         var code = insertHeader(result.getCode(asset)).join('\n\n');
         try {
           code = _formatOutput(code, done.languageVersion);

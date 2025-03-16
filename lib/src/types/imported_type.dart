@@ -1,6 +1,6 @@
 part of 'managed_type.dart';
 
-base class ImportedType implements ManagedType {
+base class ImportedType with ManagedTypeMixin implements ManagedType {
   ImportedType._(
       this.pckUri, this.prefix, this.baseName, this.nullabilitySuffix);
 
@@ -38,28 +38,33 @@ base class ImportedType implements ManagedType {
   bool get isDynamic => baseName == 'dynamic';
 
   @override
-  Marshaler? _attachedMarshaler;
-
-  @override
-  Marshaler? get attachedMarshaler => _attachedMarshaler;
-
-  @override
-  void setMarshaler(Marshaler marshaler) => throw UnimplementedError();
-
-  @override
   DartType? get dartType => null;
 
   @override
-  DeSer? getSerializer(SerializationContext context) => null;
+  DeSer? ser(MarshalingContext context, bool? withContext) {
+    throwIfNullable();
+    final ser = attachedMarshaler?.ser(context, this);
+    if (ser != null) return ser;
+    final code = 'value<$this>()';
+    return DeSer(code, true, false);
+  }
 
   @override
-  DeSer? getDeserializer(SerializationContext context) =>
-      DeSer('${isNullable ? 'n' : ''}value<$nonNullable>()', true, false);
+  DeSer? deser(MarshalingContext context) {
+    throwIfNullable();
+    final deser = attachedMarshaler?.deser(context, this);
+    if (deser != null) return deser;
+    final code = 'value<$this>()';
+    return DeSer(code, true, false);
+  }
 
   @override
-  String getTypeName() => isDynamic
-      ? (isNullable ? '${prefix}dynamic' : '${prefix}Object')
-      : '$prefix$baseName${nullabilitySuffix.suffix}';
+  String getTypeName({bool omitPrefix = false}) {
+    final px = omitPrefix ? '' : prefix;
+    return isDynamic
+        ? (isNullable ? '${px}dynamic' : '${px}Object')
+        : '$px$baseName${nullabilitySuffix.suffix}';
+  }
 
   @override
   String toString() => getTypeName();

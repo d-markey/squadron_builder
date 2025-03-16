@@ -7,19 +7,17 @@
 
 import 'package:squadron/squadron.dart';
 
-import 'dart:core' as dc;
+import '../some_service.dart';
 
-import '../fib_service.dart';
-
-void _start$FibService(WorkerRequest command) {
-  /// VM entry point for FibService
-  run($FibServiceInitializer, command);
+void _start$SomeService(WorkerRequest command) {
+  /// VM entry point for SomeService
+  run($SomeServiceInitializer, command);
 }
 
-EntryPoint $getFibServiceActivator(SquadronPlatformType platform) {
+EntryPoint $getSomeServiceActivator(SquadronPlatformType platform) {
   if (platform.isVm) {
-    return _start$FibService;
+    return _start$SomeService;
   } else {
-    throw dc.UnsupportedError('${platform.label} not supported.');
+    throw UnsupportedError('${platform.label} not supported.');
   }
 }

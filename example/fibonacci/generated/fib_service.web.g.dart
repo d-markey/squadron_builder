@@ -7,6 +7,8 @@
 
 import 'package:squadron/squadron.dart';
 
+import 'dart:core' as dc;
+
 import '../fib_service.dart';
 
 void main() {
@@ -18,6 +20,6 @@ EntryPoint $getFibServiceActivator(SquadronPlatformType platform) {
   if (platform.isWeb) {
     return Squadron.uri('/workers/fib_service.web.g.dart.js');
   } else {
-    throw UnsupportedError('${platform.label} not supported.');
+    throw dc.UnsupportedError('${platform.label} not supported.');
   }
 }

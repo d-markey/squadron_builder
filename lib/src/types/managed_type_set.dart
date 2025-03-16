@@ -6,11 +6,7 @@ class _ManagedSetType extends ManagedType {
     this.dartType,
     TypeManager typeManager,
     NullabilitySuffix nullabilitySuffix,
-  ) : super._(prefix, dartType, typeManager, nullabilitySuffix) {
-    // if (typeArguments.first.dartType is DynamicType) {
-    //   typeArguments.first = typeManager.TObject;
-    // }
-  }
+  ) : super._(prefix, dartType, typeManager, nullabilitySuffix);
 
   @override
   _ManagedSetType _forceNullability(bool nullable) => _ManagedSetType._(
@@ -24,28 +20,23 @@ class _ManagedSetType extends ManagedType {
   final ParameterizedType dartType;
 
   @override
-  DeSer? getSerializer(SerializationContext context) {
+  DeSer? ser(MarshalingContext context, bool? withContext) {
+    throwIfNullable();
     final item = typeArguments.first;
-    final convert = item.nonNullable.getSerializer(context);
-    final serializer =
-        '${item.isNullable ? 'n' : ''}set<${item.nonNullable}>(${convert.code})';
-    return DeSer(
-      isNullable ? '${context.allowNull}($serializer)' : serializer,
-      true,
-      convert.contextAware,
-    );
+    final convert = context.ser(item.nonNullable, withContext);
+    if (convert == null) return null;
+    final set = item.isNullable ? 'nset' : 'set';
+    final code = '$set<${item.nonNullable}>(${convert.code})';
+    return DeSer(code, true, convert.contextAware);
   }
 
   @override
-  DeSer? getDeserializer(SerializationContext context) {
+  DeSer? deser(MarshalingContext context) {
+    throwIfNullable();
     final item = typeArguments.first;
-    final convert = item.nonNullable.getDeserializer(context);
-    final deserializer =
-        '${item.isNullable ? 'n' : ''}set<${item.nonNullable}>(${convert.code})';
-    return DeSer(
-      isNullable ? '${context.allowNull}($deserializer)' : deserializer,
-      true,
-      convert.contextAware,
-    );
+    final convert = context.deser(item.nonNullable);
+    final set = item.isNullable ? 'nset' : 'set';
+    final code = '$set<${item.nonNullable}>(${convert.code})';
+    return DeSer(code, true, convert.contextAware);
   }
 }

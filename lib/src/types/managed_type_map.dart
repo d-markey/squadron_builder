@@ -3,14 +3,7 @@ part of 'managed_type.dart';
 class _ManagedMapType extends ManagedType {
   _ManagedMapType._(String prefix, this.dartType, TypeManager typeManager,
       NullabilitySuffix nullabilitySuffix)
-      : super._(prefix, dartType, typeManager, nullabilitySuffix) {
-    // if (typeArguments.first.dartType is DynamicType) {
-    //   typeArguments.first = typeManager.TObject.nullable;
-    // }
-    // if (typeArguments.last.dartType is DynamicType) {
-    //   typeArguments.last = typeManager.TObject.nullable;
-    // }
-  }
+      : super._(prefix, dartType, typeManager, nullabilitySuffix);
 
   @override
   _ManagedMapType _forceNullability(bool nullable) => _ManagedMapType._(
@@ -23,52 +16,42 @@ class _ManagedMapType extends ManagedType {
   final ParameterizedType dartType;
 
   @override
-  DeSer? getSerializer(SerializationContext context) {
-    final args = <String>[];
+  DeSer? ser(MarshalingContext context, bool? withContext) {
+    throwIfNullable();
+
+    final args = StringBuffer();
 
     final key = typeArguments.first;
-    final kconvert = key.nonNullable.getSerializer(context);
-    if (kconvert != null) args.add('kcast: ${kconvert.code}');
+    final kcast = context.ser(key.nonNullable, withContext);
+    if (kcast != null) args.csv('kcast: ${kcast.code}');
 
     final value = typeArguments.last;
-    final vconvert = value.nonNullable.getSerializer(context);
-    if (vconvert != null) args.add('vcast: ${vconvert.code}');
+    final vcast = context.ser(value.nonNullable, withContext);
+    if (vcast != null) args.csv('vcast: ${vcast.code}');
 
-    final serializer = '${value.isNullable ? 'n' : ''}map(${args.join(', ')})';
-    return DeSer(
-      isNullable ? '${context.allowNull}($serializer)' : serializer,
-      true,
-      kconvert.contextAware || vconvert.contextAware,
-    );
+    if (args.isEmpty) return null;
+
+    final map = value.isNullable ? 'nmap' : 'map';
+    final code = '$map($args)';
+    return DeSer(code, true, kcast.contextAware || vcast.contextAware);
   }
 
   @override
-  DeSer? getDeserializer(SerializationContext context) {
-    final args = <String>[];
+  DeSer? deser(MarshalingContext context) {
+    throwIfNullable();
 
-    final keyType = typeArguments.first;
-    final keyDeserializer = keyType.nonNullable.getSerializer(context);
-    if (keyDeserializer != null) {
-      args.add('kcast: ${keyDeserializer.code}');
-    }
+    final args = StringBuffer();
 
-    final valueType = typeArguments.last;
-    final valueDeserializer = valueType.nonNullable.getDeserializer(context);
-    if (valueDeserializer != null) {
-      args.add('vcast: ${valueDeserializer.code}');
-    }
+    final key = typeArguments.first;
+    final kcast = context.deser(key.nonNullable);
+    if (kcast != null) args.csv('kcast: ${kcast.code}');
 
-    final needsContext =
-        keyDeserializer.needsContext || valueDeserializer.needsContext;
-    final contextAware =
-        keyDeserializer.contextAware || valueDeserializer.contextAware;
+    final value = typeArguments.last;
+    final vcast = context.deser(value.nonNullable);
+    if (vcast != null) args.csv('vcast: ${vcast.code}');
 
-    final deserializer =
-        '${valueType.isNullable ? 'n' : ''}map<${keyType.nonNullable}, ${valueType.nonNullable}>(${args.join(', ')})';
-    return DeSer(
-      isNullable ? '${context.allowNull}($deserializer)' : deserializer,
-      needsContext,
-      contextAware,
-    );
+    final map = value.isNullable ? 'nmap' : 'map';
+    final code = '$map<${key.nonNullable}, ${value.nonNullable}>($args)';
+    return DeSer(code, true, kcast.contextAware || vcast.contextAware);
   }
 }

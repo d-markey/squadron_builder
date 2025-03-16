@@ -3,9 +3,8 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart' as squadron;
 
-import '../marshalers/deser.dart';
 import '../marshalers/marshaler.dart';
-import '../marshalers/serialization_context.dart';
+import '../marshalers/marshaling_context.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
 import 'annotations_reader.dart';
@@ -27,7 +26,7 @@ class DartMethodReader {
   final SquadronParameters parameters;
 
   final TypeManager typeManager;
-  final SerializationContext context;
+  final MarshalingContext context;
 
   final ManagedType returnType;
 
@@ -55,7 +54,7 @@ class DartMethodReader {
   }
 
   static DartMethodReader? load(MethodElement method, TypeManager typeManager,
-      SerializationContext context) {
+      MarshalingContext context) {
     if (method.name == 'toString' || method.name == 'noSuchMethod') {
       // base Dart methods -- ignore
       return null;

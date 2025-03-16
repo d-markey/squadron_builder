@@ -5,10 +5,7 @@ class DeSer {
   final bool needsContext;
   final bool contextAware;
 
-  DeSer mapTo(String code) => DeSer(code, needsContext, contextAware);
-
-  @override
-  String toString() => 'DeSer($code, $needsContext, $contextAware)';
+  DeSer mapTo(String newCode) => DeSer(newCode, needsContext, contextAware);
 }
 
 extension DeSerExt on DeSer? {

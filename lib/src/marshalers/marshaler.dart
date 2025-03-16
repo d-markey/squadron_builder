@@ -5,19 +5,22 @@ import '../types/extensions.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
 import 'deser.dart';
-import 'serialization_context.dart';
+import 'marshaling_context.dart';
 
 part 'marshaler_explicit.dart';
 part 'marshaler_json.dart';
 part 'marshaler_self.dart';
+
+// ignore: constant_identifier_names
+const Dollar = r'$';
 
 abstract class Marshaler {
   const Marshaler();
 
   bool targets(ManagedType type);
 
-  DeSer? serializerOf(SerializationContext context, ManagedType type);
-  DeSer? deserializerOf(SerializationContext context, ManagedType type);
+  DeSer? ser(MarshalingContext context, ManagedType? type);
+  DeSer? deser(MarshalingContext context, ManagedType? type);
 
   static Marshaler self(
           String typeName,
@@ -28,9 +31,8 @@ abstract class Marshaler {
       _SelfMarshaler(typeName, loaderTypeName, pivotType, marshalingContext,
           unmarshalingContext);
 
-  static Marshaler json(
-          String typeName, String? loaderTypeName, ManagedType? pivotType) =>
-      _JsonMarshaler(typeName, loaderTypeName, pivotType);
+  static Marshaler json(String typeName, String? loaderTypeName) =>
+      _JsonMarshaler(typeName, loaderTypeName);
 
   static Marshaler explicit(TypeManager typeManager, DartObject marshaler,
           ManagedType marshalerType) =>

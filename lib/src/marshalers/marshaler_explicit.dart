@@ -29,21 +29,20 @@ class _ExplicitMarshaler extends Marshaler {
   bool targets(ManagedType type) => type.dartType?.isA(_itemType) ?? false;
 
   @override
-  DeSer serializerOf(SerializationContext context, ManagedType type) => DeSer(
-        '((\$_) => $_instance.${type.isNullable ? 'n' : ''}marshal(\$_, this))',
-        true,
-        true,
-      );
+  DeSer? ser(MarshalingContext context, ManagedType? type) {
+    if (type == null) return null;
+    type.throwIfNullable();
+    final code = '(($Dollar) => $_instance.marshal($Dollar, this))';
+    return DeSer(code, true, true);
+  }
 
   @override
-  DeSer deserializerOf(SerializationContext context, ManagedType type) {
-    final convert = context.getDeserializer(_pivotType, null);
-    return DeSer(
-      (convert == null)
-          ? '((\$_) => $_instance.${type.isNullable ? 'n' : ''}unmarshal(\$_, this))'
-          : '((\$_) => $_instance.${type.isNullable ? 'n' : ''}unmarshal(${convert.code}(\$_), this))',
-      true,
-      true,
-    );
+  DeSer? deser(MarshalingContext context, ManagedType? type) {
+    if (type == null) return null;
+    type.throwIfNullable();
+    final convert = context.deser(_pivotType);
+    final arg = (convert == null) ? Dollar : '${convert.code}($Dollar)';
+    final code = '(($Dollar) => $_instance.unmarshal($arg, this))';
+    return DeSer(code, true, true);
   }
 }

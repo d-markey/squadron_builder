@@ -4,79 +4,131 @@ extension on WorkerAssets {
   /// Worker
   String _generateWorker(List<SquadronMethodReader> commands,
       List<DartMethodReader> unimplemented, bool finalizable) {
-    final serialized = _service.parameters.serializeForActivation(_context);
-    var activationArgs = serialized.isEmpty
-        ? '$_serviceActivator($TSquadron.platformType)'
-        : '$_serviceActivator($TSquadron.platformType), args: $serialized';
-    var vmActivationArgs = serialized.isEmpty
-        ? '$_serviceActivator($TSquadronPlatformType.vm)'
-        : '$_serviceActivator($TSquadronPlatformType.vm), args: $serialized';
-    var jsActivationArgs = serialized.isEmpty
-        ? '$_serviceActivator($TSquadronPlatformType.js)'
-        : '$_serviceActivator($TSquadronPlatformType.js), args: $serialized';
-    var wasmActivationArgs = serialized.isEmpty
-        ? '$_serviceActivator($TSquadronPlatformType.wasm)'
-        : '$_serviceActivator($TSquadronPlatformType.wasm), args: $serialized';
+    final startReq = r'_$startReq', localWorkers = '_\$localWorkers';
 
-    var params = _service.parameters;
-    params = params.clone();
-    final threadHook = params.addOptional('threadHook', TPlatformThreadHook);
+    final String declareLocalWorkers, overrideStop;
+    final String declareStartArgs, setStartArgs, getStartArgs;
+
+    final params = _service.parameters;
+    final startArgs = params.serializeForActivation(_context);
+    if (startArgs.isEmpty) {
+      // parameter-less service
+      declareLocalWorkers = '';
+      declareStartArgs = '';
+      setStartArgs = '';
+      getStartArgs = ' => null;';
+      overrideStop = '';
+    } else {
+      declareStartArgs = 'final ${_typeManager.TList} $startReq;';
+      setStartArgs = '$startReq = $startArgs,';
+
+      // handle parameters decorated with @localWorker annotation
+      // these parameters are local workers for which a shared channel must be serialized
+      // additionaly, local workers need to be stopped when the worker is stopped
+      final initLocalWorkers = StringBuffer(),
+          stopLocalWorkers = StringBuffer();
+      for (var param in _service.parameters.all) {
+        if (param.isLocalWorker) {
+          final idx = param.serIdx, p = 'p$idx';
+          // instantiate and register a local worker
+          // obtain a shared channel for serialization
+          initLocalWorkers.write('''
+            final $p = $startReq[$idx];
+            if ($p is ${param.type.nonNullable}) {
+              $startReq[$idx] = ($localWorkers[$idx] = $p.getLocalWorker()).channel?.serialize();
+            }''');
+
+          // stop the local worker and reset the start argument
+          stopLocalWorkers.write('''
+            $localWorkers[$idx]?.stop();
+            $localWorkers[$idx] = null;
+            $startReq[$idx] = ${param.name};
+          ''');
+        }
+      }
+
+      getStartArgs = initLocalWorkers.isEmpty
+          ? ' => $startReq;'
+          : '{ $initLocalWorkers return $startReq; }';
+
+      declareLocalWorkers = stopLocalWorkers.isEmpty
+          ? ''
+          : 'final $localWorkers = <$TLocalWorker?>[${params.all.map((_) => 'null').join(', ')}];';
+
+      overrideStop = stopLocalWorkers.isEmpty
+          ? ''
+          : '$_override void stop() { $stopLocalWorkers super.stop(); }';
+    }
+
+    final workerParams = _service.parameters.clone();
+    final threadHook =
+        workerParams.addOptional('threadHook', TPlatformThreadHook);
     final exceptionManager =
-        params.addOptional('exceptionManager', TExceptionManager);
+        workerParams.addOptional('exceptionManager', TExceptionManager);
 
-    activationArgs +=
-        ', ${threadHook.namedArgument()}, ${exceptionManager.namedArgument()}';
-    vmActivationArgs +=
-        ', ${threadHook.namedArgument()}, ${exceptionManager.namedArgument()}';
-    jsActivationArgs +=
-        ', ${threadHook.namedArgument()}, ${exceptionManager.namedArgument()}';
-    wasmActivationArgs +=
-        ', ${threadHook.namedArgument()}, ${exceptionManager.namedArgument()}';
+    final additionalArgs =
+        '${threadHook.namedArgument()}, ${exceptionManager.namedArgument()}';
+
+    final args = '$_serviceActivator($TSquadron.platformType), $additionalArgs';
+    final vmArgs =
+        '$_serviceActivator($TSquadronPlatformType.vm), $additionalArgs';
+    final jsArgs =
+        '$_serviceActivator($TSquadronPlatformType.js), $additionalArgs';
+    final wasmArgs =
+        '$_serviceActivator($TSquadronPlatformType.wasm), $additionalArgs';
 
     final worker = finalizable ? '_\$$_worker' : _worker;
 
-    var workerCode = '''
+    final code = StringBuffer();
+    code.writeln('''
         /// Worker for $_name
         base class $worker extends $TWorker with $_serviceInvoker, $_serviceFacade implements $_name {
           
-          $worker($params) : super(\$$activationArgs);
+          $worker($workerParams) : $setStartArgs super(\$$args);
 
-          ${_service.vm ? '$worker.vm($params) : super(\$$vmActivationArgs);' : ''}
+          ${_service.vm ? '$worker.vm($workerParams) : $setStartArgs super(\$$vmArgs);' : ''}
 
-          ${_service.js ? '$worker.js($params) : super(\$$jsActivationArgs);' : ''}
+          ${_service.js ? '$worker.js($workerParams) : $setStartArgs super(\$$jsArgs);' : ''}
 
-          ${_service.wasm ? '$worker.wasm($params) : super(\$$wasmActivationArgs);' : ''}
+          ${_service.wasm ? '$worker.wasm($workerParams) : $setStartArgs super(\$$wasmArgs);' : ''}
 
-          ${_service.fields.values.map((f) => f.override(_typeManager)).join('\n\n')}
+          $declareLocalWorkers
+          $declareStartArgs
 
-          ${finalizable ? 'final $TObject _detachToken = $TObject();' : ''}
+          $_override
+          ${_typeManager.TList}? getStartArgs() $getStartArgs
+
+          $overrideStop
+
+          ${_service.fields.values.map((f) => f.override(this)).join('\n\n')}
+
+          ${finalizable ? 'final $TObject $DetachToken = $TObject();' : ''}
         }
-      ''';
+      ''');
 
     if (finalizable) {
-      final instance = r'_$worker';
-      workerCode += '''/// Finalizable worker wrapper for $_name
+      code.writeln('''/// Finalizable worker wrapper for $_name
         base class $_worker with $TReleasable implements $worker {
           
-          $_worker._(this.$instance) {
-            _finalizer.attach(this, $instance, detach: $instance._detachToken);
+          $_worker._(this.$Worker) {
+            _finalizer.attach(this, $Worker, detach: $Worker.$DetachToken);
           }
 
-          $_worker(${params.toStringNoFields()}) : this._($worker(${params.asArguments()}));
+          $_worker(${workerParams.toStringNoFields()}) : this._($worker(${workerParams.asArguments()}));
 
-          ${_service.vm ? '$_worker.vm(${params.toStringNoFields()}) : this._($worker.vm(${params.asArguments()}));' : ''}
+          ${_service.vm ? '$_worker.vm(${workerParams.toStringNoFields()}) : this._($worker.vm(${workerParams.asArguments()}));' : ''}
 
-          ${_service.js ? '$_worker.js(${params.toStringNoFields()}) : this._($worker.js(${params.asArguments()}));' : ''}
+          ${_service.js ? '$_worker.js(${workerParams.toStringNoFields()}) : this._($worker.js(${workerParams.asArguments()}));' : ''}
 
-          ${_service.wasm ? '$_worker.wasm(${params.toStringNoFields()}) : this._($worker.wasm(${params.asArguments()}));' : ''}
+          ${_service.wasm ? '$_worker.wasm(${workerParams.toStringNoFields()}) : this._($worker.wasm(${workerParams.asArguments()}));' : ''}
 
-          ${_service.fields.values.map((f) => f.forwardTo(instance, _typeManager)).join('\n\n')}
+          ${_service.fields.values.map((f) => f.forwardTo(Worker, this)).join('\n\n')}
 
-          final $worker $instance;
+          final $worker $Worker;
 
           static final $TFinalizer<$worker> _finalizer = $TFinalizer<$worker>((w) {
             try {
-              _finalizer.detach(w._detachToken);
+              _finalizer.detach(w.$DetachToken);
               w.release();
             } catch (_) {
               // finalizers must not throw
@@ -86,27 +138,34 @@ extension on WorkerAssets {
           $_override
           void release() {
             try {
-              $instance.release();
+              $Worker.release();
               super.release();
             } catch (_) {
               // release should not throw
             }
           }
 
-          ${commands.map((cmd) => cmd.forwardTo(instance)).join('\n\n')}
+          ${declareLocalWorkers.isEmpty ? '' : '$_override $TList<$TLocalWorker?> get $localWorkers => const [];'}
 
-          ${unimplemented.map((cmd) => cmd.forwardTo(instance)).join('\n\n')}
+          ${declareStartArgs.isEmpty ? '' : '$_override $TList<$TDynamic> get $startReq => const  [];'}
 
-          ${_service.accessors.where((a) => !a.isOperationsMap).map((a) => a.forwardTo(instance, _typeManager)).join('\n\n')}
+          $_override
+          ${_typeManager.TList}? getStartArgs() => null;
 
-          ${_typeManager.getWorkerOverrides().entries.map((e) => _forwardOverride(e.key, instance, e.value)).join('\n\n')}
+          ${commands.map((cmd) => cmd.forwardTo(Worker, this)).join('\n\n')}
+
+          ${unimplemented.map((cmd) => cmd.forwardTo(Worker, this)).join('\n\n')}
+
+          ${_service.accessors.where((a) => !a.isOperationsMap).map((a) => a.forwardTo(Worker, this)).join('\n\n')}
+
+          ${_getWorkerOverrides().entries.map((e) => _forwardOverride(e.key, Worker, e.value)).join('\n\n')}
 
           $_override
           final $TOperationsMap operations = $TWorkerService.noOperations;
         }
-      ''';
+      ''');
     }
 
-    return workerCode;
+    return code.toString();
   }
 }
