@@ -34,7 +34,7 @@ extension on WorkerAssets {
 
           ${commands.map((cmd) => cmd.poolMethod(this)).join('\n\n')}
 
-          ${finalizable ? 'final $TObject $DetachToken = $TObject();' : ''}
+          ${finalizable ? 'final $DetachToken = $TObject();' : ''}
         }
       ''');
 

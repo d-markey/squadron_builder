@@ -53,18 +53,23 @@ class MarshalingContext {
     return fromCache;
   }
 
-  DeSer? ser(ManagedType? type, bool? withContext, [Marshaler? marshaler]) =>
-      _checkCache(
-          _ser,
-          (type?.isNullable ?? false)
-              ? allowNull(ser(type?.nonNullable, withContext, marshaler))
-              : (marshaler?.ser(this, type) ?? type?.ser(this, withContext)));
+  DeSer? ser(ManagedType? type, bool? withContext, [Marshaler? marshaler]) {
+    if (marshaler == null && type?.isDynamic == true) return null;
+    return _checkCache(
+        _ser,
+        (type?.isNullable ?? false)
+            ? allowNull(ser(type?.nonNullable, withContext, marshaler))
+            : (marshaler?.ser(this, type) ?? type?.ser(this, withContext)));
+  }
 
-  DeSer? deser(ManagedType? type, [Marshaler? marshaler]) => _checkCache(
-      _deser,
-      (type?.isNullable ?? false)
-          ? allowNull(deser(type?.nonNullable, marshaler))
-          : (marshaler?.deser(this, type) ?? type?.deser(this)));
+  DeSer? deser(ManagedType? type, [Marshaler? marshaler]) {
+    if (marshaler == null && type?.isDynamic == true) return null;
+    return _checkCache(
+        _deser,
+        (type?.isNullable ?? false)
+            ? allowNull(deser(type?.nonNullable, marshaler))
+            : (marshaler?.deser(this, type) ?? type?.deser(this)));
+  }
 
   String get code {
     final sb = StringBuffer();

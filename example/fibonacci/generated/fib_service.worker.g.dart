@@ -65,10 +65,8 @@ final class $LocalFibServiceClient extends LocalWorkerClient
 class _$FibService$WorkerService extends FibService implements WorkerService {
   _$FibService$WorkerService() : super();
 
-  OperationsMap? _$ops;
-
   @dc.override
-  OperationsMap get operations => (_$ops ??= _$getOperations());
+  OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for FibService
@@ -97,7 +95,7 @@ base class _$FibServiceWorker extends Worker
   @dc.override
   dc.List? getStartArgs() => null;
 
-  final dc.Object _$detachToken = dc.Object();
+  final _$detachToken = dc.Object();
 }
 
 /// Finalizable worker wrapper for FibService
@@ -162,34 +160,10 @@ base class FibServiceWorker with Releasable implements _$FibServiceWorker {
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @dc.override
-  dc.Duration get idleTime => _$worker.idleTime;
-
-  @dc.override
-  dc.bool get isStopped => _$worker.isStopped;
-
-  @dc.override
   dc.bool get isConnected => _$worker.isConnected;
 
   @dc.override
-  dc.int get maxWorkload => _$worker.maxWorkload;
-
-  @dc.override
   WorkerStat get stats => _$worker.stats;
-
-  @dc.override
-  dc.String get status => _$worker.status;
-
-  @dc.override
-  dc.int get totalErrors => _$worker.totalErrors;
-
-  @dc.override
-  dc.int get totalWorkload => _$worker.totalWorkload;
-
-  @dc.override
-  dc.Duration get upTime => _$worker.upTime;
-
-  @dc.override
-  dc.int get workload => _$worker.workload;
 
   @dc.override
   Future<Channel> start() => _$worker.start();
@@ -271,7 +245,7 @@ base class _$FibServiceWorkerPool extends WorkerPool<FibServiceWorker>
   @dc.override
   Future<dc.int> fibonacci(dc.int i) => execute((w) => w.fibonacci(i));
 
-  final dc.Object _$detachToken = dc.Object();
+  final _$detachToken = dc.Object();
 }
 
 /// Finalizable worker pool wrapper for FibService
@@ -365,9 +339,6 @@ base class FibServiceWorkerPool
   dc.int get maxWorkers => _$pool.maxWorkers;
 
   @dc.override
-  dc.int get maxWorkload => _$pool.maxWorkload;
-
-  @dc.override
   dc.int get minWorkers => _$pool.minWorkers;
 
   @dc.override
@@ -381,15 +352,6 @@ base class FibServiceWorkerPool
 
   @dc.override
   dc.bool get stopped => _$pool.stopped;
-
-  @dc.override
-  dc.int get totalErrors => _$pool.totalErrors;
-
-  @dc.override
-  dc.int get totalWorkload => _$pool.totalWorkload;
-
-  @dc.override
-  dc.int get workload => _$pool.workload;
 
   @dc.override
   void cancelAll([dc.String? message]) => _$pool.cancelAll(message);
@@ -409,13 +371,12 @@ base class FibServiceWorkerPool
 
   @dc.override
   dc.Object registerWorkerPoolListener(
-          void Function(FibServiceWorker worker, dc.bool removed) listener) =>
+          void Function(WorkerStat, dc.bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @dc.override
   void unregisterWorkerPoolListener(
-          {void Function(FibServiceWorker worker, dc.bool removed)? listener,
-          dc.Object? token}) =>
+          {void Function(WorkerStat, dc.bool)? listener, dc.Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @dc.override

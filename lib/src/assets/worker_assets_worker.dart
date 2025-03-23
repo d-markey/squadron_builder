@@ -102,7 +102,7 @@ extension on WorkerAssets {
 
           ${_service.fields.values.map((f) => f.override(this)).join('\n\n')}
 
-          ${finalizable ? 'final $TObject $DetachToken = $TObject();' : ''}
+          ${finalizable ? 'final $DetachToken = $TObject();' : ''}
         }
       ''');
 

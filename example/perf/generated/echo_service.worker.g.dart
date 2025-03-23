@@ -178,10 +178,8 @@ class _$EchoService$WorkerService extends EchoService
   _$EchoService$WorkerService([super.trace = false, super.workloadDelay])
       : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for EchoService
@@ -224,7 +222,7 @@ base class _$EchoServiceWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for EchoService
@@ -323,34 +321,10 @@ base class EchoServiceWorker with Releasable implements _$EchoServiceWorker {
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   xxx.Future<sq.Channel> start() => _$worker.start();
@@ -450,7 +424,7 @@ base class _$EchoServiceWorkerPool extends sq.WorkerPool<EchoServiceWorker>
           [CancelationToken? token]) =>
       execute((w) => w.jsonEncodeEcho(request, token));
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for EchoService
@@ -565,9 +539,6 @@ base class EchoServiceWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -581,15 +552,6 @@ base class EchoServiceWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -609,13 +571,12 @@ base class EchoServiceWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(EchoServiceWorker worker, bool removed) listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(EchoServiceWorker worker, bool removed)? listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override

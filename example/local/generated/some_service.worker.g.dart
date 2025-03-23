@@ -49,10 +49,8 @@ mixin _$SomeService$Facade implements SomeService {}
 class _$SomeService$WorkerService extends SomeService implements WorkerService {
   _$SomeService$WorkerService({super.threadIdService}) : super();
 
-  OperationsMap? _$ops;
-
   @override
-  OperationsMap get operations => (_$ops ??= _$getOperations());
+  OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for SomeService
@@ -108,7 +106,7 @@ base class _$SomeServiceWorker extends Worker
   @override
   final id.ThreadIdentityService? threadIdService;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for SomeService
@@ -185,34 +183,10 @@ base class SomeServiceWorker with Releasable implements _$SomeServiceWorker {
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<Channel> start() => _$worker.start();
@@ -297,7 +271,7 @@ base class _$SomeServiceWorkerPool extends WorkerPool<SomeServiceWorker>
   Future<String> getThreadIdFromLocal() =>
       execute((w) => w.getThreadIdFromLocal());
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for SomeService
@@ -389,9 +363,6 @@ base class SomeServiceWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -405,15 +376,6 @@ base class SomeServiceWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -432,14 +394,12 @@ base class SomeServiceWorkerPool
   void terminate([TaskTerminatedException? ex]) => _$pool.terminate(ex);
 
   @override
-  Object registerWorkerPoolListener(
-          void Function(SomeServiceWorker worker, bool removed) listener) =>
+  Object registerWorkerPoolListener(void Function(WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(SomeServiceWorker worker, bool removed)? listener,
-          Object? token}) =>
+          {void Function(WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override

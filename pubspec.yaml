@@ -30,6 +30,10 @@ dev_dependencies:
   freezed:
   freezed_annotation:
 
+dependency_overrides:
+  squadron:
+    path: ../squadron
+
 topics:
   - concurrency
   - parallelism

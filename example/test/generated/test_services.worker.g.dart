@@ -27,10 +27,8 @@ class _$TestParameterLess$WorkerService extends TestParameterLess
     implements sq.WorkerService {
   _$TestParameterLess$WorkerService() : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestParameterLess
@@ -68,7 +66,7 @@ base class _$TestParameterLessWorker extends sq.Worker
   @override
   List? getStartArgs() => null;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestParameterLess
@@ -138,34 +136,10 @@ base class TestParameterLessWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -258,7 +232,7 @@ base class _$TestParameterLessWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestParameterLess
@@ -355,9 +329,6 @@ base class TestParameterLessWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -371,15 +342,6 @@ base class TestParameterLessWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -399,15 +361,12 @@ base class TestParameterLessWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestParameterLessWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestParameterLessWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -459,10 +418,8 @@ class _$TestReqPositional$WorkerService extends TestReqPositional
     implements sq.WorkerService {
   _$TestReqPositional$WorkerService(super.arg1) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestReqPositional
@@ -520,7 +477,7 @@ base class _$TestReqPositionalWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestReqPositional
@@ -593,34 +550,10 @@ base class TestReqPositionalWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -715,7 +648,7 @@ base class _$TestReqPositionalWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestReqPositional
@@ -812,9 +745,6 @@ base class TestReqPositionalWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -828,15 +758,6 @@ base class TestReqPositionalWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -856,15 +777,12 @@ base class TestReqPositionalWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestReqPositionalWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestReqPositionalWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -917,10 +835,8 @@ class _$TestOptNullPositional$WorkerService extends TestOptNullPositional
     implements sq.WorkerService {
   _$TestOptNullPositional$WorkerService([super.arg1]) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullPositional
@@ -982,7 +898,7 @@ base class _$TestOptNullPositionalWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullPositional
@@ -1059,34 +975,10 @@ base class TestOptNullPositionalWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -1183,7 +1075,7 @@ base class _$TestOptNullPositionalWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptNullPositional
@@ -1276,9 +1168,6 @@ base class TestOptNullPositionalWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -1292,15 +1181,6 @@ base class TestOptNullPositionalWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -1320,15 +1200,12 @@ base class TestOptNullPositionalWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptNullPositionalWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestOptNullPositionalWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -1383,10 +1260,8 @@ class _$TestOptDefPositional$WorkerService extends TestOptDefPositional
     implements sq.WorkerService {
   _$TestOptDefPositional$WorkerService([super.arg1 = 0]) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptDefPositional
@@ -1448,7 +1323,7 @@ base class _$TestOptDefPositionalWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptDefPositional
@@ -1525,34 +1400,10 @@ base class TestOptDefPositionalWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -1649,7 +1500,7 @@ base class _$TestOptDefPositionalWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptDefPositional
@@ -1742,9 +1593,6 @@ base class TestOptDefPositionalWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -1758,15 +1606,6 @@ base class TestOptDefPositionalWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -1786,15 +1625,12 @@ base class TestOptDefPositionalWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptDefPositionalWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestOptDefPositionalWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -1849,10 +1685,8 @@ class _$TestOptNullDefPositional$WorkerService extends TestOptNullDefPositional
     implements sq.WorkerService {
   _$TestOptNullDefPositional$WorkerService([super.arg1 = 0]) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullDefPositional
@@ -1914,7 +1748,7 @@ base class _$TestOptNullDefPositionalWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullDefPositional
@@ -1991,34 +1825,10 @@ base class TestOptNullDefPositionalWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -2116,7 +1926,7 @@ base class _$TestOptNullDefPositionalWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptNullDefPositional
@@ -2209,9 +2019,6 @@ base class TestOptNullDefPositionalWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -2225,15 +2032,6 @@ base class TestOptNullDefPositionalWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -2253,15 +2051,12 @@ base class TestOptNullDefPositionalWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptNullDefPositionalWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestOptNullDefPositionalWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -2316,10 +2111,8 @@ class _$TestReqPositionalField$WorkerService extends TestReqPositionalField
     implements sq.WorkerService {
   _$TestReqPositionalField$WorkerService(super.arg1) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestReqPositionalField
@@ -2380,7 +2173,7 @@ base class _$TestReqPositionalFieldWorker extends sq.Worker
   @override
   final int arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestReqPositionalField
@@ -2456,34 +2249,10 @@ base class TestReqPositionalFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -2580,7 +2349,7 @@ base class _$TestReqPositionalFieldWorkerPool
   @override
   final int arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestReqPositionalField
@@ -2680,9 +2449,6 @@ base class TestReqPositionalFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -2696,15 +2462,6 @@ base class TestReqPositionalFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -2724,15 +2481,12 @@ base class TestReqPositionalFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestReqPositionalFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestReqPositionalFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -2788,10 +2542,8 @@ class _$TestOptNullPositionalField$WorkerService
     extends TestOptNullPositionalField implements sq.WorkerService {
   _$TestOptNullPositionalField$WorkerService([super.arg1]) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullPositionalField
@@ -2860,7 +2612,7 @@ base class _$TestOptNullPositionalFieldWorker extends sq.Worker
   @override
   final int? arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullPositionalField
@@ -2940,34 +2692,10 @@ base class TestOptNullPositionalFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -3068,7 +2796,7 @@ base class _$TestOptNullPositionalFieldWorkerPool
   @override
   final int? arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptNullPositionalField
@@ -3164,9 +2892,6 @@ base class TestOptNullPositionalFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -3180,15 +2905,6 @@ base class TestOptNullPositionalFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -3210,15 +2926,12 @@ base class TestOptNullPositionalFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptNullPositionalFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestOptNullPositionalFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -3273,10 +2986,8 @@ class _$TestOptDefPositionalField$WorkerService
     extends TestOptDefPositionalField implements sq.WorkerService {
   _$TestOptDefPositionalField$WorkerService([super.arg1 = 0]) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptDefPositionalField
@@ -3341,7 +3052,7 @@ base class _$TestOptDefPositionalFieldWorker extends sq.Worker
   @override
   final int arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptDefPositionalField
@@ -3421,34 +3132,10 @@ base class TestOptDefPositionalFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -3549,7 +3236,7 @@ base class _$TestOptDefPositionalFieldWorkerPool
   @override
   final int arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptDefPositionalField
@@ -3645,9 +3332,6 @@ base class TestOptDefPositionalFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -3661,15 +3345,6 @@ base class TestOptDefPositionalFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -3690,15 +3365,12 @@ base class TestOptDefPositionalFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptDefPositionalFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestOptDefPositionalFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -3754,10 +3426,8 @@ class _$TestOptNullDefPositionalField$WorkerService
     extends TestOptNullDefPositionalField implements sq.WorkerService {
   _$TestOptNullDefPositionalField$WorkerService([super.arg1 = 0]) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullDefPositionalField
@@ -3832,7 +3502,7 @@ base class _$TestOptNullDefPositionalFieldWorker extends sq.Worker
   @override
   final int? arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullDefPositionalField
@@ -3912,34 +3582,10 @@ base class TestOptNullDefPositionalFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -4040,7 +3686,7 @@ base class _$TestOptNullDefPositionalFieldWorkerPool
   @override
   final int? arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptNullDefPositionalField
@@ -4136,9 +3782,6 @@ base class TestOptNullDefPositionalFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -4152,15 +3795,6 @@ base class TestOptNullDefPositionalFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -4182,17 +3816,12 @@ base class TestOptNullDefPositionalFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(
-                  TestOptNullDefPositionalFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(
-                  TestOptNullDefPositionalFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -4252,10 +3881,8 @@ class _$TestReqPositionalPrivateField$WorkerService
     extends TestReqPositionalPrivateField implements sq.WorkerService {
   _$TestReqPositionalPrivateField$WorkerService(super.arg1) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestReqPositionalPrivateField
@@ -4323,7 +3950,7 @@ base class _$TestReqPositionalPrivateFieldWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestReqPositionalPrivateField
@@ -4399,34 +4026,10 @@ base class TestReqPositionalPrivateFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -4520,7 +4123,7 @@ base class _$TestReqPositionalPrivateFieldWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestReqPositionalPrivateField
@@ -4620,9 +4223,6 @@ base class TestReqPositionalPrivateFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -4636,15 +4236,6 @@ base class TestReqPositionalPrivateFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -4666,17 +4257,12 @@ base class TestReqPositionalPrivateFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(
-                  TestReqPositionalPrivateFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(
-                  TestReqPositionalPrivateFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -4736,10 +4322,8 @@ class _$TestOptNullPositionalPrivateField$WorkerService
     extends TestOptNullPositionalPrivateField implements sq.WorkerService {
   _$TestOptNullPositionalPrivateField$WorkerService([super.arg1]) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullPositionalPrivateField
@@ -4817,7 +4401,7 @@ base class _$TestOptNullPositionalPrivateFieldWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullPositionalPrivateField
@@ -4897,34 +4481,10 @@ base class TestOptNullPositionalPrivateFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -5022,7 +4582,7 @@ base class _$TestOptNullPositionalPrivateFieldWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptNullPositionalPrivateField
@@ -5119,9 +4679,6 @@ base class TestOptNullPositionalPrivateFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -5135,15 +4692,6 @@ base class TestOptNullPositionalPrivateFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -5165,17 +4713,12 @@ base class TestOptNullPositionalPrivateFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(
-                  TestOptNullPositionalPrivateFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(
-                  TestOptNullPositionalPrivateFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -5239,10 +4782,8 @@ class _$TestOptDefPositionalPrivateField$WorkerService
     extends TestOptDefPositionalPrivateField implements sq.WorkerService {
   _$TestOptDefPositionalPrivateField$WorkerService([super.arg1 = 0]) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptDefPositionalPrivateField
@@ -5320,7 +4861,7 @@ base class _$TestOptDefPositionalPrivateFieldWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptDefPositionalPrivateField
@@ -5400,34 +4941,10 @@ base class TestOptDefPositionalPrivateFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -5525,7 +5042,7 @@ base class _$TestOptDefPositionalPrivateFieldWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptDefPositionalPrivateField
@@ -5621,9 +5138,6 @@ base class TestOptDefPositionalPrivateFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -5637,15 +5151,6 @@ base class TestOptDefPositionalPrivateFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -5667,17 +5172,12 @@ base class TestOptDefPositionalPrivateFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(
-                  TestOptDefPositionalPrivateFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(
-                  TestOptDefPositionalPrivateFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -5742,10 +5242,8 @@ class _$TestOptNullDefPositionalPrivateField$WorkerService
   _$TestOptNullDefPositionalPrivateField$WorkerService([super.arg1 = 0])
       : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullDefPositionalPrivateField
@@ -5823,7 +5321,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullDefPositionalPrivateField
@@ -5903,34 +5401,10 @@ base class TestOptNullDefPositionalPrivateFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -6028,7 +5502,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptNullDefPositionalPrivateField
@@ -6125,9 +5599,6 @@ base class TestOptNullDefPositionalPrivateFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -6141,15 +5612,6 @@ base class TestOptNullDefPositionalPrivateFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -6171,17 +5633,12 @@ base class TestOptNullDefPositionalPrivateFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptNullDefPositionalPrivateFieldWorker worker,
-                  bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestOptNullDefPositionalPrivateFieldWorker worker,
-                  bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -6239,10 +5696,8 @@ class _$TestOptNullNamed$WorkerService extends TestOptNullNamed
     implements sq.WorkerService {
   _$TestOptNullNamed$WorkerService({super.arg1}) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullNamed
@@ -6304,7 +5759,7 @@ base class _$TestOptNullNamedWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullNamed
@@ -6389,34 +5844,10 @@ base class TestOptNullNamedWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -6519,7 +5950,7 @@ base class _$TestOptNullNamedWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptNullNamed
@@ -6624,9 +6055,6 @@ base class TestOptNullNamedWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -6640,15 +6068,6 @@ base class TestOptNullNamedWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -6668,14 +6087,12 @@ base class TestOptNullNamedWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptNullNamedWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestOptNullNamedWorker worker, bool removed)? listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -6727,10 +6144,8 @@ class _$TestOptDefNamed$WorkerService extends TestOptDefNamed
     implements sq.WorkerService {
   _$TestOptDefNamed$WorkerService({super.arg1 = 0}) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptDefNamed
@@ -6792,7 +6207,7 @@ base class _$TestOptDefNamedWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptDefNamed
@@ -6877,34 +6292,10 @@ base class TestOptDefNamedWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -7007,7 +6398,7 @@ base class _$TestOptDefNamedWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptDefNamed
@@ -7112,9 +6503,6 @@ base class TestOptDefNamedWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -7128,15 +6516,6 @@ base class TestOptDefNamedWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -7156,13 +6535,12 @@ base class TestOptDefNamedWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptDefNamedWorker worker, bool removed) listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestOptDefNamedWorker worker, bool removed)? listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -7215,10 +6593,8 @@ class _$TestOptNullDefNamed$WorkerService extends TestOptNullDefNamed
     implements sq.WorkerService {
   _$TestOptNullDefNamed$WorkerService({super.arg1 = 0}) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullDefNamed
@@ -7280,7 +6656,7 @@ base class _$TestOptNullDefNamedWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullDefNamed
@@ -7365,34 +6741,10 @@ base class TestOptNullDefNamedWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -7497,7 +6849,7 @@ base class _$TestOptNullDefNamedWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptNullDefNamed
@@ -7602,9 +6954,6 @@ base class TestOptNullDefNamedWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -7618,15 +6967,6 @@ base class TestOptNullDefNamedWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -7646,15 +6986,12 @@ base class TestOptNullDefNamedWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptNullDefNamedWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestOptNullDefNamedWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -7708,10 +7045,8 @@ class _$TestOptNullNamedField$WorkerService extends TestOptNullNamedField
     implements sq.WorkerService {
   _$TestOptNullNamedField$WorkerService({super.arg1}) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullNamedField
@@ -7776,7 +7111,7 @@ base class _$TestOptNullNamedFieldWorker extends sq.Worker
   @override
   final int? arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullNamedField
@@ -7864,34 +7199,10 @@ base class TestOptNullNamedFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -8000,7 +7311,7 @@ base class _$TestOptNullNamedFieldWorkerPool
   @override
   final int? arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptNullNamedField
@@ -8108,9 +7419,6 @@ base class TestOptNullNamedFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -8124,15 +7432,6 @@ base class TestOptNullNamedFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -8152,15 +7451,12 @@ base class TestOptNullNamedFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptNullNamedFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestOptNullNamedFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -8215,10 +7511,8 @@ class _$TestOptDefNamedField$WorkerService extends TestOptDefNamedField
     implements sq.WorkerService {
   _$TestOptDefNamedField$WorkerService({super.arg1 = 0}) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptDefNamedField
@@ -8283,7 +7577,7 @@ base class _$TestOptDefNamedFieldWorker extends sq.Worker
   @override
   final int arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptDefNamedField
@@ -8371,34 +7665,10 @@ base class TestOptDefNamedFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -8507,7 +7777,7 @@ base class _$TestOptDefNamedFieldWorkerPool
   @override
   final int arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptDefNamedField
@@ -8615,9 +7885,6 @@ base class TestOptDefNamedFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -8631,15 +7898,6 @@ base class TestOptDefNamedFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -8659,15 +7917,12 @@ base class TestOptDefNamedFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptDefNamedFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestOptDefNamedFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -8722,10 +7977,8 @@ class _$TestOptNullDefNamedField$WorkerService extends TestOptNullDefNamedField
     implements sq.WorkerService {
   _$TestOptNullDefNamedField$WorkerService({super.arg1 = 0}) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullDefNamedField
@@ -8790,7 +8043,7 @@ base class _$TestOptNullDefNamedFieldWorker extends sq.Worker
   @override
   final int? arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullDefNamedField
@@ -8878,34 +8131,10 @@ base class TestOptNullDefNamedFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -9014,7 +8243,7 @@ base class _$TestOptNullDefNamedFieldWorkerPool
   @override
   final int? arg1;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptNullDefNamedField
@@ -9122,9 +8351,6 @@ base class TestOptNullDefNamedFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -9138,15 +8364,6 @@ base class TestOptNullDefNamedFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -9166,15 +8383,12 @@ base class TestOptNullDefNamedFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptNullDefNamedFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestOptNullDefNamedFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -9290,10 +8504,8 @@ class _$TestTypedData$WorkerService extends TestTypedData
     implements sq.WorkerService {
   _$TestTypedData$WorkerService() : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestTypedData
@@ -9331,7 +8543,7 @@ base class _$TestTypedDataWorker extends sq.Worker
   @override
   List? getStartArgs() => null;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestTypedData
@@ -9424,34 +8636,10 @@ base class TestTypedDataWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -9563,7 +8751,7 @@ base class _$TestTypedDataWorkerPool extends sq.WorkerPool<TestTypedDataWorker>
           {bool isLandscape = true}) =>
       execute((w) => w.foo(bytes, isLandscape: isLandscape));
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestTypedData
@@ -9683,9 +8871,6 @@ base class TestTypedDataWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -9699,15 +8884,6 @@ base class TestTypedDataWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -9727,13 +8903,12 @@ base class TestTypedDataWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestTypedDataWorker worker, bool removed) listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestTypedDataWorker worker, bool removed)? listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -9791,10 +8966,8 @@ class _$TestOptNullNamedPrivateField$WorkerService
     extends TestOptNullNamedPrivateField implements sq.WorkerService {
   _$TestOptNullNamedPrivateField$WorkerService({super.arg1}) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullNamedPrivateField
@@ -9867,7 +9040,7 @@ base class _$TestOptNullNamedPrivateFieldWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullNamedPrivateField
@@ -9955,34 +9128,10 @@ base class TestOptNullNamedPrivateFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -10088,7 +9237,7 @@ base class _$TestOptNullNamedPrivateFieldWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptNullNamedPrivateField
@@ -10196,9 +9345,6 @@ base class TestOptNullNamedPrivateFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -10212,15 +9358,6 @@ base class TestOptNullNamedPrivateFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -10242,16 +9379,12 @@ base class TestOptNullNamedPrivateFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptNullNamedPrivateFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(
-                  TestOptNullNamedPrivateFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -10311,10 +9444,8 @@ class _$TestOptDefNamedPrivateField$WorkerService
     extends TestOptDefNamedPrivateField implements sq.WorkerService {
   _$TestOptDefNamedPrivateField$WorkerService({super.arg1 = 0}) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptDefNamedPrivateField
@@ -10382,7 +9513,7 @@ base class _$TestOptDefNamedPrivateFieldWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptDefNamedPrivateField
@@ -10470,34 +9601,10 @@ base class TestOptDefNamedPrivateFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -10603,7 +9710,7 @@ base class _$TestOptDefNamedPrivateFieldWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptDefNamedPrivateField
@@ -10711,9 +9818,6 @@ base class TestOptDefNamedPrivateFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -10727,15 +9831,6 @@ base class TestOptDefNamedPrivateFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -10757,16 +9852,12 @@ base class TestOptDefNamedPrivateFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestOptDefNamedPrivateFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(
-                  TestOptDefNamedPrivateFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -10826,10 +9917,8 @@ class _$TestOptNullDefNamedPrivateField$WorkerService
     extends TestOptNullDefNamedPrivateField implements sq.WorkerService {
   _$TestOptNullDefNamedPrivateField$WorkerService({super.arg1 = 0}) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullDefNamedPrivateField
@@ -10906,7 +9995,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullDefNamedPrivateField
@@ -10994,34 +10083,10 @@ base class TestOptNullDefNamedPrivateFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -11127,7 +10192,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestOptNullDefNamedPrivateField
@@ -11235,9 +10300,6 @@ base class TestOptNullDefNamedPrivateFieldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -11251,15 +10313,6 @@ base class TestOptNullDefNamedPrivateFieldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -11281,17 +10334,12 @@ base class TestOptNullDefNamedPrivateFieldWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(
-                  TestOptNullDefNamedPrivateFieldWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(
-                  TestOptNullDefNamedPrivateFieldWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -11358,10 +10406,8 @@ class _$TestPrefixedImportType$WorkerService extends TestPrefixedImportType
     implements sq.WorkerService {
   _$TestPrefixedImportType$WorkerService(super.typedData) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestPrefixedImportType
@@ -11422,7 +10468,7 @@ base class _$TestPrefixedImportTypeWorker extends sq.Worker
   @override
   final typed_data.Int8List typedData;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestPrefixedImportType
@@ -11501,34 +10547,10 @@ base class TestPrefixedImportTypeWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -11629,7 +10651,7 @@ base class _$TestPrefixedImportTypeWorkerPool
   Future<typed_data.Int8List?> getTypedData() =>
       execute((w) => w.getTypedData());
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestPrefixedImportType
@@ -11732,9 +10754,6 @@ base class TestPrefixedImportTypeWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -11748,15 +10767,6 @@ base class TestPrefixedImportTypeWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -11776,15 +10786,12 @@ base class TestPrefixedImportTypeWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestPrefixedImportTypeWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestPrefixedImportTypeWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -11870,10 +10877,8 @@ class _$TestOptNullDefNamedPrivateNonFinalField$WorkerService
   _$TestOptNullDefNamedPrivateNonFinalField$WorkerService({super.state = 0})
       : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestOptNullDefNamedPrivateNonFinalField
@@ -11951,7 +10956,7 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestOptNullDefNamedPrivateNonFinalField
@@ -12049,34 +11054,10 @@ base class TestOptNullDefNamedPrivateNonFinalFieldWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -12151,10 +11132,8 @@ class _$TestInstallable$WorkerService extends TestInstallable
     implements sq.WorkerService {
   _$TestInstallable$WorkerService(super.delay) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestInstallable
@@ -12212,7 +11191,7 @@ base class _$TestInstallableWorker extends sq.Worker
   @override
   List? getStartArgs() => _$startReq;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestInstallable
@@ -12294,34 +11273,10 @@ base class TestInstallableWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -12418,7 +11373,7 @@ base class _$TestInstallableWorkerPool
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestInstallable
@@ -12524,9 +11479,6 @@ base class TestInstallableWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -12540,15 +11492,6 @@ base class TestInstallableWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -12568,13 +11511,12 @@ base class TestInstallableWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestInstallableWorker worker, bool removed) listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestInstallableWorker worker, bool removed)? listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -12703,10 +11645,8 @@ class _$TestRecordTypes$WorkerService extends TestRecordTypes
     implements sq.WorkerService {
   _$TestRecordTypes$WorkerService() : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestRecordTypes
@@ -12744,7 +11684,7 @@ base class _$TestRecordTypesWorker extends sq.Worker
   @override
   List? getStartArgs() => null;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestRecordTypes
@@ -12828,34 +11768,10 @@ base class TestRecordTypesWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -12961,7 +11877,7 @@ base class _$TestRecordTypesWorkerPool
   @override
   Future<(int, List<dynamic>)> unnamed() => execute((w) => w.unnamed());
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestRecordTypes
@@ -13072,9 +11988,6 @@ base class TestRecordTypesWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -13088,15 +12001,6 @@ base class TestRecordTypesWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -13116,13 +12020,12 @@ base class TestRecordTypesWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestRecordTypesWorker worker, bool removed) listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestRecordTypesWorker worker, bool removed)? listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -13181,10 +12084,8 @@ class _$TestRequiredSuperParam$WorkerService extends TestRequiredSuperParam
     implements sq.WorkerService {
   _$TestRequiredSuperParam$WorkerService({required super.path}) : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestRequiredSuperParam
@@ -13249,7 +12150,7 @@ base class _$TestRequiredSuperParamWorker extends sq.Worker
   @override
   final String path;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestRequiredSuperParam
@@ -13340,34 +12241,10 @@ base class TestRequiredSuperParamWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -13479,7 +12356,7 @@ base class _$TestRequiredSuperParamWorkerPool
   @override
   Future<void> clear() => execute((w) => w.clear());
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestRequiredSuperParam
@@ -13590,9 +12467,6 @@ base class TestRequiredSuperParamWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -13606,15 +12480,6 @@ base class TestRequiredSuperParamWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -13634,15 +12499,12 @@ base class TestRequiredSuperParamWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestRequiredSuperParamWorker worker, bool removed)
-              listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestRequiredSuperParamWorker worker, bool removed)?
-              listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -13715,10 +12577,8 @@ class _$TestBigInt$WorkerService extends TestBigInt
     implements sq.WorkerService {
   _$TestBigInt$WorkerService() : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for TestBigInt
@@ -13756,7 +12616,7 @@ base class _$TestBigIntWorker extends sq.Worker
   @override
   List? getStartArgs() => null;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for TestBigInt
@@ -13827,34 +12687,10 @@ base class TestBigIntWorker with Releasable implements _$TestBigIntWorker {
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -13946,7 +12782,7 @@ base class _$TestBigIntWorkerPool extends sq.WorkerPool<TestBigIntWorker>
   @override
   Future<BigInt> add(BigInt a, BigInt b) => execute((w) => w.add(a, b));
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for TestBigInt
@@ -14046,9 +12882,6 @@ base class TestBigIntWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -14062,15 +12895,6 @@ base class TestBigIntWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -14090,13 +12914,12 @@ base class TestBigIntWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(TestBigIntWorker worker, bool removed) listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(TestBigIntWorker worker, bool removed)? listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override

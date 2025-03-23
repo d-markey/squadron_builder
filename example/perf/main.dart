@@ -215,10 +215,10 @@ Future<instr.PerfCounters> runPools(DeviationMonitor monitor, bool trace,
 
   await Future.delayed(Duration(milliseconds: 500));
 
-  fibonacciPool.stop((w) => w.idleTime.inMilliseconds > 400);
+  fibonacciPool.stop((w) => w.stats.idleTime.inMilliseconds > 400);
   fibonacciPool.fullStats.forEach(displayStats);
 
-  echoPool.stop((w) => w.idleTime.inMilliseconds > 400);
+  echoPool.stop((w) => w.stats.idleTime.inMilliseconds > 400);
   echoPool.fullStats.forEach(displayStats);
 
   // clean up pools... should not be necessary if with_finalizers was set to true when the code was generated

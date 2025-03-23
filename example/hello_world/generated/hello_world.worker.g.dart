@@ -53,10 +53,8 @@ base class _$HelloWorld$WorkerService extends HelloWorld
     implements WorkerService {
   _$HelloWorld$WorkerService() : super();
 
-  OperationsMap? _$ops;
-
   @override
-  OperationsMap get operations => (_$ops ??= _$getOperations());
+  OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for HelloWorld
@@ -90,7 +88,7 @@ base class _$HelloWorldWorker extends Worker
   @override
   List? getStartArgs() => null;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for HelloWorld
@@ -157,34 +155,10 @@ base class HelloWorldWorker with Releasable implements _$HelloWorldWorker {
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<Channel> start() => _$worker.start();
@@ -276,7 +250,7 @@ base class _$HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
   @override
   Future<String> sayHello([String? name]) => execute((w) => w.sayHello(name));
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for HelloWorld
@@ -376,9 +350,6 @@ base class HelloWorldWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -392,15 +363,6 @@ base class HelloWorldWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -419,14 +381,12 @@ base class HelloWorldWorkerPool
   void terminate([TaskTerminatedException? ex]) => _$pool.terminate(ex);
 
   @override
-  Object registerWorkerPoolListener(
-          void Function(HelloWorldWorker worker, bool removed) listener) =>
+  Object registerWorkerPoolListener(void Function(WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(HelloWorldWorker worker, bool removed)? listener,
-          Object? token}) =>
+          {void Function(WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override

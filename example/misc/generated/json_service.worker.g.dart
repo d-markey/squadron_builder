@@ -28,13 +28,7 @@ extension on JsonService {
 /// remote service.
 mixin _$JsonService$Invoker on sq.Invoker implements JsonService {
   @override
-  Future<dynamic> decode(String source) async {
-    final dynamic $res = await send(_$decodeId, args: [source]);
-    try {
-      final $dsr = _$Deser(contextAware: false);
-      return $dsr.$2($res);
-    } finally {}
-  }
+  Future<dynamic> decode(String source) => send(_$decodeId, args: [source]);
 }
 
 /// Facade for JsonService, implements other details of the service unrelated to
@@ -46,10 +40,8 @@ class _$JsonService$WorkerService extends JsonService
     implements sq.WorkerService {
   _$JsonService$WorkerService() : super();
 
-  sq.OperationsMap? _$ops;
-
   @override
-  sq.OperationsMap get operations => (_$ops ??= _$getOperations());
+  sq.OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for JsonService
@@ -87,7 +79,7 @@ base class _$JsonServiceWorker extends sq.Worker
   @override
   List? getStartArgs() => null;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for JsonService
@@ -158,34 +150,10 @@ base class JsonServiceWorker with Releasable implements _$JsonServiceWorker {
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<sq.Channel> start() => _$worker.start();
@@ -277,7 +245,7 @@ base class _$JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
   @override
   Future<dynamic> decode(String source) => execute((w) => w.decode(source));
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for JsonService
@@ -377,9 +345,6 @@ base class JsonServiceWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -393,15 +358,6 @@ base class JsonServiceWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -421,13 +377,12 @@ base class JsonServiceWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(JsonServiceWorker worker, bool removed) listener) =>
+          void Function(sq.WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(JsonServiceWorker worker, bool removed)? listener,
-          Object? token}) =>
+          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
@@ -462,6 +417,4 @@ base class JsonServiceWorkerPool
 final class _$Deser extends sq.MarshalingContext {
   _$Deser({super.contextAware});
   late final $0 = value<String>();
-  late final $1 = value<Object>();
-  late final $2 = sq.Converter.allowNull($1);
 }

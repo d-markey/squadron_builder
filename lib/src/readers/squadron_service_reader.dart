@@ -13,8 +13,8 @@ class SquadronServiceReader {
   SquadronServiceReader._(
     ClassElement clazz,
     this._typeManager,
-    this.worker,
     this.local,
+    this.worker,
     this.pool,
     this.vm,
     this.js,
@@ -34,8 +34,8 @@ class SquadronServiceReader {
   final methods = <MethodElement>[];
 
   final String name;
-  final bool worker;
   final bool local;
+  final bool worker;
   final bool pool;
   final bool vm;
   final bool js;
@@ -47,14 +47,13 @@ class SquadronServiceReader {
   final TypeManager _typeManager;
 
   void _load(ClassElement clazz) {
-    if (clazz.isAbstract ||
-        clazz.isInterface ||
-        clazz.isSealed ||
-        clazz.isFinal ||
-        !clazz.isConstructable ||
-        clazz.name.startsWith('_')) {
+    if (clazz.name.startsWith('_')) {
+      throw InvalidGenerationSourceError('Service classes must be public.');
+    }
+
+    if (worker && !clazz.isConstructable) {
       throw InvalidGenerationSourceError(
-          'Service classes must be public, concrete and extendable.');
+          'Worker service classes must be constructable.');
     }
 
     final ctorElement = clazz.unnamedConstructor;
@@ -123,6 +122,6 @@ class SquadronServiceReader {
       baseUrl = baseUrl.substring(0, baseUrl.length - 1);
     }
     return SquadronServiceReader._(
-        clazz, context.typeManager, worker, local, pool, vm, js, wasm, baseUrl);
+        clazz, context.typeManager, local, worker, pool, vm, js, wasm, baseUrl);
   }
 }

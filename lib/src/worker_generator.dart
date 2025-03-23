@@ -85,7 +85,7 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
     final service = SquadronServiceReader.load(classElt, context);
     if (service == null) return;
 
-    if (_withFinalizers) {
+    if (_withFinalizers && service.worker) {
       final missingImports = context.typeManager.checkRequiredImports([
         context.typeManager.TReleasable,
         context.typeManager.TCancelationToken,

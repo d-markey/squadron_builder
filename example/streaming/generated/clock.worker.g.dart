@@ -47,10 +47,8 @@ mixin _$Clock$Facade implements Clock {}
 class _$Clock$WorkerService extends Clock implements WorkerService {
   _$Clock$WorkerService() : super();
 
-  OperationsMap? _$ops;
-
   @override
-  OperationsMap get operations => (_$ops ??= _$getOperations());
+  OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for Clock
@@ -83,7 +81,7 @@ base class _$ClockWorker extends Worker
   @override
   List? getStartArgs() => null;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for Clock
@@ -151,34 +149,10 @@ base class ClockWorker with Releasable implements _$ClockWorker {
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<Channel> start() => _$worker.start();
@@ -271,7 +245,7 @@ base class _$ClockWorkerPool extends WorkerPool<ClockWorker>
   Stream<int> infiniteClock({int periodInMs = 1000, ConsoleColor? color}) =>
       stream((w) => w.infiniteClock(periodInMs: periodInMs, color: color));
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for Clock
@@ -370,9 +344,6 @@ base class ClockWorkerPool with Releasable implements _$ClockWorkerPool {
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -386,15 +357,6 @@ base class ClockWorkerPool with Releasable implements _$ClockWorkerPool {
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -413,14 +375,12 @@ base class ClockWorkerPool with Releasable implements _$ClockWorkerPool {
   void terminate([TaskTerminatedException? ex]) => _$pool.terminate(ex);
 
   @override
-  Object registerWorkerPoolListener(
-          void Function(ClockWorker worker, bool removed) listener) =>
+  Object registerWorkerPoolListener(void Function(WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(ClockWorker worker, bool removed)? listener,
-          Object? token}) =>
+          {void Function(WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override

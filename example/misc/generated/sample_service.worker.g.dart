@@ -53,10 +53,8 @@ class _$SampleService$WorkerService extends SampleService
     implements WorkerService {
   _$SampleService$WorkerService() : super();
 
-  OperationsMap? _$ops;
-
   @override
-  OperationsMap get operations => (_$ops ??= _$getOperations());
+  OperationsMap get operations => _$getOperations();
 }
 
 /// Service initializer for SampleService
@@ -90,7 +88,7 @@ base class _$SampleServiceWorker extends Worker
   @override
   List? getStartArgs() => null;
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker wrapper for SampleService
@@ -160,34 +158,10 @@ base class SampleServiceWorker
   set channelLogger(Logger? value) => _$worker.channelLogger = value;
 
   @override
-  Duration get idleTime => _$worker.idleTime;
-
-  @override
-  bool get isStopped => _$worker.isStopped;
-
-  @override
   bool get isConnected => _$worker.isConnected;
 
   @override
-  int get maxWorkload => _$worker.maxWorkload;
-
-  @override
   WorkerStat get stats => _$worker.stats;
-
-  @override
-  String get status => _$worker.status;
-
-  @override
-  int get totalErrors => _$worker.totalErrors;
-
-  @override
-  int get totalWorkload => _$worker.totalWorkload;
-
-  @override
-  Duration get upTime => _$worker.upTime;
-
-  @override
-  int get workload => _$worker.workload;
 
   @override
   Future<Channel> start() => _$worker.start();
@@ -280,7 +254,7 @@ base class _$SampleServiceWorkerPool extends WorkerPool<SampleServiceWorker>
   Future<DataOut> compute(DataIn input, State state) =>
       execute((w) => w.compute(input, state));
 
-  final Object _$detachToken = Object();
+  final _$detachToken = Object();
 }
 
 /// Finalizable worker pool wrapper for SampleService
@@ -381,9 +355,6 @@ base class SampleServiceWorkerPool
   int get maxWorkers => _$pool.maxWorkers;
 
   @override
-  int get maxWorkload => _$pool.maxWorkload;
-
-  @override
   int get minWorkers => _$pool.minWorkers;
 
   @override
@@ -397,15 +368,6 @@ base class SampleServiceWorkerPool
 
   @override
   bool get stopped => _$pool.stopped;
-
-  @override
-  int get totalErrors => _$pool.totalErrors;
-
-  @override
-  int get totalWorkload => _$pool.totalWorkload;
-
-  @override
-  int get workload => _$pool.workload;
 
   @override
   void cancelAll([String? message]) => _$pool.cancelAll(message);
@@ -424,14 +386,12 @@ base class SampleServiceWorkerPool
   void terminate([TaskTerminatedException? ex]) => _$pool.terminate(ex);
 
   @override
-  Object registerWorkerPoolListener(
-          void Function(SampleServiceWorker worker, bool removed) listener) =>
+  Object registerWorkerPoolListener(void Function(WorkerStat, bool) listener) =>
       _$pool.registerWorkerPoolListener(listener);
 
   @override
   void unregisterWorkerPoolListener(
-          {void Function(SampleServiceWorker worker, bool removed)? listener,
-          Object? token}) =>
+          {void Function(WorkerStat, bool)? listener, Object? token}) =>
       _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
