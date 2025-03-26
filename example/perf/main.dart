@@ -443,3 +443,15 @@ class LinePrinter extends SimplePrinter {
         .toList();
   }
 }
+
+extension on WorkerStat {
+  String get status {
+    if (isStopped) {
+      return 'STOPPED';
+    } else if (workload == 0) {
+      return 'IDLE';
+    } else {
+      return 'WORKING($workload)';
+    }
+  }
+}

@@ -4,7 +4,7 @@
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.0.0
+// Generator: WorkerGenerator 7.1.0 (Squadron 7.1.0)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -317,22 +317,10 @@ base class TestParameterLessWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -733,22 +721,10 @@ base class TestReqPositionalWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -1156,22 +1132,10 @@ base class TestOptNullPositionalWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -1581,22 +1545,10 @@ base class TestOptDefPositionalWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -2007,22 +1959,10 @@ base class TestOptNullDefPositionalWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -2437,22 +2377,10 @@ base class TestReqPositionalFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -2880,22 +2808,10 @@ base class TestOptNullPositionalFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -3320,22 +3236,10 @@ base class TestOptDefPositionalFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -3770,22 +3674,10 @@ base class TestOptNullDefPositionalFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -4211,22 +4103,10 @@ base class TestReqPositionalPrivateFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -4667,22 +4547,10 @@ base class TestOptNullPositionalPrivateFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -5126,22 +4994,10 @@ base class TestOptDefPositionalPrivateFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -5587,22 +5443,10 @@ base class TestOptNullDefPositionalPrivateFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -6043,22 +5887,10 @@ base class TestOptNullNamedWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -6491,22 +6323,10 @@ base class TestOptDefNamedWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -6942,22 +6762,10 @@ base class TestOptNullDefNamedWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -7407,22 +7215,10 @@ base class TestOptNullNamedFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -7873,22 +7669,10 @@ base class TestOptDefNamedFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -8339,22 +8123,10 @@ base class TestOptNullDefNamedFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -8859,22 +8631,10 @@ base class TestTypedDataWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -9333,22 +9093,10 @@ base class TestOptNullNamedPrivateFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -9806,22 +9554,10 @@ base class TestOptDefNamedPrivateFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -10288,22 +10024,10 @@ base class TestOptNullDefNamedPrivateFieldWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -10742,22 +10466,10 @@ base class TestPrefixedImportTypeWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -11467,22 +11179,10 @@ base class TestInstallableWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -11976,22 +11676,10 @@ base class TestRecordTypesWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -12455,22 +12143,10 @@ base class TestRequiredSuperParamWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;
@@ -12870,22 +12546,10 @@ base class TestBigIntWorkerPool
   Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;

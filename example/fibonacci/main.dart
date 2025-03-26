@@ -98,7 +98,17 @@ class Monitor {
   }
 }
 
-extension DebugStats on WorkerStat {
+extension on WorkerStat {
+  String get status {
+    if (isStopped) {
+      return 'STOPPED';
+    } else if (workload == 0) {
+      return 'IDLE';
+    } else {
+      return 'WORKING($workload)';
+    }
+  }
+
   String dump() =>
       'totalWorkload=$totalWorkload (max $maxWorkload) - upTime=$upTime - idleTime=$idleTime - status=$status (workerHashCode=$workerHashCode)';
 }

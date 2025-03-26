@@ -5,6 +5,7 @@ import 'package:build/build.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart' as squadron;
+import 'package:squadron/version.dart' as squadron;
 import 'package:squadron_builder/src/marshalers/marshaling_context.dart';
 
 import '../version.dart';
@@ -152,7 +153,7 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
   }
 
   @override
-  String toString() => '$runtimeType $version';
+  String toString() => '$runtimeType $version (Squadron ${squadron.version})';
 }
 
 String _noFormatting(String source, Version languageVersion) => source;

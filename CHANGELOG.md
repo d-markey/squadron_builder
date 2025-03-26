@@ -1,3 +1,7 @@
+## 7.1.0
+
+- Code Generator for Squadron 7.1: stop generating shortcut accessors for stats and concurrency settings.
+
 ## 7.0.0
 
 - Code Generator for Squadron 7.0: generate code for serialization contexts + local workers.

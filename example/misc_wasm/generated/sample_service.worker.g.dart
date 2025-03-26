@@ -4,7 +4,7 @@
 part of '../sample_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.0.0
+// Generator: WorkerGenerator 7.1.0 (Squadron 7.1.0)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -282,22 +282,10 @@ base class SampleServiceWorkerPool
   Iterable<WorkerStat> get fullStats => _$pool.fullStats;
 
   @override
-  int get maxConcurrency => _$pool.maxConcurrency;
-
-  @override
-  int get maxParallel => _$pool.maxParallel;
+  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get maxSize => _$pool.maxSize;
-
-  @override
-  int get maxWorkers => _$pool.maxWorkers;
-
-  @override
-  int get minWorkers => _$pool.minWorkers;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
 
   @override
   int get size => _$pool.size;

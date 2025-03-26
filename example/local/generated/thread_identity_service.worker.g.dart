@@ -4,7 +4,7 @@
 part of '../thread_identity_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.0.0
+// Generator: WorkerGenerator 7.1.0 (Squadron 7.1.0)
 // **************************************************************************
 
 /// Command ids used in operations map

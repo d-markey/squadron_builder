@@ -24,7 +24,7 @@ Dart code generator for Squadron workers. Implement your worker service and let 
 [![Dart Style](https://img.shields.io/badge/style-lints-40c4ff)](https://pub.dev/packages/lints)
 [![Pub Points](https://img.shields.io/pub/points/squadron_builder)](https://pub.dev/packages/squadron_builder/score)
 [![Likes](https://img.shields.io/pub/likes/squadron_builder)](https://pub.dev/packages/squadron_builder/score)
-[![Popularity](https://img.shields.io/pub/popularity/squadron_builder)](https://pub.dev/packages/squadron_builder/score)
+[![Downloads](https://img.shields.io/pub/dm/squadron_builder)](https://pub.dev/packages/squadron_builder/score)
 [![Last Commit](https://img.shields.io/github/last-commit/d-markey/squadron_builder?logo=git&logoColor=white)](https://github.com/d-markey/squadron_builder/commits)
 
 # Usage

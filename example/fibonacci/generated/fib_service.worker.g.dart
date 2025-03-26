@@ -4,7 +4,7 @@
 part of '../fib_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.0.0
+// Generator: WorkerGenerator 7.1.0 (Squadron 7.1.0)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -327,22 +327,10 @@ base class FibServiceWorkerPool
   dc.Iterable<WorkerStat> get fullStats => _$pool.fullStats;
 
   @dc.override
-  dc.int get maxConcurrency => _$pool.maxConcurrency;
-
-  @dc.override
-  dc.int get maxParallel => _$pool.maxParallel;
+  dc.int get pendingWorkload => _$pool.pendingWorkload;
 
   @dc.override
   dc.int get maxSize => _$pool.maxSize;
-
-  @dc.override
-  dc.int get maxWorkers => _$pool.maxWorkers;
-
-  @dc.override
-  dc.int get minWorkers => _$pool.minWorkers;
-
-  @dc.override
-  dc.int get pendingWorkload => _$pool.pendingWorkload;
 
   @dc.override
   dc.int get size => _$pool.size;
