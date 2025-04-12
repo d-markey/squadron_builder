@@ -38,6 +38,14 @@ base class ImportedType with ManagedTypeMixin implements ManagedType {
   bool get isDynamic => baseName == 'dynamic';
 
   @override
+  bool get isNumericType =>
+      baseName == 'int' || baseName == 'double' || baseName == 'num';
+
+  @override
+  bool get isPrimaryType =>
+      isNumericType || baseName == 'bool' || baseName == 'String';
+
+  @override
   DartType? get dartType => null;
 
   @override
@@ -45,8 +53,8 @@ base class ImportedType with ManagedTypeMixin implements ManagedType {
     throwIfNullable();
     final ser = attachedMarshaler?.ser(context, this);
     if (ser != null) return ser;
-    final code = 'value<$this>()';
-    return DeSer(code, true, false);
+    if (isPrimaryType) withContext = false;
+    return (withContext ?? false) ? DeSer('value<$this>()', true, false) : null;
   }
 
   @override
@@ -54,8 +62,7 @@ base class ImportedType with ManagedTypeMixin implements ManagedType {
     throwIfNullable();
     final deser = attachedMarshaler?.deser(context, this);
     if (deser != null) return deser;
-    final code = 'value<$this>()';
-    return DeSer(code, true, false);
+    return DeSer('value<$this>()', true, false);
   }
 
   @override

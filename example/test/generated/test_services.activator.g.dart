@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.0 (Squadron 7.1.0)
+// Generator: WorkerGenerator 7.1.1 (Squadron 7.1.1)
 // **************************************************************************
 
 import 'test_services.stub.g.dart'
@@ -108,3 +108,6 @@ const $TestRequiredSuperParamActivator = $getTestRequiredSuperParamActivator;
 
 /// Service activator for TestBigInt
 const $TestBigIntActivator = $getTestBigIntActivator;
+
+/// Service activator for TestCustomData
+const $TestCustomDataActivator = $getTestCustomDataActivator;

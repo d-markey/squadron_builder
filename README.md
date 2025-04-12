@@ -36,11 +36,19 @@ Its purpose is to generate the code for Workers and WorkerPools based on the ser
 Example of a service class:
 
 ```dart
+// file hello_world.dart
+
+// mandatory, will be generated with platform-specific code for your worker's entry points
+import 'hello_world.activator.g.dart';
+
+// mandatory, will be generated with code for your worker & worker pool
+part 'hello_world.worker.g.dart';
+
 // this annotation tells squadron_builder that this class contains code to be executed on dedicated threads
 @SquadronService(baseUrl: '~/workers', targetPlatform: TargetPlatform.vm | TargetPlatform.web)
 base class HelloWorld {
   // this annotation tells squadron_builder that this method is exposed to clients running in the main thread for instance
-  @SquadronMethod()
+  @squadronMethod
   FutureOr<String> hello([String? name]) {
     name = name?.trim() ?? 'World';
     return 'Hello, $name!';

@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.0 (Squadron 7.1.0)
+// Generator: WorkerGenerator 7.1.1 (Squadron 7.1.1)
 // **************************************************************************
 
 import 'package:squadron/squadron.dart' as sq;
@@ -402,6 +402,19 @@ void _start$TestBigInt(sq.WorkerRequest command) {
 sq.EntryPoint $getTestBigIntActivator(sq.SquadronPlatformType platform) {
   if (platform.isVm) {
     return _start$TestBigInt;
+  } else {
+    throw UnsupportedError('${platform.label} not supported.');
+  }
+}
+
+void _start$TestCustomData(sq.WorkerRequest command) {
+  /// VM entry point for TestCustomData
+  sq.run($TestCustomDataInitializer, command);
+}
+
+sq.EntryPoint $getTestCustomDataActivator(sq.SquadronPlatformType platform) {
+  if (platform.isVm) {
+    return _start$TestCustomData;
   } else {
     throw UnsupportedError('${platform.label} not supported.');
   }

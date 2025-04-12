@@ -4,7 +4,7 @@
 part of '../echo_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.0 (Squadron 7.1.0)
+// Generator: WorkerGenerator 7.1.1 (Squadron 7.1.1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -190,29 +190,29 @@ sq.WorkerService $EchoServiceInitializer(sq.WorkerRequest $req) {
 }
 
 /// Worker for EchoService
-base class _$EchoServiceWorker extends sq.Worker
+base class EchoServiceWorker extends sq.Worker
     with _$EchoService$Invoker, _$EchoService$Facade
     implements EchoService {
-  _$EchoServiceWorker(
+  EchoServiceWorker(
       [bool trace = false,
       cfg.ServiceConfig<int>? workloadDelay,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : _$startReq = (() {
           final $sr = _$Ser(contextAware: false);
-          return [$sr.$9(trace), $sr.$11(workloadDelay)];
+          return [trace, $sr.$10(workloadDelay)];
         })(),
         super($EchoServiceActivator(sq.Squadron.platformType),
             threadHook: threadHook, exceptionManager: exceptionManager);
 
-  _$EchoServiceWorker.vm(
+  EchoServiceWorker.vm(
       [bool trace = false,
       cfg.ServiceConfig<int>? workloadDelay,
       sq.PlatformThreadHook? threadHook,
       sq.ExceptionManager? exceptionManager])
       : _$startReq = (() {
           final $sr = _$Ser(contextAware: false);
-          return [$sr.$9(trace), $sr.$11(workloadDelay)];
+          return [trace, $sr.$10(workloadDelay)];
         })(),
         super($EchoServiceActivator(sq.SquadronPlatformType.vm),
             threadHook: threadHook, exceptionManager: exceptionManager);
@@ -221,159 +221,13 @@ base class _$EchoServiceWorker extends sq.Worker
 
   @override
   List? getStartArgs() => _$startReq;
-
-  final _$detachToken = Object();
-}
-
-/// Finalizable worker wrapper for EchoService
-base class EchoServiceWorker with Releasable implements _$EchoServiceWorker {
-  EchoServiceWorker._(this._$worker) {
-    _finalizer.attach(this, _$worker, detach: _$worker._$detachToken);
-  }
-
-  EchoServiceWorker(
-      [bool trace = false,
-      cfg.ServiceConfig<int>? workloadDelay,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$EchoServiceWorker(
-            trace, workloadDelay, threadHook, exceptionManager));
-
-  EchoServiceWorker.vm(
-      [bool trace = false,
-      cfg.ServiceConfig<int>? workloadDelay,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager])
-      : this._(_$EchoServiceWorker.vm(
-            trace, workloadDelay, threadHook, exceptionManager));
-
-  final _$EchoServiceWorker _$worker;
-
-  static final Finalizer<_$EchoServiceWorker> _finalizer =
-      Finalizer<_$EchoServiceWorker>((w) {
-    try {
-      _finalizer.detach(w._$detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$worker.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  List<dynamic> get _$startReq => const [];
-
-  @override
-  List? getStartArgs() => null;
-
-  @override
-  xxx.Future<srv.ServiceResponse<String>> explicitEchoWithExplicitResult(
-          srv.ServiceRequest request,
-          {CancelationToken? token}) =>
-      _$worker.explicitEchoWithExplicitResult(request, token: token);
-
-  @override
-  xxx.Future<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
-          srv.ServiceRequest request) =>
-      _$worker.explicitEchoWithJsonResult(request);
-
-  @override
-  xxx.Future<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
-          srv.ServiceRequest request) =>
-      _$worker.jsonEchoWithExplicitResult(request);
-
-  @override
-  xxx.Future<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
-          srv.ServiceRequest request) =>
-      _$worker.jsonEchoWithJsonResult(request);
-
-  @override
-  xxx.Future<srv.ServiceResponse<String>> jsonEncodeEcho(
-          srv.ServiceRequest request,
-          [CancelationToken? token]) =>
-      _$worker.jsonEncodeEcho(request, token);
-
-  @override
-  void _simulateWorkload() => _$worker._simulateWorkload();
-
-  @override
-  Logger? get _logger => _$worker._logger;
-
-  @override
-  Duration get _delay => _$worker._delay;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$worker.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$worker.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$worker.channelLogger = value;
-
-  @override
-  bool get isConnected => _$worker.isConnected;
-
-  @override
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
-  xxx.Future<sq.Channel> start() => _$worker.start();
-
-  @override
-  void stop() => _$worker.stop();
-
-  @override
-  void terminate([sq.TaskTerminatedException? ex]) => _$worker.terminate(ex);
-
-  @override
-  sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
-
-  @override
-  xxx.Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  xxx.Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
-
-  @override
-  Object get _$detachToken => _$worker._$detachToken;
-
-  @override
-  final sq.OperationsMap operations = sq.WorkerService.noOperations;
 }
 
 /// Worker pool for EchoService
-base class _$EchoServiceWorkerPool extends sq.WorkerPool<EchoServiceWorker>
+base class EchoServiceWorkerPool extends sq.WorkerPool<EchoServiceWorker>
     with _$EchoService$Facade
     implements EchoService {
-  _$EchoServiceWorkerPool(
+  EchoServiceWorkerPool(
       [bool trace = false,
       cfg.ServiceConfig<int>? workloadDelay,
       sq.PlatformThreadHook? threadHook,
@@ -385,7 +239,7 @@ base class _$EchoServiceWorkerPool extends sq.WorkerPool<EchoServiceWorker>
             concurrencySettings: concurrencySettings,
             exceptionManager: exceptionManager);
 
-  _$EchoServiceWorkerPool.vm(
+  EchoServiceWorkerPool.vm(
       [bool trace = false,
       cfg.ServiceConfig<int>? workloadDelay,
       sq.PlatformThreadHook? threadHook,
@@ -423,178 +277,6 @@ base class _$EchoServiceWorkerPool extends sq.WorkerPool<EchoServiceWorker>
           srv.ServiceRequest request,
           [CancelationToken? token]) =>
       execute((w) => w.jsonEncodeEcho(request, token));
-
-  final _$detachToken = Object();
-}
-
-/// Finalizable worker pool wrapper for EchoService
-base class EchoServiceWorkerPool
-    with Releasable
-    implements _$EchoServiceWorkerPool {
-  EchoServiceWorkerPool._(this._$pool) {
-    _finalizer.attach(this, _$pool, detach: _$pool._$detachToken);
-  }
-
-  EchoServiceWorkerPool(
-      [bool trace = false,
-      cfg.ServiceConfig<int>? workloadDelay,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager,
-      sq.ConcurrencySettings? concurrencySettings])
-      : this._(_$EchoServiceWorkerPool(trace, workloadDelay, threadHook,
-            exceptionManager, concurrencySettings));
-
-  EchoServiceWorkerPool.vm(
-      [bool trace = false,
-      cfg.ServiceConfig<int>? workloadDelay,
-      sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager,
-      sq.ConcurrencySettings? concurrencySettings])
-      : this._(_$EchoServiceWorkerPool.vm(trace, workloadDelay, threadHook,
-            exceptionManager, concurrencySettings));
-
-  final _$EchoServiceWorkerPool _$pool;
-
-  static final Finalizer<_$EchoServiceWorkerPool> _finalizer =
-      Finalizer<_$EchoServiceWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._$detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
-
-  @override
-  void release() {
-    try {
-      _$pool.release();
-      super.release();
-    } catch (_) {
-      // release should not throw
-    }
-  }
-
-  @override
-  xxx.Future<srv.ServiceResponse<String>> explicitEchoWithExplicitResult(
-          srv.ServiceRequest request,
-          {CancelationToken? token}) =>
-      _$pool.explicitEchoWithExplicitResult(request, token: token);
-
-  @override
-  xxx.Future<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
-          srv.ServiceRequest request) =>
-      _$pool.explicitEchoWithJsonResult(request);
-
-  @override
-  xxx.Future<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
-          srv.ServiceRequest request) =>
-      _$pool.jsonEchoWithExplicitResult(request);
-
-  @override
-  xxx.Future<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
-          srv.ServiceRequest request) =>
-      _$pool.jsonEchoWithJsonResult(request);
-
-  @override
-  xxx.Future<srv.ServiceResponse<String>> jsonEncodeEcho(
-          srv.ServiceRequest request,
-          [CancelationToken? token]) =>
-      _$pool.jsonEncodeEcho(request, token);
-
-  @override
-  void _simulateWorkload() => _$pool._simulateWorkload();
-
-  @override
-  Logger? get _logger => _$pool._logger;
-
-  @override
-  Duration get _delay => _$pool._delay;
-
-  @override
-  sq.ExceptionManager get exceptionManager => _$pool.exceptionManager;
-
-  @override
-  Logger? get channelLogger => _$pool.channelLogger;
-
-  @override
-  set channelLogger(Logger? value) => _$pool.channelLogger = value;
-
-  @override
-  sq.ConcurrencySettings get concurrencySettings => _$pool.concurrencySettings;
-
-  @override
-  Iterable<sq.WorkerStat> get fullStats => _$pool.fullStats;
-
-  @override
-  int get pendingWorkload => _$pool.pendingWorkload;
-
-  @override
-  int get maxSize => _$pool.maxSize;
-
-  @override
-  int get size => _$pool.size;
-
-  @override
-  Iterable<sq.WorkerStat> get stats => _$pool.stats;
-
-  @override
-  bool get stopped => _$pool.stopped;
-
-  @override
-  void cancelAll([String? message]) => _$pool.cancelAll(message);
-
-  @override
-  void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
-
-  @override
-  xxx.FutureOr<void> start() => _$pool.start();
-
-  @override
-  int stop([bool Function(EchoServiceWorker worker)? predicate]) =>
-      _$pool.stop(predicate);
-
-  @override
-  void terminate([sq.TaskTerminatedException? ex]) => _$pool.terminate(ex);
-
-  @override
-  Object registerWorkerPoolListener(
-          void Function(sq.WorkerStat, bool) listener) =>
-      _$pool.registerWorkerPoolListener(listener);
-
-  @override
-  void unregisterWorkerPoolListener(
-          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
-
-  @override
-  xxx.Future<T> execute<T>(
-          xxx.Future<T> Function(EchoServiceWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
-
-  @override
-  xxx.Stream<T> stream<T>(xxx.Stream<T> Function(EchoServiceWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
-
-  @override
-  sq.StreamTask<T> scheduleStreamTask<T>(
-          xxx.Stream<T> Function(EchoServiceWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
-
-  @override
-  sq.ValueTask<T> scheduleValueTask<T>(
-          xxx.Future<T> Function(EchoServiceWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
-
-  @override
-  Object get _$detachToken => _$pool._$detachToken;
-
-  @override
-  final sq.OperationsMap operations = sq.WorkerService.noOperations;
 }
 
 final class _$Deser extends sq.MarshalingContext {
@@ -635,7 +317,6 @@ final class _$Ser extends sq.MarshalingContext {
   late final $6 = (($) => (const ServiceRequestToString()).marshal($, this));
   late final $7 = (($) => ($ as srv.ServiceRequest).toJson());
   late final $8 = (($) => ServiceRequestToString.instance.marshal($, this));
-  late final $9 = value<bool>();
-  late final $10 = (($) => ($ as cfg.ServiceConfig<int>).toJson());
-  late final $11 = sq.Converter.allowNull($10);
+  late final $9 = (($) => ($ as cfg.ServiceConfig<int>).toJson());
+  late final $10 = sq.Converter.allowNull($9);
 }

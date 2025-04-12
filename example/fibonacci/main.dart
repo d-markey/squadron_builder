@@ -30,7 +30,7 @@ Computing with FibServiceWorker (single-threaded in 1 dedicated Isolate)
   final worker = FibServiceWorker();
   await worker.start();
   await computeWith(worker, start, count);
-  print('  * Stats for worker ${worker.hashCode}: ${worker.stats.dump()}');
+  print('  * Stats for worker ${worker.hashCode}: ${worker.getStats().dump()}');
   worker.stop();
 
   final maxWorkers = count ~/ 2;

@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.0 (Squadron 7.1.0)
+// Generator: WorkerGenerator 7.1.1 (Squadron 7.1.1)
 // **************************************************************************
 
 import 'package:squadron/squadron.dart' as sq;
@@ -115,4 +115,7 @@ sq.EntryPoint $getTestRequiredSuperParamActivator(
     throw UnimplementedError();
 
 sq.EntryPoint $getTestBigIntActivator(sq.SquadronPlatformType platform) =>
+    throw UnimplementedError();
+
+sq.EntryPoint $getTestCustomDataActivator(sq.SquadronPlatformType platform) =>
     throw UnimplementedError();

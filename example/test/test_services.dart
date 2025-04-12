@@ -244,8 +244,6 @@ class TestInstallable with sq.ServiceInstaller {
 
 @sq.SquadronService()
 class TestRecordTypes {
-  TestRecordTypes();
-
   @sq.squadronMethod
   FutureOr<(int, List)> unnamed() {
     return (0, []);
@@ -283,8 +281,26 @@ class TestRequiredSuperParam {
 
 @sq.SquadronService()
 class TestBigInt {
-  TestBigInt();
-
   @sq.squadronMethod
   FutureOr<BigInt> add(BigInt a, BigInt b) => a + b;
+}
+
+@sq.SquadronService()
+class TestCustomData {
+  @sq.squadronMethod
+  FutureOr<CustomData> one(CustomData data) => data;
+
+  @sq.squadronMethod
+  FutureOr<List<CustomData>> many(List<CustomData> data) => data;
+}
+
+class CustomData {
+  CustomData(this.data);
+
+  final String data;
+
+  Map<String, dynamic> toJson() => {'data': data};
+
+  static CustomData fromJson(Map<String, dynamic> json) =>
+      CustomData(json['data'] as String);
 }

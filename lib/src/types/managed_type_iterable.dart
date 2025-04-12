@@ -27,7 +27,7 @@ class _ManagedIterableType extends ManagedType {
     final convert = context.ser(item.nonNullable, withContext);
     if (convert == null) return null;
     final list = item.isNullable ? 'nlist' : 'list';
-    final code = '$list<${item.nonNullable}>(${convert.code})';
+    final code = '$list(${convert.code})';
     return DeSer(code, true, convert.contextAware);
   }
 

@@ -26,7 +26,7 @@ class _ManagedSetType extends ManagedType {
     final convert = context.ser(item.nonNullable, withContext);
     if (convert == null) return null;
     final set = item.isNullable ? 'nset' : 'set';
-    final code = '$set<${item.nonNullable}>(${convert.code})';
+    final code = '$set(${convert.code})';
     return DeSer(code, true, convert.contextAware);
   }
 

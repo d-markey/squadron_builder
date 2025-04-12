@@ -1,6 +1,6 @@
 name: squadron_builder
 description: Dart code generator for Squadron workers. Implement your worker service and let squadron_builder bridge the gap with Web Workers and Isolates!
-version: 7.1.0
+version: 7.1.1
 homepage: https://github.com/d-markey/squadron_builder
 repository: https://github.com/d-markey/squadron_builder
 
@@ -13,7 +13,7 @@ platforms:
   macos:
 
 dependencies:
-  squadron: ^7.1.0
+  squadron: ^7.1.1
   build: ^2.4.2
   source_gen: ^2.0.0
   analyzer: ^7.1.0

@@ -1,3 +1,8 @@
+## 7.1.1
+
+- Serialize primary type values as is.
+- Remove item type when serializing a list or set -- fixes https://github.com/d-markey/squadron_builder/issues/30.
+
 ## 7.1.0
 
 - Code Generator for Squadron 7.1: stop generating shortcut accessors for stats and concurrency settings.

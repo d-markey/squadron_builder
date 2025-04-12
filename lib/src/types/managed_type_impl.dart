@@ -35,11 +35,7 @@ class _ManagedTypeImpl extends ManagedType {
 
   @override
   bool get isPrimaryType =>
-      dartType.isDartCoreBool ||
-      dartType.isDartCoreDouble ||
-      dartType.isDartCoreInt ||
-      dartType.isDartCoreNum ||
-      dartType.isDartCoreString;
+      isNumericType || dartType.isDartCoreBool || dartType.isDartCoreString;
 
   @override
   DeSer? ser(MarshalingContext context, bool? withContext) {
@@ -50,6 +46,7 @@ class _ManagedTypeImpl extends ManagedType {
       final code = '(($Dollar) => ($Dollar as $this).index)';
       return DeSer(code, false, false);
     } else {
+      if (isPrimaryType) withContext = false;
       return (withContext ?? false)
           ? DeSer('value<$this>()', true, false)
           : null;
@@ -68,8 +65,7 @@ class _ManagedTypeImpl extends ManagedType {
       final code = '(($Dollar) => $this.values[$arg])';
       return DeSer(code, convert.needsContext, false);
     } else {
-      final code = 'value<$this>()';
-      return DeSer(code, true, false);
+      return DeSer('value<$this>()', true, false);
     }
   }
 }

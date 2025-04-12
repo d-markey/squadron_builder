@@ -170,8 +170,8 @@ Future<instr.PerfCounters> runWorkers(DeviationMonitor monitor, bool trace,
     counters += await testWith(monitor, fibonacciWorker, echoWorker);
   }
 
-  displayStats(fibonacciWorker.stats);
-  displayStats(echoWorker.stats);
+  displayStats(fibonacciWorker.getStats());
+  displayStats(echoWorker.getStats());
 
   // clean up workers... should not be necessary if with_finalizers was set to true when the code was generated
   fibonacciWorker.stop();
@@ -215,10 +215,10 @@ Future<instr.PerfCounters> runPools(DeviationMonitor monitor, bool trace,
 
   await Future.delayed(Duration(milliseconds: 500));
 
-  fibonacciPool.stop((w) => w.stats.idleTime.inMilliseconds > 400);
+  fibonacciPool.stop((w) => w.getStats().idleTime.inMilliseconds > 400);
   fibonacciPool.fullStats.forEach(displayStats);
 
-  echoPool.stop((w) => w.stats.idleTime.inMilliseconds > 400);
+  echoPool.stop((w) => w.getStats().idleTime.inMilliseconds > 400);
   echoPool.fullStats.forEach(displayStats);
 
   // clean up pools... should not be necessary if with_finalizers was set to true when the code was generated
