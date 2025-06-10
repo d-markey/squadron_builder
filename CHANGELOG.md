@@ -1,3 +1,7 @@
+## 7.1.2
+
+- Restrict `analyzer` version to forbid versions 7.4.0+ as `source_gen` / `build` are not compatible with the *2 `analyzer` APIs yet. Cf. https://github.com/dart-lang/source_gen/issues/743 and https://github.com/dart-lang/build/issues/3977.
+
 ## 7.1.1
 
 - Serialize primary type values as is.
