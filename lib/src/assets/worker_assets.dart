@@ -1,12 +1,9 @@
 import 'dart:async';
 
-import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
-import 'package:source_gen/source_gen.dart';
-import 'package:squadron_builder/src/readers/squadron_parameters.dart';
-import 'package:squadron_builder/src/types/extensions.dart';
 
+import '../_analyzer_helpers.dart';
 import '../build_step_events.dart';
 import '../marshalers/deser.dart';
 import '../marshalers/marshaling_context.dart';
@@ -15,7 +12,6 @@ import '../readers/squadron_service_reader.dart';
 import '../types/type_manager.dart';
 import '../worker_generator.dart';
 
-part 'helpers/worker_assets_extensions.dart';
 part 'helpers/worker_assets_imported_types.dart';
 part 'helpers/worker_assets_overrides.dart';
 part 'helpers/worker_assets_variables.dart';
@@ -37,7 +33,7 @@ class WorkerAssets with _ImportedTypesMixin {
         _serviceFacade = '_\$${_service.name}\$Facade',
         _serviceInitializer = '\$${_service.name}Initializer',
         _serviceActivator = '${_service.name}Activator',
-        _typeManager = context.typeManager,
+        typeManager = context.typeManager,
         _context = context.marshalingContext {
     for (var output in buildStep.allowedOutputs) {
       final path = output.path.toLowerCase();
@@ -64,8 +60,10 @@ class WorkerAssets with _ImportedTypesMixin {
 
   final SquadronServiceReader _service;
 
+  @internal
   @override
-  final TypeManager _typeManager;
+  final TypeManager typeManager;
+
   final MarshalingContext _context;
 
   final String _name;
@@ -82,7 +80,7 @@ class WorkerAssets with _ImportedTypesMixin {
 
     for (var m in _service.methods) {
       // load command info
-      switch (DartMethodReader.load(m, _typeManager, _context)) {
+      switch (DartMethodReader.load(m, typeManager, _context)) {
         case SquadronMethodReader command:
           // Squadron command: override to use worker / pool
           commands.add(command);
@@ -119,11 +117,11 @@ class WorkerAssets with _ImportedTypesMixin {
 
   /// Proxy for base worker/worker pool method
   String _forwardOverride(String decl, String target, String impl) =>
-      '$_override ${decl.replaceAll('@TWorker@', _worker)} => $target.$impl;';
+      '$override ${decl.replaceAll('@TWorker@', _worker)} => $target.$impl;';
 
   // Unimplemented member
-  String _unimpl(String decl, {bool override = false, bool unused = false}) =>
-      '''${override ? _override : ''}
+  String unimpl(String decl, {bool override = false, bool unused = false}) =>
+      '''${override ? this.override : ''}
        ${unused ? '// ignore: unused_element' : ''}
        $decl => throw $TUnimplementedError();''';
 }

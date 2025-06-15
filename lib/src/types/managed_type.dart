@@ -1,23 +1,22 @@
 import 'dart:collection';
 
-import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:analyzer/dart/element/visitor.dart';
 
+import '../_analyzer_helpers.dart';
+import '../_helpers.dart';
 import '../marshalers/deser.dart';
 import '../marshalers/marshaler.dart';
 import '../marshalers/marshaling_context.dart';
-import 'extensions.dart';
 import 'type_manager.dart';
 
-part '../marshalers/marshaler_inspector.dart';
 part 'imported_type.dart';
 part 'managed_type_impl.dart';
 part 'managed_type_iterable.dart';
 part 'managed_type_map.dart';
 part 'managed_type_record.dart';
 part 'managed_type_set.dart';
+part 'marshaler_inspector.dart';
 
 typedef MarshalerBuilder = Marshaler Function(ManagedType);
 
@@ -104,10 +103,10 @@ abstract class ManagedType with ManagedTypeMixin {
         return '${px}dynamic';
       }
       final a = typeArguments.isEmpty ? '' : '<${typeArguments.join(', ')}>';
-      return '$px${dartType!.element!.name}$a${nullabilitySuffix.suffix}';
+      return '$px${dartType!.elt!.name}$a${nullabilitySuffix.suffix}';
     } catch (ex) {
       throw Exception(
-          'Error for dartType = $dartType / element = ${dartType?.element}');
+          'Error for dartType = $dartType / element = ${dartType?.elt}');
     }
   }
 

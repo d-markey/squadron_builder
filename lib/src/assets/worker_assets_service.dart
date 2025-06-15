@@ -43,7 +43,7 @@ extension on WorkerAssets {
         ${_service.isBase ? 'base ' : ''}class $_workerService extends $_name implements $TWorkerService {
           $_workerService(${params.asSuperParams()}): super(${params.asNonSuperArguments()});
 
-          $_override
+          $override
           $TOperationsMap get operations => _\$getOperations();
         }''';
   }

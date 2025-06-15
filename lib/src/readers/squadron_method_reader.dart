@@ -19,7 +19,7 @@ class SquadronMethodReader extends DartMethodReader {
     var returnType = method.returnType;
     if (method.returnType.isDartAsyncFutureOr) {
       final valueType = (returnType as ParameterizedType).typeArguments.single;
-      returnType = method.library.typeProvider.futureType(valueType);
+      returnType = method.lib!.typeProvider.futureType(valueType);
     }
     return typeManager.handleDartType(returnType);
   }
@@ -55,13 +55,11 @@ class SquadronMethodReader extends DartMethodReader {
     if (!type.isDartAsyncFuture && !type.isDartAsyncStream) {
       throw InvalidGenerationSourceError(
           '${method.librarySource.fullName}: public service method '
-          '\'${method.enclosingElement3.displayName}.${method.name}\' must '
+          '\'${method.enclosingElt?.displayName}.${method.name}\' must '
           'return a Future, a FutureOr, a Stream, or void.');
     }
 
-    if (method.typeParameters.isNotEmpty) {
-      typeParameters.addAll(method.typeParameters.map((e) => e.toString()));
-    }
+    typeParameters.addAll(method.typeParams.map((e) => e.toString()));
 
     for (var n = 0; n < method.parameters.length; n++) {
       final param = method.parameters[n];
@@ -69,4 +67,128 @@ class SquadronMethodReader extends DartMethodReader {
       parameters.register(param, marshaler);
     }
   }
+
+  void throwIfLocalWorkerParam() {
+    if (parameters.all.any((p) => p.isLocalWorker)) {
+      throw InvalidGenerationSourceError(
+          'Local Worker parameters are not supported in service methods');
+    }
+  }
+
+  String commandId() => 'const ${typeManager.TInt} $id = $index;';
+
+  String commandHandler() {
+    var commandDecl = '$id: ($Req)';
+
+    final args = parameters.deser(context, Req);
+    var callService = '$name(${args.code})';
+
+    final unmarshalContext = context.initDeserContext(
+        args.needsContext, withContext ?? args.contextAware);
+
+    if (!hasReturnValue) {
+      return unmarshalContext.isEmpty
+          ? '$commandDecl => $callService,'
+          : '$commandDecl { $unmarshalContext; return $callService; },';
+    }
+
+    final convert = ser(context);
+    final marshalContext = context.initSerContext(
+        convert != null, withContext ?? convert.contextAware);
+
+    if (unmarshalContext.isEmpty && marshalContext.isEmpty) {
+      return '$commandDecl => $callService,';
+    }
+
+    final resType =
+        (isFuture || isFutureOr) ? returnType.typeArguments.first : returnType;
+    var res = Res, resDecl = 'final $resType $res';
+    if (!isStream) {
+      commandDecl = '$commandDecl async';
+      callService = 'await $callService';
+    }
+
+    callService = unmarshalContext.isEmpty
+        ? '$resDecl = $callService;'
+        : '$resDecl; try { $unmarshalContext; $res = $callService; } finally {}';
+
+    if (convert != null) {
+      res = isStream
+          ? '$res.map(${context.$sr}.${convert.code})'
+          : '${context.$sr}.${convert.code}($res)';
+    }
+
+    final returnResult = marshalContext.isEmpty
+        ? 'return $res;'
+        : 'try { $marshalContext; return $res; } finally {}';
+
+    return '$commandDecl { $callService $returnResult },';
+  }
+
+  String workerMethod(WorkerAssets assets) {
+    final serialized = parameters.ser(context, withContext);
+    final args = StringBuffer();
+    args.csv(id);
+    if (serialized != null) args.csv('args: ${serialized.code}');
+    if (parameters.cancelationToken != null) {
+      args.csv('token: ${parameters.cancelationToken}');
+    }
+    if (inspectRequest) args.csv('inspectRequest: true');
+    if (inspectResponse) args.csv('inspectResponse: true');
+
+    var methodDecl = '${assets.override} $declaration';
+    var callWorker = '$workerExecutor($args)';
+
+    final marshalContext = context.initSerContext(
+        serialized.needsContext, withContext ?? serialized.contextAware);
+
+    if (!hasReturnValue) {
+      return marshalContext.isEmpty
+          ? '$methodDecl => $callWorker;'
+          : '$methodDecl { $marshalContext; return $callWorker; }';
+    }
+
+    final convert = deser(context);
+    final unmarshalContext = context.initDeserContext(
+        convert.needsContext, withContext ?? convert.contextAware);
+
+    if (marshalContext.isEmpty && convert == null && unmarshalContext.isEmpty) {
+      return '$methodDecl => $callWorker;';
+    }
+
+    String res = Res, resDecl;
+
+    if (!isStream) {
+      callWorker = 'await $callWorker';
+      methodDecl = '$methodDecl async';
+      resDecl = 'final ${typeManager.TDynamic} $res';
+    } else {
+      resDecl = 'final ${typeManager.TStream} $res';
+    }
+
+    callWorker = marshalContext.isEmpty
+        ? '$resDecl = $callWorker;'
+        : '$resDecl; try { $marshalContext; $res = $callWorker; } finally {}';
+
+    if (convert != null) {
+      res = isStream
+          ? '$res.map(${context.$dsr}.${convert.code})'
+          : '${context.$dsr}.${convert.code}($res)';
+    }
+
+    final returnResult = unmarshalContext.isEmpty
+        ? 'return $res;'
+        : 'try { $unmarshalContext; return $res; } finally {}';
+
+    return '$methodDecl { $callWorker $returnResult }';
+  }
+
+  String poolMethod(WorkerAssets assets) =>
+      '${assets.override} $declaration => $poolExecutor((w) => w.$name(${parameters.asArguments()}));';
+
+  DeSer? ser(MarshalingContext context) =>
+      context.ser(valueType, withContext, resultMarshaler);
+
+  DeSer? deser(MarshalingContext context) =>
+      context.deser(valueType, resultMarshaler);
 }

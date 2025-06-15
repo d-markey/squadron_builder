@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element.dart';
 
-import '../types/extensions.dart';
+import '../_analyzer_helpers.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
 import 'deser.dart';

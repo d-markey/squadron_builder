@@ -19,7 +19,7 @@ extension on WorkerAssets {
       getStartArgs = ' => null;';
       overrideStop = '';
     } else {
-      declareStartArgs = 'final ${_typeManager.TList} $startReq;';
+      declareStartArgs = 'final ${typeManager.TList} $startReq;';
       setStartArgs = '$startReq = $startArgs,';
 
       // handle parameters decorated with @localWorker annotation
@@ -57,7 +57,7 @@ extension on WorkerAssets {
 
       overrideStop = stopLocalWorkers.isEmpty
           ? ''
-          : '$_override void stop() { $stopLocalWorkers super.stop(); }';
+          : '$override void stop() { $stopLocalWorkers super.stop(); }';
     }
 
     final workerParams = _service.parameters.clone();
@@ -95,8 +95,8 @@ extension on WorkerAssets {
           $declareLocalWorkers
           $declareStartArgs
 
-          $_override
-          ${_typeManager.TList}? getStartArgs() $getStartArgs
+          $override
+          ${typeManager.TList}? getStartArgs() $getStartArgs
 
           $overrideStop
 
@@ -135,7 +135,7 @@ extension on WorkerAssets {
             }
           });
 
-          $_override
+          $override
           void release() {
             try {
               $Worker.release();
@@ -145,12 +145,12 @@ extension on WorkerAssets {
             }
           }
 
-          ${declareLocalWorkers.isEmpty ? '' : '$_override $TList<$TLocalWorker?> get $localWorkers => const [];'}
+          ${declareLocalWorkers.isEmpty ? '' : '$override $TList<$TLocalWorker?> get $localWorkers => const [];'}
 
-          ${declareStartArgs.isEmpty ? '' : '$_override $TList<$TDynamic> get $startReq => const  [];'}
+          ${declareStartArgs.isEmpty ? '' : '$override $TList<$TDynamic> get $startReq => const  [];'}
 
-          $_override
-          ${_typeManager.TList}? getStartArgs() => null;
+          $override
+          ${typeManager.TList}? getStartArgs() => null;
 
           ${commands.map((cmd) => cmd.forwardTo(Worker, this)).join('\n\n')}
 
@@ -160,7 +160,7 @@ extension on WorkerAssets {
 
           ${_getWorkerOverrides().entries.map((e) => _forwardOverride(e.key, Worker, e.value)).join('\n\n')}
 
-          $_override
+          $override
           final $TOperationsMap operations = $TWorkerService.noOperations;
         }
       ''');

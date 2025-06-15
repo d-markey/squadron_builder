@@ -31,7 +31,7 @@ extension ActivatorExt on WorkerAssets {
       codeEvent.importDartCore(output, _dartCoreAlias);
       codeEvent.add(
         output,
-        _unimpl(
+        unimpl(
             '$TEntryPoint \$get$_serviceActivator($TSquadronPlatformType platform)'),
       );
     }

@@ -3,57 +3,57 @@
 part of '../worker_assets.dart';
 
 mixin _ImportedTypesMixin {
-  TypeManager get _typeManager;
+  TypeManager get typeManager;
 
-  late final _squadronAlias = _typeManager.squadronAlias;
+  late final _squadronAlias = typeManager.squadronAlias;
   late final _run = _squadronAlias.isEmpty ? 'run' : '$_squadronAlias.run';
 
-  late final _dartCoreAlias = _typeManager.dartCoreAlias;
+  late final _dartCoreAlias = typeManager.dartCoreAlias;
 
-  late final _override =
+  late final override =
       _dartCoreAlias.isEmpty ? '@override' : '@$_dartCoreAlias.override';
 
-  late final TChannel = _typeManager.TChannel;
-  late final TPlatformChannel = _typeManager.TPlatformChannel;
-  late final TOperationsMap = _typeManager.TOperationsMap;
-  late final TWorkerService = _typeManager.TWorkerService;
-  late final TWorkerRequest = _typeManager.TWorkerRequest;
-  late final TEntryPoint = _typeManager.TEntryPoint;
-  late final TSquadron = _typeManager.TSquadron;
-  late final TSquadronPlatformType = _typeManager.TSquadronPlatformType;
-  late final TPlatformThreadHook = _typeManager.TPlatformThreadHook;
-  late final TExceptionManager = _typeManager.TExceptionManager;
-  late final TInvoker = _typeManager.TInvoker;
-  late final TWorker = _typeManager.TWorker;
-  late final TWorkerPool = _typeManager.TWorkerPool;
-  late final TTask = _typeManager.TTask;
-  late final TValueTask = _typeManager.TValueTask;
-  late final TStreamTask = _typeManager.TStreamTask;
-  late final TTaskTerminatedException = _typeManager.TTaskTerminatedException;
-  late final TWorkerStat = _typeManager.TWorkerStat;
-  late final TPerfCounter = _typeManager.TPerfCounter;
-  late final TLocalWorker = _typeManager.TLocalWorker;
-  late final TLocalWorkerClient = _typeManager.TLocalWorkerClient;
-  late final TMarshalingContext = _typeManager.TMarshalingContext;
-  late final TConcurrencySettings = _typeManager.TConcurrencySettings;
+  late final TChannel = typeManager.TChannel;
+  late final TPlatformChannel = typeManager.TPlatformChannel;
+  late final TOperationsMap = typeManager.TOperationsMap;
+  late final TWorkerService = typeManager.TWorkerService;
+  late final TWorkerRequest = typeManager.TWorkerRequest;
+  late final TEntryPoint = typeManager.TEntryPoint;
+  late final TSquadron = typeManager.TSquadron;
+  late final TSquadronPlatformType = typeManager.TSquadronPlatformType;
+  late final TPlatformThreadHook = typeManager.TPlatformThreadHook;
+  late final TExceptionManager = typeManager.TExceptionManager;
+  late final TInvoker = typeManager.TInvoker;
+  late final TWorker = typeManager.TWorker;
+  late final TWorkerPool = typeManager.TWorkerPool;
+  late final TTask = typeManager.TTask;
+  late final TValueTask = typeManager.TValueTask;
+  late final TStreamTask = typeManager.TStreamTask;
+  late final TTaskTerminatedException = typeManager.TTaskTerminatedException;
+  late final TWorkerStat = typeManager.TWorkerStat;
+  late final TPerfCounter = typeManager.TPerfCounter;
+  late final TLocalWorker = typeManager.TLocalWorker;
+  late final TLocalWorkerClient = typeManager.TLocalWorkerClient;
+  late final TMarshalingContext = typeManager.TMarshalingContext;
+  late final TConcurrencySettings = typeManager.TConcurrencySettings;
 
-  late final TReleasable = _typeManager.TReleasable;
-  late final TCancelationToken = _typeManager.TCancelationToken;
-  late final TLogger = _typeManager.TLogger;
+  late final TReleasable = typeManager.TReleasable;
+  late final TCancelationToken = typeManager.TCancelationToken;
+  late final TLogger = typeManager.TLogger;
 
-  late final TMap = _typeManager.TMap;
-  late final TList = _typeManager.TList;
-  late final TIterable = _typeManager.TIterable;
-  late final TBool = _typeManager.TBool;
-  late final TInt = _typeManager.TInt;
-  late final TString = _typeManager.TString;
-  late final TDuration = _typeManager.TDuration;
-  late final TFinalizer = _typeManager.TFinalizer;
-  late final TFuture = _typeManager.TFuture;
-  late final TFutureOr = _typeManager.TFutureOr;
-  late final TStream = _typeManager.TStream;
-  late final TObject = _typeManager.TObject;
-  late final TDynamic = _typeManager.TDynamic;
-  late final TUnimplementedError = _typeManager.TUnimplementedError;
-  late final TUnsupportedError = _typeManager.TUnsupportedError;
+  late final TMap = typeManager.TMap;
+  late final TList = typeManager.TList;
+  late final TIterable = typeManager.TIterable;
+  late final TBool = typeManager.TBool;
+  late final TInt = typeManager.TInt;
+  late final TString = typeManager.TString;
+  late final TDuration = typeManager.TDuration;
+  late final TFinalizer = typeManager.TFinalizer;
+  late final TFuture = typeManager.TFuture;
+  late final TFutureOr = typeManager.TFutureOr;
+  late final TStream = typeManager.TStream;
+  late final TObject = typeManager.TObject;
+  late final TDynamic = typeManager.TDynamic;
+  late final TUnimplementedError = typeManager.TUnimplementedError;
+  late final TUnsupportedError = typeManager.TUnsupportedError;
 }

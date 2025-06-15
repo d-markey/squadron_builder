@@ -1,7 +1,8 @@
-import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
 import 'package:pub_semver/pub_semver.dart';
+
+import '_analyzer_helpers.dart';
 
 /// Class for build step events (additional assets)
 @internal
@@ -23,13 +24,13 @@ class ImportDetails {
 /// points and code parts into a single asset.
 @internal
 class BuildStepCodeEvent extends BuildStepEvent {
-  BuildStepCodeEvent(super.buildStep, this._class);
+  BuildStepCodeEvent(super.buildStep, this._libraryName);
 
   final _assetImports = <AssetId, Map<String, ImportDetails>>{};
   final _webEntryPoints = <AssetId, Set<String>>{};
   final _assetCodeParts = <AssetId, Set<String>>{};
 
-  final ClassElement _class;
+  final String? _libraryName;
 
   var _warn = false;
 
@@ -59,7 +60,7 @@ class BuildStepCodeEvent extends BuildStepEvent {
     }
     if (!alreadyWarned && _warn) {
       log.warning(
-        'Library ${_class.library.librarySource.shortName} defines multiple services including some targetting Web platforms. '
+        'Library $_libraryName defines multiple services including some targetting Web platforms. '
         'This will fail in production as each Web Worker needs its own URL and its own communication channel. '
         'Web workers services must be implemented in separate libraries. '
         'If necessary, code generation for Web platforms can be turned off with @SquadronService(targetPlatform: TargetPlatform.vm).',

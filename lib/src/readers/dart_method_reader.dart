@@ -1,8 +1,11 @@
-import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart' as squadron;
 
+import '../_analyzer_helpers.dart';
+import '../_helpers.dart';
+import '../assets/worker_assets.dart';
+import '../marshalers/deser.dart';
 import '../marshalers/marshaler.dart';
 import '../marshalers/marshaling_context.dart';
 import '../types/managed_type.dart';
@@ -44,10 +47,7 @@ class DartMethodReader {
   }
 
   void _init(MethodElement method) {
-    if (method.typeParameters.isNotEmpty) {
-      typeParameters.addAll(method.typeParameters.map((e) => e.toString()));
-    }
-
+      typeParameters.addAll(method.typeParams.map((e) => e.toString()));
     for (var n = 0; n < method.parameters.length; n++) {
       parameters.register(method.parameters[n], null);
     }
@@ -79,4 +79,10 @@ class DartMethodReader {
   String get declaration => typeParameters.isEmpty
       ? '$returnType $name($parameters)'
       : '$returnType $name<${typeParameters.join(', ')}>($parameters)';
+
+  String forwardTo(String target, WorkerAssets assets) =>
+      '${assets.override} $declaration => $target.$name(${parameters.asArguments()});';
+
+  String unimpl(WorkerAssets assets) =>
+      assets.unimpl(declaration, override: true);
 }

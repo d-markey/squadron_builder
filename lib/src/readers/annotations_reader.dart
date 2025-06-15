@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element.dart';
+
+import '../_analyzer_helpers.dart';
 
 class AnnotationReader<T> {
   AnnotationReader(Element? element)
@@ -16,28 +17,4 @@ class AnnotationReader<T> {
 
   bool get isEmpty => annotations.isEmpty;
   bool get isNotEmpty => annotations.isNotEmpty;
-}
-
-extension AnnotationReaderExt on DartObject? {
-  String getString(String fieldName) =>
-      this?.getField(fieldName)?.toStringValue()?.trim() ?? '';
-
-  int getInt(String fieldName) => this?.getField(fieldName)?.toIntValue() ?? 0;
-
-  bool getBool(String fieldName) =>
-      this?.getField(fieldName)?.toBoolValue() ?? false;
-
-  bool? getNullableBool(String fieldName) =>
-      this?.getField(fieldName)?.toBoolValue();
-}
-
-extension AnnotationExt on Element {
-  Iterable<DartObject> getAnnotations() =>
-      metadata.map((a) => a.computeConstantValue()).nonNulls;
-
-  Iterable<DartObject> findAnnotations<T>() {
-    final targetAnnotationName = T.toString();
-    return getAnnotations()
-        .where((v) => v.type?.getDisplayString() == targetAnnotationName);
-  }
 }

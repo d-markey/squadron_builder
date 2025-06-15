@@ -1,10 +1,10 @@
-import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart' as squadron;
-import 'package:squadron_builder/src/worker_generator.dart';
 
+import '../_analyzer_helpers.dart';
 import '../types/type_manager.dart';
+import '../worker_generator.dart';
 import 'annotations_reader.dart';
 import 'squadron_parameters.dart';
 
@@ -56,9 +56,11 @@ class SquadronServiceReader {
           'Worker service classes must be constructable.');
     }
 
+    // ignore: deprecated_member_use
     final ctorElement = clazz.unnamedConstructor;
 
     if (ctorElement == null) {
+      // ignore: deprecated_member_use
       if (clazz.constructors.isNotEmpty) {
         log.warning('Missing unnamed constructor for ${clazz.name}');
       }
@@ -66,9 +68,13 @@ class SquadronServiceReader {
       for (var n = 0; n < ctorElement.parameters.length; n++) {
         final param = ctorElement.parameters[n];
 
-        if (param is FieldFormalParameterElement && param.field != null) {
-          if (!param.field!.name.startsWith('_')) {
-            fields[param.name] = param.field!;
+        if (param is FieldFormalParameterElement) {
+          // ignore: deprecated_member_use
+          final fld = param.field;
+          if (fld != null) {
+            if (!fld.name.startsWith('_')) {
+              fields[param.name] = fld;
+            }
           }
         }
 

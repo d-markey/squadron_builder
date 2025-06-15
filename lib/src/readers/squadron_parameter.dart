@@ -1,6 +1,6 @@
-import 'package:analyzer/dart/element/element.dart';
 import 'package:squadron/squadron.dart' as squadron;
 
+import '../_analyzer_helpers.dart';
 import '../marshalers/marshaler.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
@@ -30,12 +30,16 @@ class SquadronParameter {
     var name = param.name;
     var type = param.type;
     FieldElement? field;
-    if (param is FieldFormalParameterElement && param.field != null) {
-      field = param.field!;
-      type = field.type;
-      name = field.name;
-      while (name.startsWith('_')) {
-        name = name.substring((1));
+    if (param is FieldFormalParameterElement) {
+      // ignore: deprecated_member_use
+      final fld = param.field;
+      if (fld != null) {
+        field = fld;
+        type = field.type;
+        name = field.name;
+        while (name.startsWith('_')) {
+          name = name.substring((1));
+        }
       }
     }
 

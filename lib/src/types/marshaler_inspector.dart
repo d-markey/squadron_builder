@@ -1,4 +1,4 @@
-part of '../types/managed_type.dart';
+part of 'managed_type.dart';
 
 class MarshalerInspector extends SimpleElementVisitor {
   MarshalerInspector(this.typeManager);
@@ -9,7 +9,7 @@ class MarshalerInspector extends SimpleElementVisitor {
 
   Marshaler? getMarshalerFor(ManagedType type) {
     // make sure type can be visited
-    final element = type.dartType?.element?.declaration;
+    final element = type.dartType?.elt?.declarationOrSelf;
     if (element == null) return null;
 
     if (_inspecting) {
@@ -29,15 +29,20 @@ class MarshalerInspector extends SimpleElementVisitor {
       _unmarshal = null;
 
       // check this type
+      // ignore: deprecated_member_use
       element.visitChildren(this);
 
       // also check methods/getters defined in extensions of this type
       final extensions = typeManager
-          .library.definingCompilationUnit.accessibleExtensions
+          .library
+          // ignore: deprecated_member_use
+          .definingCompilationUnit
+          .accessibleExtensions
           .where((e) => e.extendedType == type.dartType)
           .toList();
       if (extensions.isNotEmpty) {
         for (var ext in extensions) {
+          // ignore: deprecated_member_use
           ext.visitChildren(this);
         }
       }
@@ -48,11 +53,11 @@ class MarshalerInspector extends SimpleElementVisitor {
 
       // get loader name if static methods are implemented via extensions
       final loaderElt = isMarshaler
-          ? _unmarshal!.enclosingElement3!
-          : (isJson ? _fromJson!.enclosingElement3! : null);
+          ? _unmarshal!.enclosingElt!
+          : (isJson ? _fromJson!.enclosingElt! : null);
       String? loader;
       if (loaderElt is ExtensionElement) {
-        final prefix = typeManager.getPrefixFor(loaderElt.library);
+        final prefix = typeManager.getPrefixFor(loaderElt.lib);
         loader = '${prefix.isEmpty ? '' : '$prefix.'}${loaderElt.name!}';
       }
 
@@ -76,10 +81,9 @@ class MarshalerInspector extends SimpleElementVisitor {
   }
 
   Element? _toJson;
-  Element? get toJson => _toJson;
 
   void _checkImplementsToJson(Element element) {
-    final decl = element.declaration ?? element;
+    final decl = element.declarationOrSelf;
     var accessible = !decl.isPrivate;
     if (accessible && decl.name == 'toJson') {
       bool hasParams = true;
@@ -91,14 +95,14 @@ class MarshalerInspector extends SimpleElementVisitor {
       } else if (decl is FieldElement && decl.type is FunctionType) {
         final func = decl.type as FunctionType;
         returnType = func.returnType;
-        hasParams = func.parameters.isNotEmpty;
+        hasParams = func.params.isNotEmpty;
         accessible = !decl.isAbstract && !decl.isStatic;
       } else if (decl is PropertyAccessorElement &&
           decl.isGetter &&
           decl.type.returnType is FunctionType) {
         final func = decl.type.returnType as FunctionType;
         returnType = func.returnType;
-        hasParams = func.parameters.isNotEmpty;
+        hasParams = func.params.isNotEmpty;
         accessible = !decl.isAbstract && !decl.isStatic;
       }
       final isImpl = accessible && !hasParams && _isJson(returnType);
@@ -107,10 +111,9 @@ class MarshalerInspector extends SimpleElementVisitor {
   }
 
   Element? _fromJson;
-  Element? get fromJson => _fromJson;
 
   void _checkImplementsFromJson(Element element) {
-    final decl = element.declaration ?? element;
+    final decl = element.declarationOrSelf;
     var accessible = !decl.isPrivate;
     if (accessible && decl.name == 'fromJson') {
       ParameterElement? param;
@@ -125,14 +128,14 @@ class MarshalerInspector extends SimpleElementVisitor {
         accessible = !decl.isAbstract && decl.isStatic;
       } else if (decl is FieldElement && decl.type is FunctionType) {
         final func = decl.type as FunctionType;
-        param = func.parameters.singleOrNull?.declaration;
+        param = func.params.singleOrNull?.declaration;
         returnType = func.returnType;
         accessible = !decl.isAbstract && decl.isStatic;
       } else if (decl is PropertyAccessorElement &&
           decl.isGetter &&
           decl.type.returnType is FunctionType) {
         final func = decl.type.returnType as FunctionType;
-        param = func.parameters.singleOrNull?.declaration;
+        param = func.params.singleOrNull?.declaration;
         returnType = func.returnType;
         accessible = !decl.isAbstract && decl.isStatic;
       }
@@ -157,10 +160,9 @@ class MarshalerInspector extends SimpleElementVisitor {
 
   Element? _marshal;
   ParameterElement? _marshalingContext;
-  Element? get marshal => _marshal;
 
   void _checkImplementsMarshal(Element element) {
-    final decl = element.declaration ?? element;
+    final decl = element.declarationOrSelf;
     var accessible = !decl.isPrivate;
     if (accessible && decl.name == 'marshal') {
       DartType? returnType;
@@ -171,14 +173,14 @@ class MarshalerInspector extends SimpleElementVisitor {
       } else if (decl is FieldElement && decl.type is FunctionType) {
         final func = decl.type as FunctionType;
         returnType = func.returnType;
-        _marshalingContext = _getMarshalingContextParam(func.parameters, 0);
+        _marshalingContext = _getMarshalingContextParam(func.params, 0);
         accessible = !decl.isAbstract && !decl.isStatic;
       } else if (decl is PropertyAccessorElement &&
           decl.isGetter &&
           decl.type.returnType is FunctionType) {
         final func = decl.type.returnType as FunctionType;
         returnType = func.returnType;
-        _marshalingContext = _getMarshalingContextParam(func.parameters, 0);
+        _marshalingContext = _getMarshalingContextParam(func.params, 0);
         accessible = !decl.isAbstract && !decl.isStatic;
       }
       final isImpl = accessible && _isSync(returnType);
@@ -188,10 +190,9 @@ class MarshalerInspector extends SimpleElementVisitor {
 
   Element? _unmarshal;
   ParameterElement? _unmarshalingContext;
-  Element? get unmarshal => _unmarshal;
 
   void _checkImplementsUnmarshal(Element element) {
-    final decl = element.declaration ?? element;
+    final decl = element.declarationOrSelf;
     var accessible = !decl.isPrivate;
     if (accessible && decl.name == 'unmarshal') {
       ParameterElement? param;
@@ -208,16 +209,16 @@ class MarshalerInspector extends SimpleElementVisitor {
         accessible = !decl.isAbstract && decl.isStatic;
       } else if (decl is FieldElement && decl.type is FunctionType) {
         final func = decl.type as FunctionType;
-        param = func.parameters.firstOrNull?.declaration;
-        _unmarshalingContext = _getMarshalingContextParam(func.parameters, 1);
+        param = func.params.firstOrNull?.declaration;
+        _unmarshalingContext = _getMarshalingContextParam(func.params, 1);
         returnType = func.returnType;
         accessible = !decl.isAbstract && decl.isStatic;
       } else if (decl is PropertyAccessorElement &&
           decl.isGetter &&
           decl.type.returnType is FunctionType) {
         final func = decl.type.returnType as FunctionType;
-        param = func.parameters.firstOrNull?.declaration;
-        _unmarshalingContext = _getMarshalingContextParam(func.parameters, 1);
+        param = func.params.firstOrNull?.declaration;
+        _unmarshalingContext = _getMarshalingContextParam(func.params, 1);
         returnType = func.returnType;
         accessible = !decl.isAbstract && decl.isStatic;
       }

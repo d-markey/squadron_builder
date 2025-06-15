@@ -1,8 +1,11 @@
-import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
 
+import '../_analyzer_helpers.dart';
+import '../_helpers.dart';
+import '../assets/worker_assets.dart';
+import '../marshalers/deser.dart';
 import '../marshalers/marshaler.dart';
-import '../types/extensions.dart';
+import '../marshalers/marshaling_context.dart';
 import '../types/managed_type.dart';
 import '../types/type_manager.dart';
 import 'squadron_parameter.dart';
@@ -154,6 +157,85 @@ class SquadronParameters {
     } else {
       return '';
     }
+  }
+
+  DeSer? ser(MarshalingContext context, bool? withContext) {
+    var needsContext = false, contextAware = false;
+    final args = StringBuffer();
+    for (var param in params) {
+      if (param.isCancelationToken) continue;
+      final ser = context.ser(param.type, withContext, param.marshaler);
+      if (ser == null) {
+        args.csv(param.name);
+      } else {
+        needsContext = true;
+        contextAware |= ser.contextAware;
+        args.csv('${context.$sr}.${ser.code}(${param.name})');
+      }
+    }
+    return args.isEmpty ? null : DeSer('[$args]', needsContext, contextAware);
+  }
+
+  String serializeForActivation(MarshalingContext context) {
+    if (params.isEmpty) return '';
+    bool? needsContext;
+    var contextAware = false;
+    final args = StringBuffer();
+    for (var param in params) {
+      final ser = param.isLocalWorker
+          ? null
+          : context.ser(param.type, true, param.marshaler);
+      if (ser == null) {
+        args.csv(param.name);
+      } else {
+        needsContext = true;
+        contextAware |= ser.contextAware;
+        args.csv('${context.$sr}.${ser.code}(${param.name})');
+      }
+    }
+    return (needsContext == null)
+        ? '[$args]'
+        : '''(() {
+              ${context.initSerContext(true, contextAware)};
+              return [$args];
+            })()''';
+  }
+
+  DeSer? deser(MarshalingContext context, String req) {
+    if (params.isEmpty) return null;
+    var needsContext = false, contextAware = false;
+    final code = StringBuffer();
+    for (var p in params.indexed) {
+      final param = p.$2;
+      final name = param.isNamed ? '${param.name}:' : '';
+      final arg = '$req.args[${p.$1}]';
+
+      if (param.isCancelationToken) {
+        code.csv('$name $req.cancelToken');
+      } else if (param.isLocalWorker) {
+        needsContext = true;
+        final service = param.type;
+        final ser = context.deser(typeManager.TPlatformChannel);
+        final platformChannel =
+            (ser == null) ? arg : '${context.$dsr}.${ser.code}($arg)';
+        final localService = service.nonNullable.getTypeName(omitPrefix: true);
+        final localWorkerClient =
+            '${service.prefix}${WorkerAssets.getLocalWorkerClientFor(localService)}($platformChannel)';
+        code.csv(service.isNullable
+            ? '$name ($arg == null) ? null : $localWorkerClient'
+            : '$name $localWorkerClient');
+      } else {
+        final ser = context.deser(param.type, param.marshaler);
+        if (ser == null) {
+          code.csv('$name $arg');
+        } else {
+          needsContext = true;
+          contextAware |= ser.contextAware;
+          code.csv('$name ${context.$dsr}.${ser.code}($arg)');
+        }
+      }
+    }
+    return DeSer(code.toString(), needsContext, contextAware);
   }
 }
 

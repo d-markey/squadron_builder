@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:source_gen/source_gen.dart';
@@ -9,6 +8,7 @@ import 'package:squadron/version.dart' as squadron;
 import 'package:squadron_builder/src/marshalers/marshaling_context.dart';
 
 import '../version.dart';
+import '_analyzer_helpers.dart';
 import 'assets/worker_assets.dart';
 import 'build_step_events.dart';
 import 'readers/squadron_service_reader.dart';
@@ -75,6 +75,7 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
   ) async* {
     final classElt = element;
     if (classElt is! ClassElement) return;
+    final libraryName = classElt.lib?.librarySource.shortName;
 
     final context = _contexts[buildStep];
     if (context == null) {
@@ -102,7 +103,7 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
 
     final assets = WorkerAssets(buildStep, service, context);
 
-    final codeEvent = BuildStepCodeEvent(buildStep, classElt);
+    final codeEvent = BuildStepCodeEvent(buildStep, libraryName);
     assets.generateVmCode(codeEvent);
     assets.generateWebCode(codeEvent);
     assets.generateCrossPlatformCode(codeEvent);

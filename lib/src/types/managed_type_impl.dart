@@ -42,7 +42,7 @@ class _ManagedTypeImpl extends ManagedType {
     throwIfNullable();
     final ser = attachedMarshaler?.ser(context, this);
     if (ser != null) return ser;
-    if (dartType.element is EnumElement) {
+    if (dartType.isEnum) {
       final code = '(($Dollar) => ($Dollar as $this).index)';
       return DeSer(code, false, false);
     } else {
@@ -59,7 +59,7 @@ class _ManagedTypeImpl extends ManagedType {
     final deser = attachedMarshaler?.deser(context, this);
     if (deser != null) return deser;
     if (isDynamic) return null;
-    if (dartType.element is EnumElement) {
+    if (dartType.isEnum) {
       final convert = context.deser(typeManager.TInt);
       final arg = (convert == null) ? Dollar : '${convert.code}($Dollar)';
       final code = '(($Dollar) => $this.values[$arg])';

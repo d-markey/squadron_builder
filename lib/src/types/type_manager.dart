@@ -1,11 +1,9 @@
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 
+import '../_analyzer_helpers.dart';
 import '../marshalers/marshaler.dart';
-import '../readers/annotations_reader.dart';
-import 'extensions.dart';
 import 'managed_type.dart';
 
 part 'type_manager_imported_types.dart';
@@ -50,6 +48,7 @@ class TypeManager with _ImportedTypesMixin {
 
   String getPrefixFor(LibraryElement? lib) {
     if (lib == null) return '';
+    // ignore: deprecated_member_use
     return library.definingCompilationUnit.libraryImportPrefixes
             .where((p) => p.imports.any((i) => i.importedLibrary == lib))
             .firstOrNull
@@ -67,7 +66,7 @@ class TypeManager with _ImportedTypesMixin {
       managedType = ManagedType.record(type, this);
       _cache[type] = managedType;
     } else {
-      final typeLib = type.element?.library;
+      final typeLib = type.elt?.lib;
       managedType = ManagedType(getPrefixFor(typeLib), type, this);
       _cache[type] = managedType;
       findMarshaler(managedType);
@@ -77,7 +76,7 @@ class TypeManager with _ImportedTypesMixin {
   }
 
   void findMarshaler(ManagedType type) {
-    final element = type.dartType?.element;
+    final element = type.dartType?.elt;
     if (element == null) return;
     final marshalerLoader = MarshalerInspector(this);
     final marshaler = marshalerLoader.getMarshalerFor(type);
@@ -92,7 +91,8 @@ class TypeManager with _ImportedTypesMixin {
       obj.type?.isA(TSquadronMarshaler) ?? false;
 
   Marshaler? getExplicitMarshaler(Element? element) {
-    var marshaler =
+    final marshaler =
+        // ignore: deprecated_member_use
         element?.declaration?.getAnnotations().where(_isMarshaler).firstOrNull;
     if (marshaler == null) return null;
     final type = marshaler.toTypeValue() ?? marshaler.type;
