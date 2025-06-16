@@ -66,7 +66,7 @@ class SquadronParameters {
     }
   }
 
-  SquadronParameter register(ParameterElement param, Marshaler? marshaler) {
+  SquadronParameter register(ParameterElement param, [Marshaler? marshaler]) {
     final isToken = _checkCancelationToken(param);
     int serIdx = -1;
     if (!isToken) {

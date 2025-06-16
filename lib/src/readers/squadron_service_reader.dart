@@ -78,8 +78,11 @@ class SquadronServiceReader {
           }
         }
 
-        final marshaler = _typeManager.getExplicitMarshaler(param);
-        final p = parameters.register(param, marshaler);
+        final p = parameters.register(
+          param,
+          _typeManager.getExplicitMarshaler(param),
+        );
+
         if (p.isCancelationToken) {
           throw InvalidGenerationSourceError(
               'Cancelation tokens are not supported during service initialization.');

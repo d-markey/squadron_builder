@@ -4,7 +4,7 @@
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.1 (Squadron 7.1.1)
+// Generator: WorkerGenerator 7.1.4 (Squadron 7.1.1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -3389,7 +3389,7 @@ mixin _$TestOptNullDefNamedPrivateNonFinalField$Facade
 
   @override
   // ignore: unused_element
-  set _state(void value) => throw UnimplementedError();
+  set _state(void $value) => throw UnimplementedError();
 }
 
 /// WorkerService class for TestOptNullDefNamedPrivateNonFinalField

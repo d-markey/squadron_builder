@@ -19,7 +19,8 @@ class SquadronMethodReader extends DartMethodReader {
     var returnType = method.returnType;
     if (method.returnType.isDartAsyncFutureOr) {
       final valueType = (returnType as ParameterizedType).typeArguments.single;
-      returnType = method.lib!.typeProvider.futureType(valueType);
+      // ignore: deprecated_member_use
+      returnType = method.library.typeProvider.futureType(valueType);
     }
     return typeManager.handleDartType(returnType);
   }
@@ -63,8 +64,7 @@ class SquadronMethodReader extends DartMethodReader {
 
     for (var n = 0; n < method.parameters.length; n++) {
       final param = method.parameters[n];
-      final marshaler = typeManager.getExplicitMarshaler(param);
-      parameters.register(param, marshaler);
+      parameters.register(param, typeManager.getExplicitMarshaler(param));
     }
   }
 
@@ -136,7 +136,7 @@ class SquadronMethodReader extends DartMethodReader {
     if (inspectRequest) args.csv('inspectRequest: true');
     if (inspectResponse) args.csv('inspectResponse: true');
 
-    var methodDecl = '${assets.override} $declaration';
+    var methodDecl = '${assets.override_} $declaration';
     var callWorker = '$workerExecutor($args)';
 
     final marshalContext = context.initSerContext(
@@ -184,7 +184,7 @@ class SquadronMethodReader extends DartMethodReader {
   }
 
   String poolMethod(WorkerAssets assets) =>
-      '${assets.override} $declaration => $poolExecutor((w) => w.$name(${parameters.asArguments()}));';
+      '${assets.override_} $declaration => $poolExecutor((w) => w.$name(${parameters.asArguments()}));';
 
   DeSer? ser(MarshalingContext context) =>
       context.ser(valueType, withContext, resultMarshaler);

@@ -117,11 +117,11 @@ class WorkerAssets with _ImportedTypesMixin {
 
   /// Proxy for base worker/worker pool method
   String _forwardOverride(String decl, String target, String impl) =>
-      '$override ${decl.replaceAll('@TWorker@', _worker)} => $target.$impl;';
+      '$override_ ${decl.replaceAll('@TWorker@', _worker)} => $target.$impl;';
 
   // Unimplemented member
   String unimpl(String decl, {bool override = false, bool unused = false}) =>
-      '''${override ? this.override : ''}
+      '''${override ? override_ : ''}
        ${unused ? '// ignore: unused_element' : ''}
        $decl => throw $TUnimplementedError();''';
 }

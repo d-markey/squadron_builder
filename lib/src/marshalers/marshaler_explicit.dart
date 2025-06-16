@@ -8,12 +8,10 @@ class _ExplicitMarshaler extends Marshaler {
     // ignore: deprecated_member_use
     final variable = _marshaler.variable;
     if (variable != null) {
-      final enclosing = variable.enclosingElt;
-      if (enclosing is InterfaceElement) {
-        _instance = '${enclosing.name}.${variable.name}';
-      } else {
-        _instance = variable.name;
-      }
+      _instance = switch (variable.enclosingElt) {
+        InterfaceElement enclosing => '${enclosing.name}.${variable.name}',
+        _ => variable.name,
+      };
     } else {
       final typeName = typeManager
           .handleDartType(_marshaler.toTypeValue() ?? _marshaler.type!)

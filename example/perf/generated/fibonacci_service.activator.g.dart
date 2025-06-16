@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.1 (Squadron 7.1.1)
+// Generator: WorkerGenerator 7.1.4 (Squadron 7.1.1)
 // **************************************************************************
 
 import 'fibonacci_service.vm.g.dart';

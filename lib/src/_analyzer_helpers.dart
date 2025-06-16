@@ -30,7 +30,7 @@ typedef ConstructorElement = element_.ConstructorElement;
 typedef InterfaceElement = element_.InterfaceElement;
 typedef TypeParameterElement = element_.TypeParameterElement;
 
-typedef SimpleElementVisitor = visitor_.SimpleElementVisitor;
+typedef SimpleElementVisitor<T> = visitor_.SimpleElementVisitor<T>;
 
 @internal
 extension ElementExt on Element {
@@ -42,8 +42,6 @@ extension ElementExt on Element {
     return getAnnotations()
         .where((v) => v.type?.getDisplayString() == targetAnnotationName);
   }
-
-  LibraryElement? get lib => library;
 
   Element get declarationOrSelf => declaration ?? this;
 
@@ -59,18 +57,14 @@ extension MethodElementExt on MethodElement {
 extension FieldElementExt on FieldElement {
   String forwardTo(String target, WorkerAssets assets) {
     final typeName = assets.typeManager.getTypeName(type);
-    final override = assets.override;
     return '''
-      $override $typeName get $name => $target.$name;
-      ${isFinal ? '' : '$override set $name($typeName value) => $target.$name = value;'}
+      ${assets.override_} $typeName get $name => $target.$name;
+      ${isFinal ? '' : '${assets.override_} set $name($typeName value) => $target.$name = value;'}
     ''';
   }
 
-  String override(WorkerAssets assets) {
-    final typeName = assets.typeManager.getTypeName(type);
-    final override = assets.override;
-    return '$override ${isFinal ? 'final ' : ''}$typeName $name;';
-  }
+  String override(WorkerAssets assets) =>
+      '${assets.override_} ${isFinal ? 'final ' : ''}${assets.typeManager.getTypeName(type)} $name;';
 }
 
 @internal
@@ -79,22 +73,17 @@ extension PropertyAccessorElementExt on PropertyAccessorElement {
 
   bool get isOperationsMap => property == 'operations';
 
-  String forwardTo(String target, WorkerAssets assets) {
-    final type = assets.typeManager.getTypeName(returnType);
-    final override = assets.override;
-    return isGetter
-        ? '$override $type get $property => $target.$property;'
-        : '$override set $property($type value) => $target.$property = value;';
-  }
+  String forwardTo(String target, WorkerAssets assets) => isGetter
+      ? '${assets.override_} ${assets.typeManager.getTypeName(returnType)} get $property => $target.$property;'
+      : '${assets.override_} set $property(${assets.typeManager.getTypeName(returnType)} \$value) => $target.$property = \$value;';
 
-  String unimpl(WorkerAssets assets) {
-    final type = assets.typeManager.getTypeName(returnType);
-    return assets.unimpl(
-      isGetter ? '$type get $property' : 'set $property($type value)',
-      override: true,
-      unused: true,
-    );
-  }
+  String unimpl(WorkerAssets assets) => assets.unimpl(
+        isGetter
+            ? '${assets.typeManager.getTypeName(returnType)} get $property'
+            : 'set $property(${assets.typeManager.getTypeName(returnType)} \$value)',
+        override: true,
+        unused: true,
+      );
 }
 
 @internal

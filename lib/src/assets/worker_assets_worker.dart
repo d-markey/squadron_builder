@@ -57,7 +57,7 @@ extension on WorkerAssets {
 
       overrideStop = stopLocalWorkers.isEmpty
           ? ''
-          : '$override void stop() { $stopLocalWorkers super.stop(); }';
+          : '$override_ void stop() { $stopLocalWorkers super.stop(); }';
     }
 
     final workerParams = _service.parameters.clone();
@@ -95,7 +95,7 @@ extension on WorkerAssets {
           $declareLocalWorkers
           $declareStartArgs
 
-          $override
+          $override_
           ${typeManager.TList}? getStartArgs() $getStartArgs
 
           $overrideStop
@@ -135,7 +135,7 @@ extension on WorkerAssets {
             }
           });
 
-          $override
+          $override_
           void release() {
             try {
               $Worker.release();
@@ -145,11 +145,11 @@ extension on WorkerAssets {
             }
           }
 
-          ${declareLocalWorkers.isEmpty ? '' : '$override $TList<$TLocalWorker?> get $localWorkers => const [];'}
+          ${declareLocalWorkers.isEmpty ? '' : '$override_ $TList<$TLocalWorker?> get $localWorkers => const [];'}
 
-          ${declareStartArgs.isEmpty ? '' : '$override $TList<$TDynamic> get $startReq => const  [];'}
+          ${declareStartArgs.isEmpty ? '' : '$override_ $TList<$TDynamic> get $startReq => const  [];'}
 
-          $override
+          $override_
           ${typeManager.TList}? getStartArgs() => null;
 
           ${commands.map((cmd) => cmd.forwardTo(Worker, this)).join('\n\n')}
@@ -160,7 +160,7 @@ extension on WorkerAssets {
 
           ${_getWorkerOverrides().entries.map((e) => _forwardOverride(e.key, Worker, e.value)).join('\n\n')}
 
-          $override
+          $override_
           final $TOperationsMap operations = $TWorkerService.noOperations;
         }
       ''');

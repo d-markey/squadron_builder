@@ -47,10 +47,8 @@ class DartMethodReader {
   }
 
   void _init(MethodElement method) {
-      typeParameters.addAll(method.typeParams.map((e) => e.toString()));
-    for (var n = 0; n < method.parameters.length; n++) {
-      parameters.register(method.parameters[n], null);
-    }
+    method.typeParams.map((e) => e.toString()).forEach(typeParameters.add);
+    method.parameters.forEach(parameters.register);
   }
 
   static DartMethodReader? load(MethodElement method, TypeManager typeManager,
@@ -81,7 +79,7 @@ class DartMethodReader {
       : '$returnType $name<${typeParameters.join(', ')}>($parameters)';
 
   String forwardTo(String target, WorkerAssets assets) =>
-      '${assets.override} $declaration => $target.$name(${parameters.asArguments()});';
+      '${assets.override_} $declaration => $target.$name(${parameters.asArguments()});';
 
   String unimpl(WorkerAssets assets) =>
       assets.unimpl(declaration, override: true);

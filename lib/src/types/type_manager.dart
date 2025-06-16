@@ -46,7 +46,13 @@ class TypeManager with _ImportedTypesMixin {
 
   bool _initialized = false;
 
-  String getPrefixFor(LibraryElement? lib) {
+  String getPrefixFor(Element? element) {
+    final lib = switch (element) {
+      LibraryElement() => element,
+      // ignore: deprecated_member_use
+      Element() => element.library,
+      null => null,
+    };
     if (lib == null) return '';
     // ignore: deprecated_member_use
     return library.definingCompilationUnit.libraryImportPrefixes
@@ -66,8 +72,7 @@ class TypeManager with _ImportedTypesMixin {
       managedType = ManagedType.record(type, this);
       _cache[type] = managedType;
     } else {
-      final typeLib = type.elt?.lib;
-      managedType = ManagedType(getPrefixFor(typeLib), type, this);
+      managedType = ManagedType(getPrefixFor(type.elt), type, this);
       _cache[type] = managedType;
       findMarshaler(managedType);
     }

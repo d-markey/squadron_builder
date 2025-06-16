@@ -68,7 +68,7 @@ extension on WorkerAssets {
             }
           });
 
-          $override
+          $override_
           void release() {
             try {
               $Pool.release();
@@ -86,7 +86,7 @@ extension on WorkerAssets {
 
           ${getWorkerPoolOverrides().entries.map((e) => _forwardOverride(e.key, Pool, e.value)).join('\n\n')}
 
-          $override
+          $override_
           final $TOperationsMap operations = $TWorkerService.noOperations;
         }''');
     }

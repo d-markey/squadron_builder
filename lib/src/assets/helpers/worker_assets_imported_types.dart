@@ -10,7 +10,7 @@ mixin _ImportedTypesMixin {
 
   late final _dartCoreAlias = typeManager.dartCoreAlias;
 
-  late final override =
+  late final override_ =
       _dartCoreAlias.isEmpty ? '@override' : '@$_dartCoreAlias.override';
 
   late final TChannel = typeManager.TChannel;

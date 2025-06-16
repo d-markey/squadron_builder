@@ -75,7 +75,7 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
   ) async* {
     final classElt = element;
     if (classElt is! ClassElement) return;
-    final libraryName = classElt.lib?.librarySource.shortName;
+    final libraryName = classElt.librarySource.shortName;
 
     final context = _contexts[buildStep];
     if (context == null) {

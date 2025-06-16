@@ -57,7 +57,7 @@ class MarshalerInspector extends SimpleElementVisitor {
           : (isJson ? _fromJson!.enclosingElt! : null);
       String? loader;
       if (loaderElt is ExtensionElement) {
-        final prefix = typeManager.getPrefixFor(loaderElt.lib);
+        final prefix = typeManager.getPrefixFor(loaderElt);
         loader = '${prefix.isEmpty ? '' : '$prefix.'}${loaderElt.name!}';
       }
 

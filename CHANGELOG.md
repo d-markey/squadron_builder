@@ -1,3 +1,7 @@
+## 7.1.4
+
+- Rename `WorkerAssets.override` to `override_` to avoid confusion with `dart:core`'s top-level `override` constant -- fixes https://github.com/d-markey/squadron_builder/issues/34.
+
 ## 7.1.3
 
 - Allow `analyzer` version above 7.4.0 and ignore deprecation warnings until https://github.com/dart-lang/source_gen/issues/743 and https://github.com/dart-lang/build/issues/3977 are fixed.
