@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/dart/element/visitor2.dart';
 
 import '../_analyzer_helpers.dart';
 import '../_helpers.dart';
@@ -103,7 +104,7 @@ abstract class ManagedType with ManagedTypeMixin {
         return '${px}dynamic';
       }
       final a = typeArguments.isEmpty ? '' : '<${typeArguments.join(', ')}>';
-      return '$px${dartType!.elt!.name}$a${nullabilitySuffix.suffix}';
+      return '$px${dartType!.elt!.name3!}$a${nullabilitySuffix.suffix}';
     } catch (ex) {
       throw Exception(
           'Error for dartType = $dartType / element = ${dartType?.elt}');

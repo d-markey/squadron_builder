@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart' as squadron;
@@ -20,7 +21,8 @@ class SquadronServiceReader {
     this.js,
     this.wasm,
     this.baseUrl,
-  )   : name = clazz.name,
+  )   : assert(clazz.name3 != null, "Class name can't be null"),
+        name = clazz.name3!,
         isBase = clazz.isBase,
         parameters = SquadronParameters(_typeManager) {
     _load(clazz);
@@ -47,7 +49,8 @@ class SquadronServiceReader {
   final TypeManager _typeManager;
 
   void _load(ClassElement clazz) {
-    if (clazz.name.startsWith('_')) {
+    final name = clazz.name3;
+    if (name != null && name.startsWith('_')) {
       throw InvalidGenerationSourceError('Service classes must be public.');
     }
 
@@ -57,23 +60,24 @@ class SquadronServiceReader {
     }
 
     // ignore: deprecated_member_use
-    final ctorElement = clazz.unnamedConstructor;
+    final ctorElement = clazz.unnamedConstructor2;
 
     if (ctorElement == null) {
       // ignore: deprecated_member_use
-      if (clazz.constructors.isNotEmpty) {
-        log.warning('Missing unnamed constructor for ${clazz.name}');
+      if (clazz.constructors2.isNotEmpty) {
+        log.warning('Missing unnamed constructor for ${clazz.name3}');
       }
-    } else if (ctorElement.parameters.isNotEmpty) {
-      for (var n = 0; n < ctorElement.parameters.length; n++) {
-        final param = ctorElement.parameters[n];
+    } else if (ctorElement.formalParameters.isNotEmpty) {
+      for (var n = 0; n < ctorElement.formalParameters.length; n++) {
+        final param = ctorElement.formalParameters[n];
 
         if (param is FieldFormalParameterElement) {
           // ignore: deprecated_member_use
-          final fld = param.field;
+          final fld = param.field2;
           if (fld != null) {
-            if (!fld.name.startsWith('_')) {
-              fields[param.name] = fld;
+            final name = fld.name3;
+            if (name != null && !name.startsWith('_')) {
+              fields[name] = fld;
             }
           }
         }
@@ -90,15 +94,23 @@ class SquadronServiceReader {
       }
     }
 
-    methods.addAll(clazz.methods.where((m) => !m.isStatic));
-    accessors.addAll(clazz.accessors.where((a) =>
-        !a.isStatic &&
-        ((a.isGetter && !fields.containsKey(a.name)) ||
-            (a.isSetter && !fields.containsKey(a.name.replaceAll('=', ''))))));
+    methods.addAll(clazz.methods2.where((m) => !m.isStatic));
+    final fragments = clazz.fragments;
+    for (final fragment in fragments) {
+      final getters = fragment.getters
+          .where((b) => !fragment.fields2.map((c) => c.name2).contains(b.name2))
+          .map((e) => e.element as PropertyAccessorElement2);
+      final setters = fragment.setters
+          .where((b) => !fragment.fields2
+              .map((c) => c.name2?.replaceAll('=', ''))
+              .contains(b.name2))
+          .map((e) => e.element as PropertyAccessorElement2);
+      accessors.addAll(getters.followedBy(setters));
+    }
   }
 
   static SquadronServiceReader? load(
-      ClassElement clazz, GeneratorContext context) {
+      ClassElement2 clazz, GeneratorContext context) {
     final reader = AnnotationReader<squadron.SquadronService>(clazz);
     if (reader.isEmpty) return null;
 

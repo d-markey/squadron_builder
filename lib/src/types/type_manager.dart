@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/constant/value.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -13,7 +14,7 @@ class TypeManager with _ImportedTypesMixin {
   TypeManager(this.library)
       : dartCoreAlias = library.getPrefixFor(PckUri.dartCore) ?? '';
 
-  final LibraryElement library;
+  final LibraryElement2 library;
   final String dartCoreAlias;
   late final String squadronAlias;
 
@@ -50,15 +51,15 @@ class TypeManager with _ImportedTypesMixin {
     final lib = switch (element) {
       LibraryElement() => element,
       // ignore: deprecated_member_use
-      Element() => element.library,
+      Element() => element.library2,
       null => null,
     };
     if (lib == null) return '';
     // ignore: deprecated_member_use
-    return library.definingCompilationUnit.libraryImportPrefixes
-            .where((p) => p.imports.any((i) => i.importedLibrary == lib))
+    return library.firstFragment.libraryImports2
+            .where((p) => p.importedLibrary2 == lib)
             .firstOrNull
-            ?.name ??
+            ?.libraryFragment.name2 ??
         '';
   }
 
@@ -98,7 +99,7 @@ class TypeManager with _ImportedTypesMixin {
   Marshaler? getExplicitMarshaler(Element? element) {
     final marshaler =
         // ignore: deprecated_member_use
-        element?.declaration?.getAnnotations().where(_isMarshaler).firstOrNull;
+        element?.getAnnotations().where(_isMarshaler).firstOrNull;
     if (marshaler == null) return null;
     final type = marshaler.toTypeValue() ?? marshaler.type;
     final baseMarshaler = type?.implementedTypes(TSquadronMarshaler);

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:build/build.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:source_gen/source_gen.dart';
@@ -69,13 +70,15 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
 
   @override
   Stream<String> generateForAnnotatedElement(
-    Element element,
+    Element2 element,
     ConstantReader annotation,
     BuildStep buildStep,
   ) async* {
     final classElt = element;
     if (classElt is! ClassElement) return;
-    final libraryName = classElt.librarySource.shortName;
+
+    final libraryName = classElt.library2.name3;
+    if (libraryName == null) return;
 
     final context = _contexts[buildStep];
     if (context == null) {

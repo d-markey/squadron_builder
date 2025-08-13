@@ -27,16 +27,16 @@ class SquadronParameter {
 
   static SquadronParameter from(ParameterElement param, bool isToken,
       Marshaler? marshaler, int serIdx, TypeManager typeManager) {
-    var name = param.name;
+    var name = param.name3 ?? '';
     var type = param.type;
     FieldElement? field;
     if (param is FieldFormalParameterElement) {
       // ignore: deprecated_member_use
-      final fld = param.field;
+      final fld = param.field2;
       if (fld != null) {
         field = fld;
         type = field.type;
-        name = field.name;
+        name = field.name3 ?? '';
         while (name.startsWith('_')) {
           name = name.substring((1));
         }
@@ -76,7 +76,7 @@ class SquadronParameter {
   bool get mayBeNull =>
       (isOptional || (isNamed && required.isEmpty)) && defaultValue == null;
 
-  bool get isPublicField => field != null && !field!.name.startsWith('_');
+  bool get isPublicField => field != null && !(field!.name3?.startsWith('_') ?? false);
 
   String argument() => isNamed ? '$name: $name' : name;
 

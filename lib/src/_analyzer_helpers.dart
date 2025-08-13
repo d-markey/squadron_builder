@@ -1,12 +1,12 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element.dart' as element_;
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element2.dart' as element_;
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart' as visitor_;
 import 'package:meta/meta.dart';
+import 'package:squadron_builder/src/types/type_manager.dart';
 
 import '_helpers.dart';
 import 'assets/worker_assets.dart';
@@ -14,28 +14,35 @@ import 'types/managed_type.dart';
 
 export 'package:analyzer/dart/element/element.dart';
 
-typedef Element = element_.Element;
-typedef FieldElement = element_.FieldElement;
-typedef PropertyAccessorElement = element_.PropertyAccessorElement;
-typedef LibraryImportElement = element_.LibraryImportElement;
-typedef LibraryElement = element_.LibraryElement;
+typedef Annotatable = element_.Annotatable;
+
+typedef Element = element_.Element2;
+typedef FieldElement = element_.FieldElement2;
+typedef PropertyAccessorElement = element_.PropertyAccessorElement2;
+typedef LibraryImportElement = element_.LibraryImport;
+typedef LibraryElement = element_.LibraryElement2;
 typedef ElementLocation = element_.ElementLocation;
-typedef ClassElement = element_.ClassElement;
-typedef MethodElement = element_.MethodElement;
-typedef FieldFormalParameterElement = element_.FieldFormalParameterElement;
-typedef EnumElement = element_.EnumElement;
-typedef ExtensionElement = element_.ExtensionElement;
-typedef ParameterElement = element_.ParameterElement;
-typedef ConstructorElement = element_.ConstructorElement;
-typedef InterfaceElement = element_.InterfaceElement;
-typedef TypeParameterElement = element_.TypeParameterElement;
+typedef ClassElement = element_.ClassElement2;
+typedef MethodElement = element_.MethodElement2;
+typedef FieldFormalParameterElement = element_.FieldFormalParameterElement2;
+typedef EnumElement = element_.EnumElement2;
+typedef ExtensionElement = element_.ExtensionElement2;
+typedef ParameterElement = element_.FormalParameterElement;
+typedef ConstructorElement = element_.ConstructorElement2;
+typedef InterfaceElement = element_.InterfaceElement2;
+typedef TypeParameterElement = element_.TypeParameterElement2;
 
 typedef SimpleElementVisitor<T> = visitor_.SimpleElementVisitor<T>;
 
 @internal
 extension ElementExt on Element {
-  Iterable<DartObject> getAnnotations() =>
-      metadata.map((a) => a.computeConstantValue()).nonNulls;
+  Iterable<DartObject> getAnnotations() {
+    if (this case final Annotatable annotatable) {
+      final annotations = annotatable.metadata2.annotations;
+      return annotations.map((a) => a.computeConstantValue()).nonNulls;
+    }
+    return Iterable.empty();
+  }
 
   Iterable<DartObject> findAnnotations<T>() {
     final targetAnnotationName = T.toString();
@@ -43,14 +50,14 @@ extension ElementExt on Element {
         .where((v) => v.type?.getDisplayString() == targetAnnotationName);
   }
 
-  Element get declarationOrSelf => declaration ?? this;
+  Element get declarationOrSelf => baseElement;
 
-  Element? get enclosingElt => enclosingElement3;
+  Element? get enclosingElt => enclosingElement2;
 }
 
 @internal
 extension MethodElementExt on MethodElement {
-  List<TypeParameterElement> get typeParams => typeParameters;
+  List<TypeParameterElement> get typeParams => typeParameters2;
 }
 
 @internal
@@ -58,18 +65,21 @@ extension FieldElementExt on FieldElement {
   String forwardTo(String target, WorkerAssets assets) {
     final typeName = assets.typeManager.getTypeName(type);
     return '''
-      ${assets.override_} $typeName get $name => $target.$name;
-      ${isFinal ? '' : '${assets.override_} set $name($typeName value) => $target.$name = value;'}
+      ${assets.override_} $typeName get $name3 => $target.$name3;
+      ${isFinal ? '' : '${assets.override_} set $name3($typeName value) => $target.$name3 = value;'}
     ''';
   }
 
   String override(WorkerAssets assets) =>
-      '${assets.override_} ${isFinal ? 'final ' : ''}${assets.typeManager.getTypeName(type)} $name;';
+      '${assets.override_} ${isFinal ? 'final ' : ''}${assets.typeManager.getTypeName(type)} $name3;';
 }
 
 @internal
 extension PropertyAccessorElementExt on PropertyAccessorElement {
-  String get property => isGetter ? name : name.replaceAll('=', '');
+  bool get isGetter => variable3?.getter2 != null;
+
+  String get property =>
+      isGetter ? name3 ?? '' : name3?.replaceAll('=', '') ?? '';
 
   bool get isOperationsMap => property == 'operations';
 
@@ -88,19 +98,21 @@ extension PropertyAccessorElementExt on PropertyAccessorElement {
 
 @internal
 extension LibraryElementExt on LibraryElement {
-  bool isFromPackage(String pckUri) => location?.isFromPackage(pckUri) ?? false;
+  List<LibraryElement> get importedLibraries =>
+      firstFragment.importedLibraries2;
 
-  LibraryImportElement? getImport(String pckUri) =>
-      definingCompilationUnit.libraryImports
-          .where((i) => i.isFromPackage(pckUri))
-          .firstOrNull;
+  bool isFromPackage(String pckUri) => uri.path.contains(pckUri);
+
+  LibraryElement? getImport(String pckUri) =>
+      importedLibraries.where((i) => i.isFromPackage(pckUri)).firstOrNull;
 
   String? getPrefixFor(String pckUri) {
-    final import = definingCompilationUnit.libraryImports
+    final import = firstFragment.libraryImports2
         .where((i) => i.isFromPackage(pckUri))
         .firstOrNull;
+
     if (import == null) return null;
-    return import.prefix?.element.name ?? '';
+    return import.prefix2?.name2 ?? '';
   }
 }
 
@@ -112,7 +124,7 @@ extension ElementLocationExt on ElementLocation {
 
 extension on LibraryImportElement {
   bool isFromPackage(String pckUri) =>
-      importedLibrary?.isFromPackage(pckUri) ?? false;
+      importedLibrary2?.isFromPackage(pckUri) ?? false;
 }
 
 @internal
@@ -131,11 +143,11 @@ extension DartObjectExt on DartObject? {
 
 @internal
 extension DartTypeExt on DartType {
-  Element? get elt => element;
+  Element? get elt => element3;
 
   String get baseName => element3?.name3 ?? '<anonymous>';
 
-  bool get isEnum => element3 is EnumElement2;
+  bool get isEnum => element3 is EnumElement;
 
   Iterable<DartType> implementedTypes(ManagedType knownType,
       {bool includeSelf = false}) sync* {
@@ -143,8 +155,8 @@ extension DartTypeExt on DartType {
     if (includeSelf && isMatch(this)) {
       yield this;
     }
-    if (element3 is ClassElement2) {
-      yield* (element3 as ClassElement2).allSupertypes.where(isMatch);
+    if (element3 is ClassElement) {
+      yield* (element3 as ClassElement).allSupertypes.where(isMatch);
     }
   }
 
@@ -157,7 +169,7 @@ extension DartTypeExt on DartType {
 
 @internal
 extension FunctionTypeExt on FunctionType {
-  List<ParameterElement> get params => parameters;
+  List<ParameterElement> get params => formalParameters;
 }
 
 @internal
