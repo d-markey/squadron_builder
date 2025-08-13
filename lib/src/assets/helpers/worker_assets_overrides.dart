@@ -11,7 +11,9 @@ extension SquadronOverrides on WorkerAssets {
       '$TLogger? get channelLogger': 'channelLogger',
       'set channelLogger($TLogger? value)': 'channelLogger = value',
       '$TBool get isConnected': 'isConnected',
+      '$TBool get isStopped': 'isStopped',
       '$TWorkerStat get stats': 'stats',
+      '$TWorkerStat getStats()': 'getStats()',
       // worker control
       '$TFuture<$TChannel> start()': 'start()',
       'void stop()': 'stop()',
