@@ -59,11 +59,9 @@ class SquadronServiceReader {
           'Worker service classes must be constructable.');
     }
 
-    // ignore: deprecated_member_use
     final ctorElement = clazz.unnamedConstructor2;
 
     if (ctorElement == null) {
-      // ignore: deprecated_member_use
       if (clazz.constructors2.isNotEmpty) {
         log.warning('Missing unnamed constructor for ${clazz.name3}');
       }
@@ -72,7 +70,6 @@ class SquadronServiceReader {
         final param = ctorElement.formalParameters[n];
 
         if (param is FieldFormalParameterElement) {
-          // ignore: deprecated_member_use
           final fld = param.field2;
           if (fld != null) {
             final name = fld.name3;
@@ -95,18 +92,8 @@ class SquadronServiceReader {
     }
 
     methods.addAll(clazz.methods2.where((m) => !m.isStatic));
-    final fragments = clazz.fragments;
-    for (final fragment in fragments) {
-      final getters = fragment.getters
-          .where((b) => !fragment.fields2.map((c) => c.name2).contains(b.name2))
-          .map((e) => e.element as PropertyAccessorElement2);
-      final setters = fragment.setters
-          .where((b) => !fragment.fields2
-              .map((c) => c.name2?.replaceAll('=', ''))
-              .contains(b.name2))
-          .map((e) => e.element as PropertyAccessorElement2);
-      accessors.addAll(getters.followedBy(setters));
-    }
+    accessors.addAll(clazz.getters2.where((a) => !a.isStatic && !fields.containsKey(a.property)));
+    accessors.addAll(clazz.setters2.where((a) => !a.isStatic && !fields.containsKey(a.property)));
   }
 
   static SquadronServiceReader? load(

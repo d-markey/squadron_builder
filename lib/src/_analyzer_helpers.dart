@@ -76,7 +76,9 @@ extension FieldElementExt on FieldElement {
 
 @internal
 extension PropertyAccessorElementExt on PropertyAccessorElement {
-  bool get isGetter => variable3?.getter2 != null;
+  bool get isSetter => this is element_.SetterElement;
+
+  bool get isGetter => this is element_.GetterElement;
 
   String get property =>
       isGetter ? name3 ?? '' : name3?.replaceAll('=', '') ?? '';
@@ -98,22 +100,32 @@ extension PropertyAccessorElementExt on PropertyAccessorElement {
 
 @internal
 extension LibraryElementExt on LibraryElement {
-  List<LibraryElement> get importedLibraries =>
-      firstFragment.importedLibraries2;
+  List<LibraryImportElement> get allImports => fragments
+      .expand((f) =>
+          [...f.libraryImports2, ...?f.enclosingFragment?.libraryImports2])
+      .toList();
 
-  bool isFromPackage(String pckUri) => uri.path.contains(pckUri);
-
-  LibraryElement? getImport(String pckUri) =>
-      importedLibraries.where((i) => i.isFromPackage(pckUri)).firstOrNull;
-
-  String? getPrefixFor(String pckUri) {
-    final import = firstFragment.libraryImports2
-        .where((i) => i.isFromPackage(pckUri))
-        .firstOrNull;
-
-    if (import == null) return null;
-    return import.prefix2?.name2 ?? '';
+  Map<LibraryElement, String?> get allImportPrefixes {
+    final map = <LibraryElement, String>{};
+    for (final imp in allImports) {
+      final lib = imp.importedLibrary2;
+      if (lib == null) continue;
+      final pfx = imp.prefix2?.name2 ?? '';
+      map.update(lib, (prev) => prev.isNotEmpty ? prev : pfx,
+          ifAbsent: () => pfx);
+    }
+    return map;
   }
+
+  LibraryImportElement? getImport(String pckUri) =>
+      allImports.where((i) => i.isFromPackage(pckUri)).firstOrNull;
+
+  bool isFromPackage(String pckUri) => uri.toString().contains(pckUri);
+
+  String? getPrefixFor(String pckUri) => allImportPrefixes.entries
+      .where((i) => i.key.isFromPackage(pckUri))
+      .firstOrNull
+      ?.value;
 }
 
 @internal
@@ -122,7 +134,7 @@ extension ElementLocationExt on ElementLocation {
       components.any((c) => c.startsWith(pckUri));
 }
 
-extension on LibraryImportElement {
+extension LibraryImportElementX on LibraryImportElement {
   bool isFromPackage(String pckUri) =>
       importedLibrary2?.isFromPackage(pckUri) ?? false;
 }

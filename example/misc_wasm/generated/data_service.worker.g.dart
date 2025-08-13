@@ -4,7 +4,7 @@
 part of '../data_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.4 (Squadron 7.1.1)
+// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2)
 // **************************************************************************
 
 /// Command ids used in operations map

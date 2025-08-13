@@ -38,8 +38,8 @@ class TypeManager with _ImportedTypesMixin {
 
   List<String> checkRequiredImports(List<ImportedType> requiredTypes) {
     final missingImports = requiredTypes.map((t) => t.pckUri).toSet()
-      ..removeWhere((pckUri) =>
-          library.importedLibraries.any((l) => l.isFromPackage(pckUri)));
+      ..removeWhere(
+          (pckUri) => library.allImports.any((l) => l.isFromPackage(pckUri)));
     return missingImports
         .map((s) => s.endsWith('/') ? s.substring(0, s.length - 1) : s)
         .toList();
@@ -50,17 +50,11 @@ class TypeManager with _ImportedTypesMixin {
   String getPrefixFor(Element? element) {
     final lib = switch (element) {
       LibraryElement() => element,
-      // ignore: deprecated_member_use
       Element() => element.library2,
       null => null,
     };
     if (lib == null) return '';
-    // ignore: deprecated_member_use
-    return library.firstFragment.libraryImports2
-            .where((p) => p.importedLibrary2 == lib)
-            .firstOrNull
-            ?.libraryFragment.name2 ??
-        '';
+    return library.getPrefixFor(lib.uri.toString()) ?? '';
   }
 
   final _cache = <DartType, ManagedType>{};

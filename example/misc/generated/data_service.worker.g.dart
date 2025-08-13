@@ -4,7 +4,7 @@
 part of '../data_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.4 (Squadron 7.1.1)
+// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -16,13 +16,10 @@ extension on DataService {
         _$doSomethingId: ($req) async {
           final Data $res;
           try {
-            final $dsr = _$Deser(contextAware: true);
+            final $dsr = _$Deser(contextAware: false);
             $res = await doSomething($dsr.$0($req.args[0]));
           } finally {}
-          try {
-            final $sr = _$Ser(contextAware: true);
-            return $sr.$0($res);
-          } finally {}
+          return $res;
         },
       });
 }
@@ -32,13 +29,9 @@ extension on DataService {
 mixin _$DataService$Invoker on Invoker implements DataService {
   @override
   Future<Data> doSomething(Data input) async {
-    final dynamic $res;
+    final dynamic $res = await send(_$doSomethingId, args: [input]);
     try {
-      final $sr = _$Ser(contextAware: true);
-      $res = await send(_$doSomethingId, args: [$sr.$0(input)]);
-    } finally {}
-    try {
-      final $dsr = _$Deser(contextAware: true);
+      final $dsr = _$Deser(contextAware: false);
       return $dsr.$0($res);
     } finally {}
   }
@@ -138,10 +131,5 @@ base class DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
 
 final class _$Deser extends MarshalingContext {
   _$Deser({super.contextAware});
-  late final $0 = (($) => ext_d.DataMarshalerExt.unmarshal($, this));
-}
-
-final class _$Ser extends MarshalingContext {
-  _$Ser({super.contextAware});
-  late final $0 = (($) => ($ as Data).marshal(this));
+  late final $0 = value<Data>();
 }

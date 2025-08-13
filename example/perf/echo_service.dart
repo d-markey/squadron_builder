@@ -11,7 +11,9 @@ import 'generated/echo_service.activator.g.dart';
 import 'marshalers.dart';
 import 'service_config.dart' as cfg;
 import 'service_request.dart' as srv;
+import 'service_request.dart';
 import 'service_response.dart' as srv;
+import 'service_response.dart';
 
 part 'generated/echo_service.worker.g.dart';
 
