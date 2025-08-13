@@ -1,3 +1,4 @@
+import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart' as squadron;
 
 import '../_analyzer_helpers.dart';
@@ -27,7 +28,13 @@ class SquadronParameter {
 
   static SquadronParameter from(ParameterElement param, bool isToken,
       Marshaler? marshaler, int serIdx, TypeManager typeManager) {
-    var name = param.name3 ?? '';
+    var name = param.name3;
+
+    if (name == null) {
+      throw InvalidGenerationSourceError('Parameter name cannot be null '
+          'for ${param.enclosingElement2?.name3}.');
+    }
+
     var type = param.type;
     FieldElement? field;
     if (param is FieldFormalParameterElement) {
@@ -36,8 +43,14 @@ class SquadronParameter {
       if (fld != null) {
         field = fld;
         type = field.type;
-        name = field.name3 ?? '';
-        while (name.startsWith('_')) {
+        name = field.name3;
+
+        if (name == null) {
+          throw InvalidGenerationSourceError('Parameter name cannot be null '
+              'for ${field.enclosingElement2.name3}.');
+        }
+
+        while (name!.startsWith('_')) {
           name = name.substring((1));
         }
       }
@@ -76,7 +89,8 @@ class SquadronParameter {
   bool get mayBeNull =>
       (isOptional || (isNamed && required.isEmpty)) && defaultValue == null;
 
-  bool get isPublicField => field != null && !(field!.name3?.startsWith('_') ?? false);
+  bool get isPublicField =>
+      field != null && field!.name3 != null && !field!.name3!.startsWith('_');
 
   String argument() => isNamed ? '$name: $name' : name;
 
