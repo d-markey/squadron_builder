@@ -1,5 +1,4 @@
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -14,7 +13,7 @@ class TypeManager with _ImportedTypesMixin {
   TypeManager(this.library)
       : dartCoreAlias = library.getPrefixFor(PckUri.dartCore) ?? '';
 
-  final LibraryElement2 library;
+  final LibraryElement library;
   final String dartCoreAlias;
   late final String squadronAlias;
 

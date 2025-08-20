@@ -4,7 +4,7 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element2.dart' as element_;
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:analyzer/dart/element/visitor.dart' as visitor_;
+import 'package:analyzer/dart/element/visitor2.dart' as visitor_;
 import 'package:meta/meta.dart';
 import 'package:squadron_builder/src/types/type_manager.dart';
 
@@ -32,7 +32,7 @@ typedef ConstructorElement = element_.ConstructorElement2;
 typedef InterfaceElement = element_.InterfaceElement2;
 typedef TypeParameterElement = element_.TypeParameterElement2;
 
-typedef SimpleElementVisitor<T> = visitor_.SimpleElementVisitor<T>;
+typedef SimpleElementVisitor<T> = visitor_.GeneralizingElementVisitor2<T>;
 
 @internal
 extension ElementExt on Element {

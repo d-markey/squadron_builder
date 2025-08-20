@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/element/element2.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:squadron/squadron.dart' as squadron;
@@ -97,7 +96,7 @@ class SquadronServiceReader {
   }
 
   static SquadronServiceReader? load(
-      ClassElement2 clazz, GeneratorContext context) {
+      ClassElement clazz, GeneratorContext context) {
     final reader = AnnotationReader<squadron.SquadronService>(clazz);
     if (reader.isEmpty) return null;
 

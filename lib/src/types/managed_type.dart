@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:analyzer/dart/element/visitor2.dart';
 
 import '../_analyzer_helpers.dart';
 import '../_helpers.dart';

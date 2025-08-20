@@ -13,7 +13,7 @@ platforms:
   macos:
 
 dependencies:
-  squadron: ^7.1.2
+  squadron: ^7.1.0
   build: ^3.0.1
   source_gen: ^3.0.0
   analyzer: ^7.6.0

@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/element/element2.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
 import 'package:pub_semver/pub_semver.dart';
@@ -169,7 +168,7 @@ class BuildStepCodeEvent extends BuildStepEvent {
 /// Code event emitted when a library has been fully processed
 @internal
 class BuildStepDoneEvent extends BuildStepEvent {
-  BuildStepDoneEvent(super.buildStep, LibraryElement2 lib)
+  BuildStepDoneEvent(super.buildStep, LibraryElement lib)
       : languageVersion = lib.languageVersion.package;
 
   final Version languageVersion;

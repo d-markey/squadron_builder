@@ -1,6 +1,6 @@
 part of 'managed_type.dart';
 
-class MarshalerInspector extends GeneralizingElementVisitor2 {
+class MarshalerInspector extends SimpleElementVisitor {
   MarshalerInspector(this.typeManager);
 
   final TypeManager typeManager;
