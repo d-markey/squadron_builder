@@ -1,3 +1,7 @@
+## 7.1.5-mki
+
+- Update for source_gen 3.0.0
+
 ## 7.1.4
 
 - Rename `WorkerAssets.override` to `override_` to avoid confusion with `dart:core`'s top-level `override` constant -- fixes https://github.com/d-markey/squadron_builder/issues/34.

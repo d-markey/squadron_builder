@@ -37,8 +37,8 @@ class TypeManager with _ImportedTypesMixin {
 
   List<String> checkRequiredImports(List<ImportedType> requiredTypes) {
     final missingImports = requiredTypes.map((t) => t.pckUri).toSet()
-      ..removeWhere((pckUri) =>
-          library.importedLibraries.any((l) => l.isFromPackage(pckUri)));
+      ..removeWhere(
+          (pckUri) => library.allImports.any((l) => l.isFromPackage(pckUri)));
     return missingImports
         .map((s) => s.endsWith('/') ? s.substring(0, s.length - 1) : s)
         .toList();
@@ -49,17 +49,11 @@ class TypeManager with _ImportedTypesMixin {
   String getPrefixFor(Element? element) {
     final lib = switch (element) {
       LibraryElement() => element,
-      // ignore: deprecated_member_use
-      Element() => element.library,
+      Element() => element.library2,
       null => null,
     };
     if (lib == null) return '';
-    // ignore: deprecated_member_use
-    return library.definingCompilationUnit.libraryImportPrefixes
-            .where((p) => p.imports.any((i) => i.importedLibrary == lib))
-            .firstOrNull
-            ?.name ??
-        '';
+    return library.getPrefixFor(lib.uri.toString()) ?? '';
   }
 
   final _cache = <DartType, ManagedType>{};
@@ -98,7 +92,7 @@ class TypeManager with _ImportedTypesMixin {
   Marshaler? getExplicitMarshaler(Element? element) {
     final marshaler =
         // ignore: deprecated_member_use
-        element?.declaration?.getAnnotations().where(_isMarshaler).firstOrNull;
+        element?.getAnnotations().where(_isMarshaler).firstOrNull;
     if (marshaler == null) return null;
     final type = marshaler.toTypeValue() ?? marshaler.type;
     final baseMarshaler = type?.implementedTypes(TSquadronMarshaler);

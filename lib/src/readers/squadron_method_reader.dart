@@ -9,7 +9,8 @@ class SquadronMethodReader extends DartMethodReader {
       this.withContext,
       TypeManager typeManager,
       MarshalingContext context)
-      : id = '_\$${method.name}Id',
+      : assert(method.name3 != null, "Method name can't be null"),
+        id = '_\$${method.name3}Id',
         patchedReturnType = _patchReturnType(method, typeManager),
         resultMarshaler = typeManager.getExplicitMarshaler(method),
         super._(method, typeManager, context);
@@ -19,8 +20,7 @@ class SquadronMethodReader extends DartMethodReader {
     var returnType = method.returnType;
     if (method.returnType.isDartAsyncFutureOr) {
       final valueType = (returnType as ParameterizedType).typeArguments.single;
-      // ignore: deprecated_member_use
-      returnType = method.library.typeProvider.futureType(valueType);
+      returnType = method.library2.typeProvider.futureType(valueType);
     }
     return typeManager.handleDartType(returnType);
   }
@@ -55,15 +55,15 @@ class SquadronMethodReader extends DartMethodReader {
     final type = patchedReturnType.dartType!;
     if (!type.isDartAsyncFuture && !type.isDartAsyncStream) {
       throw InvalidGenerationSourceError(
-          '${method.librarySource.fullName}: public service method '
-          '\'${method.enclosingElt?.displayName}.${method.name}\' must '
+          '${method.library2.name3}: public service method '
+          '\'${method.enclosingElt?.displayName}.${method.name3}\' must '
           'return a Future, a FutureOr, a Stream, or void.');
     }
 
     typeParameters.addAll(method.typeParams.map((e) => e.toString()));
 
-    for (var n = 0; n < method.parameters.length; n++) {
-      final param = method.parameters[n];
+    for (var n = 0; n < method.formalParameters.length; n++) {
+      final param = method.formalParameters[n];
       parameters.register(param, typeManager.getExplicitMarshaler(param));
     }
   }

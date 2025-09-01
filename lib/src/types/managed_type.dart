@@ -103,7 +103,7 @@ abstract class ManagedType with ManagedTypeMixin {
         return '${px}dynamic';
       }
       final a = typeArguments.isEmpty ? '' : '<${typeArguments.join(', ')}>';
-      return '$px${dartType!.elt!.name}$a${nullabilitySuffix.suffix}';
+      return '$px${dartType!.elt!.name3!}$a${nullabilitySuffix.suffix}';
     } catch (ex) {
       throw Exception(
           'Error for dartType = $dartType / element = ${dartType?.elt}');
