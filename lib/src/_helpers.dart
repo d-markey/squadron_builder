@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
 
 import '_analyzer_helpers.dart';

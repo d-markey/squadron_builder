@@ -8,8 +8,8 @@ void main() async {
   final monitor = Monitor(const Duration(seconds: 1));
   await monitor.start();
 
-  // compute 9 fibonnaci numbers (starting from 37)
-  int count = 9, start = 37;
+  // compute 9 fibonnaci numbers (starting from 33)
+  int count = 9, start = 33;
 
   print('''
 

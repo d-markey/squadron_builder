@@ -1,18 +1,19 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:analyzer/dart/constant/value.dart';
+import 'package:analyzer/dart/constant/value.dart' as value_;
 import 'package:analyzer/dart/element/element2.dart' as element_;
-import 'package:analyzer/dart/element/nullability_suffix.dart';
-import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart' as nullable_;
+import 'package:analyzer/dart/element/type.dart' as type_;
 import 'package:analyzer/dart/element/visitor2.dart' as visitor_;
 import 'package:meta/meta.dart';
-import 'package:squadron_builder/src/types/type_manager.dart';
 
 import '_helpers.dart';
 import 'assets/worker_assets.dart';
 import 'types/managed_type.dart';
 
-export 'package:analyzer/dart/element/element.dart';
+export 'package:analyzer/dart/constant/value.dart';
+export 'package:analyzer/dart/element/nullability_suffix.dart';
+export 'package:analyzer/dart/element/type.dart';
 
 typedef Annotatable = element_.Annotatable;
 
@@ -36,7 +37,7 @@ typedef SimpleElementVisitor<T> = visitor_.GeneralizingElementVisitor2<T>;
 
 @internal
 extension ElementExt on Element {
-  Iterable<DartObject> getAnnotations() {
+  Iterable<value_.DartObject> getAnnotations() {
     if (this case final Annotatable annotatable) {
       final annotations = annotatable.metadata2.annotations;
       return annotations.map((a) => a.computeConstantValue()).nonNulls;
@@ -44,7 +45,7 @@ extension ElementExt on Element {
     return Iterable.empty();
   }
 
-  Iterable<DartObject> findAnnotations<T>() {
+  Iterable<value_.DartObject> findAnnotations<T>() {
     final targetAnnotationName = T.toString();
     return getAnnotations()
         .where((v) => v.type?.getDisplayString() == targetAnnotationName);
@@ -140,7 +141,7 @@ extension LibraryImportElementX on LibraryImportElement {
 }
 
 @internal
-extension DartObjectExt on DartObject? {
+extension DartObjectExt on value_.DartObject? {
   String getString(String fieldName) =>
       this?.getField(fieldName)?.toStringValue()?.trim() ?? '';
 
@@ -154,14 +155,14 @@ extension DartObjectExt on DartObject? {
 }
 
 @internal
-extension DartTypeExt on DartType {
+extension DartTypeExt on type_.DartType {
   Element? get elt => element3;
 
   String get baseName => element3?.name3 ?? '<anonymous>';
 
   bool get isEnum => element3 is EnumElement;
 
-  Iterable<DartType> implementedTypes(ManagedType knownType,
+  Iterable<type_.DartType> implementedTypes(ManagedType knownType,
       {bool includeSelf = false}) sync* {
     final isMatch = TypeFilter(knownType).isMatch;
     if (includeSelf && isMatch(this)) {
@@ -180,15 +181,15 @@ extension DartTypeExt on DartType {
 }
 
 @internal
-extension FunctionTypeExt on FunctionType {
+extension FunctionTypeExt on type_.FunctionType {
   List<ParameterElement> get params => formalParameters;
 }
 
 @internal
-extension NullabilitySuffixExt on NullabilitySuffix {
+extension NullabilitySuffixExt on nullable_.NullabilitySuffix {
   String get suffix => switch (this) {
-        NullabilitySuffix.none => '',
-        NullabilitySuffix.question => '?',
-        NullabilitySuffix.star => '*'
+        nullable_.NullabilitySuffix.none => '',
+        nullable_.NullabilitySuffix.question => '?',
+        nullable_.NullabilitySuffix.star => '*'
       };
 }

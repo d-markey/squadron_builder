@@ -4,7 +4,7 @@
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2)
+// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2+1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -142,6 +142,7 @@ base class TestParameterLessWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -538,6 +539,7 @@ base class TestReqPositionalWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -945,6 +947,7 @@ base class TestOptNullPositionalWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -1352,6 +1355,7 @@ base class TestOptDefPositionalWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -1759,6 +1763,7 @@ base class TestOptNullDefPositionalWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -2165,6 +2170,7 @@ base class TestReqPositionalFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -2590,6 +2596,7 @@ base class TestOptNullPositionalFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -3012,6 +3019,7 @@ base class TestOptDefPositionalFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -3444,6 +3452,7 @@ base class TestOptNullDefPositionalFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -3870,6 +3879,7 @@ base class TestReqPositionalPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -4307,6 +4317,7 @@ base class TestOptNullPositionalPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -4749,6 +4760,7 @@ base class TestOptDefPositionalPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -5191,6 +5203,7 @@ base class TestOptNullDefPositionalPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -5616,6 +5629,7 @@ base class TestOptNullNamedWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -6046,6 +6060,7 @@ base class TestOptDefNamedWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -6477,6 +6492,7 @@ base class TestOptNullDefNamedWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -6917,6 +6933,7 @@ base class TestOptNullNamedFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -7365,6 +7382,7 @@ base class TestOptDefNamedFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -7813,6 +7831,7 @@ base class TestOptNullDefNamedFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -8312,6 +8331,7 @@ base class TestTypedDataWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -8786,6 +8806,7 @@ base class TestOptNullNamedPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -9241,6 +9262,7 @@ base class TestOptDefNamedPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -9705,6 +9727,7 @@ base class TestOptNullDefNamedPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -10163,6 +10186,7 @@ base class TestPrefixedImportTypeWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -10652,6 +10676,7 @@ base class TestOptNullDefNamedPrivateNonFinalFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -10865,6 +10890,7 @@ base class TestInstallableWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -11354,6 +11380,7 @@ base class TestRecordTypesWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -11809,6 +11836,7 @@ base class TestRequiredSuperParamWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -12249,6 +12277,7 @@ base class TestBigIntWorker with Releasable implements _$TestBigIntWorker {
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -12693,6 +12722,7 @@ base class TestCustomDataWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override

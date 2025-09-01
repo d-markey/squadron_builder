@@ -4,7 +4,7 @@
 part of '../json_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2)
+// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2+1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -132,6 +132,7 @@ base class JsonServiceWorker with Releasable implements _$JsonServiceWorker {
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override

@@ -4,7 +4,7 @@
 part of '../fib_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2)
+// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2+1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -166,6 +166,7 @@ base class FibServiceWorker with Releasable implements _$FibServiceWorker {
   dc.bool get isStopped => _$worker.isStopped;
 
   @dc.override
+// ignore: deprecated_member_use
   WorkerStat get stats => _$worker.stats;
 
   @dc.override

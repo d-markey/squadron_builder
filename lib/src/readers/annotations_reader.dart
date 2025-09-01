@@ -1,5 +1,3 @@
-import 'package:analyzer/dart/constant/value.dart';
-
 import '../_analyzer_helpers.dart';
 
 class AnnotationReader<T> {

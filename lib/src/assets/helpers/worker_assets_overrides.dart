@@ -3,67 +3,74 @@
 part of '../worker_assets.dart';
 
 extension SquadronOverrides on WorkerAssets {
-  Map<String, String> _getWorkerOverrides() {
+  Map<String, List<String>> _getWorkerOverrides() {
     return {
       // state properties and statistics
       // '$TList get args': 'args',
-      '$TExceptionManager get exceptionManager': 'exceptionManager',
-      '$TLogger? get channelLogger': 'channelLogger',
-      'set channelLogger($TLogger? value)': 'channelLogger = value',
-      '$TBool get isConnected': 'isConnected',
-      '$TBool get isStopped': 'isStopped',
-      '$TWorkerStat get stats': 'stats',
-      '$TWorkerStat getStats()': 'getStats()',
+      '$TExceptionManager get exceptionManager': ['exceptionManager'],
+      '$TLogger? get channelLogger': ['channelLogger'],
+      'set channelLogger($TLogger? value)': ['channelLogger = value'],
+      '$TBool get isConnected': ['isConnected'],
+      '$TBool get isStopped': ['isStopped'],
+      '$TWorkerStat get stats': ['stats', '// ignore: deprecated_member_use'],
+      '$TWorkerStat getStats()': ['getStats()'],
       // worker control
-      '$TFuture<$TChannel> start()': 'start()',
-      'void stop()': 'stop()',
-      'void terminate([$TTaskTerminatedException? ex])': 'terminate(ex)',
-      '$TChannel? getSharedChannel()': 'getSharedChannel()',
+      '$TFuture<$TChannel> start()': ['start()'],
+      'void stop()': ['stop()'],
+      'void terminate([$TTaskTerminatedException? ex])': ['terminate(ex)'],
+      '$TChannel? getSharedChannel()': ['getSharedChannel()'],
       // worker tasks
       '$TFuture<$TDynamic> send($TInt command, {$TList args = const [], $TCancelationToken? token, $TBool inspectRequest = false, $TBool inspectResponse = false})':
-          'send(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)',
+          [
+        'send(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)'
+      ],
       '$TStream<$TDynamic> stream($TInt command, {$TList args = const [], $TCancelationToken? token, $TBool inspectRequest = false, $TBool inspectResponse = false})':
-          'stream(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)',
+          [
+        'stream(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)'
+      ],
       // finalization token
-      '$TObject get $DetachToken': DetachToken,
+      '$TObject get $DetachToken': [DetachToken],
     };
   }
 
-  Map<String, String> getWorkerPoolOverrides() {
+  Map<String, List<String>> getWorkerPoolOverrides() {
     return {
       // state properties and statistics
-      '$TExceptionManager get exceptionManager': 'exceptionManager',
-      '$TLogger? get channelLogger': 'channelLogger',
-      'set channelLogger($TLogger? value)': 'channelLogger = value',
-      '$TConcurrencySettings get concurrencySettings': 'concurrencySettings',
-      '$TIterable<$TWorkerStat> get fullStats': 'fullStats',
-      '$TInt get pendingWorkload': 'pendingWorkload',
-      '$TInt get maxSize': 'maxSize',
-      '$TInt get size': 'size',
-      '$TIterable<$TWorkerStat> get stats': 'stats',
-      '$TBool get stopped': 'stopped',
+      '$TExceptionManager get exceptionManager': ['exceptionManager'],
+      '$TLogger? get channelLogger': ['channelLogger'],
+      'set channelLogger($TLogger? value)': ['channelLogger = value'],
+      '$TConcurrencySettings get concurrencySettings': ['concurrencySettings'],
+      '$TIterable<$TWorkerStat> get fullStats': ['fullStats'],
+      '$TInt get pendingWorkload': ['pendingWorkload'],
+      '$TInt get maxSize': ['maxSize'],
+      '$TInt get size': ['size'],
+      '$TIterable<$TWorkerStat> get stats': ['stats'],
+      '$TBool get stopped': ['stopped'],
       // pool & task control
-      'void cancelAll([$TString? message])': 'cancelAll(message)',
-      'void cancel($TTask task, [$TString? message])': 'cancel(task, message)',
-      '$TFutureOr<void> start()': 'start()',
-      '$TInt stop([$TBool Function(@TWorker@ worker)? predicate])':
-          'stop(predicate)',
-      'void terminate([$TTaskTerminatedException? ex])': 'terminate(ex)',
+      'void cancelAll([$TString? message])': ['cancelAll(message)'],
+      'void cancel($TTask task, [$TString? message])': [
+        'cancel(task, message)'
+      ],
+      '$TFutureOr<void> start()': ['start()'],
+      '$TInt stop([$TBool Function(@TWorker@ worker)? predicate])': [
+        'stop(predicate)'
+      ],
+      'void terminate([$TTaskTerminatedException? ex])': ['terminate(ex)'],
       '$TObject registerWorkerPoolListener(void Function($TWorkerStat, $TBool) listener)':
-          'registerWorkerPoolListener(listener)',
+          ['registerWorkerPoolListener(listener)'],
       'void unregisterWorkerPoolListener({void Function($TWorkerStat, $TBool)? listener, $TObject? token})':
-          'unregisterWorkerPoolListener(listener: listener, token: token)',
+          ['unregisterWorkerPoolListener(listener: listener, token: token)'],
       // pool tasks
       '$TFuture<T> execute<T>($TFuture<T> Function(@TWorker@ worker) task, {$TPerfCounter? counter})':
-          'execute<T>(task, counter: counter)',
+          ['execute<T>(task, counter: counter)'],
       '$TStream<T> stream<T>($TStream<T> Function(@TWorker@ worker) task, {$TPerfCounter? counter})':
-          'stream<T>(task, counter: counter)',
+          ['stream<T>(task, counter: counter)'],
       '$TStreamTask<T> scheduleStreamTask<T>($TStream<T> Function(@TWorker@ worker) task, {$TPerfCounter? counter})':
-          'scheduleStreamTask<T>(task, counter: counter)',
+          ['scheduleStreamTask<T>(task, counter: counter)'],
       '$TValueTask<T> scheduleValueTask<T>($TFuture<T> Function(@TWorker@ worker) task, {$TPerfCounter? counter})':
-          'scheduleValueTask<T>(task, counter: counter)',
+          ['scheduleValueTask<T>(task, counter: counter)'],
       // finalization token
-      '$TObject get $DetachToken': DetachToken,
+      '$TObject get $DetachToken': [DetachToken],
     };
   }
 }

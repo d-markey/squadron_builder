@@ -4,7 +4,7 @@
 part of '../hello_world.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2)
+// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2+1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -154,6 +154,7 @@ base class HelloWorldWorker with Releasable implements _$HelloWorldWorker {
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   WorkerStat get stats => _$worker.stats;
 
   @override

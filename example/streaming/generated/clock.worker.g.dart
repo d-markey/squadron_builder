@@ -4,7 +4,7 @@
 part of '../clock.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2)
+// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2+1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -155,6 +155,7 @@ base class ClockWorker with Releasable implements _$ClockWorker {
   bool get isStopped => _$worker.isStopped;
 
   @override
+// ignore: deprecated_member_use
   WorkerStat get stats => _$worker.stats;
 
   @override

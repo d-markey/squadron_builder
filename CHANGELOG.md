@@ -1,6 +1,6 @@
-## 7.1.5-mki
+## 7.1.5
 
-- Update for source_gen 3.0.0
+- [PR #35](https://github.com/d-markey/squadron_builder/pull/35) (courtesy of https://github.com/mkidv): upgrade to `source_gen` (^3.0.0) / `build` (^3.0.1) / `analyzer` (^7.6.0) packages.
 
 ## 7.1.4
 

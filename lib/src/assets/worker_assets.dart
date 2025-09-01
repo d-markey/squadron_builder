@@ -116,8 +116,11 @@ class WorkerAssets with _ImportedTypesMixin {
   }
 
   /// Proxy for base worker/worker pool method
-  String _forwardOverride(String decl, String target, String impl) =>
-      '$override_ ${decl.replaceAll('@TWorker@', _worker)} => $target.$impl;';
+  String _forwardOverride(String decl, String target, List<String> impl) => (impl
+              .length ==
+          2)
+      ? '$override_\n${impl.last}\n${decl.replaceAll('@TWorker@', _worker)} => $target.${impl.first};'
+      : '$override_ ${decl.replaceAll('@TWorker@', _worker)} => $target.${impl.single};';
 
   // Unimplemented member
   String unimpl(String decl, {bool override = false, bool unused = false}) =>
