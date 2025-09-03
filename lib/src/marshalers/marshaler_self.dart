@@ -12,7 +12,9 @@ class _SelfMarshaler extends Marshaler {
         contextIn = _getContextArg(unmarshalingContext);
 
   static String _getContextArg(ParameterElement? ctx) =>
-      (ctx == null || ctx.name3 == null) ? '' : (ctx.isNamed ? '${ctx.name3!}: this' : 'this');
+      (ctx == null || ctx.name3 == null)
+          ? ''
+          : (ctx.isNamed ? '${ctx.name3!}: this' : 'this');
 
   final String typeName;
   final String loaderTypeName;

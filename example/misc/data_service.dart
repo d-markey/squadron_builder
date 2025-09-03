@@ -5,8 +5,8 @@ import 'package:logger/web.dart';
 import 'package:squadron/squadron.dart';
 import 'package:using/using.dart';
 
-// ignore: unused_import
 import 'data.dart';
+// ignore: unused_import
 import 'data_marshaler_ext.dart' as ext_d;
 import 'generated/data_service.activator.g.dart';
 

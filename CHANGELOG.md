@@ -1,3 +1,11 @@
+## 7.1.5+2
+
+- Fix warnings from [pub.dev](https://pub.dev/packages/squadron_builder/score).
+
+## 7.1.5+1
+
+- Update version.
+
 ## 7.1.5
 
 - [PR #35](https://github.com/d-markey/squadron_builder/pull/35) (courtesy of https://github.com/mkidv): upgrade to `source_gen` (^3.0.0) / `build` (^3.0.1) / `analyzer` (^7.6.0) packages.

@@ -10,7 +10,9 @@ class _ExplicitMarshaler extends Marshaler {
     final name = variable?.name3;
     if (variable != null && name != null) {
       _instance = switch (variable.enclosingElt) {
-        (final enclosing) when enclosing is InterfaceElement && enclosing.name3 != null => '${enclosing.name3!}.$name',
+        (final enclosing)
+            when enclosing is InterfaceElement && enclosing.name3 != null =>
+          '${enclosing.name3!}.$name',
         _ => name,
       };
     } else {
