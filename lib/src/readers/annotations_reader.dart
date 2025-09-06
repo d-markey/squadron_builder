@@ -1,3 +1,5 @@
+import 'package:source_gen/source_gen.dart';
+
 import '../_analyzer_helpers.dart';
 
 class AnnotationReader<T> {
@@ -7,7 +9,7 @@ class AnnotationReader<T> {
   AnnotationReader.single(Element? element)
       : annotations = element?.findAnnotations<T>().toList() ?? const [] {
     if (annotations.length > 1) {
-      throw UnsupportedError('Too many annotations for $element');
+      throw InvalidGenerationSourceError('Too many annotations for $element');
     }
   }
 

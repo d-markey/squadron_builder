@@ -28,29 +28,28 @@ class SquadronParameter {
 
   static SquadronParameter from(ParameterElement param, bool isToken,
       Marshaler? marshaler, int serIdx, TypeManager typeManager) {
-    var name = param.name3;
+    var name = param.name;
 
-    if (name == null) {
+    if (name.isEmpty) {
       throw InvalidGenerationSourceError('Parameter name cannot be null '
-          'for ${param.enclosingElement2?.name3}.');
+          'for ${param.enclosingElt?.name}.');
     }
 
     var type = param.type;
     FieldElement? field;
     if (param is FieldFormalParameterElement) {
-      // ignore: deprecated_member_use
-      final fld = param.field2;
+      final fld = param.fldElt;
       if (fld != null) {
         field = fld;
-        type = field.type;
-        name = field.name3;
+        type = fld.type;
+        name = fld.name;
 
-        if (name == null) {
+        if (name.isEmpty) {
           throw InvalidGenerationSourceError('Parameter name cannot be null '
-              'for ${field.enclosingElement2.name3}.');
+              'for ${fld.enclosingElt?.name}.');
         }
 
-        while (name!.startsWith('_')) {
+        while (name.startsWith('_')) {
           name = name.substring((1));
         }
       }
@@ -89,8 +88,7 @@ class SquadronParameter {
   bool get mayBeNull =>
       (isOptional || (isNamed && required.isEmpty)) && defaultValue == null;
 
-  bool get isPublicField =>
-      field != null && field!.name3 != null && !field!.name3!.startsWith('_');
+  bool get isPublicField => field != null && !field!.name.startsWith('_');
 
   String argument() => isNamed ? '$name: $name' : name;
 

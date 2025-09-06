@@ -20,8 +20,7 @@ class SquadronServiceReader {
     this.js,
     this.wasm,
     this.baseUrl,
-  )   : assert(clazz.name3 != null, "Class name can't be null"),
-        name = clazz.name3!,
+  )   : name = clazz.name,
         isBase = clazz.isBase,
         parameters = SquadronParameters(_typeManager) {
     _load(clazz);
@@ -48,8 +47,8 @@ class SquadronServiceReader {
   final TypeManager _typeManager;
 
   void _load(ClassElement clazz) {
-    final name = clazz.name3;
-    if (name != null && name.startsWith('_')) {
+    final name = clazz.name;
+    if (name.startsWith('_')) {
       throw InvalidGenerationSourceError('Service classes must be public.');
     }
 
@@ -58,21 +57,21 @@ class SquadronServiceReader {
           'Worker service classes must be constructable.');
     }
 
-    final ctorElement = clazz.unnamedConstructor2;
+    final ctorElement = clazz.unnamedCtorElt;
 
     if (ctorElement == null) {
-      if (clazz.constructors2.isNotEmpty) {
-        log.warning('Missing unnamed constructor for ${clazz.name3}');
+      if (clazz.constructorElts.isNotEmpty) {
+        log.warning('Missing unnamed constructor for ${clazz.name}');
       }
     } else if (ctorElement.formalParameters.isNotEmpty) {
       for (var n = 0; n < ctorElement.formalParameters.length; n++) {
         final param = ctorElement.formalParameters[n];
 
         if (param is FieldFormalParameterElement) {
-          final fld = param.field2;
+          final fld = param.fldElt;
           if (fld != null) {
-            final name = fld.name3;
-            if (name != null && !name.startsWith('_')) {
+            final name = fld.name;
+            if (!name.startsWith('_')) {
               fields[name] = fld;
             }
           }
@@ -90,9 +89,11 @@ class SquadronServiceReader {
       }
     }
 
-    methods.addAll(clazz.methods2.where((m) => !m.isStatic));
-    accessors.addAll(clazz.getters2.where((a) => !a.isStatic && !fields.containsKey(a.property)));
-    accessors.addAll(clazz.setters2.where((a) => !a.isStatic && !fields.containsKey(a.property)));
+    methods.addAll(clazz.methodElts.where((m) => !m.isStatic));
+    accessors.addAll(clazz.getterElts
+        .where((a) => !a.isStatic && !fields.containsKey(a.property)));
+    accessors.addAll(clazz.setterElts
+        .where((a) => !a.isStatic && !fields.containsKey(a.property)));
   }
 
   static SquadronServiceReader? load(

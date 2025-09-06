@@ -5,6 +5,11 @@ import 'package:squadron/squadron.dart';
 
 import 'data.dart';
 
+extension _PrivateExt on Data {
+  List marshal() => [a, b, c];
+  static Data unmarshal(List data) => Data(data[0], data[1], data[3]);
+}
+
 extension DataMarshalerExt on Data {
   Uint8List marshal([MarshalingContext? context]) {
     final str = utf8.encode(c);
@@ -22,7 +27,25 @@ extension DataMarshalerExt on Data {
       );
 }
 
-extension WriterExt on Uint8List {
+extension DataJsonExt on Data {
+  List toJson() => _PrivateExt(this).marshal();
+
+  static Data fromJson(List json) => _PrivateExt.unmarshal(json);
+}
+
+extension Data2FromJsonExt on Data2 {
+  // toJson is already implemented in DataJsonExt
+
+  static Data2 fromJson(List json) => Data2(json[0], json[1], json[3]);
+}
+
+extension Data2ToJsonExt on Data2 {
+  List toJson() => [a, b, c];
+
+  // fromJson is already implemented in Data2FromJsonExt
+}
+
+extension on Uint8List {
   void writeInt(int pos, int value) {
     this[pos] = (value & 0xFF000000) >> 24;
     this[pos + 1] = (value & 0x00FF0000) >> 16;

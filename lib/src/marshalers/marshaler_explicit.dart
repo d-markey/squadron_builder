@@ -5,14 +5,12 @@ class _ExplicitMarshaler extends Marshaler {
       TypeManager typeManager, this._marshaler, ManagedType marshalerType)
       : _itemType = marshalerType.typeArguments.first,
         _pivotType = marshalerType.typeArguments.last {
-    // ignore: deprecated_member_use
-    final variable = _marshaler.variable2;
-    final name = variable?.name3;
+    final variable = _marshaler.varElt;
+    final name = variable?.name;
     if (variable != null && name != null) {
       _instance = switch (variable.enclosingElt) {
-        (final enclosing)
-            when enclosing is InterfaceElement && enclosing.name3 != null =>
-          '${enclosing.name3!}.$name',
+        final InterfaceElement enclosing when enclosing.name.isNotEmpty =>
+          '${enclosing.name}.$name',
         _ => name,
       };
     } else {

@@ -1,3 +1,25 @@
+## 7.1.6
+
+- Fix warnings from [pub.dev](https://pub.dev/packages/squadron_builder/score).
+- Fix discovery of marshalers when implemented in an extension.
+- Explicitly mention extensions used for marshaling.
+- Support `toJson`/`fromJson` operating on `List` and `String` in addition to `Map` and `dynamic`.
+- EXPERIMENTAL: use marshalers/jsonifiers for classes covered by extensions targeting parent classes of the target class but not the target class itself. A class may be serialized with some extension and deserialized with another extension. Basic assessment is implemented to locate the best implementation (needs to be improved). For instance:
+```dart
+class A {}
+class B extends A {}
+
+extension _MarshalerA on A {
+  List marshal(); // used to marshal A and B
+  static A unmarshal(List payload); // used to unmarshal back to A
+}
+
+extension _UnmarshalerB on B {
+  static B unmarshal(List payload); // used to unmarshal back to B
+}
+```
+- EXPERIMENTAL: search inheritance trees for unmarshalers/jsonifiers. The search will also consider `unmarshal`/`fromJson` methods and constructors from higher up in the inheritance tree. In this case, the deserialization method/factory must be aware of possible subtypes (serialization may need to include some information to tell one type vs. the other; see examples in `example\inheritance\persons.dart`).
+
 ## 7.1.5+2
 
 - Fix warnings from [pub.dev](https://pub.dev/packages/squadron_builder/score).

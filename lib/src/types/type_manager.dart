@@ -2,6 +2,7 @@ import 'package:source_gen/source_gen.dart';
 
 import '../_analyzer_helpers.dart';
 import '../marshalers/marshaler.dart';
+import '../marshalers/marshaler_inspector.dart';
 import 'managed_type.dart';
 
 part 'type_manager_imported_types.dart';
@@ -45,11 +46,7 @@ class TypeManager with _ImportedTypesMixin {
   bool _initialized = false;
 
   String getPrefixFor(Element? element) {
-    final lib = switch (element) {
-      LibraryElement() => element,
-      Element() => element.library2,
-      null => null,
-    };
+    final lib = element?.libElt;
     if (lib == null) return '';
     return library.getPrefixFor(lib.uri.toString()) ?? '';
   }
@@ -88,9 +85,7 @@ class TypeManager with _ImportedTypesMixin {
       obj.type?.isA(TSquadronMarshaler) ?? false;
 
   Marshaler? getExplicitMarshaler(Element? element) {
-    final marshaler =
-        // ignore: deprecated_member_use
-        element?.getAnnotations().where(_isMarshaler).firstOrNull;
+    final marshaler = element?.getAnnotations().where(_isMarshaler).firstOrNull;
     if (marshaler == null) return null;
     final type = marshaler.toTypeValue() ?? marshaler.type;
     final baseMarshaler = type?.implementedTypes(TSquadronMarshaler);

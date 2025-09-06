@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 7.1.6 (Squadron 7.1.2+1)
 // **************************************************************************
 
 import 'test_services.stub.g.dart'

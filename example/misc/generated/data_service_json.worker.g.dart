@@ -1,14 +1,17 @@
 // dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../data_service.dart';
+part of '../data_service_json.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 7.1.6 (Squadron 7.1.2+1)
 // **************************************************************************
 
 /// Command ids used in operations map
 const int _$doSomethingId = 1;
+const int _$doSomethingElseId = 2;
+const int _$processId = 3;
+const int _$processOtherId = 4;
 
 /// WorkerService operations for DataService
 extension on DataService {
@@ -19,7 +22,43 @@ extension on DataService {
             final $dsr = _$Deser(contextAware: false);
             $res = await doSomething($dsr.$0($req.args[0]));
           } finally {}
-          return $res;
+          try {
+            final $sr = _$Ser(contextAware: false);
+            return $sr.$0($res);
+          } finally {}
+        },
+        _$doSomethingElseId: ($req) async {
+          final Data2 $res;
+          try {
+            final $dsr = _$Deser(contextAware: false);
+            $res = await doSomethingElse($dsr.$1($req.args[0]));
+          } finally {}
+          try {
+            final $sr = _$Ser(contextAware: false);
+            return $sr.$1($res);
+          } finally {}
+        },
+        _$processId: ($req) async {
+          final Self $res;
+          try {
+            final $dsr = _$Deser(contextAware: false);
+            $res = await process($dsr.$2($req.args[0]));
+          } finally {}
+          try {
+            final $sr = _$Ser(contextAware: false);
+            return $sr.$2($res);
+          } finally {}
+        },
+        _$processOtherId: ($req) async {
+          final OtherSelf $res;
+          try {
+            final $dsr = _$Deser(contextAware: false);
+            $res = await processOther($dsr.$3($req.args[0]));
+          } finally {}
+          try {
+            final $sr = _$Ser(contextAware: false);
+            return $sr.$3($res);
+          } finally {}
         },
       });
 }
@@ -29,10 +68,53 @@ extension on DataService {
 mixin _$DataService$Invoker on Invoker implements DataService {
   @override
   Future<Data> doSomething(Data input) async {
-    final dynamic $res = await send(_$doSomethingId, args: [input]);
+    final dynamic $res;
+    try {
+      final $sr = _$Ser(contextAware: false);
+      $res = await send(_$doSomethingId, args: [$sr.$0(input)]);
+    } finally {}
     try {
       final $dsr = _$Deser(contextAware: false);
       return $dsr.$0($res);
+    } finally {}
+  }
+
+  @override
+  Future<Data2> doSomethingElse(Data2 input) async {
+    final dynamic $res;
+    try {
+      final $sr = _$Ser(contextAware: false);
+      $res = await send(_$doSomethingElseId, args: [$sr.$1(input)]);
+    } finally {}
+    try {
+      final $dsr = _$Deser(contextAware: false);
+      return $dsr.$1($res);
+    } finally {}
+  }
+
+  @override
+  Future<Self> process(Self input) async {
+    final dynamic $res;
+    try {
+      final $sr = _$Ser(contextAware: false);
+      $res = await send(_$processId, args: [$sr.$2(input)]);
+    } finally {}
+    try {
+      final $dsr = _$Deser(contextAware: false);
+      return $dsr.$2($res);
+    } finally {}
+  }
+
+  @override
+  Future<OtherSelf> processOther(OtherSelf input) async {
+    final dynamic $res;
+    try {
+      final $sr = _$Ser(contextAware: false);
+      $res = await send(_$processOtherId, args: [$sr.$3(input)]);
+    } finally {}
+    try {
+      final $dsr = _$Deser(contextAware: false);
+      return $dsr.$3($res);
     } finally {}
   }
 }
@@ -136,6 +218,16 @@ base class DataServiceWorker with Releasable implements _$DataServiceWorker {
 
   @override
   Future<Data> doSomething(Data input) => _$worker.doSomething(input);
+
+  @override
+  Future<Data2> doSomethingElse(Data2 input) => _$worker.doSomethingElse(input);
+
+  @override
+  Future<Self> process(Self input) => _$worker.process(input);
+
+  @override
+  Future<OtherSelf> processOther(OtherSelf input) =>
+      _$worker.processOther(input);
 
   @override
   ExceptionManager get exceptionManager => _$worker.exceptionManager;
@@ -249,6 +341,17 @@ base class _$DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
   @override
   Future<Data> doSomething(Data input) => execute((w) => w.doSomething(input));
 
+  @override
+  Future<Data2> doSomethingElse(Data2 input) =>
+      execute((w) => w.doSomethingElse(input));
+
+  @override
+  Future<Self> process(Self input) => execute((w) => w.process(input));
+
+  @override
+  Future<OtherSelf> processOther(OtherSelf input) =>
+      execute((w) => w.processOther(input));
+
   final _$detachToken = Object();
 }
 
@@ -320,6 +423,15 @@ base class DataServiceWorkerPool
 
   @override
   Future<Data> doSomething(Data input) => _$pool.doSomething(input);
+
+  @override
+  Future<Data2> doSomethingElse(Data2 input) => _$pool.doSomethingElse(input);
+
+  @override
+  Future<Self> process(Self input) => _$pool.process(input);
+
+  @override
+  Future<OtherSelf> processOther(OtherSelf input) => _$pool.processOther(input);
 
   @override
   ExceptionManager get exceptionManager => _$pool.exceptionManager;
@@ -407,5 +519,16 @@ base class DataServiceWorkerPool
 
 final class _$Deser extends MarshalingContext {
   _$Deser({super.contextAware});
-  late final $0 = value<Data>();
+  late final $0 = (($) => DataJsonExt.fromJson($));
+  late final $1 = (($) => Data2FromJsonExt.fromJson($));
+  late final $2 = (($) => Self.fromJson($));
+  late final $3 = (($) => OtherSelf.fromJson($));
+}
+
+final class _$Ser extends MarshalingContext {
+  _$Ser({super.contextAware});
+  late final $0 = (($) => DataJsonExt($ as Data).toJson());
+  late final $1 = (($) => Data2ToJsonExt($ as Data2).toJson());
+  late final $2 = (($) => ($ as Self).toJson());
+  late final $3 = (($) => ($ as OtherSelf).toJson());
 }

@@ -2,46 +2,52 @@ part of 'marshaler.dart';
 
 class _SelfMarshaler extends Marshaler {
   _SelfMarshaler(
-      this.typeName,
-      String? loaderTypeName,
-      this.pivotType,
+      this._typeName,
+      String? deserExt,
+      String? serExt,
       ParameterElement? marshalingContext,
-      ParameterElement? unmarshalingContext)
-      : loaderTypeName = loaderTypeName ?? typeName,
-        contextOut = _getContextArg(marshalingContext),
-        contextIn = _getContextArg(unmarshalingContext);
+      ParameterElement? unmarshalingContext,
+      this._forceCast)
+      : _deserExt = deserExt ?? _typeName,
+        _serExt = serExt ?? '',
+        _contextOut = _getContextArg(marshalingContext),
+        _contextIn = _getContextArg(unmarshalingContext);
 
   static String _getContextArg(ParameterElement? ctx) =>
-      (ctx == null || ctx.name3 == null)
+      (ctx == null || ctx.name.isEmpty)
           ? ''
-          : (ctx.isNamed ? '${ctx.name3!}: this' : 'this');
+          : (ctx.isNamed ? '${ctx.name}: this' : 'this');
 
-  final String typeName;
-  final String loaderTypeName;
+  final String _typeName;
+  final String _deserExt;
+  final String _serExt;
+  final bool _forceCast;
 
-  final String contextOut;
-  final String contextIn;
-  final ManagedType? pivotType;
+  final String _contextOut;
+  final String _contextIn;
 
   @override
-  bool targets(ManagedType type) => type.nonNullable.getTypeName() == typeName;
+  bool targets(ManagedType type) => type.nonNullable.getTypeName() == _typeName;
 
   @override
   DeSer? ser(MarshalingContext context, ManagedType? type) {
     if (type == null) return null;
     type.throwIfNullable();
-    final code = '(($Dollar) => ($Dollar as $typeName).marshal($contextOut))';
-    return DeSer(code, true, contextOut.isNotEmpty);
+    final code =
+        '(($Dollar) => $_serExt($Dollar as $_typeName).marshal($_contextOut))';
+    return DeSer(code, true, _contextOut.isNotEmpty);
   }
 
   @override
   DeSer? deser(MarshalingContext context, ManagedType? type) {
     if (type == null) return null;
     type.throwIfNullable();
-    final convert = context.deser(pivotType);
-    var args = (convert == null) ? Dollar : '${convert.code}($Dollar)';
-    if (contextIn.isNotEmpty) args += ', $contextIn';
-    final code = '(($Dollar) => $loaderTypeName.unmarshal($args))';
-    return DeSer(code, true, contextIn.isNotEmpty || convert.contextAware);
+    final args = _contextIn.isEmpty ? Dollar : '$Dollar, $_contextIn';
+    var cast = '';
+    if (_forceCast && _deserExt != _typeName) {
+      cast = ' as $_typeName';
+    }
+    final code = '(($Dollar) => $_deserExt.unmarshal($args)$cast)';
+    return DeSer(code, true, _contextIn.isNotEmpty);
   }
 }

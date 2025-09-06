@@ -2,12 +2,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 7.1.6 (Squadron 7.1.2+1)
 // **************************************************************************
 
 import 'package:squadron/squadron.dart';
 
-import '../data_service.dart';
+import '../data_service_marshaler.dart';
 
 void main() {
   /// Web entry point for DataService
@@ -16,9 +16,11 @@ void main() {
 
 EntryPoint $getDataServiceActivator(SquadronPlatformType platform) {
   if (platform.isJs) {
-    return Squadron.uri('example/misc/generated/data_service.web.g.dart.js');
+    return Squadron.uri(
+        'example/misc/generated/data_service_marshaler.web.g.dart.js');
   } else if (platform.isWasm) {
-    return Squadron.uri('example/misc/generated/data_service.web.g.dart.wasm');
+    return Squadron.uri(
+        'example/misc/generated/data_service_marshaler.web.g.dart.wasm');
   } else {
     throw UnsupportedError('${platform.label} not supported.');
   }

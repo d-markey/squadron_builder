@@ -21,15 +21,17 @@ abstract class Marshaler {
 
   static Marshaler self(
           String typeName,
-          String? loaderTypeName,
-          ManagedType? pivotType,
+          String? deserExt,
+          String? serExt,
           ParameterElement? marshalingContext,
-          ParameterElement? unmarshalingContext) =>
-      _SelfMarshaler(typeName, loaderTypeName, pivotType, marshalingContext,
-          unmarshalingContext);
+          ParameterElement? unmarshalingContext,
+          bool forceCast) =>
+      _SelfMarshaler(typeName, deserExt, serExt, marshalingContext,
+          unmarshalingContext, forceCast);
 
-  static Marshaler json(String typeName, String? loaderTypeName) =>
-      _JsonMarshaler(typeName, loaderTypeName);
+  static Marshaler json(
+          String typeName, String? deserExt, String? serExt, bool forceCast) =>
+      _JsonMarshaler(typeName, deserExt, serExt, forceCast);
 
   static Marshaler explicit(TypeManager typeManager, DartObject marshaler,
           ManagedType marshalerType) =>

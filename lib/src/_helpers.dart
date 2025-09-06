@@ -23,8 +23,6 @@ class TypeFilter {
 
   bool _isMatch(DartType type) => (type == target.dartType);
 
-  bool Function(DartType) _isImportMatch(ImportedType target) {
-    final pckUri = target.pckUri, baseName = target.baseName;
-    return (type) => (type.isFromPackage(pckUri) && type.baseName == baseName);
-  }
+  bool Function(DartType) _isImportMatch(ImportedType target) =>
+      (t) => (t.isFromPackage(target.pckUri) && t.baseName == target.baseName);
 }

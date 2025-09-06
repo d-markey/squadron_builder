@@ -58,10 +58,10 @@ class SquadronParameters {
     if (_cancelationToken != null) {
       throw InvalidGenerationSourceError(
           'Multiple cancelation tokens may not be passed to service methods '
-          '($_cancelationToken, ${param.name3}). You should use a '
+          '($_cancelationToken, ${param.name}). You should use a '
           'CompositeCancelationToken instead.');
     } else {
-      _cancelationToken = param.name3;
+      _cancelationToken = param.name;
       return true;
     }
   }

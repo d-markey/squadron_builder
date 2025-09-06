@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:source_gen/source_gen.dart';
+
 import '../_analyzer_helpers.dart';
 import '../_helpers.dart';
 import '../marshalers/deser.dart';
@@ -13,7 +15,6 @@ part 'managed_type_iterable.dart';
 part 'managed_type_map.dart';
 part 'managed_type_record.dart';
 part 'managed_type_set.dart';
-part 'marshaler_inspector.dart';
 
 typedef MarshalerBuilder = Marshaler Function(ManagedType);
 
@@ -100,9 +101,9 @@ abstract class ManagedType with ManagedTypeMixin {
         return '${px}dynamic';
       }
       final a = typeArguments.isEmpty ? '' : '<${typeArguments.join(', ')}>';
-      return '$px${dartType!.elt!.name3!}$a${nullabilitySuffix.suffix}';
+      return '$px${dartType!.elt!.name}$a${nullabilitySuffix.suffix}';
     } catch (ex) {
-      throw Exception(
+      throw InvalidGenerationSourceError(
           'Error for dartType = $dartType / element = ${dartType?.elt}');
     }
   }
@@ -129,6 +130,6 @@ mixin ManagedTypeMixin {
       isDynamic || (nullabilitySuffix != NullabilitySuffix.none);
 
   void throwIfNullable() {
-    if (isNullable) throw UnsupportedError('Unexpected nullable');
+    if (isNullable) throw InvalidGenerationSourceError('Unexpected nullable');
   }
 }

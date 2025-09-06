@@ -2,21 +2,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.5-mki (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 7.1.6 (Squadron 7.1.2+1)
 // **************************************************************************
 
 import 'package:squadron/squadron.dart';
 
-import '../data_service.dart';
+import '../person_service.dart';
 
-void _start$DataService(WorkerRequest command) {
-  /// VM entry point for DataService
-  run($DataServiceInitializer, command);
+void _start$PersonService(WorkerRequest command) {
+  /// VM entry point for PersonService
+  run($PersonServiceInitializer, command);
 }
 
-EntryPoint $getDataServiceActivator(SquadronPlatformType platform) {
+EntryPoint $getPersonServiceActivator(SquadronPlatformType platform) {
   if (platform.isVm) {
-    return _start$DataService;
+    return _start$PersonService;
   } else {
     throw UnsupportedError('${platform.label} not supported.');
   }

@@ -76,12 +76,12 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
     final classElt = element;
     if (classElt is! ClassElement) return;
 
-    final libraryName = classElt.library2.name3;
-    if (libraryName == null) return;
+    final libraryName = classElt.libElt?.path;
 
     final context = _contexts[buildStep];
     if (context == null) {
-      throw StateError('Missing GeneratorContext for $buildStep');
+      throw InvalidGenerationSourceError(
+          'Missing GeneratorContext for $buildStep ($libraryName)');
     }
     context.typeManager.ensureInitialized();
     context.marshalingContext.ensureInitialized(context.typeManager);
@@ -98,7 +98,7 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
       ]);
       if (missingImports.isNotEmpty) {
         log.warning(
-          'To generate finalizable workers, your library is missing the following imports: ${missingImports.join(', ')}',
+          'Generation of finalizable workers in library "$libraryName" requires the following imports: ${missingImports.join(', ')}',
         );
       }
     }
