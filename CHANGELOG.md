@@ -1,7 +1,7 @@
 ## 7.1.6
 
 - Fix warnings from [pub.dev](https://pub.dev/packages/squadron_builder/score).
-- Fix discovery of marshalers when implemented in an extension.
+- Fix discovery of marshalers implemented in extensions.
 - Explicitly mention extensions used for marshaling.
 - Support `toJson`/`fromJson` operating on `List` and `String` in addition to `Map` and `dynamic`.
 - EXPERIMENTAL: use marshalers/jsonifiers for classes covered by extensions targeting parent classes of the target class but not the target class itself. A class may be serialized with some extension and deserialized with another extension. Basic assessment is implemented to locate the best implementation (needs to be improved). For instance:
