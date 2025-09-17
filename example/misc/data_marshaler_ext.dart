@@ -5,6 +5,8 @@ import 'package:squadron/squadron.dart';
 
 import 'data.dart';
 
+export 'data.dart'; // testing cyclical imports/exports
+
 extension _PrivateExt on Data {
   List marshal() => [a, b, c];
   static Data unmarshal(List data) => Data(data[0], data[1], data[3]);

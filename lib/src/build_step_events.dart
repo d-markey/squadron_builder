@@ -63,7 +63,7 @@ class BuildStepCodeEvent extends BuildStepEvent {
         'Library "$_libraryName" defines multiple services including some targetting Web platforms. '
         'This will not work in production as each Web Worker needs its own URL and its own communication channel. '
         'Web workers services must be implemented in separate libraries. '
-        'If necessary, code generation for Web platforms can be turned off with @SquadronService(targetPlatform: TargetPlatform.vm).',
+        'If support for Web platforms is not required, code generation for Web platforms can be turned off with @SquadronService(targetPlatform: TargetPlatform.vm).',
       );
     }
   }

@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'dart:io';
 
 import 'package:source_gen/source_gen.dart';
 
@@ -322,7 +321,6 @@ class _MarshalerInspector extends SimpleElementVisitor
         _unmarshalingContext =
             _getMarshalingContextParam(decl.formalParameters, 1);
         returnType = callable.returnType;
-        stdout.writeln('!!! $callable -> returnType=$returnType');
       default:
         // unsupported
         return null;

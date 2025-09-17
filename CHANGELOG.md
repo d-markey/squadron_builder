@@ -1,5 +1,9 @@
 ## 7.1.6
 
+- Fix extension lookup in case of cyclical imports/exports -- fixes https://github.com/d-markey/squadron_builder/issues/37.
+
+## 7.1.6
+
 - Fix warnings from [pub.dev](https://pub.dev/packages/squadron_builder/score).
 - Fix discovery of marshalers implemented in extensions.
 - Explicitly mention extensions used for marshaling.
@@ -115,7 +119,7 @@ extension _UnmarshalerB on B {
 ## 6.0.4
 
 - Update managed type cache asap in `handleDartType()` (fixes a stack overflow exception).
-- Read value of boolean flags in annotations -- fixes https://github.com/d-markey/squadron/issues/44 
+- Read value of boolean flags in annotations -- fixes https://github.com/d-markey/squadron/issues/44.
 
 ## 6.0.3
 
@@ -128,13 +132,13 @@ extension _UnmarshalerB on B {
 
 ## 6.0.1
 
-- Do not initialize the type manager before a Squadron annotation is effectively found -- fixes https://github.com/d-markey/squadron/issues/40
+- Do not initialize the type manager before a Squadron annotation is effectively found -- fixes https://github.com/d-markey/squadron/issues/40.
 
 ## 6.0.0
 
 - squadron_builder for Squadron version >= 6.0. Please note there are no versions 3.x-5.x in order to align squadron_builder version numbers with that of Squadron.
 - Removed support for 'useLogger' and 'SerializeWith' annotations.
-- Added support for libraries imported with a prefix -- fixes https://github.com/d-markey/squadron_builder/issues/14
+- Added support for libraries imported with a prefix -- fixes https://github.com/d-markey/squadron_builder/issues/14.
 - Added support for record types.
 
 ## 3.x-5.x

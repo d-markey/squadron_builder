@@ -150,27 +150,29 @@ extension LibraryElementExt on LibraryElement {
     return p;
   }
 
-  Iterable<element_.LibraryImport> get allImports => fragments
+  Set<element_.LibraryImport> get allImports => fragments
       .expand((f) =>
           [...f.libraryImports2, ...?f.enclosingFragment?.libraryImports2])
       .toSet();
 
-  Iterable<element_.LibraryExport> get allExports => fragments
+  Set<element_.LibraryExport> get allExports => fragments
       .expand((f) =>
           [...f.libraryExports2, ...?f.enclosingFragment?.libraryExports2])
       .toSet();
 
-  static Iterable<ExtensionElement> _filter(
-      type_.DartType type,
-      Iterable<ExtensionElement> extensions,
-      List<String> show,
-      List<String> hide) sync* {
+  static Iterable<ExtensionElement> _filterExtensionsFor(
+    type_.DartType type,
+    Iterable<ExtensionElement> extensions, [
+    List<String>? show,
+    List<String>? hide,
+  ]) sync* {
+    show ??= const [];
+    hide ??= const [];
     for (var ext in extensions) {
       // get extension name, default to '_' (private)
       final name = ext.name.isEmpty ? '_' : ext.name;
       // ignore private, hidden extensions and extensions not targeting the required type
-      if (name.startsWith('_')) continue;
-      if (hide.contains(name)) continue;
+      if (name.startsWith('_') || hide.contains(name)) continue;
       if (!type.inheritsFrom(ext.extendedType, superOnly: false)) {
         continue;
       }
@@ -179,53 +181,77 @@ extension LibraryElementExt on LibraryElement {
     }
   }
 
-  Iterable<ExtensionElement> _lookupExtensionsFor(type_.DartType type,
-      {required bool exports,
-      List<String> show = const [],
-      List<String> hide = const []}) sync* {
-    yield* _filter(type, extensions, show, hide);
+  static String _seenKey(
+          LibraryElement lib, List<String> show, List<String> hide) =>
+      '${lib.uri} / ${hide.join(',')} / ${show.join(',')}';
 
-    if (exports) {
-      for (var export in allExports) {
-        yield* _filter(
-            type,
-            export.exportedLibrary2?._lookupExtensionsFor(type,
-                    exports: true,
-                    show: export.combinators
-                        .whereType<element_.ShowElementCombinator>()
-                        .expand((s) => s.shownNames)
-                        .toList(),
-                    hide: export.combinators
-                        .whereType<element_.HideElementCombinator>()
-                        .expand((s) => s.hiddenNames)
-                        .toList()) ??
-                const [],
-            show,
-            hide);
-      }
-    } else {
-      for (var import in allImports) {
-        yield* _filter(
-            type,
-            import.importedLibrary2?._lookupExtensionsFor(type,
-                    exports: true,
-                    show: import.combinators
-                        .whereType<element_.ShowElementCombinator>()
-                        .expand((s) => s.shownNames)
-                        .toList(),
-                    hide: import.combinators
-                        .whereType<element_.HideElementCombinator>()
-                        .expand((s) => s.hiddenNames)
-                        .toList()) ??
-                const [],
-            show,
-            hide);
-      }
+  Iterable<ExtensionElement> _lookupExportedExtensionsFor(
+    type_.DartType type,
+    Set<String> visited,
+    List<String> show,
+    List<String> hide,
+  ) sync* {
+    if (!visited.add(_seenKey(this, show, hide))) return;
+
+    yield* _filterExtensionsFor(type, extensions, show, hide);
+
+    for (var export in allExports) {
+      final lib = export.exportedLibrary2;
+      if (lib == null) continue;
+      yield* _filterExtensionsFor(
+        type,
+        lib._lookupExportedExtensionsFor(type, visited,
+            export.combinators.shownNames, export.combinators.hiddenNames),
+        show,
+        hide,
+      );
     }
   }
 
-  List<ExtensionElement> lookupExtensionsFor(type_.DartType type) =>
-      _lookupExtensionsFor(type, exports: false).toList();
+  /// Returns all public extensions that can be applied to the specified [type]
+  /// from this library. Extensions are searched in the current library and in
+  /// the libraries imported from this library. If an imported library exports
+  /// additional libraries, the exported libraries are inspected recursively.
+  ///
+  /// Eg.:
+  ///
+  /// ```dart
+  /// // lib A.dart
+  /// import 'B.dart';
+  /// extension A on TargetType { ... }
+  ///
+  /// // lib B.dart
+  /// import 'C.dart';
+  /// export 'D.dart';
+  /// extension B on TargetType { ... }
+  ///
+  /// // lib C.dart
+  /// extension C on TargetType { ... }
+  ///
+  /// // lib D.dart
+  /// extension D on TargetType { ... }
+  /// ```
+  ///
+  /// Searching for extensions on `TargetType` from library `A.dart` will
+  /// yield extensions `A`, `B` and `D`.
+  Iterable<ExtensionElement> _lookupExtensionsFor(type_.DartType type) sync* {
+    final visited = {_seenKey(this, const [], const [])};
+
+    yield* _filterExtensionsFor(type, extensions);
+
+    for (var import in allImports) {
+      final lib = import.importedLibrary2;
+      if (lib == null) continue;
+      yield* _filterExtensionsFor(
+        type,
+        lib._lookupExportedExtensionsFor(type, visited,
+            import.combinators.shownNames, import.combinators.hiddenNames),
+      );
+    }
+  }
+
+  Set<ExtensionElement> lookupExtensionsFor(type_.DartType type) =>
+      _lookupExtensionsFor(type).toSet();
 
   Map<LibraryElement, String?> get _allImportPrefixes {
     final map = <LibraryElement, String>{};
@@ -346,4 +372,14 @@ extension NullabilitySuffixExt on nullable_.NullabilitySuffix {
 extension on element_.ElementLocation {
   bool _isFromPackage(String pckUri) =>
       components.any((c) => c.startsWith(pckUri));
+}
+
+extension on List<element_.NamespaceCombinator> {
+  List<String> get shownNames => whereType<element_.ShowElementCombinator>()
+      .expand((s) => s.shownNames)
+      .toList();
+
+  List<String> get hiddenNames => whereType<element_.HideElementCombinator>()
+      .expand((s) => s.hiddenNames)
+      .toList();
 }
