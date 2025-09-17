@@ -1,4 +1,4 @@
-## 7.1.6
+## 7.1.7
 
 - Fix extension lookup in case of cyclical imports/exports -- fixes https://github.com/d-markey/squadron_builder/issues/37.
 
