@@ -1,10 +1,10 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of '../some_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.6 (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 8.0.0 (Squadron 7.1.2+1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -14,9 +14,9 @@ const int _$getThreadIdFromLocalId = 2;
 /// WorkerService operations for SomeService
 extension on SomeService {
   OperationsMap _$getOperations() => OperationsMap({
-        _$getThreadIdId: ($req) => getThreadId(),
-        _$getThreadIdFromLocalId: ($req) => getThreadIdFromLocal(),
-      });
+    _$getThreadIdId: ($req) => getThreadId(),
+    _$getThreadIdFromLocalId: ($req) => getThreadIdFromLocal(),
+  });
 }
 
 /// Invoker for SomeService, implements the public interface to invoke the
@@ -57,30 +57,38 @@ class _$SomeService$WorkerService extends SomeService implements WorkerService {
 WorkerService $SomeServiceInitializer(WorkerRequest $req) {
   final $dsr = _$Deser(contextAware: false);
   return _$SomeService$WorkerService(
-      threadIdService: ($req.args[0] == null)
-          ? null
-          : id.$LocalThreadIdentityServiceClient($dsr.$1($req.args[0])));
+    threadIdService:
+        ($req.args[0] == null)
+            ? null
+            : id.$LocalThreadIdentityServiceClient($dsr.$1($req.args[0])),
+  );
 }
 
 /// Worker for SomeService
 base class _$SomeServiceWorker extends Worker
     with _$SomeService$Invoker, _$SomeService$Facade
     implements SomeService {
-  _$SomeServiceWorker(
-      {this.threadIdService,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager})
-      : _$startReq = [threadIdService],
-        super($SomeServiceActivator(Squadron.platformType),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$SomeServiceWorker({
+    this.threadIdService,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : _$startReq = [threadIdService],
+       super(
+         $SomeServiceActivator(Squadron.platformType),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
-  _$SomeServiceWorker.vm(
-      {this.threadIdService,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager})
-      : _$startReq = [threadIdService],
-        super($SomeServiceActivator(SquadronPlatformType.vm),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$SomeServiceWorker.vm({
+    this.threadIdService,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : _$startReq = [threadIdService],
+       super(
+         $SomeServiceActivator(SquadronPlatformType.vm),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
   final _$localWorkers = <LocalWorker?>[null];
   final List _$startReq;
@@ -115,23 +123,29 @@ base class SomeServiceWorker with Releasable implements _$SomeServiceWorker {
     _finalizer.attach(this, _$worker, detach: _$worker._$detachToken);
   }
 
-  SomeServiceWorker(
-      {id.ThreadIdentityService? threadIdService,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager})
-      : this._(_$SomeServiceWorker(
-            threadIdService: threadIdService,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
+  SomeServiceWorker({
+    id.ThreadIdentityService? threadIdService,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : this._(
+         _$SomeServiceWorker(
+           threadIdService: threadIdService,
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
-  SomeServiceWorker.vm(
-      {id.ThreadIdentityService? threadIdService,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager})
-      : this._(_$SomeServiceWorker.vm(
-            threadIdService: threadIdService,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
+  SomeServiceWorker.vm({
+    id.ThreadIdentityService? threadIdService,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : this._(
+         _$SomeServiceWorker.vm(
+           threadIdService: threadIdService,
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
   @override
   id.ThreadIdentityService? get threadIdService => _$worker.threadIdService;
@@ -140,13 +154,13 @@ base class SomeServiceWorker with Releasable implements _$SomeServiceWorker {
 
   static final Finalizer<_$SomeServiceWorker> _finalizer =
       Finalizer<_$SomeServiceWorker>((w) {
-    try {
-      _finalizer.detach(w._$detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
+        try {
+          _finalizer.detach(w._$detachToken);
+          w.release();
+        } catch (_) {
+          // finalizers must not throw
+        }
+      });
 
   @override
   void release() {
@@ -189,7 +203,7 @@ base class SomeServiceWorker with Releasable implements _$SomeServiceWorker {
   bool get isStopped => _$worker.isStopped;
 
   @override
-// ignore: deprecated_member_use
+  // ignore: deprecated_member_use
   WorkerStat get stats => _$worker.stats;
 
   @override
@@ -208,28 +222,34 @@ base class SomeServiceWorker with Releasable implements _$SomeServiceWorker {
   Channel? getSharedChannel() => _$worker.getSharedChannel();
 
   @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
+  Future<dynamic> send(
+    int command, {
+    List args = const [],
+    CancelationToken? token,
+    bool inspectRequest = false,
+    bool inspectResponse = false,
+  }) => _$worker.send(
+    command,
+    args: args,
+    token: token,
+    inspectRequest: inspectRequest,
+    inspectResponse: inspectResponse,
+  );
 
   @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
+  Stream<dynamic> stream(
+    int command, {
+    List args = const [],
+    CancelationToken? token,
+    bool inspectRequest = false,
+    bool inspectResponse = false,
+  }) => _$worker.stream(
+    command,
+    args: args,
+    token: token,
+    inspectRequest: inspectRequest,
+    inspectResponse: inspectResponse,
+  );
 
   @override
   Object get _$detachToken => _$worker._$detachToken;
@@ -242,31 +262,35 @@ base class SomeServiceWorker with Releasable implements _$SomeServiceWorker {
 base class _$SomeServiceWorkerPool extends WorkerPool<SomeServiceWorker>
     with _$SomeService$Facade
     implements SomeService {
-  _$SomeServiceWorkerPool(
-      {this.threadIdService,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : super(
-            (ExceptionManager exceptionManager) => SomeServiceWorker(
-                threadIdService: threadIdService,
-                threadHook: threadHook,
-                exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$SomeServiceWorkerPool({
+    this.threadIdService,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (ExceptionManager exceptionManager) => SomeServiceWorker(
+           threadIdService: threadIdService,
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
-  _$SomeServiceWorkerPool.vm(
-      {this.threadIdService,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : super(
-            (ExceptionManager exceptionManager) => SomeServiceWorker.vm(
-                threadIdService: threadIdService,
-                threadHook: threadHook,
-                exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$SomeServiceWorkerPool.vm({
+    this.threadIdService,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (ExceptionManager exceptionManager) => SomeServiceWorker.vm(
+           threadIdService: threadIdService,
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
   @override
   final id.ThreadIdentityService? threadIdService;
@@ -289,27 +313,33 @@ base class SomeServiceWorkerPool
     _finalizer.attach(this, _$pool, detach: _$pool._$detachToken);
   }
 
-  SomeServiceWorkerPool(
-      {id.ThreadIdentityService? threadIdService,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : this._(_$SomeServiceWorkerPool(
-            threadIdService: threadIdService,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  SomeServiceWorkerPool({
+    id.ThreadIdentityService? threadIdService,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$SomeServiceWorkerPool(
+           threadIdService: threadIdService,
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
-  SomeServiceWorkerPool.vm(
-      {id.ThreadIdentityService? threadIdService,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : this._(_$SomeServiceWorkerPool.vm(
-            threadIdService: threadIdService,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  SomeServiceWorkerPool.vm({
+    id.ThreadIdentityService? threadIdService,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$SomeServiceWorkerPool.vm(
+           threadIdService: threadIdService,
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
   @override
   id.ThreadIdentityService? get threadIdService => _$pool.threadIdService;
@@ -318,13 +348,13 @@ base class SomeServiceWorkerPool
 
   static final Finalizer<_$SomeServiceWorkerPool> _finalizer =
       Finalizer<_$SomeServiceWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._$detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
+        try {
+          _finalizer.detach(p._$detachToken);
+          p.release();
+        } catch (_) {
+          // finalizers must not throw
+        }
+      });
 
   @override
   void release() {
@@ -393,31 +423,34 @@ base class SomeServiceWorkerPool
       _$pool.registerWorkerPoolListener(listener);
 
   @override
-  void unregisterWorkerPoolListener(
-          {void Function(WorkerStat, bool)? listener, Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
+  void unregisterWorkerPoolListener({
+    void Function(WorkerStat, bool)? listener,
+    Object? token,
+  }) => _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
-  Future<T> execute<T>(Future<T> Function(SomeServiceWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
+  Future<T> execute<T>(
+    Future<T> Function(SomeServiceWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.execute<T>(task, counter: counter);
 
   @override
-  Stream<T> stream<T>(Stream<T> Function(SomeServiceWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
+  Stream<T> stream<T>(
+    Stream<T> Function(SomeServiceWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.stream<T>(task, counter: counter);
 
   @override
   StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(SomeServiceWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
+    Stream<T> Function(SomeServiceWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.scheduleStreamTask<T>(task, counter: counter);
 
   @override
   ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(SomeServiceWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
+    Future<T> Function(SomeServiceWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.scheduleValueTask<T>(task, counter: counter);
 
   @override
   Object get _$detachToken => _$pool._$detachToken;

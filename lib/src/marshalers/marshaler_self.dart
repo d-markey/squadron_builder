@@ -5,18 +5,20 @@ class _SelfMarshaler extends Marshaler {
       this._typeName,
       String? deserExt,
       String? serExt,
-      ParameterElement? marshalingContext,
-      ParameterElement? unmarshalingContext,
+      FormalParameterElement? marshalingContext,
+      FormalParameterElement? unmarshalingContext,
       this._forceCast)
       : _deserExt = deserExt ?? _typeName,
         _serExt = serExt ?? '',
         _contextOut = _getContextArg(marshalingContext),
         _contextIn = _getContextArg(unmarshalingContext);
 
-  static String _getContextArg(ParameterElement? ctx) =>
-      (ctx == null || ctx.name.isEmpty)
+  static String _getContextArg(FormalParameterElement? ctx) {
+    final name = ctx?.name ?? '';
+    return (name.isEmpty)
           ? ''
-          : (ctx.isNamed ? '${ctx.name}: this' : 'this');
+        : ((ctx?.isNamed ?? false) ? '$name: this' : 'this');
+  }
 
   final String _typeName;
   final String _deserExt;

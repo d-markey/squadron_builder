@@ -1,10 +1,10 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of '../fibonacci_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.6 (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 8.0.0 (Squadron 7.1.2+1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -17,57 +17,66 @@ const int _$fibonacciStreamId = 5;
 /// WorkerService operations for FibonacciService
 extension on FibonacciService {
   OperationsMap _$getOperations() => OperationsMap({
-        _$fibonacciId: ($req) async {
-          final int? $res;
-          try {
-            final $dsr = _$Deser(contextAware: false);
-            $res = await fibonacci($dsr.$0($req.args[0]));
-          } finally {}
-          return $res;
-        },
-        _$fibonacciList0Id: ($req) async {
-          final Iterable<int>? $res;
-          try {
-            final $dsr = _$Deser(contextAware: false);
-            $res = await fibonacciList0(
-                $dsr.$0($req.args[0]), $dsr.$0($req.args[1]));
-          } finally {}
-          return $res;
-        },
-        _$fibonacciList1Id: ($req) async {
-          final List<int> $res;
-          try {
-            final $dsr = _$Deser(contextAware: false);
-            $res = await fibonacciList1(
-                $dsr.$0($req.args[0]), $dsr.$0($req.args[1]));
-          } finally {}
-          try {
-            final $sr = _$Ser(contextAware: true);
-            return $sr.$0($res);
-          } finally {}
-        },
-        _$fibonacciList2Id: ($req) async {
-          final List<int> $res;
-          try {
-            final $dsr = _$Deser(contextAware: true);
-            $res = await fibonacciList2(
-                $dsr.$0($req.args[0]), $dsr.$0($req.args[1]));
-          } finally {}
-          try {
-            final $sr = _$Ser(contextAware: true);
-            return $sr.$1($res);
-          } finally {}
-        },
-        _$fibonacciStreamId: ($req) {
-          final Stream<int> $res;
-          try {
-            final $dsr = _$Deser(contextAware: false);
-            $res = fibonacciStream($dsr.$0($req.args[0]),
-                end: $dsr.$1($req.args[1]), token: $req.cancelToken);
-          } finally {}
-          return $res;
-        },
-      });
+    _$fibonacciId: ($req) async {
+      final int? $res;
+      try {
+        final $dsr = _$Deser(contextAware: false);
+        $res = await fibonacci($dsr.$0($req.args[0]));
+      } finally {}
+      return $res;
+    },
+    _$fibonacciList0Id: ($req) async {
+      final Iterable<int>? $res;
+      try {
+        final $dsr = _$Deser(contextAware: false);
+        $res = await fibonacciList0(
+          $dsr.$0($req.args[0]),
+          $dsr.$0($req.args[1]),
+        );
+      } finally {}
+      return $res;
+    },
+    _$fibonacciList1Id: ($req) async {
+      final List<int> $res;
+      try {
+        final $dsr = _$Deser(contextAware: false);
+        $res = await fibonacciList1(
+          $dsr.$0($req.args[0]),
+          $dsr.$0($req.args[1]),
+        );
+      } finally {}
+      try {
+        final $sr = _$Ser(contextAware: true);
+        return $sr.$0($res);
+      } finally {}
+    },
+    _$fibonacciList2Id: ($req) async {
+      final List<int> $res;
+      try {
+        final $dsr = _$Deser(contextAware: true);
+        $res = await fibonacciList2(
+          $dsr.$0($req.args[0]),
+          $dsr.$0($req.args[1]),
+        );
+      } finally {}
+      try {
+        final $sr = _$Ser(contextAware: true);
+        return $sr.$1($res);
+      } finally {}
+    },
+    _$fibonacciStreamId: ($req) {
+      final Stream<int> $res;
+      try {
+        final $dsr = _$Deser(contextAware: false);
+        $res = fibonacciStream(
+          $dsr.$0($req.args[0]),
+          end: $dsr.$1($req.args[1]),
+          token: $req.cancelToken,
+        );
+      } finally {}
+      return $res;
+    },
+  });
 }
 
 /// Invoker for FibonacciService, implements the public interface to invoke the
@@ -111,8 +120,11 @@ mixin _$FibonacciService$Invoker on Invoker implements FibonacciService {
 
   @override
   Stream<int> fibonacciStream(int start, {int? end, CancelationToken? token}) {
-    final Stream $res =
-        stream(_$fibonacciStreamId, args: [start, end], token: token);
+    final Stream $res = stream(
+      _$fibonacciStreamId,
+      args: [start, end],
+      token: token,
+    );
     try {
       final $dsr = _$Deser(contextAware: false);
       return $res.map($dsr.$0);
@@ -147,21 +159,27 @@ WorkerService $FibonacciServiceInitializer(WorkerRequest $req) {
 base class _$FibonacciServiceWorker extends Worker
     with _$FibonacciService$Invoker, _$FibonacciService$Facade
     implements FibonacciService {
-  _$FibonacciServiceWorker(
-      {bool trace = false,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager})
-      : _$startReq = [trace],
-        super($FibonacciServiceActivator(Squadron.platformType),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$FibonacciServiceWorker({
+    bool trace = false,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : _$startReq = [trace],
+       super(
+         $FibonacciServiceActivator(Squadron.platformType),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
-  _$FibonacciServiceWorker.vm(
-      {bool trace = false,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager})
-      : _$startReq = [trace],
-        super($FibonacciServiceActivator(SquadronPlatformType.vm),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$FibonacciServiceWorker.vm({
+    bool trace = false,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : _$startReq = [trace],
+       super(
+         $FibonacciServiceActivator(SquadronPlatformType.vm),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
   final List _$startReq;
 
@@ -179,35 +197,41 @@ base class FibonacciServiceWorker
     _finalizer.attach(this, _$worker, detach: _$worker._$detachToken);
   }
 
-  FibonacciServiceWorker(
-      {bool trace = false,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager})
-      : this._(_$FibonacciServiceWorker(
-            trace: trace,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
+  FibonacciServiceWorker({
+    bool trace = false,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : this._(
+         _$FibonacciServiceWorker(
+           trace: trace,
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
-  FibonacciServiceWorker.vm(
-      {bool trace = false,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager})
-      : this._(_$FibonacciServiceWorker.vm(
-            trace: trace,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager));
+  FibonacciServiceWorker.vm({
+    bool trace = false,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : this._(
+         _$FibonacciServiceWorker.vm(
+           trace: trace,
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
   final _$FibonacciServiceWorker _$worker;
 
   static final Finalizer<_$FibonacciServiceWorker> _finalizer =
       Finalizer<_$FibonacciServiceWorker>((w) {
-    try {
-      _finalizer.detach(w._$detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
+        try {
+          _finalizer.detach(w._$detachToken);
+          w.release();
+        } catch (_) {
+          // finalizers must not throw
+        }
+      });
 
   @override
   void release() {
@@ -263,7 +287,7 @@ base class FibonacciServiceWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-// ignore: deprecated_member_use
+  // ignore: deprecated_member_use
   WorkerStat get stats => _$worker.stats;
 
   @override
@@ -282,28 +306,34 @@ base class FibonacciServiceWorker
   Channel? getSharedChannel() => _$worker.getSharedChannel();
 
   @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
+  Future<dynamic> send(
+    int command, {
+    List args = const [],
+    CancelationToken? token,
+    bool inspectRequest = false,
+    bool inspectResponse = false,
+  }) => _$worker.send(
+    command,
+    args: args,
+    token: token,
+    inspectRequest: inspectRequest,
+    inspectResponse: inspectResponse,
+  );
 
   @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
+  Stream<dynamic> stream(
+    int command, {
+    List args = const [],
+    CancelationToken? token,
+    bool inspectRequest = false,
+    bool inspectResponse = false,
+  }) => _$worker.stream(
+    command,
+    args: args,
+    token: token,
+    inspectRequest: inspectRequest,
+    inspectResponse: inspectResponse,
+  );
 
   @override
   Object get _$detachToken => _$worker._$detachToken;
@@ -317,31 +347,35 @@ base class _$FibonacciServiceWorkerPool
     extends WorkerPool<FibonacciServiceWorker>
     with _$FibonacciService$Facade
     implements FibonacciService {
-  _$FibonacciServiceWorkerPool(
-      {bool trace = false,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : super(
-            (ExceptionManager exceptionManager) => FibonacciServiceWorker(
-                trace: trace,
-                threadHook: threadHook,
-                exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$FibonacciServiceWorkerPool({
+    bool trace = false,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (ExceptionManager exceptionManager) => FibonacciServiceWorker(
+           trace: trace,
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
-  _$FibonacciServiceWorkerPool.vm(
-      {bool trace = false,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : super(
-            (ExceptionManager exceptionManager) => FibonacciServiceWorker.vm(
-                trace: trace,
-                threadHook: threadHook,
-                exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$FibonacciServiceWorkerPool.vm({
+    bool trace = false,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (ExceptionManager exceptionManager) => FibonacciServiceWorker.vm(
+           trace: trace,
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
   @override
   Future<int?> fibonacci(int i) => execute((w) => w.fibonacci(i));
@@ -373,39 +407,45 @@ base class FibonacciServiceWorkerPool
     _finalizer.attach(this, _$pool, detach: _$pool._$detachToken);
   }
 
-  FibonacciServiceWorkerPool(
-      {bool trace = false,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : this._(_$FibonacciServiceWorkerPool(
-            trace: trace,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  FibonacciServiceWorkerPool({
+    bool trace = false,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$FibonacciServiceWorkerPool(
+           trace: trace,
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
-  FibonacciServiceWorkerPool.vm(
-      {bool trace = false,
-      PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : this._(_$FibonacciServiceWorkerPool.vm(
-            trace: trace,
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  FibonacciServiceWorkerPool.vm({
+    bool trace = false,
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$FibonacciServiceWorkerPool.vm(
+           trace: trace,
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
   final _$FibonacciServiceWorkerPool _$pool;
 
   static final Finalizer<_$FibonacciServiceWorkerPool> _finalizer =
       Finalizer<_$FibonacciServiceWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._$detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
+        try {
+          _finalizer.detach(p._$detachToken);
+          p.release();
+        } catch (_) {
+          // finalizers must not throw
+        }
+      });
 
   @override
   void release() {
@@ -488,31 +528,34 @@ base class FibonacciServiceWorkerPool
       _$pool.registerWorkerPoolListener(listener);
 
   @override
-  void unregisterWorkerPoolListener(
-          {void Function(WorkerStat, bool)? listener, Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
+  void unregisterWorkerPoolListener({
+    void Function(WorkerStat, bool)? listener,
+    Object? token,
+  }) => _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
-  Future<T> execute<T>(Future<T> Function(FibonacciServiceWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
+  Future<T> execute<T>(
+    Future<T> Function(FibonacciServiceWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.execute<T>(task, counter: counter);
 
   @override
-  Stream<T> stream<T>(Stream<T> Function(FibonacciServiceWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
+  Stream<T> stream<T>(
+    Stream<T> Function(FibonacciServiceWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.stream<T>(task, counter: counter);
 
   @override
   StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(FibonacciServiceWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
+    Stream<T> Function(FibonacciServiceWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.scheduleStreamTask<T>(task, counter: counter);
 
   @override
   ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(FibonacciServiceWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
+    Future<T> Function(FibonacciServiceWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.scheduleValueTask<T>(task, counter: counter);
 
   @override
   Object get _$detachToken => _$pool._$detachToken;

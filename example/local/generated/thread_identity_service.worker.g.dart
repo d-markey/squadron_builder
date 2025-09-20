@@ -1,10 +1,10 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of '../thread_identity_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.6 (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 8.0.0 (Squadron 7.1.2+1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -12,9 +12,8 @@ const int _$getThreadIdId = 1;
 
 /// WorkerService operations for ThreadIdentityService
 extension on ThreadIdentityService {
-  OperationsMap _$getOperations() => OperationsMap({
-        _$getThreadIdId: ($req) => getThreadId(),
-      });
+  OperationsMap _$getOperations() =>
+      OperationsMap({_$getThreadIdId: ($req) => getThreadId()});
 }
 
 /// Invoker for ThreadIdentityService, implements the public interface to invoke the
@@ -38,9 +37,9 @@ mixin _$ThreadIdentityService$Facade implements ThreadIdentityService {}
 /// Local worker extension for ThreadIdentityService
 extension $ThreadIdentityServiceLocalWorkerExt on ThreadIdentityService {
   // Get a fresh local worker instance.
-  LocalWorker<ThreadIdentityService> getLocalWorker(
-          [ExceptionManager? exceptionManager]) =>
-      LocalWorker.create(this, _$getOperations(), exceptionManager);
+  LocalWorker<ThreadIdentityService> getLocalWorker([
+    ExceptionManager? exceptionManager,
+  ]) => LocalWorker.create(this, _$getOperations(), exceptionManager);
 }
 
 /// LocalWorkerClient for ThreadIdentityService
@@ -48,7 +47,7 @@ final class $LocalThreadIdentityServiceClient extends LocalWorkerClient
     with _$ThreadIdentityService$Invoker, _$ThreadIdentityService$Facade
     implements ThreadIdentityService {
   $LocalThreadIdentityServiceClient(PlatformChannel channelInfo)
-      : super(Channel.deserialize(channelInfo)!);
+    : super(Channel.deserialize(channelInfo)!);
 }
 
 final class _$Deser extends MarshalingContext {

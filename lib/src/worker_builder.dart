@@ -3,6 +3,18 @@ import 'package:source_gen/source_gen.dart';
 
 import 'worker_generator.dart';
 
+const defaultBuilderOptions = BuilderOptions({
+  'build_extensions': {
+    '.dart': [
+      '.worker.g.dart',
+      '.vm.g.dart',
+      '.web.g.dart',
+      '.stub.g.dart',
+      '.activator.g.dart',
+    ],
+  },
+});
+
 /// Creates the builder used to generate code for platform workers, Squadron
 /// worker and Squadron worker pool. [options] is provided by Dart's build
 /// system. It is read from the `build.yaml` file. Supported options include:
@@ -21,17 +33,7 @@ Builder workerBuilder(BuilderOptions options) {
   // PartBuilder disallows additionalOutputExtensions when options is provided
   // => a default config is provided in options if necessary
   if (!options.config.containsKey('build_extensions')) {
-    options = options.overrideWith(BuilderOptions({
-      'build_extensions': {
-        '.dart': [
-          '.worker.g.dart',
-          '.vm.g.dart',
-          '.web.g.dart',
-          '.stub.g.dart',
-          '.activator.g.dart',
-        ]
-      }
-    }));
+    options = options.overrideWith(defaultBuilderOptions);
   }
 
   final formatOutput = PartBuilder([WorkerGenerator()], '.g.dart').formatOutput;
@@ -41,7 +43,7 @@ Builder workerBuilder(BuilderOptions options) {
       WorkerGenerator(
         formatOutput: formatOutput,
         withFinalizers: withFinalizers,
-      )
+      ),
     ],
     '.worker.g.dart',
     formatOutput: formatOutput,

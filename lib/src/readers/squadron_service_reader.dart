@@ -20,7 +20,7 @@ class SquadronServiceReader {
     this.js,
     this.wasm,
     this.baseUrl,
-  )   : name = clazz.name,
+  )   : name = clazz.name ?? '',
         isBase = clazz.isBase,
         parameters = SquadronParameters(_typeManager) {
     _load(clazz);
@@ -47,7 +47,7 @@ class SquadronServiceReader {
   final TypeManager _typeManager;
 
   void _load(ClassElement clazz) {
-    final name = clazz.name;
+    final name = clazz.name ?? '';
     if (name.startsWith('_')) {
       throw InvalidGenerationSourceError('Service classes must be public.');
     }
@@ -57,10 +57,10 @@ class SquadronServiceReader {
           'Worker service classes must be constructable.');
     }
 
-    final ctorElement = clazz.unnamedCtorElt;
+    final ctorElement = clazz.unnamedConstructor;
 
     if (ctorElement == null) {
-      if (clazz.constructorElts.isNotEmpty) {
+      if (clazz.constructors.isNotEmpty) {
         log.warning('Missing unnamed constructor for ${clazz.name}');
       }
     } else if (ctorElement.formalParameters.isNotEmpty) {
@@ -68,9 +68,9 @@ class SquadronServiceReader {
         final param = ctorElement.formalParameters[n];
 
         if (param is FieldFormalParameterElement) {
-          final fld = param.fldElt;
+          final fld = param.field;
           if (fld != null) {
-            final name = fld.name;
+            final name = fld.name ?? '';
             if (!name.startsWith('_')) {
               fields[name] = fld;
             }
@@ -89,10 +89,10 @@ class SquadronServiceReader {
       }
     }
 
-    methods.addAll(clazz.methodElts.where((m) => !m.isStatic));
-    accessors.addAll(clazz.getterElts
+    methods.addAll(clazz.methods.where((m) => !m.isStatic));
+    accessors.addAll(clazz.getters
         .where((a) => !a.isStatic && !fields.containsKey(a.property)));
-    accessors.addAll(clazz.setterElts
+    accessors.addAll(clazz.setters
         .where((a) => !a.isStatic && !fields.containsKey(a.property)));
   }
 

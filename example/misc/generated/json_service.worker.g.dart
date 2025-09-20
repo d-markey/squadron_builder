@@ -1,10 +1,10 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of '../json_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.6 (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 8.0.0 (Squadron 7.1.2+1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -13,15 +13,15 @@ const int _$decodeId = 1;
 /// WorkerService operations for JsonService
 extension on JsonService {
   sq.OperationsMap _$getOperations() => sq.OperationsMap({
-        _$decodeId: ($req) async {
-          final dynamic $res;
-          try {
-            final $dsr = _$Deser(contextAware: false);
-            $res = await decode($dsr.$0($req.args[0]));
-          } finally {}
-          return $res;
-        },
-      });
+    _$decodeId: ($req) async {
+      final dynamic $res;
+      try {
+        final $dsr = _$Deser(contextAware: false);
+        $res = await decode($dsr.$0($req.args[0]));
+      } finally {}
+      return $res;
+    },
+  });
 }
 
 /// Invoker for JsonService, implements the public interface to invoke the
@@ -52,29 +52,41 @@ sq.WorkerService $JsonServiceInitializer(sq.WorkerRequest $req) =>
 base class _$JsonServiceWorker extends sq.Worker
     with _$JsonService$Invoker, _$JsonService$Facade
     implements JsonService {
-  _$JsonServiceWorker(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super($JsonServiceActivator(sq.Squadron.platformType),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$JsonServiceWorker({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+  }) : super(
+         $JsonServiceActivator(sq.Squadron.platformType),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
-  _$JsonServiceWorker.vm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super($JsonServiceActivator(sq.SquadronPlatformType.vm),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$JsonServiceWorker.vm({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+  }) : super(
+         $JsonServiceActivator(sq.SquadronPlatformType.vm),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
-  _$JsonServiceWorker.js(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super($JsonServiceActivator(sq.SquadronPlatformType.js),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$JsonServiceWorker.js({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+  }) : super(
+         $JsonServiceActivator(sq.SquadronPlatformType.js),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
-  _$JsonServiceWorker.wasm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : super($JsonServiceActivator(sq.SquadronPlatformType.wasm),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$JsonServiceWorker.wasm({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+  }) : super(
+         $JsonServiceActivator(sq.SquadronPlatformType.wasm),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
   @override
   List? getStartArgs() => null;
@@ -88,41 +100,57 @@ base class JsonServiceWorker with Releasable implements _$JsonServiceWorker {
     _finalizer.attach(this, _$worker, detach: _$worker._$detachToken);
   }
 
-  JsonServiceWorker(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$JsonServiceWorker(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  JsonServiceWorker({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+  }) : this._(
+         _$JsonServiceWorker(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
-  JsonServiceWorker.vm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$JsonServiceWorker.vm(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  JsonServiceWorker.vm({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+  }) : this._(
+         _$JsonServiceWorker.vm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
-  JsonServiceWorker.js(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$JsonServiceWorker.js(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  JsonServiceWorker.js({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+  }) : this._(
+         _$JsonServiceWorker.js(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
-  JsonServiceWorker.wasm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager})
-      : this._(_$JsonServiceWorker.wasm(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  JsonServiceWorker.wasm({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+  }) : this._(
+         _$JsonServiceWorker.wasm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
   final _$JsonServiceWorker _$worker;
 
   static final Finalizer<_$JsonServiceWorker> _finalizer =
       Finalizer<_$JsonServiceWorker>((w) {
-    try {
-      _finalizer.detach(w._$detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
+        try {
+          _finalizer.detach(w._$detachToken);
+          w.release();
+        } catch (_) {
+          // finalizers must not throw
+        }
+      });
 
   @override
   void release() {
@@ -156,7 +184,7 @@ base class JsonServiceWorker with Releasable implements _$JsonServiceWorker {
   bool get isStopped => _$worker.isStopped;
 
   @override
-// ignore: deprecated_member_use
+  // ignore: deprecated_member_use
   sq.WorkerStat get stats => _$worker.stats;
 
   @override
@@ -175,28 +203,34 @@ base class JsonServiceWorker with Releasable implements _$JsonServiceWorker {
   sq.Channel? getSharedChannel() => _$worker.getSharedChannel();
 
   @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
+  Future<dynamic> send(
+    int command, {
+    List args = const [],
+    CancelationToken? token,
+    bool inspectRequest = false,
+    bool inspectResponse = false,
+  }) => _$worker.send(
+    command,
+    args: args,
+    token: token,
+    inspectRequest: inspectRequest,
+    inspectResponse: inspectResponse,
+  );
 
   @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
+  Stream<dynamic> stream(
+    int command, {
+    List args = const [],
+    CancelationToken? token,
+    bool inspectRequest = false,
+    bool inspectResponse = false,
+  }) => _$worker.stream(
+    command,
+    args: args,
+    token: token,
+    inspectRequest: inspectRequest,
+    inspectResponse: inspectResponse,
+  );
 
   @override
   Object get _$detachToken => _$worker._$detachToken;
@@ -209,45 +243,57 @@ base class JsonServiceWorker with Releasable implements _$JsonServiceWorker {
 base class _$JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
     with _$JsonService$Facade
     implements JsonService {
-  _$JsonServiceWorkerPool(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager,
-      sq.ConcurrencySettings? concurrencySettings})
-      : super(
-            (sq.ExceptionManager exceptionManager) => JsonServiceWorker(
-                threadHook: threadHook, exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$JsonServiceWorkerPool({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+    sq.ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (sq.ExceptionManager exceptionManager) => JsonServiceWorker(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
-  _$JsonServiceWorkerPool.vm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager,
-      sq.ConcurrencySettings? concurrencySettings})
-      : super(
-            (sq.ExceptionManager exceptionManager) => JsonServiceWorker.vm(
-                threadHook: threadHook, exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$JsonServiceWorkerPool.vm({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+    sq.ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (sq.ExceptionManager exceptionManager) => JsonServiceWorker.vm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
-  _$JsonServiceWorkerPool.js(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager,
-      sq.ConcurrencySettings? concurrencySettings})
-      : super(
-            (sq.ExceptionManager exceptionManager) => JsonServiceWorker.js(
-                threadHook: threadHook, exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$JsonServiceWorkerPool.js({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+    sq.ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (sq.ExceptionManager exceptionManager) => JsonServiceWorker.js(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
-  _$JsonServiceWorkerPool.wasm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager,
-      sq.ConcurrencySettings? concurrencySettings})
-      : super(
-            (sq.ExceptionManager exceptionManager) => JsonServiceWorker.wasm(
-                threadHook: threadHook, exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$JsonServiceWorkerPool.wasm({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+    sq.ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (sq.ExceptionManager exceptionManager) => JsonServiceWorker.wasm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
   @override
   Future<dynamic> decode(String source) => execute((w) => w.decode(source));
@@ -263,53 +309,65 @@ base class JsonServiceWorkerPool
     _finalizer.attach(this, _$pool, detach: _$pool._$detachToken);
   }
 
-  JsonServiceWorkerPool(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager,
-      sq.ConcurrencySettings? concurrencySettings})
-      : this._(_$JsonServiceWorkerPool(
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  JsonServiceWorkerPool({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+    sq.ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$JsonServiceWorkerPool(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
-  JsonServiceWorkerPool.vm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager,
-      sq.ConcurrencySettings? concurrencySettings})
-      : this._(_$JsonServiceWorkerPool.vm(
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  JsonServiceWorkerPool.vm({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+    sq.ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$JsonServiceWorkerPool.vm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
-  JsonServiceWorkerPool.js(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager,
-      sq.ConcurrencySettings? concurrencySettings})
-      : this._(_$JsonServiceWorkerPool.js(
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  JsonServiceWorkerPool.js({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+    sq.ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$JsonServiceWorkerPool.js(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
-  JsonServiceWorkerPool.wasm(
-      {sq.PlatformThreadHook? threadHook,
-      sq.ExceptionManager? exceptionManager,
-      sq.ConcurrencySettings? concurrencySettings})
-      : this._(_$JsonServiceWorkerPool.wasm(
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  JsonServiceWorkerPool.wasm({
+    sq.PlatformThreadHook? threadHook,
+    sq.ExceptionManager? exceptionManager,
+    sq.ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$JsonServiceWorkerPool.wasm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
   final _$JsonServiceWorkerPool _$pool;
 
   static final Finalizer<_$JsonServiceWorkerPool> _finalizer =
       Finalizer<_$JsonServiceWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._$detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
+        try {
+          _finalizer.detach(p._$detachToken);
+          p.release();
+        } catch (_) {
+          // finalizers must not throw
+        }
+      });
 
   @override
   void release() {
@@ -372,35 +430,38 @@ base class JsonServiceWorkerPool
 
   @override
   Object registerWorkerPoolListener(
-          void Function(sq.WorkerStat, bool) listener) =>
-      _$pool.registerWorkerPoolListener(listener);
+    void Function(sq.WorkerStat, bool) listener,
+  ) => _$pool.registerWorkerPoolListener(listener);
 
   @override
-  void unregisterWorkerPoolListener(
-          {void Function(sq.WorkerStat, bool)? listener, Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
+  void unregisterWorkerPoolListener({
+    void Function(sq.WorkerStat, bool)? listener,
+    Object? token,
+  }) => _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
-  Future<T> execute<T>(Future<T> Function(JsonServiceWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
+  Future<T> execute<T>(
+    Future<T> Function(JsonServiceWorker worker) task, {
+    sq.PerfCounter? counter,
+  }) => _$pool.execute<T>(task, counter: counter);
 
   @override
-  Stream<T> stream<T>(Stream<T> Function(JsonServiceWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
+  Stream<T> stream<T>(
+    Stream<T> Function(JsonServiceWorker worker) task, {
+    sq.PerfCounter? counter,
+  }) => _$pool.stream<T>(task, counter: counter);
 
   @override
   sq.StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(JsonServiceWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
+    Stream<T> Function(JsonServiceWorker worker) task, {
+    sq.PerfCounter? counter,
+  }) => _$pool.scheduleStreamTask<T>(task, counter: counter);
 
   @override
   sq.ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(JsonServiceWorker worker) task,
-          {sq.PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
+    Future<T> Function(JsonServiceWorker worker) task, {
+    sq.PerfCounter? counter,
+  }) => _$pool.scheduleValueTask<T>(task, counter: counter);
 
   @override
   Object get _$detachToken => _$pool._$detachToken;

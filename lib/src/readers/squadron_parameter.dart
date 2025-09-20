@@ -26,27 +26,27 @@ class SquadronParameter {
       SquadronParameter._(
           name, type, null, named, !named, false, false, null, null, -1, false);
 
-  static SquadronParameter from(ParameterElement param, bool isToken,
+  static SquadronParameter from(FormalParameterElement param, bool isToken,
       Marshaler? marshaler, int serIdx, TypeManager typeManager) {
-    var name = param.name;
+    var name = param.name ?? '';
 
     if (name.isEmpty) {
       throw InvalidGenerationSourceError('Parameter name cannot be null '
-          'for ${param.enclosingElt?.name}.');
+          'for ${param.enclosingElement?.name}.');
     }
 
     var type = param.type;
     FieldElement? field;
     if (param is FieldFormalParameterElement) {
-      final fld = param.fldElt;
+      final fld = param.field;
       if (fld != null) {
         field = fld;
         type = fld.type;
-        name = fld.name;
+        name = fld.name ?? '';
 
         if (name.isEmpty) {
           throw InvalidGenerationSourceError('Parameter name cannot be null '
-              'for ${fld.enclosingElt?.name}.');
+              'for ${fld.enclosingElement.name}.');
         }
 
         while (name.startsWith('_')) {
@@ -88,7 +88,7 @@ class SquadronParameter {
   bool get mayBeNull =>
       (isOptional || (isNamed && required.isEmpty)) && defaultValue == null;
 
-  bool get isPublicField => field != null && !field!.name.startsWith('_');
+  bool get isPublicField => (field?.name?.startsWith('_') == false);
 
   String argument() => isNamed ? '$name: $name' : name;
 

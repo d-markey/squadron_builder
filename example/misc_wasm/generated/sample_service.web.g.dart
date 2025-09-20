@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.6 (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 8.0.0 (Squadron 7.1.2+1)
 // **************************************************************************
 
 import 'package:squadron/squadron.dart';
@@ -17,7 +17,8 @@ void main() {
 EntryPoint $getSampleServiceActivator(SquadronPlatformType platform) {
   if (platform.isWeb) {
     return Squadron.uri(
-        'example/misc_wasm/generated/sample_service.web.g.dart.wasm');
+      'example/misc_wasm/generated/sample_service.web.g.dart.wasm',
+    );
   } else {
     throw UnsupportedError('${platform.label} not supported.');
   }

@@ -23,8 +23,8 @@ abstract class Marshaler {
           String typeName,
           String? deserExt,
           String? serExt,
-          ParameterElement? marshalingContext,
-          ParameterElement? unmarshalingContext,
+          FormalParameterElement? marshalingContext,
+          FormalParameterElement? unmarshalingContext,
           bool forceCast) =>
       _SelfMarshaler(typeName, deserExt, serExt, marshalingContext,
           unmarshalingContext, forceCast);

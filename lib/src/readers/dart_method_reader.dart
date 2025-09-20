@@ -17,7 +17,7 @@ part 'squadron_method_reader.dart';
 /// Reader for non-service methods implemented in a SquadronService
 class DartMethodReader {
   DartMethodReader._(MethodElement method, this.typeManager, this.context)
-      : name = method.name,
+      : name = method.name ?? '',
         returnType = typeManager.handleDartType(method.returnType),
         parameters = SquadronParameters(typeManager);
 
@@ -46,19 +46,20 @@ class DartMethodReader {
   }
 
   void _init(MethodElement method) {
-    method.typeParamElts.map((e) => e.toString()).forEach(typeParameters.add);
+    method.typeParameters.map((e) => e.toString()).forEach(typeParameters.add);
     method.formalParameters.forEach(parameters.register);
   }
 
   static DartMethodReader? load(MethodElement method, TypeManager typeManager,
       MarshalingContext context) {
-    if (method.name == 'toString' || method.name == 'noSuchMethod') {
+    final name = method.name ?? '';
+    if (name == 'toString' || name == 'noSuchMethod') {
       // base Dart methods -- ignore
       return null;
     }
     final reader = AnnotationReader<squadron.SquadronMethod>.single(method);
     DartMethodReader m;
-    if (reader.isEmpty || method.name.startsWith('_')) {
+    if (reader.isEmpty || name.startsWith('_')) {
       // private method or no SquadronMethod annotation
       m = DartMethodReader._(method, typeManager, context);
     } else {

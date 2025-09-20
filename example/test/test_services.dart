@@ -155,8 +155,7 @@ class TestTypedData {
   FutureOr<typed_data.Uint8List?> foo(
     final List<int> bytes, {
     final bool isLandscape = true, // Default named parameter
-  }) async =>
-      typed_data.Uint8List.fromList(bytes);
+  }) async => typed_data.Uint8List.fromList(bytes);
 
   @sq.squadronMethod
   FutureOr<typed_data.ByteBuffer?> bar(
@@ -168,8 +167,7 @@ class TestTypedData {
     final typed_data.ByteData? fontData,
     final Map<int, typed_data.ByteData>? titleFonts,
     final Map<int, typed_data.ByteData>? dataFonts,
-  }) async =>
-      null;
+  }) async => null;
 }
 
 @sq.SquadronService()

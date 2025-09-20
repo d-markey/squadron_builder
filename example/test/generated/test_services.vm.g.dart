@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.6 (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 8.0.0 (Squadron 7.1.2+1)
 // **************************************************************************
 
 import 'package:squadron/squadron.dart' as sq;
@@ -41,7 +41,8 @@ void _start$TestOptNullPositional(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptNullPositionalActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptNullPositional;
   } else {
@@ -55,7 +56,8 @@ void _start$TestOptDefPositional(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptDefPositionalActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptDefPositional;
   } else {
@@ -69,7 +71,8 @@ void _start$TestOptNullDefPositional(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptNullDefPositionalActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptNullDefPositional;
   } else {
@@ -83,7 +86,8 @@ void _start$TestReqPositionalField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestReqPositionalFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestReqPositionalField;
   } else {
@@ -97,7 +101,8 @@ void _start$TestOptNullPositionalField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptNullPositionalFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptNullPositionalField;
   } else {
@@ -111,7 +116,8 @@ void _start$TestOptDefPositionalField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptDefPositionalFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptDefPositionalField;
   } else {
@@ -125,7 +131,8 @@ void _start$TestOptNullDefPositionalField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptNullDefPositionalFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptNullDefPositionalField;
   } else {
@@ -139,7 +146,8 @@ void _start$TestReqPositionalPrivateField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestReqPositionalPrivateFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestReqPositionalPrivateField;
   } else {
@@ -153,7 +161,8 @@ void _start$TestOptNullPositionalPrivateField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptNullPositionalPrivateFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptNullPositionalPrivateField;
   } else {
@@ -167,7 +176,8 @@ void _start$TestOptDefPositionalPrivateField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptDefPositionalPrivateFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptDefPositionalPrivateField;
   } else {
@@ -181,7 +191,8 @@ void _start$TestOptNullDefPositionalPrivateField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptNullDefPositionalPrivateFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptNullDefPositionalPrivateField;
   } else {
@@ -221,7 +232,8 @@ void _start$TestOptNullDefNamed(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptNullDefNamedActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptNullDefNamed;
   } else {
@@ -235,7 +247,8 @@ void _start$TestOptNullNamedField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptNullNamedFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptNullNamedField;
   } else {
@@ -249,7 +262,8 @@ void _start$TestOptDefNamedField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptDefNamedFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptDefNamedField;
   } else {
@@ -263,7 +277,8 @@ void _start$TestOptNullDefNamedField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptNullDefNamedFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptNullDefNamedField;
   } else {
@@ -290,7 +305,8 @@ void _start$TestOptNullNamedPrivateField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptNullNamedPrivateFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptNullNamedPrivateField;
   } else {
@@ -304,7 +320,8 @@ void _start$TestOptDefNamedPrivateField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptDefNamedPrivateFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptDefNamedPrivateField;
   } else {
@@ -318,7 +335,8 @@ void _start$TestOptNullDefNamedPrivateField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptNullDefNamedPrivateFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptNullDefNamedPrivateField;
   } else {
@@ -332,7 +350,8 @@ void _start$TestPrefixedImportType(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestPrefixedImportTypeActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestPrefixedImportType;
   } else {
@@ -346,7 +365,8 @@ void _start$TestOptNullDefNamedPrivateNonFinalField(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestOptNullDefNamedPrivateNonFinalFieldActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestOptNullDefNamedPrivateNonFinalField;
   } else {
@@ -386,7 +406,8 @@ void _start$TestRequiredSuperParam(sq.WorkerRequest command) {
 }
 
 sq.EntryPoint $getTestRequiredSuperParamActivator(
-    sq.SquadronPlatformType platform) {
+  sq.SquadronPlatformType platform,
+) {
   if (platform.isVm) {
     return _start$TestRequiredSuperParam;
   } else {

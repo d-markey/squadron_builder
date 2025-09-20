@@ -1,10 +1,10 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of '../data_service_marshaler.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.6 (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 8.0.0 (Squadron 7.1.2+1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -14,29 +14,29 @@ const int _$doSomethingElseId = 2;
 /// WorkerService operations for DataService
 extension on DataService {
   OperationsMap _$getOperations() => OperationsMap({
-        _$doSomethingId: ($req) async {
-          final Data $res;
-          try {
-            final $dsr = _$Deser(contextAware: true);
-            $res = await doSomething($dsr.$0($req.args[0]));
-          } finally {}
-          try {
-            final $sr = _$Ser(contextAware: true);
-            return $sr.$0($res);
-          } finally {}
-        },
-        _$doSomethingElseId: ($req) async {
-          final Data2 $res;
-          try {
-            final $dsr = _$Deser(contextAware: true);
-            $res = await doSomethingElse($dsr.$1($req.args[0]));
-          } finally {}
-          try {
-            final $sr = _$Ser(contextAware: true);
-            return $sr.$1($res);
-          } finally {}
-        },
-      });
+    _$doSomethingId: ($req) async {
+      final Data $res;
+      try {
+        final $dsr = _$Deser(contextAware: true);
+        $res = await doSomething($dsr.$0($req.args[0]));
+      } finally {}
+      try {
+        final $sr = _$Ser(contextAware: true);
+        return $sr.$0($res);
+      } finally {}
+    },
+    _$doSomethingElseId: ($req) async {
+      final Data2 $res;
+      try {
+        final $dsr = _$Deser(contextAware: true);
+        $res = await doSomethingElse($dsr.$1($req.args[0]));
+      } finally {}
+      try {
+        final $sr = _$Ser(contextAware: true);
+        return $sr.$1($res);
+      } finally {}
+    },
+  });
 }
 
 /// Invoker for DataService, implements the public interface to invoke the
@@ -89,25 +89,41 @@ WorkerService $DataServiceInitializer(WorkerRequest $req) =>
 base class _$DataServiceWorker extends Worker
     with _$DataService$Invoker, _$DataService$Facade
     implements DataService {
-  _$DataServiceWorker(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($DataServiceActivator(Squadron.platformType),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$DataServiceWorker({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : super(
+         $DataServiceActivator(Squadron.platformType),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
-  _$DataServiceWorker.vm(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($DataServiceActivator(SquadronPlatformType.vm),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$DataServiceWorker.vm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : super(
+         $DataServiceActivator(SquadronPlatformType.vm),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
-  _$DataServiceWorker.js(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($DataServiceActivator(SquadronPlatformType.js),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$DataServiceWorker.js({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : super(
+         $DataServiceActivator(SquadronPlatformType.js),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
-  _$DataServiceWorker.wasm(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($DataServiceActivator(SquadronPlatformType.wasm),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$DataServiceWorker.wasm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : super(
+         $DataServiceActivator(SquadronPlatformType.wasm),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
   @override
   List? getStartArgs() => null;
@@ -121,37 +137,57 @@ base class DataServiceWorker with Releasable implements _$DataServiceWorker {
     _finalizer.attach(this, _$worker, detach: _$worker._$detachToken);
   }
 
-  DataServiceWorker(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : this._(_$DataServiceWorker(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  DataServiceWorker({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : this._(
+         _$DataServiceWorker(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
-  DataServiceWorker.vm(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : this._(_$DataServiceWorker.vm(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  DataServiceWorker.vm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : this._(
+         _$DataServiceWorker.vm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
-  DataServiceWorker.js(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : this._(_$DataServiceWorker.js(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  DataServiceWorker.js({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : this._(
+         _$DataServiceWorker.js(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
-  DataServiceWorker.wasm(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : this._(_$DataServiceWorker.wasm(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  DataServiceWorker.wasm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : this._(
+         _$DataServiceWorker.wasm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
   final _$DataServiceWorker _$worker;
 
   static final Finalizer<_$DataServiceWorker> _finalizer =
       Finalizer<_$DataServiceWorker>((w) {
-    try {
-      _finalizer.detach(w._$detachToken);
-      w.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
+        try {
+          _finalizer.detach(w._$detachToken);
+          w.release();
+        } catch (_) {
+          // finalizers must not throw
+        }
+      });
 
   @override
   void release() {
@@ -188,7 +224,7 @@ base class DataServiceWorker with Releasable implements _$DataServiceWorker {
   bool get isStopped => _$worker.isStopped;
 
   @override
-// ignore: deprecated_member_use
+  // ignore: deprecated_member_use
   WorkerStat get stats => _$worker.stats;
 
   @override
@@ -207,28 +243,34 @@ base class DataServiceWorker with Releasable implements _$DataServiceWorker {
   Channel? getSharedChannel() => _$worker.getSharedChannel();
 
   @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
+  Future<dynamic> send(
+    int command, {
+    List args = const [],
+    CancelationToken? token,
+    bool inspectRequest = false,
+    bool inspectResponse = false,
+  }) => _$worker.send(
+    command,
+    args: args,
+    token: token,
+    inspectRequest: inspectRequest,
+    inspectResponse: inspectResponse,
+  );
 
   @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
+  Stream<dynamic> stream(
+    int command, {
+    List args = const [],
+    CancelationToken? token,
+    bool inspectRequest = false,
+    bool inspectResponse = false,
+  }) => _$worker.stream(
+    command,
+    args: args,
+    token: token,
+    inspectRequest: inspectRequest,
+    inspectResponse: inspectResponse,
+  );
 
   @override
   Object get _$detachToken => _$worker._$detachToken;
@@ -241,45 +283,57 @@ base class DataServiceWorker with Releasable implements _$DataServiceWorker {
 base class _$DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
     with _$DataService$Facade
     implements DataService {
-  _$DataServiceWorkerPool(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : super(
-            (ExceptionManager exceptionManager) => DataServiceWorker(
-                threadHook: threadHook, exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$DataServiceWorkerPool({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (ExceptionManager exceptionManager) => DataServiceWorker(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
-  _$DataServiceWorkerPool.vm(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : super(
-            (ExceptionManager exceptionManager) => DataServiceWorker.vm(
-                threadHook: threadHook, exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$DataServiceWorkerPool.vm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (ExceptionManager exceptionManager) => DataServiceWorker.vm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
-  _$DataServiceWorkerPool.js(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : super(
-            (ExceptionManager exceptionManager) => DataServiceWorker.js(
-                threadHook: threadHook, exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$DataServiceWorkerPool.js({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (ExceptionManager exceptionManager) => DataServiceWorker.js(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
-  _$DataServiceWorkerPool.wasm(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : super(
-            (ExceptionManager exceptionManager) => DataServiceWorker.wasm(
-                threadHook: threadHook, exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$DataServiceWorkerPool.wasm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (ExceptionManager exceptionManager) => DataServiceWorker.wasm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
   @override
   Future<Data> doSomething(Data input) => execute((w) => w.doSomething(input));
@@ -299,53 +353,65 @@ base class DataServiceWorkerPool
     _finalizer.attach(this, _$pool, detach: _$pool._$detachToken);
   }
 
-  DataServiceWorkerPool(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : this._(_$DataServiceWorkerPool(
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  DataServiceWorkerPool({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$DataServiceWorkerPool(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
-  DataServiceWorkerPool.vm(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : this._(_$DataServiceWorkerPool.vm(
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  DataServiceWorkerPool.vm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$DataServiceWorkerPool.vm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
-  DataServiceWorkerPool.js(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : this._(_$DataServiceWorkerPool.js(
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  DataServiceWorkerPool.js({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$DataServiceWorkerPool.js(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
-  DataServiceWorkerPool.wasm(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : this._(_$DataServiceWorkerPool.wasm(
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  DataServiceWorkerPool.wasm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$DataServiceWorkerPool.wasm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
   final _$DataServiceWorkerPool _$pool;
 
   static final Finalizer<_$DataServiceWorkerPool> _finalizer =
       Finalizer<_$DataServiceWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._$detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
+        try {
+          _finalizer.detach(p._$detachToken);
+          p.release();
+        } catch (_) {
+          // finalizers must not throw
+        }
+      });
 
   @override
   void release() {
@@ -414,31 +480,34 @@ base class DataServiceWorkerPool
       _$pool.registerWorkerPoolListener(listener);
 
   @override
-  void unregisterWorkerPoolListener(
-          {void Function(WorkerStat, bool)? listener, Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
+  void unregisterWorkerPoolListener({
+    void Function(WorkerStat, bool)? listener,
+    Object? token,
+  }) => _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
-  Future<T> execute<T>(Future<T> Function(DataServiceWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
+  Future<T> execute<T>(
+    Future<T> Function(DataServiceWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.execute<T>(task, counter: counter);
 
   @override
-  Stream<T> stream<T>(Stream<T> Function(DataServiceWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
+  Stream<T> stream<T>(
+    Stream<T> Function(DataServiceWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.stream<T>(task, counter: counter);
 
   @override
   StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(DataServiceWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
+    Stream<T> Function(DataServiceWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.scheduleStreamTask<T>(task, counter: counter);
 
   @override
   ValueTask<T> scheduleValueTask<T>(
-          Future<T> Function(DataServiceWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
+    Future<T> Function(DataServiceWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.scheduleValueTask<T>(task, counter: counter);
 
   @override
   Object get _$detachToken => _$pool._$detachToken;

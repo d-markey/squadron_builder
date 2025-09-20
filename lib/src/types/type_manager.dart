@@ -46,7 +46,7 @@ class TypeManager with _ImportedTypesMixin {
   bool _initialized = false;
 
   String getPrefixFor(Element? element) {
-    final lib = element?.libElt;
+    final lib = element?.library;
     if (lib == null) return '';
     return library.getPrefixFor(lib.uri.toString()) ?? '';
   }
@@ -61,7 +61,7 @@ class TypeManager with _ImportedTypesMixin {
       managedType = ManagedType.record(type, this);
       _cache[type] = managedType;
     } else {
-      managedType = ManagedType(getPrefixFor(type.elt), type, this);
+      managedType = ManagedType(getPrefixFor(type.element), type, this);
       _cache[type] = managedType;
       findMarshaler(managedType);
     }
@@ -70,7 +70,7 @@ class TypeManager with _ImportedTypesMixin {
   }
 
   void findMarshaler(ManagedType type) {
-    final element = type.dartType?.elt;
+    final element = type.dartType?.element;
     if (element == null) return;
     final marshalerLoader = MarshalerInspector(this);
     final marshaler = marshalerLoader.getMarshalerFor(type);

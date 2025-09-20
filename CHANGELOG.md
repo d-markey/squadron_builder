@@ -1,3 +1,7 @@
+## 8.0.0
+
+- Upgrade Dart (^3.7.0) + `source_gen` (^4.0.0) / `build` (^4.0.0) / `analyzer` (^8.0.0) packages.
+
 ## 7.1.7
 
 - Fix extension lookup in case of cyclical imports/exports -- fixes https://github.com/d-markey/squadron_builder/issues/37.

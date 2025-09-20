@@ -50,7 +50,7 @@ class SquadronParameters {
   static bool _named(SquadronParameter p) => p.isNamed;
   Iterable<SquadronParameter> get named => _params.where(_named);
 
-  bool _checkCancelationToken(ParameterElement param) {
+  bool _checkCancelationToken(FormalParameterElement param) {
     if (!param.type.isA(typeManager.TCancelationToken)) {
       // not a cancelation token
       return false;
@@ -66,7 +66,7 @@ class SquadronParameters {
     }
   }
 
-  SquadronParameter register(ParameterElement param, [Marshaler? marshaler]) {
+  SquadronParameter register(FormalParameterElement param, [Marshaler? marshaler]) {
     final isToken = _checkCancelationToken(param);
     int serIdx = -1;
     if (!isToken) {

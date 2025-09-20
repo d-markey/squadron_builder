@@ -13,7 +13,7 @@ abstract class MarshalerInspector {
   Marshaler? getMarshalerFor(ManagedType type);
 }
 
-class _MarshalerInspector extends SimpleElementVisitor
+class _MarshalerInspector extends GeneralizingElementVisitor2
     implements MarshalerInspector {
   _MarshalerInspector(this._typeManager);
 
@@ -24,12 +24,13 @@ class _MarshalerInspector extends SimpleElementVisitor
   @override
   Marshaler? getMarshalerFor(ManagedType type) {
     // make sure type can be visited
-    final clazz = type.dartType?.elt?.baseElt;
+    final clazz = type.dartType?.element?.baseElement;
     if (clazz == null) return null;
 
     if (_inspectedType != null) {
       throw InvalidGenerationSourceError(
-          'Looking up marshalers for $_inspectedType: cannot handle $type');
+        'Looking up marshalers for $_inspectedType: cannot handle $type',
+      );
     }
     _inspectedType = type;
 
@@ -64,7 +65,7 @@ class _MarshalerInspector extends SimpleElementVisitor
           final t = types.removeAt(0);
           if (!seen.add(t)) continue;
           types.registerSuperTypes(t);
-          t.elt?.baseElt.visitChildren(this);
+          t.element?.baseElement.visitChildren(this);
         }
       }
 
@@ -83,11 +84,12 @@ class _MarshalerInspector extends SimpleElementVisitor
       final isJson = !isMarshaler && _hasJsonifier;
 
       // get hydrater name if static methods are implemented via extensions
-      final deserElt = isMarshaler
-          ? _unmarshal!.enclosingElt!.baseElt
-          : (isJson ? _fromJson!.enclosingElt!.baseElt : null);
+      final deserElt =
+          isMarshaler
+              ? _unmarshal!.enclosingElement!.baseElement
+              : (isJson ? _fromJson!.enclosingElement!.baseElement : null);
       String? deserExt;
-      if (deserElt is ExtensionElement && deserElt.name.isNotEmpty) {
+      if (deserElt is ExtensionElement && (deserElt.name ?? '').isNotEmpty) {
         final prefix = _typeManager.getPrefixFor(deserElt);
         deserExt = '${prefix.isEmpty ? '' : '$prefix.'}${deserElt.name}';
       } else if (deserElt is InterfaceElement && deserElt != clazz) {
@@ -96,22 +98,33 @@ class _MarshalerInspector extends SimpleElementVisitor
       }
 
       // get serializer name if methods are implemented via extensions
-      final serElt = isMarshaler
-          ? _marshal!.enclosingElt!.baseElt
-          : (isJson ? _toJson!.enclosingElt!.baseElt : null);
+      final serElt =
+          isMarshaler
+              ? _marshal!.enclosingElement!.baseElement
+              : (isJson ? _toJson!.enclosingElement!.baseElement : null);
       String? serExt;
-      if (serElt is ExtensionElement && serElt.name.isNotEmpty) {
+      if (serElt is ExtensionElement && (serElt.name ?? '').isNotEmpty) {
         final prefix = _typeManager.getPrefixFor(serElt);
         serExt = '${prefix.isEmpty ? '' : '$prefix.'}${serElt.name}';
       }
 
       // return marshaler
       if (isMarshaler) {
-        return Marshaler.self(typeName, deserExt, serExt, _marshalingContext,
-            _unmarshalingContext, dartType != _unmarshalType);
+        return Marshaler.self(
+          typeName,
+          deserExt,
+          serExt,
+          _marshalingContext,
+          _unmarshalingContext,
+          dartType != _unmarshalType,
+        );
       } else if (isJson) {
         return Marshaler.json(
-            typeName, deserExt, serExt, dartType != _fromJsonType);
+          typeName,
+          deserExt,
+          serExt,
+          dartType != _fromJsonType,
+        );
       } else {
         return null;
       }
@@ -129,7 +142,7 @@ class _MarshalerInspector extends SimpleElementVisitor
 
   Element? _getToJsonImpl(Element element) {
     // make sure this is the right element
-    final decl = element.baseElt;
+    final decl = element.baseElement;
     if (decl.name != 'toJson' || !decl.isPublic) return null;
 
     final bool hasParams;
@@ -140,7 +153,7 @@ class _MarshalerInspector extends SimpleElementVisitor
         // Function field
         final func = fld.type as FunctionType;
         returnType = func.returnType;
-        hasParams = func.paramElts.isNotEmpty;
+        hasParams = func.formalParameters.isNotEmpty;
       case final PropertyAccessorElement getter
           when getter.isGetter &&
               getter.isInstanceImpl &&
@@ -148,7 +161,7 @@ class _MarshalerInspector extends SimpleElementVisitor
         // Function getter
         final func = getter.type.returnType as FunctionType;
         returnType = func.returnType;
-        hasParams = func.paramElts.isNotEmpty;
+        hasParams = func.formalParameters.isNotEmpty;
       case final MethodElement callable when callable.isInstanceImpl:
         // method
         returnType = callable.returnType;
@@ -174,19 +187,19 @@ class _MarshalerInspector extends SimpleElementVisitor
 
   (Element, DartType)? _getFromJsonImpl(Element element) {
     // make sure this is the right element
-    final decl = element.baseElt, dotIdx = decl.name.indexOf('.');
-    final name = (dotIdx >= 0) ? decl.name.substring(dotIdx + 1) : decl.name;
+    final decl = element.baseElement, dotIdx = decl.name?.indexOf('.') ?? -1;
+    final name = (dotIdx >= 0) ? decl.name?.substring(dotIdx + 1) : decl.name;
     if (name != 'fromJson' || !decl.isPublic) return null;
 
     // get details
-    final ParameterElement? param;
+    final FormalParameterElement? param;
     final DartType returnType;
     switch (decl) {
       case final FieldElement fld
           when fld.isStaticImpl && (fld.type is FunctionType):
         // Function field
         final func = fld.type as FunctionType;
-        param = func.paramElts.singleOrNull?.baseElement;
+        param = func.formalParameters.singleOrNull?.baseElement;
         returnType = func.returnType;
       case final PropertyAccessorElement getter
           when getter.isGetter &&
@@ -194,7 +207,7 @@ class _MarshalerInspector extends SimpleElementVisitor
               (getter.type.returnType is FunctionType):
         // Function getter
         final func = getter.type.returnType as FunctionType;
-        param = func.paramElts.singleOrNull?.baseElement;
+        param = func.formalParameters.singleOrNull?.baseElement;
         returnType = func.returnType;
       case final ExecutableElement callable
           when (callable is MethodElement || callable.isStaticImpl) ||
@@ -225,8 +238,10 @@ class _MarshalerInspector extends SimpleElementVisitor
 
   // === SQUADRON MARSHALING ===
 
-  ParameterElement? _getMarshalingContextParam(
-      List<ParameterElement> params, int idx) {
+  FormalParameterElement? _getMarshalingContextParam(
+    List<FormalParameterElement> params,
+    int idx,
+  ) {
     final param = params.skip(idx).take(1).firstOrNull;
 
     // missing parameter, accepted because a marshaling context is optional
@@ -240,11 +255,11 @@ class _MarshalerInspector extends SimpleElementVisitor
   }
 
   Element? _marshal;
-  ParameterElement? _marshalingContext;
+  FormalParameterElement? _marshalingContext;
 
   Element? _getMarshalImpl(Element element) {
     // make sure this is the right element
-    final decl = element.baseElt;
+    final decl = element.baseElement;
     if (decl.name != 'marshal' || !decl.isPublic) return null;
 
     // get details
@@ -255,7 +270,10 @@ class _MarshalerInspector extends SimpleElementVisitor
         // Function field
         final func = fld.type as FunctionType;
         returnType = func.returnType;
-        _marshalingContext = _getMarshalingContextParam(func.paramElts, 0);
+        _marshalingContext = _getMarshalingContextParam(
+          func.formalParameters,
+          0,
+        );
       case PropertyAccessorElement getter
           when getter.isInstanceImpl &&
               getter.isGetter &&
@@ -263,12 +281,17 @@ class _MarshalerInspector extends SimpleElementVisitor
         // Function getter
         final func = getter.type.returnType as FunctionType;
         returnType = func.returnType;
-        _marshalingContext = _getMarshalingContextParam(func.paramElts, 0);
+        _marshalingContext = _getMarshalingContextParam(
+          func.formalParameters,
+          0,
+        );
       case MethodElement callable when callable.isInstanceImpl:
         // method
         returnType = decl.returnType;
-        _marshalingContext =
-            _getMarshalingContextParam(decl.formalParameters, 0);
+        _marshalingContext = _getMarshalingContextParam(
+          decl.formalParameters,
+          0,
+        );
       default:
         // unsupported
         return null;
@@ -286,23 +309,26 @@ class _MarshalerInspector extends SimpleElementVisitor
   }
 
   Element? _unmarshal;
-  ParameterElement? _unmarshalingContext;
+  FormalParameterElement? _unmarshalingContext;
   DartType? _unmarshalType;
 
   (Element, DartType)? _getUnmarshalImpl(Element element) {
     // make sure this is the right element
-    final decl = element.baseElt;
+    final decl = element.baseElement;
     final name = decl.name;
     if (name != 'unmarshal' || !decl.isPublic) return null;
 
-    final ParameterElement? param;
+    final FormalParameterElement? param;
     final DartType returnType;
     switch (decl) {
       case FieldElement fld when fld.isStaticImpl && (fld.type is FunctionType):
         // Function field
         final func = fld.type as FunctionType;
-        param = func.paramElts.firstOrNull?.baseElement;
-        _unmarshalingContext = _getMarshalingContextParam(func.paramElts, 1);
+        param = func.formalParameters.firstOrNull?.baseElement;
+        _unmarshalingContext = _getMarshalingContextParam(
+          func.formalParameters,
+          1,
+        );
         returnType = func.returnType;
       case PropertyAccessorElement getter
           when getter.isGetter &&
@@ -310,16 +336,21 @@ class _MarshalerInspector extends SimpleElementVisitor
               (getter.type.returnType is FunctionType):
         // Function getter
         final func = getter.type.returnType as FunctionType;
-        param = func.paramElts.firstOrNull?.baseElement;
-        _unmarshalingContext = _getMarshalingContextParam(func.paramElts, 1);
+        param = func.formalParameters.firstOrNull?.baseElement;
+        _unmarshalingContext = _getMarshalingContextParam(
+          func.formalParameters,
+          1,
+        );
         returnType = func.returnType;
       case ExecutableElement callable
           when (callable is MethodElement || callable.isStaticImpl) ||
               (callable is ConstructorElement):
         // method or constructor
         param = callable.formalParameters.firstOrNull?.baseElement;
-        _unmarshalingContext =
-            _getMarshalingContextParam(decl.formalParameters, 1);
+        _unmarshalingContext = _getMarshalingContextParam(
+          decl.formalParameters,
+          1,
+        );
         returnType = callable.returnType;
       default:
         // unsupported
@@ -378,17 +409,17 @@ class _MarshalerInspector extends SimpleElementVisitor
 extension on ManagedType {
   Element selectClosestImpl(Element candidate, Element? current) {
     if (current == null) return candidate;
-    final type = dartType, target = type?.elt?.baseElt;
+    final type = dartType, target = type?.element?.baseElement;
     if (target == null) return current;
     type as DartType;
 
-    var candidateOwner = candidate.enclosingElt?.baseElt;
+    var candidateOwner = candidate.enclosingElement?.baseElement;
     if (candidateOwner is ExtensionElement) {
-      candidateOwner = candidateOwner.extendedType.elt?.baseElt;
+      candidateOwner = candidateOwner.extendedType.element?.baseElement;
     }
-    var currentOwner = current.enclosingElt?.baseElt;
+    var currentOwner = current.enclosingElement?.baseElement;
     if (currentOwner is ExtensionElement) {
-      currentOwner = currentOwner.extendedType.elt?.baseElt;
+      currentOwner = currentOwner.extendedType.element?.baseElement;
     }
 
     // if we have an exact match, return it
@@ -403,7 +434,7 @@ extension on ManagedType {
 
 extension on List<DartType> {
   void registerSuperTypes(DartType t) {
-    var elt = t.elt?.baseElt;
+    var elt = t.element?.baseElement;
     if (elt is InterfaceElement) {
       if (elt.supertype != null) {
         final superType = elt.supertype!;

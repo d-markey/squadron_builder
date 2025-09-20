@@ -1,10 +1,10 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of '../clock.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 7.1.6 (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 8.0.0 (Squadron 7.1.2+1)
 // **************************************************************************
 
 /// Command ids used in operations map
@@ -13,17 +13,18 @@ const int _$infiniteClockId = 1;
 /// WorkerService operations for Clock
 extension on Clock {
   OperationsMap _$getOperations() => OperationsMap({
-        _$infiniteClockId: ($req) {
-          final Stream<int> $res;
-          try {
-            final $dsr = _$Deser(contextAware: false);
-            $res = infiniteClock(
-                periodInMs: $dsr.$0($req.args[0]),
-                color: $dsr.$2($req.args[1]));
-          } finally {}
-          return $res;
-        },
-      });
+    _$infiniteClockId: ($req) {
+      final Stream<int> $res;
+      try {
+        final $dsr = _$Deser(contextAware: false);
+        $res = infiniteClock(
+          periodInMs: $dsr.$0($req.args[0]),
+          color: $dsr.$2($req.args[1]),
+        );
+      } finally {}
+      return $res;
+    },
+  });
 }
 
 /// Invoker for Clock, implements the public interface to invoke the
@@ -58,25 +59,41 @@ WorkerService $ClockInitializer(WorkerRequest $req) => _$Clock$WorkerService();
 base class _$ClockWorker extends Worker
     with _$Clock$Invoker, _$Clock$Facade
     implements Clock {
-  _$ClockWorker(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($ClockActivator(Squadron.platformType),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$ClockWorker({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : super(
+         $ClockActivator(Squadron.platformType),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
-  _$ClockWorker.vm(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($ClockActivator(SquadronPlatformType.vm),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$ClockWorker.vm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : super(
+         $ClockActivator(SquadronPlatformType.vm),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
-  _$ClockWorker.js(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($ClockActivator(SquadronPlatformType.js),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$ClockWorker.js({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : super(
+         $ClockActivator(SquadronPlatformType.js),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
-  _$ClockWorker.wasm(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : super($ClockActivator(SquadronPlatformType.wasm),
-            threadHook: threadHook, exceptionManager: exceptionManager);
+  _$ClockWorker.wasm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : super(
+         $ClockActivator(SquadronPlatformType.wasm),
+         threadHook: threadHook,
+         exceptionManager: exceptionManager,
+       );
 
   @override
   List? getStartArgs() => null;
@@ -90,30 +107,51 @@ base class ClockWorker with Releasable implements _$ClockWorker {
     _finalizer.attach(this, _$worker, detach: _$worker._$detachToken);
   }
 
-  ClockWorker(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : this._(_$ClockWorker(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  ClockWorker({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : this._(
+         _$ClockWorker(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
-  ClockWorker.vm(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : this._(_$ClockWorker.vm(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  ClockWorker.vm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : this._(
+         _$ClockWorker.vm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
-  ClockWorker.js(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : this._(_$ClockWorker.js(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  ClockWorker.js({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : this._(
+         _$ClockWorker.js(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
-  ClockWorker.wasm(
-      {PlatformThreadHook? threadHook, ExceptionManager? exceptionManager})
-      : this._(_$ClockWorker.wasm(
-            threadHook: threadHook, exceptionManager: exceptionManager));
+  ClockWorker.wasm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+  }) : this._(
+         _$ClockWorker.wasm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+       );
 
   final _$ClockWorker _$worker;
 
-  static final Finalizer<_$ClockWorker> _finalizer =
-      Finalizer<_$ClockWorker>((w) {
+  static final Finalizer<_$ClockWorker> _finalizer = Finalizer<_$ClockWorker>((
+    w,
+  ) {
     try {
       _finalizer.detach(w._$detachToken);
       w.release();
@@ -155,7 +193,7 @@ base class ClockWorker with Releasable implements _$ClockWorker {
   bool get isStopped => _$worker.isStopped;
 
   @override
-// ignore: deprecated_member_use
+  // ignore: deprecated_member_use
   WorkerStat get stats => _$worker.stats;
 
   @override
@@ -174,28 +212,34 @@ base class ClockWorker with Releasable implements _$ClockWorker {
   Channel? getSharedChannel() => _$worker.getSharedChannel();
 
   @override
-  Future<dynamic> send(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.send(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
+  Future<dynamic> send(
+    int command, {
+    List args = const [],
+    CancelationToken? token,
+    bool inspectRequest = false,
+    bool inspectResponse = false,
+  }) => _$worker.send(
+    command,
+    args: args,
+    token: token,
+    inspectRequest: inspectRequest,
+    inspectResponse: inspectResponse,
+  );
 
   @override
-  Stream<dynamic> stream(int command,
-          {List args = const [],
-          CancelationToken? token,
-          bool inspectRequest = false,
-          bool inspectResponse = false}) =>
-      _$worker.stream(command,
-          args: args,
-          token: token,
-          inspectRequest: inspectRequest,
-          inspectResponse: inspectResponse);
+  Stream<dynamic> stream(
+    int command, {
+    List args = const [],
+    CancelationToken? token,
+    bool inspectRequest = false,
+    bool inspectResponse = false,
+  }) => _$worker.stream(
+    command,
+    args: args,
+    token: token,
+    inspectRequest: inspectRequest,
+    inspectResponse: inspectResponse,
+  );
 
   @override
   Object get _$detachToken => _$worker._$detachToken;
@@ -208,45 +252,57 @@ base class ClockWorker with Releasable implements _$ClockWorker {
 base class _$ClockWorkerPool extends WorkerPool<ClockWorker>
     with _$Clock$Facade
     implements Clock {
-  _$ClockWorkerPool(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : super(
-            (ExceptionManager exceptionManager) => ClockWorker(
-                threadHook: threadHook, exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$ClockWorkerPool({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (ExceptionManager exceptionManager) => ClockWorker(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
-  _$ClockWorkerPool.vm(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : super(
-            (ExceptionManager exceptionManager) => ClockWorker.vm(
-                threadHook: threadHook, exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$ClockWorkerPool.vm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (ExceptionManager exceptionManager) => ClockWorker.vm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
-  _$ClockWorkerPool.js(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : super(
-            (ExceptionManager exceptionManager) => ClockWorker.js(
-                threadHook: threadHook, exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$ClockWorkerPool.js({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (ExceptionManager exceptionManager) => ClockWorker.js(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
-  _$ClockWorkerPool.wasm(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : super(
-            (ExceptionManager exceptionManager) => ClockWorker.wasm(
-                threadHook: threadHook, exceptionManager: exceptionManager),
-            concurrencySettings: concurrencySettings,
-            exceptionManager: exceptionManager);
+  _$ClockWorkerPool.wasm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : super(
+         (ExceptionManager exceptionManager) => ClockWorker.wasm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+         ),
+         concurrencySettings: concurrencySettings,
+         exceptionManager: exceptionManager,
+       );
 
   @override
   Stream<int> infiniteClock({int periodInMs = 1000, ConsoleColor? color}) =>
@@ -261,53 +317,65 @@ base class ClockWorkerPool with Releasable implements _$ClockWorkerPool {
     _finalizer.attach(this, _$pool, detach: _$pool._$detachToken);
   }
 
-  ClockWorkerPool(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : this._(_$ClockWorkerPool(
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  ClockWorkerPool({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$ClockWorkerPool(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
-  ClockWorkerPool.vm(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : this._(_$ClockWorkerPool.vm(
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  ClockWorkerPool.vm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$ClockWorkerPool.vm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
-  ClockWorkerPool.js(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : this._(_$ClockWorkerPool.js(
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  ClockWorkerPool.js({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$ClockWorkerPool.js(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
-  ClockWorkerPool.wasm(
-      {PlatformThreadHook? threadHook,
-      ExceptionManager? exceptionManager,
-      ConcurrencySettings? concurrencySettings})
-      : this._(_$ClockWorkerPool.wasm(
-            threadHook: threadHook,
-            exceptionManager: exceptionManager,
-            concurrencySettings: concurrencySettings));
+  ClockWorkerPool.wasm({
+    PlatformThreadHook? threadHook,
+    ExceptionManager? exceptionManager,
+    ConcurrencySettings? concurrencySettings,
+  }) : this._(
+         _$ClockWorkerPool.wasm(
+           threadHook: threadHook,
+           exceptionManager: exceptionManager,
+           concurrencySettings: concurrencySettings,
+         ),
+       );
 
   final _$ClockWorkerPool _$pool;
 
   static final Finalizer<_$ClockWorkerPool> _finalizer =
       Finalizer<_$ClockWorkerPool>((p) {
-    try {
-      _finalizer.detach(p._$detachToken);
-      p.release();
-    } catch (_) {
-      // finalizers must not throw
-    }
-  });
+        try {
+          _finalizer.detach(p._$detachToken);
+          p.release();
+        } catch (_) {
+          // finalizers must not throw
+        }
+      });
 
   @override
   void release() {
@@ -374,30 +442,34 @@ base class ClockWorkerPool with Releasable implements _$ClockWorkerPool {
       _$pool.registerWorkerPoolListener(listener);
 
   @override
-  void unregisterWorkerPoolListener(
-          {void Function(WorkerStat, bool)? listener, Object? token}) =>
-      _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
+  void unregisterWorkerPoolListener({
+    void Function(WorkerStat, bool)? listener,
+    Object? token,
+  }) => _$pool.unregisterWorkerPoolListener(listener: listener, token: token);
 
   @override
-  Future<T> execute<T>(Future<T> Function(ClockWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.execute<T>(task, counter: counter);
+  Future<T> execute<T>(
+    Future<T> Function(ClockWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.execute<T>(task, counter: counter);
 
   @override
-  Stream<T> stream<T>(Stream<T> Function(ClockWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.stream<T>(task, counter: counter);
+  Stream<T> stream<T>(
+    Stream<T> Function(ClockWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.stream<T>(task, counter: counter);
 
   @override
   StreamTask<T> scheduleStreamTask<T>(
-          Stream<T> Function(ClockWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.scheduleStreamTask<T>(task, counter: counter);
+    Stream<T> Function(ClockWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.scheduleStreamTask<T>(task, counter: counter);
 
   @override
-  ValueTask<T> scheduleValueTask<T>(Future<T> Function(ClockWorker worker) task,
-          {PerfCounter? counter}) =>
-      _$pool.scheduleValueTask<T>(task, counter: counter);
+  ValueTask<T> scheduleValueTask<T>(
+    Future<T> Function(ClockWorker worker) task, {
+    PerfCounter? counter,
+  }) => _$pool.scheduleValueTask<T>(task, counter: counter);
 
   @override
   Object get _$detachToken => _$pool._$detachToken;

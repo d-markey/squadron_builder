@@ -19,7 +19,7 @@ class SquadronMethodReader extends DartMethodReader {
     var returnType = method.returnType;
     if (method.returnType.isDartAsyncFutureOr) {
       final valueType = (returnType as ParameterizedType).typeArguments.single;
-      returnType = method.libElt!.typeProvider.futureType(valueType);
+      returnType = method.library.typeProvider.futureType(valueType);
     }
     return typeManager.handleDartType(returnType);
   }
@@ -54,12 +54,12 @@ class SquadronMethodReader extends DartMethodReader {
     final type = patchedReturnType.dartType!;
     if (!type.isDartAsyncFuture && !type.isDartAsyncStream) {
       throw InvalidGenerationSourceError(
-          '${method.libElt!.name}: public service method '
-          '\'${method.enclosingElt?.displayName}.${method.name}\' must '
+          '${method.library.name}: public service method '
+          '\'${method.enclosingElement?.displayName}.${method.name}\' must '
           'return a Future, a FutureOr, a Stream, or void.');
     }
 
-    typeParameters.addAll(method.typeParamElts.map((e) => e.toString()));
+    typeParameters.addAll(method.typeParameters.map((e) => e.toString()));
 
     for (var n = 0; n < method.formalParameters.length; n++) {
       final param = method.formalParameters[n];

@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
 import 'package:pub_semver/pub_semver.dart';
 
-import '_analyzer_helpers.dart';
+import '_helpers.dart';
 
 /// Class for build step events (additional assets)
 @internal
@@ -108,8 +110,12 @@ class BuildStepCodeEvent extends BuildStepEvent {
     return false;
   }
 
-  void _import(AssetId asset, String library, String prefix,
-      [Map<String, String>? platformSpecific]) {
+  void _import(
+    AssetId asset,
+    String library,
+    String prefix, [
+    Map<String, String>? platformSpecific,
+  ]) {
     final imports = _assetImports.putIfAbsent(asset, () => {});
     library = library.trim();
     // library = library.trim();
@@ -136,15 +142,19 @@ class BuildStepCodeEvent extends BuildStepEvent {
     imports.removeWhere((key, value) => platformLibraries.contains(key));
   }
 
-  void import(AssetId asset, AssetId target,
-          {String prefix = '', Map<String, AssetId>? platformSpecific}) =>
-      _import(
-          asset,
-          asset.relativePathTo(target),
-          prefix,
-          platformSpecific?.map(
-            (key, value) => MapEntry(key, asset.relativePathTo(value)),
-          ));
+  void import(
+    AssetId asset,
+    AssetId target, {
+    String prefix = '',
+    Map<String, AssetId>? platformSpecific,
+  }) => _import(
+    asset,
+    asset.relativePathTo(target),
+    prefix,
+    platformSpecific?.map(
+      (key, value) => MapEntry(key, asset.relativePathTo(value)),
+    ),
+  );
 
   void importSquadron(AssetId asset, String alias) {
     _import(asset, 'package:squadron/squadron.dart', alias);
@@ -168,29 +178,19 @@ class BuildStepCodeEvent extends BuildStepEvent {
 /// Code event emitted when a library has been fully processed
 @internal
 class BuildStepDoneEvent extends BuildStepEvent {
-  BuildStepDoneEvent(super.buildStep, LibraryElement lib)
-      : languageVersion = lib.languageVersion.package;
+  BuildStepDoneEvent(super.buildStep, this.languageVersion);
 
   final Version languageVersion;
-}
 
-extension on AssetId {
-  String relativePathTo(AssetId target) {
-    final targetSegments = target.pathSegments;
-    final currentSegments = pathSegments;
+  final _completer = Completer<void>();
 
-    while (targetSegments.isNotEmpty &&
-        currentSegments.isNotEmpty &&
-        targetSegments.first == currentSegments.first) {
-      targetSegments.removeAt(0);
-      currentSegments.removeAt(0);
-    }
+  Future<void> get future => _completer.future;
 
-    while (currentSegments.length > 1) {
-      targetSegments.insert(0, '..');
-      currentSegments.removeAt(0);
-    }
+  void success() {
+    if (!_completer.isCompleted) _completer.complete();
+  }
 
-    return targetSegments.join('/');
+  void failure(Object error, [StackTrace? st]) {
+    if (!_completer.isCompleted) _completer.completeError(error, st);
   }
 }
