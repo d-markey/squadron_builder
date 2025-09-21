@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:source_gen_test/source_gen_test.dart';
 import 'package:test/test.dart';
 
+import 'squadron_utils.dart';
 import 'utils.dart';
 
 void main() async {
@@ -13,18 +14,25 @@ void main() async {
       try {
         final buildResult = await build(
           'base_types/int_service.dart',
-          buildOptions[#withFinalizers],
+          buildOptionsWithFinalizers,
         );
 
         final workerOutput = buildResult.outputs.worker;
         expect(workerOutput, isNotNull);
         final workerSrc = buildResult.getGeneratedContents(workerOutput!);
 
+        expect(workerSrc, contains('class _\$IntServiceWorker extends Worker'));
         expect(workerSrc, contains('class IntServiceWorker'));
         expect(workerSrc, contains('IntServiceWorker.vm'));
         expect(workerSrc, isNot(contains('IntServiceWorker.wasm')));
         expect(workerSrc, isNot(contains('IntServiceWorker.js')));
-        expect(workerSrc, contains('class IntServiceWorkerPool'));
+        expect(workerSrc, contains('class _\$IntServiceWorkerPool'));
+        expect(
+          workerSrc,
+          contains(
+            'class IntServiceWorkerPool extends WorkerPool<IntServiceWorker>',
+          ),
+        );
         expect(workerSrc, contains('class _\$Deser'));
         expect(workerSrc, isNot(contains('class _\$Ser')));
         expect(
@@ -66,7 +74,7 @@ void main() async {
       try {
         final buildResult = await build(
           'base_types/datetime_service.dart',
-          buildOptions[#withFinalizers],
+          buildOptionsWithoutFinalizers,
         );
 
         final workerOutput = buildResult.outputs.worker;

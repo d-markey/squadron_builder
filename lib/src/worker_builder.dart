@@ -22,7 +22,7 @@ const defaultBuilderOptions = BuilderOptions({
 /// * `with_finalizers`: to activate automatic finalization of workers/worker pools.
 Builder workerBuilder(BuilderOptions options) {
   final withFinalizers = options.config['with_finalizers'] ?? false;
-  if (withFinalizers != null && withFinalizers is! bool) {
+  if (withFinalizers is! bool) {
     throw ArgumentError.value(
       withFinalizers,
       'with_finalizers',

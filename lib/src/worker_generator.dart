@@ -213,8 +213,8 @@ String _noFormatting(String source, Version languageVersion) => source;
 @internal
 WorkerGenerator getTestWorkerGenerator({
   Formatter? formatOutput,
-  bool withFinalizers = false,
+  BuilderOptions? options,
 }) => WorkerGenerator._test(
   formatOutput: formatOutput,
-  withFinalizers: withFinalizers,
+  withFinalizers: options?.config['with_finalizers'] ?? false,
 );
