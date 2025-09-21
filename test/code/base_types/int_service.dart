@@ -1,16 +1,13 @@
 import 'dart:async';
 
-import 'package:source_gen_test/source_gen_test.dart';
 import 'package:squadron/squadron.dart';
 
-import 'gen/int_service.activator.g.dart';
+import 'goldens/int_service.activator.g.dart';
 
-part 'gen/int_service.worker.g.dart';
+part 'goldens/int_service.worker.g.dart';
 
-@ShouldGenerateFile('gen/int_service.worker.g.dart', partOfCurrent: true)
-@ShouldGenerateFile('gen/int_service.activator.g.dart', partOfCurrent: false)
 @SquadronService.vm()
-class MyService {
+class IntService {
   @squadronMethod
   FutureOr<int> identity(int x) => x;
 
