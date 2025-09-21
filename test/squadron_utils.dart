@@ -1,4 +1,5 @@
 import 'package:build/build.dart';
+import 'package:source_gen_test/source_gen_test.dart';
 
 const testOptions = BuilderOptions({
   'build_extensions': {
@@ -20,17 +21,19 @@ final buildOptionsWithoutFinalizers = testOptions.overrideWith(
   const BuilderOptions({'with_finalizers': false}),
 );
 
-extension SquadronOutputsExt on Iterable<AssetId> {
+extension SquadronOutputsExt on TestBuildResult {
   AssetId? get worker =>
-      where(($) => $.path.endsWith('.worker.g.dart')).firstOrNull;
+      outputs.where(($) => $.path.endsWith('.worker.g.dart')).firstOrNull;
 
-  AssetId? get vm => where(($) => $.path.endsWith('.vm.g.dart')).firstOrNull;
+  AssetId? get vm =>
+      outputs.where(($) => $.path.endsWith('.vm.g.dart')).firstOrNull;
 
-  AssetId? get web => where(($) => $.path.endsWith('.web.g.dart')).firstOrNull;
+  AssetId? get web =>
+      outputs.where(($) => $.path.endsWith('.web.g.dart')).firstOrNull;
 
   AssetId? get stub =>
-      where(($) => $.path.endsWith('.stub.g.dart')).firstOrNull;
+      outputs.where(($) => $.path.endsWith('.stub.g.dart')).firstOrNull;
 
   AssetId? get activator =>
-      where(($) => $.path.endsWith('.activator.g.dart')).firstOrNull;
+      outputs.where(($) => $.path.endsWith('.activator.g.dart')).firstOrNull;
 }

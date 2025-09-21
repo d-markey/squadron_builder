@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:source_gen_test/source_gen_test.dart';
 import 'package:test/test.dart';
 
@@ -10,63 +8,87 @@ void main() async {
   initializeBuildLogTracking();
 
   group('BASE TYPES', () {
-    test('- int', () async {
+    test('- int (without finalizers)', () async {
+      try {
+        final buildResult = await build(
+          'base_types/int_service.dart',
+          buildOptionsWithoutFinalizers,
+        );
+
+        expect(buildResult.web, isNull);
+        expect(buildResult.stub, isNull);
+
+        expectOutputContains(buildResult.worker, buildResult, {
+          'WorkerService \$IntServiceInitializer(WorkerRequest \$req)',
+          'class IntServiceWorker',
+          'IntServiceWorker.vm',
+          'class IntServiceWorkerPool',
+          'class _\$Deser',
+        });
+
+        expectOutputDoesNotContain(buildResult.worker, buildResult, {
+          'class _\$IntServiceWorker',
+          'IntServiceWorker.wasm',
+          'IntServiceWorker.js',
+          'class _\$IntServiceWorkerPool',
+          'class _\$Ser',
+        });
+
+        expectOutputContains(buildResult.vm, buildResult, {
+          'void _start\$IntService(WorkerRequest command)',
+          'EntryPoint \$getIntServiceActivator(SquadronPlatformType platform)',
+        });
+
+        expectOutputContains(buildResult.activator, buildResult, {
+          'const \$IntServiceActivator',
+        });
+      } finally {
+        checkBuildLogs();
+      }
+    });
+
+    test('- int (with finalizers)', () async {
       try {
         final buildResult = await build(
           'base_types/int_service.dart',
           buildOptionsWithFinalizers,
         );
 
-        final workerOutput = buildResult.outputs.worker;
-        expect(workerOutput, isNotNull);
-        final workerSrc = buildResult.getGeneratedContents(workerOutput!);
+        expect(buildResult.web, isNull);
+        expect(buildResult.stub, isNull);
 
-        expect(workerSrc, contains('class _\$IntServiceWorker extends Worker'));
-        expect(workerSrc, contains('class IntServiceWorker'));
-        expect(workerSrc, contains('IntServiceWorker.vm'));
-        expect(workerSrc, isNot(contains('IntServiceWorker.wasm')));
-        expect(workerSrc, isNot(contains('IntServiceWorker.js')));
-        expect(workerSrc, contains('class _\$IntServiceWorkerPool'));
-        expect(
-          workerSrc,
-          contains(
-            'class IntServiceWorkerPool extends WorkerPool<IntServiceWorker>',
-          ),
-        );
-        expect(workerSrc, contains('class _\$Deser'));
-        expect(workerSrc, isNot(contains('class _\$Ser')));
-        expect(
-          workerSrc,
-          contains(
-            'WorkerService \$IntServiceInitializer(WorkerRequest \$req)',
-          ),
-        );
+        expectOutputContains(buildResult.worker, buildResult, {
+          'WorkerService \$IntServiceInitializer(WorkerRequest \$req)',
+          'class _\$IntServiceWorker',
+          'class IntServiceWorker',
+          'IntServiceWorker.vm',
+          'class _\$IntServiceWorkerPool',
+          'class IntServiceWorkerPool',
+          'class _\$Deser',
+        });
 
-        final vmOutput = buildResult.outputs.vm;
-        expect(vmOutput, isNotNull);
-        final vmSrc = buildResult.getGeneratedContents(vmOutput!);
+        expectOutputDoesNotContain(buildResult.worker, buildResult, {
+          'IntServiceWorker.wasm',
+          'IntServiceWorker.js',
+          'class _\$Ser',
+        });
 
-        expect(
-          vmSrc,
-          contains(
-            'EntryPoint \$getIntServiceActivator(SquadronPlatformType platform)',
-          ),
-        );
-        expect(
-          vmSrc,
-          contains('void _start\$IntService(WorkerRequest command)'),
-        );
+        expectOutputContains(buildResult.vm, buildResult, {
+          'void _start\$IntService(WorkerRequest command)',
+          'EntryPoint \$getIntServiceActivator(SquadronPlatformType platform)',
+        });
 
-        final activatorOutput = buildResult.outputs.activator;
-        expect(activatorOutput, isNotNull);
-        final activatorSrc = buildResult.getGeneratedContents(activatorOutput!);
-
-        expect(activatorSrc, contains('const \$IntServiceActivator'));
-
-        expect(buildResult.outputs.web, isNull);
-        expect(buildResult.outputs.stub, isNull);
+        expectOutputContains(buildResult.activator, buildResult, {
+          'const \$IntServiceActivator',
+        });
       } finally {
-        checkBuildLogs();
+        checkBuildLogs({
+          'finalizable workers',
+          'requires',
+          'package:using',
+          'package:cancelation_token',
+          'package:logger',
+        });
       }
     });
 
@@ -77,57 +99,38 @@ void main() async {
           buildOptionsWithoutFinalizers,
         );
 
-        final workerOutput = buildResult.outputs.worker;
-        expect(workerOutput, isNotNull);
-        final workerSrc = buildResult.getGeneratedContents(workerOutput!);
+        expect(buildResult.stub, isNotNull);
 
-        expect(workerSrc, contains('class DateTimeServiceWorker'));
-        expect(workerSrc, contains('DateTimeServiceWorker.vm'));
-        expect(workerSrc, contains('DateTimeServiceWorker.wasm'));
-        expect(workerSrc, contains('DateTimeServiceWorker.js'));
-        expect(workerSrc, contains('class DateTimeServiceWorkerPool'));
-        expect(workerSrc, contains('class _\$Deser'));
-        expect(workerSrc, isNot(contains('class _\$Ser')));
-        expect(
-          workerSrc,
-          contains(
-            'WorkerService \$DateTimeServiceInitializer(WorkerRequest \$req)',
-          ),
-        );
+        expectOutputContains(buildResult.worker, buildResult, {
+          'WorkerService \$DateTimeServiceInitializer(WorkerRequest \$req)',
+          'class DateTimeServiceWorker',
+          'DateTimeServiceWorker.vm',
+          'DateTimeServiceWorker.wasm',
+          'DateTimeServiceWorker.js',
+          'class DateTimeServiceWorkerPool',
+          'class _\$Deser',
+        });
 
-        final vmOutput = buildResult.outputs.vm;
-        expect(vmOutput, isNotNull);
-        final vmSrc = buildResult.getGeneratedContents(vmOutput!);
+        expectOutputDoesNotContain(buildResult.worker, buildResult, {
+          'class _\$Ser',
+        });
 
-        expect(
-          vmSrc,
-          contains(
-            'EntryPoint \$getDateTimeServiceActivator(SquadronPlatformType platform)',
-          ),
-        );
-        expect(
-          vmSrc,
-          contains('void _start\$DateTimeService(WorkerRequest command)'),
-        );
+        expectOutputContains(buildResult.vm, buildResult, {
+          'void _start\$DateTimeService(WorkerRequest command)',
+          'EntryPoint \$getDateTimeServiceActivator(SquadronPlatformType platform)',
+        });
 
-        final activatorOutput = buildResult.outputs.activator;
-        expect(activatorOutput, isNotNull);
-        final activatorSrc = buildResult.getGeneratedContents(activatorOutput!);
+        expectOutputContains(buildResult.web, buildResult, {
+          'void main()',
+          'EntryPoint \$getDateTimeServiceActivator(SquadronPlatformType platform)',
+        });
 
-        expect(activatorSrc, contains('const \$DateTimeServiceActivator'));
-
-        expect(buildResult.outputs.web, isNotNull);
-        expect(buildResult.outputs.stub, isNotNull);
+        expectOutputContains(buildResult.activator, buildResult, {
+          'const \$DateTimeServiceActivator',
+        });
       } finally {
         checkBuildLogs();
       }
     });
   }, timeout: Timeout.none);
-}
-
-void checkBuildLogs() {
-  for (var log in buildLogItems) {
-    stderr.writeln('Build Log >   $log');
-  }
-  clearBuildLog();
 }
