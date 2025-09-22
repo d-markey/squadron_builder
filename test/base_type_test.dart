@@ -112,6 +112,8 @@ void main() async {
         });
 
         expectOutputDoesNotContain(buildResult.worker, buildResult, {
+          'class _\$DateTimeServiceWorker',
+          'class _\$DateTimeServiceWorkerPool',
           'class _\$Ser',
         });
 

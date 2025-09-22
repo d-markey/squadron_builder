@@ -81,8 +81,10 @@ class ServiceResponseOfStringToByteBuffer
       bytes[offset + 3];
 
   @override
-  ServiceResponse<String> unmarshal(ByteBuffer x,
-      [MarshalingContext? context]) {
+  ServiceResponse<String> unmarshal(
+    ByteBuffer x, [
+    MarshalingContext? context,
+  ]) {
     final bytes = Uint8List.view(x);
     final reslen = _readInt(bytes, 0);
     final res = utf8.decode(bytes.sublist(4, 4 + reslen));
@@ -102,7 +104,8 @@ class ServiceResponseToJson
       jsonEncode(data.toJson());
 
   @override
-  ServiceResponse<String> unmarshal(String data,
-          [MarshalingContext? context]) =>
-      ServiceResponse<String>.fromJson(jsonDecode(data));
+  ServiceResponse<String> unmarshal(
+    String data, [
+    MarshalingContext? context,
+  ]) => ServiceResponse<String>.fromJson(jsonDecode(data));
 }

@@ -10,7 +10,7 @@ part 'type_manager_pck_uri.dart';
 
 class TypeManager with _ImportedTypesMixin {
   TypeManager(this.library)
-      : dartCoreAlias = library.getPrefixFor(PckUri.dartCore) ?? '';
+    : dartCoreAlias = library.getPrefixFor(PckUri.dartCore) ?? '';
 
   final LibraryElement library;
   final String dartCoreAlias;
@@ -35,9 +35,10 @@ class TypeManager with _ImportedTypesMixin {
   }
 
   List<String> checkRequiredImports(List<ImportedType> requiredTypes) {
-    final missingImports = requiredTypes.map((t) => t.pckUri).toSet()
-      ..removeWhere(
-          (pckUri) => library.allImports.any((l) => l.isFromPackage(pckUri)));
+    final missingImports =
+        requiredTypes.map((t) => t.pckUri).toSet()..removeWhere(
+          (pckUri) => library.allImports.any((l) => l.isFromPackage(pckUri)),
+        );
     return missingImports
         .map((s) => s.endsWith('/') ? s.substring(0, s.length - 1) : s)
         .toList();
@@ -91,9 +92,13 @@ class TypeManager with _ImportedTypesMixin {
     final baseMarshaler = type?.implementedTypes(TSquadronMarshaler);
     if (baseMarshaler == null || baseMarshaler.isEmpty) {
       throw InvalidGenerationSourceError(
-          'Invalid marshaler for $element: $marshaler');
+        'Invalid marshaler for $element: $marshaler',
+      );
     }
     return Marshaler.explicit(
-        this, marshaler, handleDartType(baseMarshaler.single));
+      this,
+      marshaler,
+      handleDartType(baseMarshaler.single),
+    );
   }
 }

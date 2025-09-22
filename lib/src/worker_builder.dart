@@ -3,6 +3,7 @@ import 'package:source_gen/source_gen.dart';
 
 import 'worker_generator.dart';
 
+/// Default builder options
 const defaultBuilderOptions = BuilderOptions({
   'build_extensions': {
     '.dart': [

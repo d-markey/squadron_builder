@@ -24,15 +24,33 @@ class SquadronParameter {
 
   static SquadronParameter opt(String name, ManagedType type, bool named) =>
       SquadronParameter._(
-          name, type, null, named, !named, false, false, null, null, -1, false);
+        name,
+        type,
+        null,
+        named,
+        !named,
+        false,
+        false,
+        null,
+        null,
+        -1,
+        false,
+      );
 
-  static SquadronParameter from(FormalParameterElement param, bool isToken,
-      Marshaler? marshaler, int serIdx, TypeManager typeManager) {
+  static SquadronParameter from(
+    FormalParameterElement param,
+    bool isToken,
+    Marshaler? marshaler,
+    int serIdx,
+    TypeManager typeManager,
+  ) {
     var name = param.name ?? '';
 
     if (name.isEmpty) {
-      throw InvalidGenerationSourceError('Parameter name cannot be null '
-          'for ${param.enclosingElement?.name}.');
+      throw InvalidGenerationSourceError(
+        'Parameter name cannot be null '
+        'for ${param.enclosingElement?.name}.',
+      );
     }
 
     var type = param.type;
@@ -45,8 +63,10 @@ class SquadronParameter {
         name = fld.name ?? '';
 
         if (name.isEmpty) {
-          throw InvalidGenerationSourceError('Parameter name cannot be null '
-              'for ${fld.enclosingElement.name}.');
+          throw InvalidGenerationSourceError(
+            'Parameter name cannot be null '
+            'for ${fld.enclosingElement.name}.',
+          );
         }
 
         while (name.startsWith('_')) {

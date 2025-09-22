@@ -31,18 +31,10 @@ mixin _ImportedTypesMixin {
       'ValueTask': ImportedType.unset,
       'StreamTask': ImportedType.unset,
     },
-    PckUri.cancelationToken: {
-      'CancelationToken': ImportedType.unset,
-    },
-    PckUri.using: {
-      'Releasable': ImportedType.unset,
-    },
-    PckUri.logger: {
-      'Logger': ImportedType.unset,
-    },
-    PckUri.dartTypedData: {
-      'TypedData': ImportedType.unset,
-    },
+    PckUri.cancelationToken: {'CancelationToken': ImportedType.unset},
+    PckUri.using: {'Releasable': ImportedType.unset},
+    PckUri.logger: {'Logger': ImportedType.unset},
+    PckUri.dartTypedData: {'TypedData': ImportedType.unset},
     PckUri.dartAsync: {
       'FutureOr': ImportedType.unset,
       'Future': ImportedType.unset,

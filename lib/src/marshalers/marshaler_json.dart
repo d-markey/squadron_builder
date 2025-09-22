@@ -2,9 +2,12 @@ part of 'marshaler.dart';
 
 class _JsonMarshaler extends Marshaler {
   _JsonMarshaler(
-      this._typeName, String? deserExt, String? serExt, this._forceCast)
-      : _deserExt = deserExt ?? _typeName,
-        _serExt = serExt ?? '';
+    this._typeName,
+    String? deserExt,
+    String? serExt,
+    this._forceCast,
+  ) : _deserExt = deserExt ?? _typeName,
+      _serExt = serExt ?? '';
 
   final String _typeName;
   final String _deserExt;

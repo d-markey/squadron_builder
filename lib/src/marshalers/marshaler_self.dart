@@ -2,21 +2,21 @@ part of 'marshaler.dart';
 
 class _SelfMarshaler extends Marshaler {
   _SelfMarshaler(
-      this._typeName,
-      String? deserExt,
-      String? serExt,
-      FormalParameterElement? marshalingContext,
-      FormalParameterElement? unmarshalingContext,
-      this._forceCast)
-      : _deserExt = deserExt ?? _typeName,
-        _serExt = serExt ?? '',
-        _contextOut = _getContextArg(marshalingContext),
-        _contextIn = _getContextArg(unmarshalingContext);
+    this._typeName,
+    String? deserExt,
+    String? serExt,
+    FormalParameterElement? marshalingContext,
+    FormalParameterElement? unmarshalingContext,
+    this._forceCast,
+  ) : _deserExt = deserExt ?? _typeName,
+      _serExt = serExt ?? '',
+      _contextOut = _getContextArg(marshalingContext),
+      _contextIn = _getContextArg(unmarshalingContext);
 
   static String _getContextArg(FormalParameterElement? ctx) {
     final name = ctx?.name ?? '';
     return (name.isEmpty)
-          ? ''
+        ? ''
         : ((ctx?.isNamed ?? false) ? '$name: this' : 'this');
   }
 

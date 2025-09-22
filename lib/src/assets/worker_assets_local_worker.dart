@@ -2,8 +2,10 @@ part of 'worker_assets.dart';
 
 extension on WorkerAssets {
   /// Local Worker
-  String _generateLocal(List<SquadronMethodReader> commands,
-      List<DartMethodReader> unimplemented) {
+  String _generateLocal(
+    List<SquadronMethodReader> commands,
+    List<DartMethodReader> unimplemented,
+  ) {
     final localWorkerClient = WorkerAssets.getLocalWorkerClientFor(_name);
     final localWorkerExt = '\$${_name}LocalWorkerExt';
 

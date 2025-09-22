@@ -21,6 +21,7 @@ void main() async {
   final curSrc = await File(versionPath).readAsString();
   final src = '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
+/// Current `squadron_builder` version.
 const version = '$version';
 ''';
   if (curSrc != src) {

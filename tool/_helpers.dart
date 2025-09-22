@@ -5,7 +5,10 @@ import 'package:path/path.dart' as path;
 final projectRoot = findRootOfProject();
 
 List<String> overrideDefaultArgs(
-    List<String> args, String def, Iterable<String> defaultArgs) {
+  List<String> args,
+  String def,
+  Iterable<String> defaultArgs,
+) {
   args = args.toList(); // make args a modifiable list
   if (args.isEmpty || args.contains(def)) {
     args.remove(def);
@@ -39,7 +42,8 @@ String findRootOfProject() {
       .isEmpty) {
     if (dir == dir.parent) {
       throw Exception(
-          'The tool must be run from the root or a subdirectory of your project.');
+        'The tool must be run from the root or a subdirectory of your project.',
+      );
     }
     dir = dir.parent;
   }

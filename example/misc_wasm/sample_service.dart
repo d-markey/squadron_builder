@@ -32,7 +32,7 @@ class DataIn {
       SomeTransferable(payload);
 
   DataIn.unmarshal(SomeTransferable transferable, {MarshalingContext? context})
-      : this(transferable.data);
+    : this(transferable.data);
 
   Map toJson() => {'pld': payload};
 

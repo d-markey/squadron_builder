@@ -43,13 +43,20 @@ Computing with FibServiceWorkerPool (multi-threaded in $maxWorkers dedicated Iso
   The timer triggers periodically.
 ''');
   final concurrency = ConcurrencySettings(
-      minWorkers: 1, maxWorkers: maxWorkers, maxParallel: 1);
+    minWorkers: 1,
+    maxWorkers: maxWorkers,
+    maxParallel: 1,
+  );
   final pool = FibServiceWorkerPool(concurrencySettings: concurrency);
   await pool.start();
   await computeWith(pool, start, count);
-  print(pool.fullStats
-      .map((s) => '  * Stats for pool worker ${s.workerHashCode}: ${s.dump()}')
-      .join('\n'));
+  print(
+    pool.fullStats
+        .map(
+          (s) => '  * Stats for pool worker ${s.workerHashCode}: ${s.dump()}',
+        )
+        .join('\n'),
+  );
   pool.stop();
 
   print('');
@@ -59,9 +66,10 @@ Computing with FibServiceWorkerPool (multi-threaded in $maxWorkers dedicated Iso
 Future computeWith(FibService service, int start, int count) async {
   final sw = Stopwatch()..start();
   // start all computations
-  final computations = Iterable<int>.generate(count)
-      .map((i) => service.fibonacci(start + i))
-      .toList();
+  final computations =
+      Iterable<int>.generate(
+        count,
+      ).map((i) => service.fibonacci(start + i)).toList();
   // wait for results
   final results = await Future.wait(computations);
   // display results
@@ -78,9 +86,11 @@ class Monitor {
 
   void _tick(Timer t) {
     final d = t.tick - _lastTick;
-    print((d > 1)
-        ? '  tick #${t.tick} - skipped $d ticks!'
-        : '  tick #${t.tick}...');
+    print(
+      (d > 1)
+          ? '  tick #${t.tick} - skipped $d ticks!'
+          : '  tick #${t.tick}...',
+    );
     _lastTick = t.tick;
   }
 

@@ -2,15 +2,20 @@ part of 'worker_assets.dart';
 
 extension on WorkerAssets {
   /// Worker pool
-  String _generatePool(List<SquadronMethodReader> commands,
-      List<DartMethodReader> unimplemented, bool finalizable) {
+  String _generatePool(
+    List<SquadronMethodReader> commands,
+    List<DartMethodReader> unimplemented,
+    bool finalizable,
+  ) {
     final workerParams = _service.parameters.clone();
     workerParams.addOptional('threadHook', TPlatformThreadHook);
     final em = workerParams.addOptional('exceptionManager', TExceptionManager);
 
     final poolParams = workerParams.clone();
-    final cs =
-        poolParams.addOptional('concurrencySettings', TConcurrencySettings);
+    final cs = poolParams.addOptional(
+      'concurrencySettings',
+      TConcurrencySettings,
+    );
 
     final publicWorkerPool = '${_service.name}WorkerPool';
     final workerPool = finalizable ? '_\$$publicWorkerPool' : publicWorkerPool;

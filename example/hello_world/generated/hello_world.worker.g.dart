@@ -4,9 +4,10 @@
 part of '../hello_world.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.0.0 (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 8.0.0+1 (Squadron 7.1.2+1)
 // **************************************************************************
 
+// dart format width=80
 /// Command ids used in operations map
 const int _$sayHelloId = 1;
 

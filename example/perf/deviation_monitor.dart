@@ -61,16 +61,22 @@ class DeviationMonitor {
     if (diff.abs() > _maxDelay.abs()) {
       _maxDelay = diff;
     }
-    final deviation =
-        instr.trend(resolution.inMicroseconds, diff.inMicroseconds);
+    final deviation = instr.trend(
+      resolution.inMicroseconds,
+      diff.inMicroseconds,
+    );
     _last = DateTime.now();
     if (noisy) {
       if (delta > 0) {
-        logger?.w(() =>
-            '!! timer deviation = ${instr.percent(deviation)} (elapsed = $diff, delta = $delta, skipped = $_skippedTicks)');
+        logger?.w(
+          () =>
+              '!! timer deviation = ${instr.percent(deviation)} (elapsed = $diff, delta = $delta, skipped = $_skippedTicks)',
+        );
       } else {
-        logger?.w(() =>
-            '!! timer deviation = ${instr.percent(deviation)} (elapsed = $diff, delta = $delta, skipped = $_skippedTicks)');
+        logger?.w(
+          () =>
+              '!! timer deviation = ${instr.percent(deviation)} (elapsed = $diff, delta = $delta, skipped = $_skippedTicks)',
+        );
       }
     }
   }

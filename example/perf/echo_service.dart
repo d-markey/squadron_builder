@@ -18,14 +18,15 @@ part 'generated/echo_service.worker.g.dart';
 @sq.SquadronService(targetPlatform: sq.TargetPlatform.vm)
 class EchoService {
   EchoService([bool trace = false, cfg.ServiceConfig<int>? workloadDelay])
-      : _delay = Duration(microseconds: workloadDelay?.value ?? 50),
-        _logger = trace
-            ? Logger(
+    : _delay = Duration(microseconds: workloadDelay?.value ?? 50),
+      _logger =
+          trace
+              ? Logger(
                 filter: ProductionFilter(),
                 output: ConsoleOutput(),
                 printer: SimplePrinter(),
               )
-            : null;
+              : null;
 
   final Logger? _logger;
 
@@ -33,7 +34,8 @@ class EchoService {
 
   @sq.squadronMethod
   xxx.FutureOr<srv.ServiceResponse<String>?> jsonEchoWithJsonResult(
-      srv.ServiceRequest request) {
+    srv.ServiceRequest request,
+  ) {
     _logger?.t('jsonEchoWithJsonResult(${jsonEncode(request.toJson())})');
     _simulateWorkload();
     return srv.ServiceResponse('${request.payload} done');
@@ -41,7 +43,8 @@ class EchoService {
 
   @sq.squadronMethod
   xxx.FutureOr<srv.ServiceResponse<String>> explicitEchoWithJsonResult(
-      @ServiceRequestToString() srv.ServiceRequest request) {
+    @ServiceRequestToString() srv.ServiceRequest request,
+  ) {
     _logger?.t('explicitEchoWithJsonResult(${jsonEncode(request.toJson())})');
     _simulateWorkload();
     return srv.ServiceResponse('${request.payload} done');
@@ -50,7 +53,8 @@ class EchoService {
   @sq.squadronMethod
   @ServiceResponseOfStringToByteBuffer()
   xxx.FutureOr<srv.ServiceResponse<String>> jsonEchoWithExplicitResult(
-      srv.ServiceRequest request) {
+    srv.ServiceRequest request,
+  ) {
     _logger?.t('jsonEchoWithExplicitResult(${jsonEncode(request.toJson())})');
     _simulateWorkload();
     return srv.ServiceResponse('${request.payload} done');
@@ -59,10 +63,12 @@ class EchoService {
   @sq.squadronMethod
   @ServiceResponseOfStringToByteBuffer.instance
   xxx.FutureOr<srv.ServiceResponse<String>> explicitEchoWithExplicitResult(
-      @ServiceRequestGenericToString.instance srv.ServiceRequest request,
-      {CancelationToken? token}) {
-    _logger
-        ?.t('explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
+    @ServiceRequestGenericToString.instance srv.ServiceRequest request, {
+    CancelationToken? token,
+  }) {
+    _logger?.t(
+      'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})',
+    );
     _simulateWorkload();
     return srv.ServiceResponse('${request.payload} done');
   }
@@ -70,10 +76,12 @@ class EchoService {
   @sq.squadronMethod
   @ServiceResponseToJson()
   xxx.FutureOr<srv.ServiceResponse<String>> jsonEncodeEcho(
-      @ServiceRequestToString.instance srv.ServiceRequest request,
-      [CancelationToken? token]) {
-    _logger
-        ?.t('explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})');
+    @ServiceRequestToString.instance srv.ServiceRequest request, [
+    CancelationToken? token,
+  ]) {
+    _logger?.t(
+      'explicitEchoWithExplicitResult(${jsonEncode(request.toJson())})',
+    );
     _simulateWorkload();
     return srv.ServiceResponse('${request.payload} done');
   }

@@ -26,15 +26,15 @@ part 'worker_assets_worker_pool.dart';
 @internal
 class WorkerAssets with _ImportedTypesMixin {
   WorkerAssets(BuildStep buildStep, this._service, GeneratorContext context)
-      : _name = _service.name,
-        _worker = '${_service.name}Worker',
-        _workerService = '_\$${_service.name}\$WorkerService',
-        _serviceInvoker = '_\$${_service.name}\$Invoker',
-        _serviceFacade = '_\$${_service.name}\$Facade',
-        _serviceInitializer = '\$${_service.name}Initializer',
-        _serviceActivator = '${_service.name}Activator',
-        typeManager = context.typeManager,
-        _context = context.marshalingContext {
+    : _name = _service.name,
+      _worker = '${_service.name}Worker',
+      _workerService = '_\$${_service.name}\$WorkerService',
+      _serviceInvoker = '_\$${_service.name}\$Invoker',
+      _serviceFacade = '_\$${_service.name}\$Facade',
+      _serviceInitializer = '\$${_service.name}Initializer',
+      _serviceActivator = '${_service.name}Activator',
+      typeManager = context.typeManager,
+      _context = context.marshalingContext {
     for (var output in buildStep.allowedOutputs) {
       final path = output.path.toLowerCase();
       if (_service.vm && path.endsWith('.vm.g.dart')) {
@@ -116,11 +116,10 @@ class WorkerAssets with _ImportedTypesMixin {
   }
 
   /// Proxy for base worker/worker pool method
-  String _forwardOverride(String decl, String target, List<String> impl) => (impl
-              .length ==
-          2)
-      ? '$override_\n${impl.last}\n${decl.replaceAll('@TWorker@', _worker)} => $target.${impl.first};'
-      : '$override_ ${decl.replaceAll('@TWorker@', _worker)} => $target.${impl.single};';
+  String _forwardOverride(String decl, String target, List<String> impl) =>
+      (impl.length == 2)
+          ? '$override_\n${impl.last}\n${decl.replaceAll('@TWorker@', _worker)} => $target.${impl.first};'
+          : '$override_ ${decl.replaceAll('@TWorker@', _worker)} => $target.${impl.single};';
 
   // Unimplemented member
   String unimpl(String decl, {bool override = false, bool unused = false}) =>

@@ -38,9 +38,9 @@ class Data {
   }
 
   Data.unmarshal(Uint8List buffer)
-      : a = _readInt(buffer, 0),
-        b = (buffer[4] != 0),
-        c = utf8.decode(buffer.sublist(5));
+    : a = _readInt(buffer, 0),
+      b = (buffer[4] != 0),
+      c = utf8.decode(buffer.sublist(5));
 
   static void _writeInt(Uint8List buffer, int pos, int value) {
     buffer[pos] = (value & 0xFF000000) >> 24;

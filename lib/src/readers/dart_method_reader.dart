@@ -17,9 +17,9 @@ part 'squadron_method_reader.dart';
 /// Reader for non-service methods implemented in a SquadronService
 class DartMethodReader {
   DartMethodReader._(MethodElement method, this.typeManager, this.context)
-      : name = method.name ?? '',
-        returnType = typeManager.handleDartType(method.returnType),
-        parameters = SquadronParameters(typeManager);
+    : name = method.name ?? '',
+      returnType = typeManager.handleDartType(method.returnType),
+      parameters = SquadronParameters(typeManager);
 
   final String name;
 
@@ -37,9 +37,10 @@ class DartMethodReader {
   bool get isFutureOr => returnType.dartType?.isDartAsyncFutureOr ?? false;
 
   bool get hasReturnValue {
-    final type = (isFuture || isFutureOr || isStream)
-        ? returnType.typeArguments.single
-        : returnType;
+    final type =
+        (isFuture || isFutureOr || isStream)
+            ? returnType.typeArguments.single
+            : returnType;
     return type.dartType is! VoidType &&
         type.dartType is! NeverType &&
         !(type.dartType?.isDartCoreNull ?? false);
@@ -50,8 +51,11 @@ class DartMethodReader {
     method.formalParameters.forEach(parameters.register);
   }
 
-  static DartMethodReader? load(MethodElement method, TypeManager typeManager,
-      MarshalingContext context) {
+  static DartMethodReader? load(
+    MethodElement method,
+    TypeManager typeManager,
+    MarshalingContext context,
+  ) {
     final name = method.name ?? '';
     if (name == 'toString' || name == 'noSuchMethod') {
       // base Dart methods -- ignore
@@ -67,16 +71,23 @@ class DartMethodReader {
       final inspectRequest = annotation.getBool('inspectRequest');
       final inspectResponse = annotation.getBool('inspectResponse');
       final withContext = annotation.getNullableBool('withContext');
-      m = SquadronMethodReader._(method, inspectRequest, inspectResponse,
-          withContext, typeManager, context);
+      m = SquadronMethodReader._(
+        method,
+        inspectRequest,
+        inspectResponse,
+        withContext,
+        typeManager,
+        context,
+      );
     }
     m._init(method);
     return m;
   }
 
-  String get declaration => typeParameters.isEmpty
-      ? '$returnType $name($parameters)'
-      : '$returnType $name<${typeParameters.join(', ')}>($parameters)';
+  String get declaration =>
+      typeParameters.isEmpty
+          ? '$returnType $name($parameters)'
+          : '$returnType $name<${typeParameters.join(', ')}>($parameters)';
 
   String forwardTo(String target, WorkerAssets assets) =>
       '${assets.override_} $declaration => $target.$name(${parameters.asArguments()});';

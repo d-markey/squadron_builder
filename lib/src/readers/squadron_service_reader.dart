@@ -20,9 +20,9 @@ class SquadronServiceReader {
     this.js,
     this.wasm,
     this.baseUrl,
-  )   : name = clazz.name ?? '',
-        isBase = clazz.isBase,
-        parameters = SquadronParameters(_typeManager) {
+  ) : name = clazz.name ?? '',
+      isBase = clazz.isBase,
+      parameters = SquadronParameters(_typeManager) {
     _load(clazz);
   }
 
@@ -54,7 +54,8 @@ class SquadronServiceReader {
 
     if (worker && !clazz.isConstructable) {
       throw InvalidGenerationSourceError(
-          'Worker service classes must be constructable.');
+        'Worker service classes must be constructable.',
+      );
     }
 
     final ctorElement = clazz.unnamedConstructor;
@@ -84,20 +85,29 @@ class SquadronServiceReader {
 
         if (p.isCancelationToken) {
           throw InvalidGenerationSourceError(
-              'Cancelation tokens are not supported during service initialization.');
+            'Cancelation tokens are not supported during service initialization.',
+          );
         }
       }
     }
 
     methods.addAll(clazz.methods.where((m) => !m.isStatic));
-    accessors.addAll(clazz.getters
-        .where((a) => !a.isStatic && !fields.containsKey(a.property)));
-    accessors.addAll(clazz.setters
-        .where((a) => !a.isStatic && !fields.containsKey(a.property)));
+    accessors.addAll(
+      clazz.getters.where(
+        (a) => !a.isStatic && !fields.containsKey(a.property),
+      ),
+    );
+    accessors.addAll(
+      clazz.setters.where(
+        (a) => !a.isStatic && !fields.containsKey(a.property),
+      ),
+    );
   }
 
   static SquadronServiceReader? load(
-      ClassElement clazz, GeneratorContext context) {
+    ClassElement clazz,
+    GeneratorContext context,
+  ) {
     final reader = AnnotationReader<squadron.SquadronService>(clazz);
     if (reader.isEmpty) return null;
 
@@ -130,6 +140,15 @@ class SquadronServiceReader {
       baseUrl = baseUrl.substring(0, baseUrl.length - 1);
     }
     return SquadronServiceReader._(
-        clazz, context.typeManager, local, worker, pool, vm, js, wasm, baseUrl);
+      clazz,
+      context.typeManager,
+      local,
+      worker,
+      pool,
+      vm,
+      js,
+      wasm,
+      baseUrl,
+    );
   }
 }

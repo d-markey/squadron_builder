@@ -1,16 +1,20 @@
 part of 'managed_type.dart';
 
 class _ManagedMapType extends ManagedType {
-  _ManagedMapType._(String prefix, this.dartType, TypeManager typeManager,
-      NullabilitySuffix nullabilitySuffix)
-      : super._(prefix, dartType, typeManager, nullabilitySuffix);
+  _ManagedMapType._(
+    String prefix,
+    this.dartType,
+    TypeManager typeManager,
+    NullabilitySuffix nullabilitySuffix,
+  ) : super._(prefix, dartType, typeManager, nullabilitySuffix);
 
   @override
   _ManagedMapType _forceNullability(bool nullable) => _ManagedMapType._(
-      prefix,
-      dartType,
-      typeManager,
-      nullable ? NullabilitySuffix.question : NullabilitySuffix.none);
+    prefix,
+    dartType,
+    typeManager,
+    nullable ? NullabilitySuffix.question : NullabilitySuffix.none,
+  );
 
   @override
   final ParameterizedType dartType;

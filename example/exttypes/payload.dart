@@ -25,13 +25,13 @@ extension type Payload._(List _payload) implements Object {
   }
 
   Map<String, dynamic> get props => {
-        'id': id,
-        'name': name,
-        'success': success,
-        'created': created,
-        'modified': modified,
-        'items.length': items.length,
-      };
+    'id': id,
+    'name': name,
+    'success': success,
+    'created': created,
+    'modified': modified,
+    'items.length': items.length,
+  };
 }
 
 extension type PayloadItem._(List _payload) {
@@ -50,8 +50,8 @@ extension type PayloadItem._(List _payload) {
   DateTime get modified => _payload[2] as DateTime;
 
   Map<String, dynamic> get props => {
-        'name': name,
-        'value': value,
-        'modified': modified,
-      };
+    'name': name,
+    'value': value,
+    'modified': modified,
+  };
 }

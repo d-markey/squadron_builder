@@ -2,23 +2,27 @@ part of 'managed_type.dart';
 
 base class ImportedType with ManagedTypeMixin implements ManagedType {
   ImportedType._(
-      this.pckUri, this.prefix, this.baseName, this.nullabilitySuffix);
+    this.pckUri,
+    this.prefix,
+    this.baseName,
+    this.nullabilitySuffix,
+  );
 
   ImportedType(String pckUri, String alias, String baseName)
-      : this._(
-          pckUri,
-          alias.isEmpty ? '' : '$alias.',
-          baseName,
-          NullabilitySuffix.none,
-        );
+    : this._(
+        pckUri,
+        alias.isEmpty ? '' : '$alias.',
+        baseName,
+        NullabilitySuffix.none,
+      );
 
   @override
   ImportedType _forceNullability(bool nullable) => ImportedType._(
-        pckUri,
-        prefix,
-        (isDynamic && !nullable) ? 'Object' : baseName,
-        nullable ? NullabilitySuffix.question : NullabilitySuffix.none,
-      );
+    pckUri,
+    prefix,
+    (isDynamic && !nullable) ? 'Object' : baseName,
+    nullable ? NullabilitySuffix.question : NullabilitySuffix.none,
+  );
 
   static final ImportedType unset = ImportedType('', '', '');
 

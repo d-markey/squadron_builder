@@ -20,20 +20,31 @@ abstract class Marshaler {
   DeSer? deser(MarshalingContext context, ManagedType? type);
 
   static Marshaler self(
-          String typeName,
-          String? deserExt,
-          String? serExt,
-          FormalParameterElement? marshalingContext,
-          FormalParameterElement? unmarshalingContext,
-          bool forceCast) =>
-      _SelfMarshaler(typeName, deserExt, serExt, marshalingContext,
-          unmarshalingContext, forceCast);
+    String typeName,
+    String? deserExt,
+    String? serExt,
+    FormalParameterElement? marshalingContext,
+    FormalParameterElement? unmarshalingContext,
+    bool forceCast,
+  ) => _SelfMarshaler(
+    typeName,
+    deserExt,
+    serExt,
+    marshalingContext,
+    unmarshalingContext,
+    forceCast,
+  );
 
   static Marshaler json(
-          String typeName, String? deserExt, String? serExt, bool forceCast) =>
-      _JsonMarshaler(typeName, deserExt, serExt, forceCast);
+    String typeName,
+    String? deserExt,
+    String? serExt,
+    bool forceCast,
+  ) => _JsonMarshaler(typeName, deserExt, serExt, forceCast);
 
-  static Marshaler explicit(TypeManager typeManager, DartObject marshaler,
-          ManagedType marshalerType) =>
-      _ExplicitMarshaler(typeManager, marshaler, marshalerType);
+  static Marshaler explicit(
+    TypeManager typeManager,
+    DartObject marshaler,
+    ManagedType marshalerType,
+  ) => _ExplicitMarshaler(typeManager, marshaler, marshalerType);
 }

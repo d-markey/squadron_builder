@@ -82,6 +82,13 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
     final languageVersion = library.element.languageVersion.package;
 
     // generate code
+    final src = await super.generate(library, buildStep);
+    if (src.isEmpty) {
+      // nothing to do
+      return '';
+    }
+
+    // assemble
     final code = StringBuffer();
     if (_testing) {
       final x = buildStep.allowedOutputs.first.relativePathTo(
@@ -91,7 +98,7 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
       code.writeln('part of \'$x\';\n\n');
       code.writeln('${_getHeader()}\n\n');
     }
-    code.writeln(await super.generate(library, buildStep));
+    code.writeln(src);
     code.writeln(context.marshalingContext.code);
 
     // done, trigger code generation for additional assets if any

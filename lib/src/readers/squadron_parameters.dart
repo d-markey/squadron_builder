@@ -57,34 +57,44 @@ class SquadronParameters {
     }
     if (_cancelationToken != null) {
       throw InvalidGenerationSourceError(
-          'Multiple cancelation tokens may not be passed to service methods '
-          '($_cancelationToken, ${param.name}). You should use a '
-          'CompositeCancelationToken instead.');
+        'Multiple cancelation tokens may not be passed to service methods '
+        '($_cancelationToken, ${param.name}). You should use a '
+        'CompositeCancelationToken instead.',
+      );
     } else {
       _cancelationToken = param.name;
       return true;
     }
   }
 
-  SquadronParameter register(FormalParameterElement param, [Marshaler? marshaler]) {
+  SquadronParameter register(
+    FormalParameterElement param, [
+    Marshaler? marshaler,
+  ]) {
     final isToken = _checkCancelationToken(param);
     int serIdx = -1;
     if (!isToken) {
       serIdx = _params.length - (_cancelationToken != null ? 1 : 0);
     }
     return _register(
-        SquadronParameter.from(param, isToken, marshaler, serIdx, typeManager));
+      SquadronParameter.from(param, isToken, marshaler, serIdx, typeManager),
+    );
   }
 
-  SquadronParameter addOptional(String name, ManagedType type) =>
-      _register(SquadronParameter.opt(
-          name, type, _hasNamedParameters || !_hasOptionalParameters));
+  SquadronParameter addOptional(String name, ManagedType type) => _register(
+    SquadronParameter.opt(
+      name,
+      type,
+      _hasNamedParameters || !_hasOptionalParameters,
+    ),
+  );
 
   SquadronParameter _register(SquadronParameter param) {
     if ((param.isNamed && _hasOptionalParameters) ||
         (param.isOptional && _hasNamedParameters)) {
       throw InvalidGenerationSourceError(
-          'Cannot register both named and optional parameters. Parameter name: ${param.name}');
+        'Cannot register both named and optional parameters. Parameter name: ${param.name}',
+      );
     }
 
     if (param.isNamed) {
@@ -182,9 +192,10 @@ class SquadronParameters {
     var contextAware = false;
     final args = StringBuffer();
     for (var param in params) {
-      final ser = param.isLocalWorker
-          ? null
-          : context.ser(param.type, true, param.marshaler);
+      final ser =
+          param.isLocalWorker
+              ? null
+              : context.ser(param.type, true, param.marshaler);
       if (ser == null) {
         args.csv(param.name);
       } else {
@@ -221,9 +232,11 @@ class SquadronParameters {
         final localService = service.nonNullable.getTypeName(omitPrefix: true);
         final localWorkerClient =
             '${service.prefix}${WorkerAssets.getLocalWorkerClientFor(localService)}($platformChannel)';
-        code.csv(service.isNullable
-            ? '$name ($arg == null) ? null : $localWorkerClient'
-            : '$name $localWorkerClient');
+        code.csv(
+          service.isNullable
+              ? '$name ($arg == null) ? null : $localWorkerClient'
+              : '$name $localWorkerClient',
+        );
       } else {
         final ser = context.deser(param.type, param.marshaler);
         if (ser == null) {

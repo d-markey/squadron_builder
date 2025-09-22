@@ -2,8 +2,11 @@ part of 'worker_assets.dart';
 
 extension on WorkerAssets {
   /// Worker
-  String _generateWorker(List<SquadronMethodReader> commands,
-      List<DartMethodReader> unimplemented, bool finalizable) {
+  String _generateWorker(
+    List<SquadronMethodReader> commands,
+    List<DartMethodReader> unimplemented,
+    bool finalizable,
+  ) {
     final startReq = r'_$startReq', localWorkers = '_\$localWorkers';
 
     final String declareLocalWorkers, overrideStop;
@@ -47,24 +50,31 @@ extension on WorkerAssets {
         }
       }
 
-      getStartArgs = initLocalWorkers.isEmpty
-          ? ' => $startReq;'
-          : '{ $initLocalWorkers return $startReq; }';
+      getStartArgs =
+          initLocalWorkers.isEmpty
+              ? ' => $startReq;'
+              : '{ $initLocalWorkers return $startReq; }';
 
-      declareLocalWorkers = stopLocalWorkers.isEmpty
-          ? ''
-          : 'final $localWorkers = <$TLocalWorker?>[${params.all.map((_) => 'null').join(', ')}];';
+      declareLocalWorkers =
+          stopLocalWorkers.isEmpty
+              ? ''
+              : 'final $localWorkers = <$TLocalWorker?>[${params.all.map((_) => 'null').join(', ')}];';
 
-      overrideStop = stopLocalWorkers.isEmpty
-          ? ''
-          : '$override_ void stop() { $stopLocalWorkers super.stop(); }';
+      overrideStop =
+          stopLocalWorkers.isEmpty
+              ? ''
+              : '$override_ void stop() { $stopLocalWorkers super.stop(); }';
     }
 
     final workerParams = _service.parameters.clone();
-    final threadHook =
-        workerParams.addOptional('threadHook', TPlatformThreadHook);
-    final exceptionManager =
-        workerParams.addOptional('exceptionManager', TExceptionManager);
+    final threadHook = workerParams.addOptional(
+      'threadHook',
+      TPlatformThreadHook,
+    );
+    final exceptionManager = workerParams.addOptional(
+      'exceptionManager',
+      TExceptionManager,
+    );
 
     final additionalArgs =
         '${threadHook.namedArgument()}, ${exceptionManager.namedArgument()}';

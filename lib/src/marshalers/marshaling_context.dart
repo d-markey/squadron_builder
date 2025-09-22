@@ -36,13 +36,15 @@ class MarshalingContext {
 
   int get count => serializerCount + deserializerCount;
 
-  String initDeserContext(bool needsContext, bool contextAware) => needsContext
-      ? 'final ${$dsr} = ${_$TDeser}(contextAware: $contextAware)'
-      : '';
+  String initDeserContext(bool needsContext, bool contextAware) =>
+      needsContext
+          ? 'final ${$dsr} = ${_$TDeser}(contextAware: $contextAware)'
+          : '';
 
-  String initSerContext(bool needsContext, bool contextAware) => needsContext
-      ? 'final ${$sr} = ${_$TSer}(contextAware: $contextAware)'
-      : '';
+  String initSerContext(bool needsContext, bool contextAware) =>
+      needsContext
+          ? 'final ${$sr} = ${_$TSer}(contextAware: $contextAware)'
+          : '';
 
   DeSer? _checkCache(Map<String, DeSer> cache, DeSer? convert) {
     if (convert == null || convert.code.isEmpty) return null;
@@ -56,19 +58,21 @@ class MarshalingContext {
   DeSer? ser(ManagedType? type, bool? withContext, [Marshaler? marshaler]) {
     if (marshaler == null && type?.isDynamic == true) return null;
     return _checkCache(
-        _ser,
-        (type?.isNullable ?? false)
-            ? allowNull(ser(type?.nonNullable, withContext, marshaler))
-            : (marshaler?.ser(this, type) ?? type?.ser(this, withContext)));
+      _ser,
+      (type?.isNullable ?? false)
+          ? allowNull(ser(type?.nonNullable, withContext, marshaler))
+          : (marshaler?.ser(this, type) ?? type?.ser(this, withContext)),
+    );
   }
 
   DeSer? deser(ManagedType? type, [Marshaler? marshaler]) {
     if (marshaler == null && type?.isDynamic == true) return null;
     return _checkCache(
-        _deser,
-        (type?.isNullable ?? false)
-            ? allowNull(deser(type?.nonNullable, marshaler))
-            : (marshaler?.deser(this, type) ?? type?.deser(this)));
+      _deser,
+      (type?.isNullable ?? false)
+          ? allowNull(deser(type?.nonNullable, marshaler))
+          : (marshaler?.deser(this, type) ?? type?.deser(this)),
+    );
   }
 
   String get code {

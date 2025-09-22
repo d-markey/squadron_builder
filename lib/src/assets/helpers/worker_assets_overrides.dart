@@ -6,7 +6,6 @@ extension SquadronOverrides on WorkerAssets {
   Map<String, List<String>> _getWorkerOverrides() {
     return {
       // state properties and statistics
-      // '$TList get args': 'args',
       '$TExceptionManager get exceptionManager': ['exceptionManager'],
       '$TLogger? get channelLogger': ['channelLogger'],
       'set channelLogger($TLogger? value)': ['channelLogger = value'],
@@ -20,13 +19,11 @@ extension SquadronOverrides on WorkerAssets {
       'void terminate([$TTaskTerminatedException? ex])': ['terminate(ex)'],
       '$TChannel? getSharedChannel()': ['getSharedChannel()'],
       // worker tasks
-      '$TFuture<$TDynamic> send($TInt command, {$TList args = const [], $TCancelationToken? token, $TBool inspectRequest = false, $TBool inspectResponse = false})':
-          [
-        'send(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)'
+      '$TFuture<$TDynamic> send($TInt command, {$TList args = const [], $TCancelationToken? token, $TBool inspectRequest = false, $TBool inspectResponse = false})': [
+        'send(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)',
       ],
-      '$TStream<$TDynamic> stream($TInt command, {$TList args = const [], $TCancelationToken? token, $TBool inspectRequest = false, $TBool inspectResponse = false})':
-          [
-        'stream(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)'
+      '$TStream<$TDynamic> stream($TInt command, {$TList args = const [], $TCancelationToken? token, $TBool inspectRequest = false, $TBool inspectResponse = false})': [
+        'stream(command, args: args, token: token, inspectRequest: inspectRequest, inspectResponse: inspectResponse)',
       ],
       // finalization token
       '$TObject get $DetachToken': [DetachToken],
@@ -49,11 +46,11 @@ extension SquadronOverrides on WorkerAssets {
       // pool & task control
       'void cancelAll([$TString? message])': ['cancelAll(message)'],
       'void cancel($TTask task, [$TString? message])': [
-        'cancel(task, message)'
+        'cancel(task, message)',
       ],
       '$TFutureOr<void> start()': ['start()'],
       '$TInt stop([$TBool Function(@TWorker@ worker)? predicate])': [
-        'stop(predicate)'
+        'stop(predicate)',
       ],
       'void terminate([$TTaskTerminatedException? ex])': ['terminate(ex)'],
       '$TObject registerWorkerPoolListener(void Function($TWorkerStat, $TBool) listener)':

@@ -10,9 +10,10 @@ void main() async {
     var output = await worker.addItem(input, 'test');
     dump(input, output);
 
-    input = Payload('2', 'Non-empty payload')
-      ..items.add(PayloadItem('Existing item #1', 'One'))
-      ..items.add(PayloadItem('Existing item #2', 'Two'));
+    input =
+        Payload('2', 'Non-empty payload')
+          ..items.add(PayloadItem('Existing item #1', 'One'))
+          ..items.add(PayloadItem('Existing item #2', 'Two'));
     await Future.delayed(Duration(milliseconds: 500));
     output = await worker.addItem(input, 'Three');
     dump(input, output);

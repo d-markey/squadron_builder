@@ -2,9 +2,11 @@ part of 'marshaler.dart';
 
 class _ExplicitMarshaler extends Marshaler {
   _ExplicitMarshaler(
-      TypeManager typeManager, this._marshaler, ManagedType marshalerType)
-      : _itemType = marshalerType.typeArguments.first,
-        _pivotType = marshalerType.typeArguments.last {
+    TypeManager typeManager,
+    this._marshaler,
+    ManagedType marshalerType,
+  ) : _itemType = marshalerType.typeArguments.first,
+      _pivotType = marshalerType.typeArguments.last {
     final variable = _marshaler.variable;
     final name = variable?.name;
     if (variable != null && name != null) {
@@ -15,9 +17,10 @@ class _ExplicitMarshaler extends Marshaler {
         _ => name,
       };
     } else {
-      final typeName = typeManager
-          .handleDartType(_marshaler.toTypeValue() ?? _marshaler.type!)
-          .getTypeName();
+      final typeName =
+          typeManager
+              .handleDartType(_marshaler.toTypeValue() ?? _marshaler.type!)
+              .getTypeName();
       _instance = '(const $typeName())';
     }
   }

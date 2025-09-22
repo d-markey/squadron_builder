@@ -17,13 +17,7 @@ class SampleService {
   }
 }
 
-enum State {
-  unset,
-  initializing,
-  ready,
-  terminating,
-  done,
-}
+enum State { unset, initializing, ready, terminating, done }
 
 class SomeTransferable {
   SomeTransferable(this.data);
@@ -40,7 +34,7 @@ class DataIn {
       SomeTransferable(payload);
 
   DataIn.unmarshal(SomeTransferable transferable, {MarshalingContext? context})
-      : this(transferable.data);
+    : this(transferable.data);
 
   Map toJson() => {'pld': payload};
 
@@ -56,7 +50,7 @@ class DataOut {
       SomeTransferable(payload);
 
   DataOut.unmarshal(SomeTransferable transferable, MarshalingContext? context)
-      : this(transferable.data);
+    : this(transferable.data);
 
   Map toJson() => {'pld': payload};
 

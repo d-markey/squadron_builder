@@ -47,6 +47,8 @@ void main() async {
     // make sure work requests get scheduled prior to calling stop()
     await Future.delayed(Duration.zero);
     clock.stop();
-    log('Worker pool has been stopped: waiting for pending work to complete...');
+    log(
+      'Worker pool has been stopped: waiting for pending work to complete...',
+    );
   }
 }

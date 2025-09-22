@@ -24,9 +24,10 @@ abstract class ManagedType with ManagedTypeMixin {
     DartType? dartType,
     this.typeManager,
     this.nullabilitySuffix,
-  ) : typeArguments = (dartType is ParameterizedType)
-            ? dartType.typeArguments.map(typeManager.handleDartType).toList()
-            : const [];
+  ) : typeArguments =
+          (dartType is ParameterizedType)
+              ? dartType.typeArguments.map(typeManager.handleDartType).toList()
+              : const [];
 
   final String prefix;
   DartType? get dartType;
@@ -53,7 +54,10 @@ abstract class ManagedType with ManagedTypeMixin {
   DeSer? deser(MarshalingContext context);
 
   factory ManagedType(
-      String alias, DartType dartType, TypeManager typeManager) {
+    String alias,
+    DartType dartType,
+    TypeManager typeManager,
+  ) {
     if (dartType.isDartCoreMap) {
       return _ManagedMapType._(
         alias.isEmpty ? '' : '$alias.',
@@ -86,11 +90,7 @@ abstract class ManagedType with ManagedTypeMixin {
   }
 
   factory ManagedType.record(RecordType dartType, TypeManager typeManager) =>
-      _ManagedRecordType._(
-        dartType,
-        typeManager,
-        dartType.nullabilitySuffix,
-      );
+      _ManagedRecordType._(dartType, typeManager, dartType.nullabilitySuffix);
 
   String getTypeName({bool omitPrefix = false}) {
     final px = omitPrefix ? '' : prefix;
@@ -104,7 +104,8 @@ abstract class ManagedType with ManagedTypeMixin {
       return '$px${dartType!.element!.name}$a${nullabilitySuffix.suffix}';
     } catch (ex) {
       throw InvalidGenerationSourceError(
-          'Error for dartType = $dartType / element = ${dartType?.element}');
+        'Error for dartType = $dartType / element = ${dartType?.element}',
+      );
     }
   }
 

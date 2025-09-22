@@ -20,9 +20,10 @@ extension on WorkerAssets {
   }
 
   /// Service mixins for invocation and implementation
-  String _generateServiceMixins(List<SquadronMethodReader> commands,
-          List<DartMethodReader> unimplemented) =>
-      '''/// Invoker for $_name, implements the public interface to invoke the
+  String _generateServiceMixins(
+    List<SquadronMethodReader> commands,
+    List<DartMethodReader> unimplemented,
+  ) => '''/// Invoker for $_name, implements the public interface to invoke the
       /// remote service.
       ${_service.isBase ? 'base ' : ''}mixin $_serviceInvoker on $TInvoker implements $_name {
         ${commands.map((cmd) => cmd.workerMethod(this)).join('\n\n')}
@@ -51,8 +52,10 @@ extension on WorkerAssets {
   /// Service initializer
   String _generateServiceInitializer(MarshalingContext context) {
     final args = _service.parameters.deser(_context, Req);
-    final contextInitialization =
-        _context.initDeserContext(args != null, args.contextAware);
+    final contextInitialization = _context.initDeserContext(
+      args != null,
+      args.contextAware,
+    );
 
     return contextInitialization.isEmpty
         ? '''/// Service initializer for $_name

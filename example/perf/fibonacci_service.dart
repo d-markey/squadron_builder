@@ -14,13 +14,14 @@ part 'generated/fibonacci_service.worker.g.dart';
 @SquadronService(targetPlatform: TargetPlatform.vm)
 class FibonacciService {
   FibonacciService({bool trace = false})
-      : _logger = trace
-            ? Logger(
+    : _logger =
+          trace
+              ? Logger(
                 filter: ProductionFilter(),
                 output: ConsoleOutput(),
                 printer: SimplePrinter(),
               )
-            : null;
+              : null;
 
   final Logger? _logger;
 
@@ -63,13 +64,17 @@ class FibonacciService {
   }
 
   @squadronMethod
-  Stream<int> fibonacciStream(int start,
-      {int? end, CancelationToken? token}) async* {
+  Stream<int> fibonacciStream(
+    int start, {
+    int? end,
+    CancelationToken? token,
+  }) async* {
     _logger?.i('fibonacciStream($start, end: $end)');
     if (end == null) {
       if (token == null) {
         throw Exception(
-            'A cancellation token is required if no upper bound is provided.');
+          'A cancellation token is required if no upper bound is provided.',
+        );
       }
       var i = start;
       while (!token.isCanceled) {

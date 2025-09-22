@@ -22,11 +22,8 @@ extension DataMarshalerExt on Data {
     return buffer;
   }
 
-  static Data unmarshal(Uint8List buffer, [MarshalingContext? context]) => Data(
-        buffer.readInt(0),
-        (buffer[4] != 0),
-        utf8.decode(buffer.sublist(5)),
-      );
+  static Data unmarshal(Uint8List buffer, [MarshalingContext? context]) =>
+      Data(buffer.readInt(0), (buffer[4] != 0), utf8.decode(buffer.sublist(5)));
 }
 
 extension DataJsonExt on Data {

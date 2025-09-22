@@ -32,7 +32,8 @@ extension ActivatorExt on WorkerAssets {
       codeEvent.add(
         output,
         unimpl(
-            '$TEntryPoint \$get$_serviceActivator($TSquadronPlatformType platform)'),
+          '$TEntryPoint \$get$_serviceActivator($TSquadronPlatformType platform)',
+        ),
       );
     }
   }
@@ -44,16 +45,14 @@ extension ActivatorExt on WorkerAssets {
       codeEvent.importSquadron(output, _squadronAlias);
       codeEvent.importDartCore(output, _dartCoreAlias);
       codeEvent.import(output, codeEvent.buildStep.inputId);
-      codeEvent.addWebEntryPoint(
-        output,
-        '''/// Web entry point for $_name
+      codeEvent.addWebEntryPoint(output, '''/// Web entry point for $_name
            $_run($_serviceInitializer);
-        ''',
-      );
+        ''');
 
-      final baseWorkerUrl = _service.baseUrl.isEmpty
-          ? output.path
-          : '${_service.baseUrl}/${output.pathSegments.last}';
+      final baseWorkerUrl =
+          _service.baseUrl.isEmpty
+              ? output.path
+              : '${_service.baseUrl}/${output.pathSegments.last}';
 
       if (_service.js && _service.wasm) {
         codeEvent.add(
@@ -94,9 +93,7 @@ extension ActivatorExt on WorkerAssets {
       codeEvent.importDartCore(output, _dartCoreAlias);
       codeEvent.import(output, codeEvent.buildStep.inputId);
 
-      codeEvent.add(
-        output,
-        '''void _start\$$_name($TWorkerRequest command) {
+      codeEvent.add(output, '''void _start\$$_name($TWorkerRequest command) {
              /// VM entry point for $_name
              $_run($_serviceInitializer, command);
            } 
@@ -108,8 +105,7 @@ extension ActivatorExt on WorkerAssets {
                throw $TUnsupportedError('\${platform.label} not supported.');
              }
            }
-        ''',
-      );
+        ''');
     }
   }
 }

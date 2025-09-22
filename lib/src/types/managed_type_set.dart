@@ -10,11 +10,11 @@ class _ManagedSetType extends ManagedType {
 
   @override
   _ManagedSetType _forceNullability(bool nullable) => _ManagedSetType._(
-        prefix,
-        dartType,
-        typeManager,
-        nullable ? NullabilitySuffix.question : NullabilitySuffix.none,
-      );
+    prefix,
+    dartType,
+    typeManager,
+    nullable ? NullabilitySuffix.question : NullabilitySuffix.none,
+  );
 
   @override
   final ParameterizedType dartType;
