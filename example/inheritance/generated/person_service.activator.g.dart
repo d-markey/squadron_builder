@@ -2,8 +2,7 @@
 // dart format width=80
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.0.0+1 (Squadron 7.1.2+1)
-// Generated: 2025-09-22 21:57:03.735423Z
+// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
 // **************************************************************************
 
 import 'person_service.stub.g.dart'

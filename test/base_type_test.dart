@@ -45,7 +45,7 @@ void main() async {
       } finally {
         checkBuildLogs();
       }
-    });
+    }, timeout: Timeout(const Duration(minutes: 5)));
 
     test('- int (with finalizers)', () async {
       try {
@@ -90,7 +90,7 @@ void main() async {
           'package:logger',
         });
       }
-    });
+    }, timeout: Timeout(const Duration(minutes: 5)));
 
     test('- DateTime', () async {
       try {
@@ -133,6 +133,6 @@ void main() async {
       } finally {
         checkBuildLogs();
       }
-    });
-  }, timeout: Timeout.none);
+    }, timeout: Timeout(const Duration(minutes: 5)));
+  });
 }

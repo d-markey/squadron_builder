@@ -1,3 +1,11 @@
+## 8.1.0
+
+- Remove the date/time included in generated comments. Fixes https://github.com/d-markey/squadron_builder/issues/41.
+
+## 8.0.0+1
+
+- Fix doc + formatting issues for https://pub.dev/packages/squadron_builder.
+
 ## 8.0.0
 
 - Upgrade Dart (^3.7.0) + `source_gen` (^4.0.0) / `build` (^4.0.0) / `analyzer` (^8.0.0) packages.

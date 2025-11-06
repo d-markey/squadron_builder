@@ -4,7 +4,7 @@
 part of '../fib_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.0.0+1 (Squadron 7.1.2+1)
+// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
 // **************************************************************************
 
 // dart format width=80

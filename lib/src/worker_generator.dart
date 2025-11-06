@@ -50,7 +50,6 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
   String _getHeader() => '''
       // **************************************************************************
       // Generator: $this
-      // Generated: ${DateTime.now().toUtc()}
       // **************************************************************************
       ''';
 
