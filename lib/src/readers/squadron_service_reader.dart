@@ -14,7 +14,6 @@ class SquadronServiceReader {
     ClassElement clazz,
     this._typeManager,
     this.local,
-    this.worker,
     this.pool,
     this.vm,
     this.js,
@@ -35,13 +34,13 @@ class SquadronServiceReader {
 
   final String name;
   final bool local;
-  final bool worker;
   final bool pool;
   final bool vm;
   final bool js;
   final bool wasm;
   final String baseUrl;
 
+  bool get worker => !local;
   bool get web => js | wasm;
 
   final TypeManager _typeManager;
@@ -112,7 +111,6 @@ class SquadronServiceReader {
     if (reader.isEmpty) return null;
 
     var local = false;
-    var worker = false;
     var pool = false;
     var vm = false;
     var js = false;
@@ -124,7 +122,6 @@ class SquadronServiceReader {
       if (annotation.getBool('local')) {
         local = true;
       } else {
-        worker = true;
         final targetPlatform = annotation.getInt('targetPlatform');
         if (targetPlatform.hasVm) vm = true;
         if (targetPlatform.hasJs) js = true;
@@ -143,7 +140,6 @@ class SquadronServiceReader {
       clazz,
       context.typeManager,
       local,
-      worker,
       pool,
       vm,
       js,
