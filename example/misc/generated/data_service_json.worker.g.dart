@@ -4,7 +4,7 @@
 part of '../data_service_json.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
 // dart format width=80
@@ -123,6 +123,22 @@ mixin _$DataService$Invoker on Invoker implements DataService {
 /// Facade for DataService, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$DataService$Facade implements DataService {}
+
+/// WorkerClient for DataService
+final class $DataService$Client extends WorkerClient
+    with _$DataService$Invoker, _$DataService$Facade
+    implements DataService {
+  $DataService$Client(PlatformChannel channelInfo)
+    : super(Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for DataService
+extension $DataServiceLocalWorkerExt on DataService {
+  // Get a fresh local worker instance.
+  LocalWorker<DataService> getLocalWorker([
+    ExceptionManager? exceptionManager,
+  ]) => LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for DataService
 class _$DataService$WorkerService extends DataService implements WorkerService {

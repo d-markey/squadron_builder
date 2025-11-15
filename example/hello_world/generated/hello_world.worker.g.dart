@@ -4,7 +4,7 @@
 part of '../hello_world.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
 // dart format width=80
@@ -41,6 +41,22 @@ base mixin _$HelloWorld$Invoker on Invoker implements HelloWorld {
 /// Facade for HelloWorld, implements other details of the service unrelated to
 /// invoking the remote service.
 base mixin _$HelloWorld$Facade implements HelloWorld {}
+
+/// WorkerClient for HelloWorld
+final class $HelloWorld$Client extends WorkerClient
+    with _$HelloWorld$Invoker, _$HelloWorld$Facade
+    implements HelloWorld {
+  $HelloWorld$Client(PlatformChannel channelInfo)
+    : super(Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for HelloWorld
+extension $HelloWorldLocalWorkerExt on HelloWorld {
+  // Get a fresh local worker instance.
+  LocalWorker<HelloWorld> getLocalWorker([
+    ExceptionManager? exceptionManager,
+  ]) => LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for HelloWorld
 base class _$HelloWorld$WorkerService extends HelloWorld

@@ -1,8 +1,8 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.0.0 (Squadron 7.1.2+1)
-// Generated: 2025-09-21 21:58:27.173261Z
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
 import 'datetime_service.stub.g.dart'

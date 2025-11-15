@@ -71,10 +71,10 @@ class SquadronMethodReader extends DartMethodReader {
     }
   }
 
-  void throwIfLocalWorkerParam() {
-    if (parameters.all.any((p) => p.isLocalWorker)) {
+  void throwIfSharedServiceParam() {
+    if (parameters.all.any((p) => p.isSharedService)) {
       throw InvalidGenerationSourceError(
-        'Local Worker parameters are not supported in service methods',
+        'Shared service parameters are not supported in service methods',
       );
     }
   }

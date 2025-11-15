@@ -33,7 +33,7 @@ mixin _ImportedTypesMixin {
   late final TWorkerStat = typeManager.TWorkerStat;
   late final TPerfCounter = typeManager.TPerfCounter;
   late final TLocalWorker = typeManager.TLocalWorker;
-  late final TLocalWorkerClient = typeManager.TLocalWorkerClient;
+  late final TWorkerClient = typeManager.TWorkerClient;
   late final TMarshalingContext = typeManager.TMarshalingContext;
   late final TConcurrencySettings = typeManager.TConcurrencySettings;
 

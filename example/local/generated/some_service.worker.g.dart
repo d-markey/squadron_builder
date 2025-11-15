@@ -4,7 +4,7 @@
 part of '../some_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
 // dart format width=80
@@ -46,6 +46,25 @@ mixin _$SomeService$Invoker on Invoker implements SomeService {
 /// invoking the remote service.
 mixin _$SomeService$Facade implements SomeService {}
 
+/// WorkerClient for SomeService
+final class $SomeService$Client extends WorkerClient
+    with _$SomeService$Invoker, _$SomeService$Facade
+    implements SomeService {
+  $SomeService$Client(PlatformChannel channelInfo)
+    : super(Channel.deserialize(channelInfo)!);
+
+  @override
+  late final id.ThreadIdentityService? threadIdService;
+}
+
+/// Local worker extension for SomeService
+extension $SomeServiceLocalWorkerExt on SomeService {
+  // Get a fresh local worker instance.
+  LocalWorker<SomeService> getLocalWorker([
+    ExceptionManager? exceptionManager,
+  ]) => LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for SomeService
 class _$SomeService$WorkerService extends SomeService implements WorkerService {
   _$SomeService$WorkerService({super.threadIdService}) : super();
@@ -61,7 +80,7 @@ WorkerService $SomeServiceInitializer(WorkerRequest $req) {
     threadIdService:
         ($req.args[0] == null)
             ? null
-            : id.$LocalThreadIdentityServiceClient($dsr.$1($req.args[0])),
+            : id.$ThreadIdentityService$Client($dsr.$1($req.args[0])),
   );
 }
 
@@ -91,23 +110,25 @@ base class _$SomeServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
-  final _$localWorkers = <LocalWorker?>[null];
+  final _$remote = <Channel?>[null];
   final List _$startReq;
 
   @override
   List? getStartArgs() {
     final p0 = _$startReq[0];
-    if (p0 is id.ThreadIdentityService) {
+    if (p0 is Worker) {
+      _$startReq[0] = (_$remote[0] ??= p0.getSharedChannel())?.serialize();
+    } else if (p0 is id.ThreadIdentityService) {
       _$startReq[0] =
-          (_$localWorkers[0] = p0.getLocalWorker()).channel?.serialize();
+          (_$remote[0] ??= p0.getLocalWorker().channel)?.serialize();
     }
     return _$startReq;
   }
 
   @override
   void stop() {
-    _$localWorkers[0]?.stop();
-    _$localWorkers[0] = null;
+    _$remote[0]?.close();
+    _$remote[0] = null;
     _$startReq[0] = threadIdService;
     super.stop();
   }
@@ -174,7 +195,7 @@ base class SomeServiceWorker with Releasable implements _$SomeServiceWorker {
   }
 
   @override
-  List<LocalWorker?> get _$localWorkers => const [];
+  List<Channel?> get _$remote => const [];
 
   @override
   List<dynamic> get _$startReq => const [];

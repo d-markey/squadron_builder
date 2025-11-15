@@ -4,7 +4,7 @@
 part of '../sample_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
 // dart format width=80
@@ -48,6 +48,22 @@ mixin _$SampleService$Invoker on Invoker implements SampleService {
 /// Facade for SampleService, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$SampleService$Facade implements SampleService {}
+
+/// WorkerClient for SampleService
+final class $SampleService$Client extends WorkerClient
+    with _$SampleService$Invoker, _$SampleService$Facade
+    implements SampleService {
+  $SampleService$Client(PlatformChannel channelInfo)
+    : super(Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for SampleService
+extension $SampleServiceLocalWorkerExt on SampleService {
+  // Get a fresh local worker instance.
+  LocalWorker<SampleService> getLocalWorker([
+    ExceptionManager? exceptionManager,
+  ]) => LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for SampleService
 class _$SampleService$WorkerService extends SampleService

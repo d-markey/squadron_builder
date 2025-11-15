@@ -15,7 +15,7 @@ mixin _ImportedTypesMixin {
       'Worker': ImportedType.unset,
       'WorkerPool': ImportedType.unset,
       'LocalWorker': ImportedType.unset,
-      'LocalWorkerClient': ImportedType.unset,
+      'WorkerClient': ImportedType.unset,
       'WorkerRequest': ImportedType.unset,
       'WorkerStat': ImportedType.unset,
       'PerfCounter': ImportedType.unset,
@@ -74,7 +74,7 @@ mixin _ImportedTypesMixin {
   ImportedType get TWorker => _sq['Worker']!;
   ImportedType get TWorkerPool => _sq['WorkerPool']!;
   ImportedType get TLocalWorker => _sq['LocalWorker']!;
-  ImportedType get TLocalWorkerClient => _sq['LocalWorkerClient']!;
+  ImportedType get TWorkerClient => _sq['WorkerClient']!;
   ImportedType get TWorkerRequest => _sq['WorkerRequest']!;
   ImportedType get TWorkerStat => _sq['WorkerStat']!;
   ImportedType get TPerfCounter => _sq['PerfCounter']!;

@@ -7,16 +7,16 @@ extension on WorkerAssets {
     List<DartMethodReader> unimplemented,
     bool finalizable,
   ) {
-    final startReq = r'_$startReq', localWorkers = '_\$localWorkers';
+    final startReq = r'_$startReq', remotes = '_\$remote';
 
-    final String declareLocalWorkers, overrideStop;
+    final String declareChannels, overrideStop;
     final String declareStartArgs, setStartArgs, getStartArgs;
 
     final params = _service.parameters;
     final startArgs = params.serializeForActivation(_context);
     if (startArgs.isEmpty) {
       // parameter-less service
-      declareLocalWorkers = '';
+      declareChannels = '';
       declareStartArgs = '';
       setStartArgs = '';
       getStartArgs = ' => null;';
@@ -28,42 +28,43 @@ extension on WorkerAssets {
       // handle parameters decorated with @localWorker annotation
       // these parameters are local workers for which a shared channel must be serialized
       // additionaly, local workers need to be stopped when the worker is stopped
-      final initLocalWorkers = StringBuffer(),
-          stopLocalWorkers = StringBuffer();
+      final initChannels = StringBuffer(), closeChannels = StringBuffer();
       for (var param in _service.parameters.all) {
-        if (param.isLocalWorker) {
+        if (param.isSharedService) {
           final idx = param.serIdx, p = 'p$idx';
           // instantiate and register a local worker
           // obtain a shared channel for serialization
-          initLocalWorkers.write('''
+          initChannels.write('''
             final $p = $startReq[$idx];
-            if ($p is ${param.type.nonNullable}) {
-              $startReq[$idx] = ($localWorkers[$idx] = $p.getLocalWorker()).channel?.serialize();
+            if ($p is $TWorker) {
+              $startReq[$idx] = ($remotes[$idx] ??= $p.getSharedChannel())?.serialize();
+            } else if ($p is ${param.type.nonNullable}) {
+              $startReq[$idx] = ($remotes[$idx] ??= $p.getLocalWorker().channel)?.serialize();
             }''');
 
           // stop the local worker and reset the start argument
-          stopLocalWorkers.write('''
-            $localWorkers[$idx]?.stop();
-            $localWorkers[$idx] = null;
+          closeChannels.write('''
+            $remotes[$idx]?.close();
+            $remotes[$idx] = null;
             $startReq[$idx] = ${param.name};
           ''');
         }
       }
 
       getStartArgs =
-          initLocalWorkers.isEmpty
+          initChannels.isEmpty
               ? ' => $startReq;'
-              : '{ $initLocalWorkers return $startReq; }';
+              : '{ $initChannels return $startReq; }';
 
-      declareLocalWorkers =
-          stopLocalWorkers.isEmpty
+      declareChannels =
+          closeChannels.isEmpty
               ? ''
-              : 'final $localWorkers = <$TLocalWorker?>[${params.all.map((_) => 'null').join(', ')}];';
+              : 'final $remotes = <$TChannel?>[${params.all.map((_) => 'null').join(', ')}];';
 
       overrideStop =
-          stopLocalWorkers.isEmpty
+          closeChannels.isEmpty
               ? ''
-              : '$override_ void stop() { $stopLocalWorkers super.stop(); }';
+              : '$override_ void stop() { $closeChannels super.stop(); }';
     }
 
     final workerParams = _service.parameters.clone();
@@ -102,7 +103,7 @@ extension on WorkerAssets {
 
           ${_service.wasm ? '$worker.wasm($workerParams) : $setStartArgs super(\$$wasmArgs);' : ''}
 
-          $declareLocalWorkers
+          $declareChannels
           $declareStartArgs
 
           $override_
@@ -155,7 +156,7 @@ extension on WorkerAssets {
             }
           }
 
-          ${declareLocalWorkers.isEmpty ? '' : '$override_ $TList<$TLocalWorker?> get $localWorkers => const [];'}
+          ${declareChannels.isEmpty ? '' : '$override_ $TList<$TChannel?> get $remotes => const [];'}
 
           ${declareStartArgs.isEmpty ? '' : '$override_ $TList<$TDynamic> get $startReq => const  [];'}
 

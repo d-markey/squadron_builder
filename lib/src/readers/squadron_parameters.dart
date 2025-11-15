@@ -193,7 +193,7 @@ class SquadronParameters {
     final args = StringBuffer();
     for (var param in params) {
       final ser =
-          param.isLocalWorker
+          param.isSharedService
               ? null
               : context.ser(param.type, true, param.marshaler);
       if (ser == null) {
@@ -223,19 +223,19 @@ class SquadronParameters {
 
       if (param.isCancelationToken) {
         code.csv('$name $req.cancelToken');
-      } else if (param.isLocalWorker) {
+      } else if (param.isSharedService) {
         needsContext = true;
         final service = param.type;
         final ser = context.deser(typeManager.TPlatformChannel);
         final platformChannel =
             (ser == null) ? arg : '${context.$dsr}.${ser.code}($arg)';
-        final localService = service.nonNullable.getTypeName(omitPrefix: true);
-        final localWorkerClient =
-            '${service.prefix}${WorkerAssets.getLocalWorkerClientFor(localService)}($platformChannel)';
+        final remoteService = service.nonNullable.getTypeName(omitPrefix: true);
+        final remoteServiceClient =
+            '${service.prefix}${WorkerAssets.getWorkerClientFor(remoteService)}($platformChannel)';
         code.csv(
           service.isNullable
-              ? '$name ($arg == null) ? null : $localWorkerClient'
-              : '$name $localWorkerClient',
+              ? '$name ($arg == null) ? null : $remoteServiceClient'
+              : '$name $remoteServiceClient',
         );
       } else {
         final ser = context.deser(param.type, param.marshaler);

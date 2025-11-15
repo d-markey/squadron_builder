@@ -4,7 +4,7 @@
 part of '../thread_identity_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
 // dart format width=80
@@ -35,20 +35,20 @@ mixin _$ThreadIdentityService$Invoker on Invoker
 /// invoking the remote service.
 mixin _$ThreadIdentityService$Facade implements ThreadIdentityService {}
 
+/// WorkerClient for ThreadIdentityService
+final class $ThreadIdentityService$Client extends WorkerClient
+    with _$ThreadIdentityService$Invoker, _$ThreadIdentityService$Facade
+    implements ThreadIdentityService {
+  $ThreadIdentityService$Client(PlatformChannel channelInfo)
+    : super(Channel.deserialize(channelInfo)!);
+}
+
 /// Local worker extension for ThreadIdentityService
 extension $ThreadIdentityServiceLocalWorkerExt on ThreadIdentityService {
   // Get a fresh local worker instance.
   LocalWorker<ThreadIdentityService> getLocalWorker([
     ExceptionManager? exceptionManager,
   ]) => LocalWorker.create(this, _$getOperations(), exceptionManager);
-}
-
-/// LocalWorkerClient for ThreadIdentityService
-final class $LocalThreadIdentityServiceClient extends LocalWorkerClient
-    with _$ThreadIdentityService$Invoker, _$ThreadIdentityService$Facade
-    implements ThreadIdentityService {
-  $LocalThreadIdentityServiceClient(PlatformChannel channelInfo)
-    : super(Channel.deserialize(channelInfo)!);
 }
 
 final class _$Deser extends MarshalingContext {

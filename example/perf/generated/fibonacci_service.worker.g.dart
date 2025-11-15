@@ -4,7 +4,7 @@
 part of '../fibonacci_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
 // dart format width=80
@@ -139,6 +139,22 @@ mixin _$FibonacciService$Facade implements FibonacciService {
   @override
   // ignore: unused_element
   Logger? get _logger => throw UnimplementedError();
+}
+
+/// WorkerClient for FibonacciService
+final class $FibonacciService$Client extends WorkerClient
+    with _$FibonacciService$Invoker, _$FibonacciService$Facade
+    implements FibonacciService {
+  $FibonacciService$Client(PlatformChannel channelInfo)
+    : super(Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for FibonacciService
+extension $FibonacciServiceLocalWorkerExt on FibonacciService {
+  // Get a fresh local worker instance.
+  LocalWorker<FibonacciService> getLocalWorker([
+    ExceptionManager? exceptionManager,
+  ]) => LocalWorker.create(this, _$getOperations(), exceptionManager);
 }
 
 /// WorkerService class for FibonacciService

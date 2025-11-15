@@ -12,7 +12,7 @@ part 'generated/some_service.worker.g.dart';
 
 @SquadronService.vm()
 class SomeService {
-  SomeService({@localWorker this.threadIdService});
+  SomeService({@sharedService this.threadIdService});
 
   final id.ThreadIdentityService? threadIdService;
 

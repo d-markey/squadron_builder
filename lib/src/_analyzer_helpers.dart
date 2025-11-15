@@ -48,8 +48,8 @@ extension FieldElementExt on element_.FieldElement {
     ''';
   }
 
-  String override(WorkerAssets assets) =>
-      '${assets.override_} ${isFinal ? 'final ' : ''}${assets.typeManager.getTypeName(type)} $name;';
+  String override(WorkerAssets assets, {bool forceLate = false}) =>
+      '${assets.override_} ${forceLate ? 'late ' : ''}${isFinal ? 'final ' : ''}${assets.typeManager.getTypeName(type)} $name;';
 }
 
 @internal

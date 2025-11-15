@@ -51,7 +51,7 @@ class WorkerAssets with _ImportedTypesMixin {
     }
   }
 
-  static String getLocalWorkerClientFor(String name) => '\$Local${name}Client';
+  static String getWorkerClientFor(String name) => '\$$name\$Client';
 
   AssetId? _vmOutput;
   AssetId? _webOutput;
@@ -100,13 +100,14 @@ class WorkerAssets with _ImportedTypesMixin {
     // common code
     yield _generateServiceOperations(commands);
     yield _generateServiceMixins(commands, unimpl);
+    yield _generateServiceClient();
 
     // local worker
-    if (_service.local) yield _generateLocal(commands, unimpl);
+    yield _generateLocalWorker();
 
     // regular worker
     if (_service.worker) {
-      yield _generateServiceClass(commands);
+      yield _generateServiceClass();
       yield _generateServiceInitializer(_context);
       yield _generateWorker(commands, unimpl, finalizable);
     }

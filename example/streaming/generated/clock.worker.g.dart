@@ -4,7 +4,7 @@
 part of '../clock.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
 // dart format width=80
@@ -44,6 +44,21 @@ mixin _$Clock$Invoker on Invoker implements Clock {
 /// Facade for Clock, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$Clock$Facade implements Clock {}
+
+/// WorkerClient for Clock
+final class $Clock$Client extends WorkerClient
+    with _$Clock$Invoker, _$Clock$Facade
+    implements Clock {
+  $Clock$Client(PlatformChannel channelInfo)
+    : super(Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for Clock
+extension $ClockLocalWorkerExt on Clock {
+  // Get a fresh local worker instance.
+  LocalWorker<Clock> getLocalWorker([ExceptionManager? exceptionManager]) =>
+      LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for Clock
 class _$Clock$WorkerService extends Clock implements WorkerService {

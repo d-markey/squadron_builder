@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of '../datetime_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.0.0 (Squadron 7.1.2+1)
-// Generated: 2025-09-21 21:58:27.150739Z
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
+// dart format width=80
 /// Command ids used in operations map
 const int _$defaultIfNullId = 1;
 const int _$identityId = 2;
@@ -79,6 +80,22 @@ mixin _$DateTimeService$Invoker on Invoker implements DateTimeService {
 /// Facade for DateTimeService, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$DateTimeService$Facade implements DateTimeService {}
+
+/// WorkerClient for DateTimeService
+final class $DateTimeService$Client extends WorkerClient
+    with _$DateTimeService$Invoker, _$DateTimeService$Facade
+    implements DateTimeService {
+  $DateTimeService$Client(PlatformChannel channelInfo)
+    : super(Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for DateTimeService
+extension $DateTimeServiceLocalWorkerExt on DateTimeService {
+  // Get a fresh local worker instance.
+  LocalWorker<DateTimeService> getLocalWorker([
+    ExceptionManager? exceptionManager,
+  ]) => LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for DateTimeService
 class _$DateTimeService$WorkerService extends DateTimeService

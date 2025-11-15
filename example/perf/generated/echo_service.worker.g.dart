@@ -4,7 +4,7 @@
 part of '../echo_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
 // dart format width=80
@@ -187,6 +187,22 @@ mixin _$EchoService$Facade implements EchoService {
   @override
   // ignore: unused_element
   Duration get _delay => throw UnimplementedError();
+}
+
+/// WorkerClient for EchoService
+final class $EchoService$Client extends sq.WorkerClient
+    with _$EchoService$Invoker, _$EchoService$Facade
+    implements EchoService {
+  $EchoService$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for EchoService
+extension $EchoServiceLocalWorkerExt on EchoService {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<EchoService> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
 }
 
 /// WorkerService class for EchoService

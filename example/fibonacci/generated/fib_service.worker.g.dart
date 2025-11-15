@@ -4,7 +4,7 @@
 part of '../fib_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
 // dart format width=80
@@ -46,20 +46,20 @@ mixin _$FibService$Facade implements FibService {
   dc.int get x => throw dc.UnimplementedError();
 }
 
+/// WorkerClient for FibService
+final class $FibService$Client extends WorkerClient
+    with _$FibService$Invoker, _$FibService$Facade
+    implements FibService {
+  $FibService$Client(PlatformChannel channelInfo)
+    : super(Channel.deserialize(channelInfo)!);
+}
+
 /// Local worker extension for FibService
 extension $FibServiceLocalWorkerExt on FibService {
   // Get a fresh local worker instance.
   LocalWorker<FibService> getLocalWorker([
     ExceptionManager? exceptionManager,
   ]) => LocalWorker.create(this, _$getOperations(), exceptionManager);
-}
-
-/// LocalWorkerClient for FibService
-final class $LocalFibServiceClient extends LocalWorkerClient
-    with _$FibService$Invoker, _$FibService$Facade
-    implements FibService {
-  $LocalFibServiceClient(PlatformChannel channelInfo)
-    : super(Channel.deserialize(channelInfo)!);
 }
 
 /// WorkerService class for FibService

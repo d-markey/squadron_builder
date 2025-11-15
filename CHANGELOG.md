@@ -1,3 +1,7 @@
+## 8.2.0
+
+- Supports passing services to other services at construction time, enabling worker cooperation.
+
 ## 8.1.0
 
 - Remove the date/time included in generated comments. Fixes https://github.com/d-markey/squadron_builder/issues/41.

@@ -4,7 +4,7 @@
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
 // dart format width=80
@@ -22,6 +22,22 @@ mixin _$TestParameterLess$Invoker on sq.Invoker implements TestParameterLess {}
 /// Facade for TestParameterLess, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$TestParameterLess$Facade implements TestParameterLess {}
+
+/// WorkerClient for TestParameterLess
+final class $TestParameterLess$Client extends sq.WorkerClient
+    with _$TestParameterLess$Invoker, _$TestParameterLess$Facade
+    implements TestParameterLess {
+  $TestParameterLess$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestParameterLess
+extension $TestParameterLessLocalWorkerExt on TestParameterLess {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestParameterLess> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for TestParameterLess
 class _$TestParameterLess$WorkerService extends TestParameterLess
@@ -466,6 +482,22 @@ mixin _$TestReqPositional$Invoker on sq.Invoker implements TestReqPositional {}
 /// Facade for TestReqPositional, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$TestReqPositional$Facade implements TestReqPositional {}
+
+/// WorkerClient for TestReqPositional
+final class $TestReqPositional$Client extends sq.WorkerClient
+    with _$TestReqPositional$Invoker, _$TestReqPositional$Facade
+    implements TestReqPositional {
+  $TestReqPositional$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestReqPositional
+extension $TestReqPositionalLocalWorkerExt on TestReqPositional {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestReqPositional> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for TestReqPositional
 class _$TestReqPositional$WorkerService extends TestReqPositional
@@ -951,6 +983,22 @@ mixin _$TestOptNullPositional$Invoker on sq.Invoker
 /// invoking the remote service.
 mixin _$TestOptNullPositional$Facade implements TestOptNullPositional {}
 
+/// WorkerClient for TestOptNullPositional
+final class $TestOptNullPositional$Client extends sq.WorkerClient
+    with _$TestOptNullPositional$Invoker, _$TestOptNullPositional$Facade
+    implements TestOptNullPositional {
+  $TestOptNullPositional$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptNullPositional
+extension $TestOptNullPositionalLocalWorkerExt on TestOptNullPositional {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullPositional> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestOptNullPositional
 class _$TestOptNullPositional$WorkerService extends TestOptNullPositional
     implements sq.WorkerService {
@@ -1411,6 +1459,22 @@ mixin _$TestOptDefPositional$Invoker on sq.Invoker
 /// invoking the remote service.
 mixin _$TestOptDefPositional$Facade implements TestOptDefPositional {}
 
+/// WorkerClient for TestOptDefPositional
+final class $TestOptDefPositional$Client extends sq.WorkerClient
+    with _$TestOptDefPositional$Invoker, _$TestOptDefPositional$Facade
+    implements TestOptDefPositional {
+  $TestOptDefPositional$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptDefPositional
+extension $TestOptDefPositionalLocalWorkerExt on TestOptDefPositional {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptDefPositional> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestOptDefPositional
 class _$TestOptDefPositional$WorkerService extends TestOptDefPositional
     implements sq.WorkerService {
@@ -1868,6 +1932,22 @@ mixin _$TestOptNullDefPositional$Invoker on sq.Invoker
 /// Facade for TestOptNullDefPositional, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$TestOptNullDefPositional$Facade implements TestOptNullDefPositional {}
+
+/// WorkerClient for TestOptNullDefPositional
+final class $TestOptNullDefPositional$Client extends sq.WorkerClient
+    with _$TestOptNullDefPositional$Invoker, _$TestOptNullDefPositional$Facade
+    implements TestOptNullDefPositional {
+  $TestOptNullDefPositional$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptNullDefPositional
+extension $TestOptNullDefPositionalLocalWorkerExt on TestOptNullDefPositional {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullDefPositional> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for TestOptNullDefPositional
 class _$TestOptNullDefPositional$WorkerService extends TestOptNullDefPositional
@@ -2348,6 +2428,25 @@ mixin _$TestReqPositionalField$Invoker on sq.Invoker
 /// Facade for TestReqPositionalField, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$TestReqPositionalField$Facade implements TestReqPositionalField {}
+
+/// WorkerClient for TestReqPositionalField
+final class $TestReqPositionalField$Client extends sq.WorkerClient
+    with _$TestReqPositionalField$Invoker, _$TestReqPositionalField$Facade
+    implements TestReqPositionalField {
+  $TestReqPositionalField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+
+  @override
+  late final int arg1;
+}
+
+/// Local worker extension for TestReqPositionalField
+extension $TestReqPositionalFieldLocalWorkerExt on TestReqPositionalField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestReqPositionalField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for TestReqPositionalField
 class _$TestReqPositionalField$WorkerService extends TestReqPositionalField
@@ -2849,6 +2948,28 @@ mixin _$TestOptNullPositionalField$Invoker on sq.Invoker
 mixin _$TestOptNullPositionalField$Facade
     implements TestOptNullPositionalField {}
 
+/// WorkerClient for TestOptNullPositionalField
+final class $TestOptNullPositionalField$Client extends sq.WorkerClient
+    with
+        _$TestOptNullPositionalField$Invoker,
+        _$TestOptNullPositionalField$Facade
+    implements TestOptNullPositionalField {
+  $TestOptNullPositionalField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+
+  @override
+  late final int? arg1;
+}
+
+/// Local worker extension for TestOptNullPositionalField
+extension $TestOptNullPositionalFieldLocalWorkerExt
+    on TestOptNullPositionalField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullPositionalField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestOptNullPositionalField
 class _$TestOptNullPositionalField$WorkerService
     extends TestOptNullPositionalField
@@ -3349,6 +3470,26 @@ mixin _$TestOptDefPositionalField$Invoker on sq.Invoker
 /// invoking the remote service.
 mixin _$TestOptDefPositionalField$Facade implements TestOptDefPositionalField {}
 
+/// WorkerClient for TestOptDefPositionalField
+final class $TestOptDefPositionalField$Client extends sq.WorkerClient
+    with _$TestOptDefPositionalField$Invoker, _$TestOptDefPositionalField$Facade
+    implements TestOptDefPositionalField {
+  $TestOptDefPositionalField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+
+  @override
+  late final int arg1;
+}
+
+/// Local worker extension for TestOptDefPositionalField
+extension $TestOptDefPositionalFieldLocalWorkerExt
+    on TestOptDefPositionalField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptDefPositionalField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestOptDefPositionalField
 class _$TestOptDefPositionalField$WorkerService
     extends TestOptDefPositionalField
@@ -3847,6 +3988,28 @@ mixin _$TestOptNullDefPositionalField$Invoker on sq.Invoker
 /// invoking the remote service.
 mixin _$TestOptNullDefPositionalField$Facade
     implements TestOptNullDefPositionalField {}
+
+/// WorkerClient for TestOptNullDefPositionalField
+final class $TestOptNullDefPositionalField$Client extends sq.WorkerClient
+    with
+        _$TestOptNullDefPositionalField$Invoker,
+        _$TestOptNullDefPositionalField$Facade
+    implements TestOptNullDefPositionalField {
+  $TestOptNullDefPositionalField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+
+  @override
+  late final int? arg1;
+}
+
+/// Local worker extension for TestOptNullDefPositionalField
+extension $TestOptNullDefPositionalFieldLocalWorkerExt
+    on TestOptNullDefPositionalField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullDefPositionalField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for TestOptNullDefPositionalField
 class _$TestOptNullDefPositionalField$WorkerService
@@ -4359,6 +4522,25 @@ mixin _$TestReqPositionalPrivateField$Facade
   int get _arg1 => throw UnimplementedError();
 }
 
+/// WorkerClient for TestReqPositionalPrivateField
+final class $TestReqPositionalPrivateField$Client extends sq.WorkerClient
+    with
+        _$TestReqPositionalPrivateField$Invoker,
+        _$TestReqPositionalPrivateField$Facade
+    implements TestReqPositionalPrivateField {
+  $TestReqPositionalPrivateField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestReqPositionalPrivateField
+extension $TestReqPositionalPrivateFieldLocalWorkerExt
+    on TestReqPositionalPrivateField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestReqPositionalPrivateField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestReqPositionalPrivateField
 class _$TestReqPositionalPrivateField$WorkerService
     extends TestReqPositionalPrivateField
@@ -4862,6 +5044,25 @@ mixin _$TestOptNullPositionalPrivateField$Facade
   @override
   // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
+}
+
+/// WorkerClient for TestOptNullPositionalPrivateField
+final class $TestOptNullPositionalPrivateField$Client extends sq.WorkerClient
+    with
+        _$TestOptNullPositionalPrivateField$Invoker,
+        _$TestOptNullPositionalPrivateField$Facade
+    implements TestOptNullPositionalPrivateField {
+  $TestOptNullPositionalPrivateField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptNullPositionalPrivateField
+extension $TestOptNullPositionalPrivateFieldLocalWorkerExt
+    on TestOptNullPositionalPrivateField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullPositionalPrivateField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
 }
 
 /// WorkerService class for TestOptNullPositionalPrivateField
@@ -5377,6 +5578,25 @@ mixin _$TestOptDefPositionalPrivateField$Facade
   int get _arg1 => throw UnimplementedError();
 }
 
+/// WorkerClient for TestOptDefPositionalPrivateField
+final class $TestOptDefPositionalPrivateField$Client extends sq.WorkerClient
+    with
+        _$TestOptDefPositionalPrivateField$Invoker,
+        _$TestOptDefPositionalPrivateField$Facade
+    implements TestOptDefPositionalPrivateField {
+  $TestOptDefPositionalPrivateField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptDefPositionalPrivateField
+extension $TestOptDefPositionalPrivateFieldLocalWorkerExt
+    on TestOptDefPositionalPrivateField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptDefPositionalPrivateField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestOptDefPositionalPrivateField
 class _$TestOptDefPositionalPrivateField$WorkerService
     extends TestOptDefPositionalPrivateField
@@ -5884,6 +6104,25 @@ mixin _$TestOptNullDefPositionalPrivateField$Facade
   @override
   // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
+}
+
+/// WorkerClient for TestOptNullDefPositionalPrivateField
+final class $TestOptNullDefPositionalPrivateField$Client extends sq.WorkerClient
+    with
+        _$TestOptNullDefPositionalPrivateField$Invoker,
+        _$TestOptNullDefPositionalPrivateField$Facade
+    implements TestOptNullDefPositionalPrivateField {
+  $TestOptNullDefPositionalPrivateField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptNullDefPositionalPrivateField
+extension $TestOptNullDefPositionalPrivateFieldLocalWorkerExt
+    on TestOptNullDefPositionalPrivateField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullDefPositionalPrivateField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
 }
 
 /// WorkerService class for TestOptNullDefPositionalPrivateField
@@ -6400,6 +6639,22 @@ mixin _$TestOptNullNamed$Invoker on sq.Invoker implements TestOptNullNamed {}
 /// invoking the remote service.
 mixin _$TestOptNullNamed$Facade implements TestOptNullNamed {}
 
+/// WorkerClient for TestOptNullNamed
+final class $TestOptNullNamed$Client extends sq.WorkerClient
+    with _$TestOptNullNamed$Invoker, _$TestOptNullNamed$Facade
+    implements TestOptNullNamed {
+  $TestOptNullNamed$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptNullNamed
+extension $TestOptNullNamedLocalWorkerExt on TestOptNullNamed {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullNamed> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestOptNullNamed
 class _$TestOptNullNamed$WorkerService extends TestOptNullNamed
     implements sq.WorkerService {
@@ -6882,6 +7137,22 @@ mixin _$TestOptDefNamed$Invoker on sq.Invoker implements TestOptDefNamed {}
 /// Facade for TestOptDefNamed, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$TestOptDefNamed$Facade implements TestOptDefNamed {}
+
+/// WorkerClient for TestOptDefNamed
+final class $TestOptDefNamed$Client extends sq.WorkerClient
+    with _$TestOptDefNamed$Invoker, _$TestOptDefNamed$Facade
+    implements TestOptDefNamed {
+  $TestOptDefNamed$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptDefNamed
+extension $TestOptDefNamedLocalWorkerExt on TestOptDefNamed {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptDefNamed> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for TestOptDefNamed
 class _$TestOptDefNamed$WorkerService extends TestOptDefNamed
@@ -7367,6 +7638,22 @@ mixin _$TestOptNullDefNamed$Invoker on sq.Invoker
 /// invoking the remote service.
 mixin _$TestOptNullDefNamed$Facade implements TestOptNullDefNamed {}
 
+/// WorkerClient for TestOptNullDefNamed
+final class $TestOptNullDefNamed$Client extends sq.WorkerClient
+    with _$TestOptNullDefNamed$Invoker, _$TestOptNullDefNamed$Facade
+    implements TestOptNullDefNamed {
+  $TestOptNullDefNamed$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptNullDefNamed
+extension $TestOptNullDefNamedLocalWorkerExt on TestOptNullDefNamed {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullDefNamed> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestOptNullDefNamed
 class _$TestOptNullDefNamed$WorkerService extends TestOptNullDefNamed
     implements sq.WorkerService {
@@ -7851,6 +8138,25 @@ mixin _$TestOptNullNamedField$Invoker on sq.Invoker
 /// Facade for TestOptNullNamedField, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$TestOptNullNamedField$Facade implements TestOptNullNamedField {}
+
+/// WorkerClient for TestOptNullNamedField
+final class $TestOptNullNamedField$Client extends sq.WorkerClient
+    with _$TestOptNullNamedField$Invoker, _$TestOptNullNamedField$Facade
+    implements TestOptNullNamedField {
+  $TestOptNullNamedField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+
+  @override
+  late final int? arg1;
+}
+
+/// Local worker extension for TestOptNullNamedField
+extension $TestOptNullNamedFieldLocalWorkerExt on TestOptNullNamedField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullNamedField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for TestOptNullNamedField
 class _$TestOptNullNamedField$WorkerService extends TestOptNullNamedField
@@ -8351,6 +8657,25 @@ mixin _$TestOptDefNamedField$Invoker on sq.Invoker
 /// invoking the remote service.
 mixin _$TestOptDefNamedField$Facade implements TestOptDefNamedField {}
 
+/// WorkerClient for TestOptDefNamedField
+final class $TestOptDefNamedField$Client extends sq.WorkerClient
+    with _$TestOptDefNamedField$Invoker, _$TestOptDefNamedField$Facade
+    implements TestOptDefNamedField {
+  $TestOptDefNamedField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+
+  @override
+  late final int arg1;
+}
+
+/// Local worker extension for TestOptDefNamedField
+extension $TestOptDefNamedFieldLocalWorkerExt on TestOptDefNamedField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptDefNamedField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestOptDefNamedField
 class _$TestOptDefNamedField$WorkerService extends TestOptDefNamedField
     implements sq.WorkerService {
@@ -8849,6 +9174,25 @@ mixin _$TestOptNullDefNamedField$Invoker on sq.Invoker
 /// Facade for TestOptNullDefNamedField, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$TestOptNullDefNamedField$Facade implements TestOptNullDefNamedField {}
+
+/// WorkerClient for TestOptNullDefNamedField
+final class $TestOptNullDefNamedField$Client extends sq.WorkerClient
+    with _$TestOptNullDefNamedField$Invoker, _$TestOptNullDefNamedField$Facade
+    implements TestOptNullDefNamedField {
+  $TestOptNullDefNamedField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+
+  @override
+  late final int? arg1;
+}
+
+/// Local worker extension for TestOptNullDefNamedField
+extension $TestOptNullDefNamedFieldLocalWorkerExt on TestOptNullDefNamedField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullDefNamedField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for TestOptNullDefNamedField
 class _$TestOptNullDefNamedField$WorkerService extends TestOptNullDefNamedField
@@ -9422,6 +9766,22 @@ mixin _$TestTypedData$Invoker on sq.Invoker implements TestTypedData {
 /// invoking the remote service.
 mixin _$TestTypedData$Facade implements TestTypedData {}
 
+/// WorkerClient for TestTypedData
+final class $TestTypedData$Client extends sq.WorkerClient
+    with _$TestTypedData$Invoker, _$TestTypedData$Facade
+    implements TestTypedData {
+  $TestTypedData$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestTypedData
+extension $TestTypedDataLocalWorkerExt on TestTypedData {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestTypedData> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestTypedData
 class _$TestTypedData$WorkerService extends TestTypedData
     implements sq.WorkerService {
@@ -9954,6 +10314,25 @@ mixin _$TestOptNullNamedPrivateField$Facade
   int? get _arg1 => throw UnimplementedError();
 }
 
+/// WorkerClient for TestOptNullNamedPrivateField
+final class $TestOptNullNamedPrivateField$Client extends sq.WorkerClient
+    with
+        _$TestOptNullNamedPrivateField$Invoker,
+        _$TestOptNullNamedPrivateField$Facade
+    implements TestOptNullNamedPrivateField {
+  $TestOptNullNamedPrivateField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptNullNamedPrivateField
+extension $TestOptNullNamedPrivateFieldLocalWorkerExt
+    on TestOptNullNamedPrivateField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullNamedPrivateField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestOptNullNamedPrivateField
 class _$TestOptNullNamedPrivateField$WorkerService
     extends TestOptNullNamedPrivateField
@@ -10461,6 +10840,25 @@ mixin _$TestOptDefNamedPrivateField$Facade
   int get _arg1 => throw UnimplementedError();
 }
 
+/// WorkerClient for TestOptDefNamedPrivateField
+final class $TestOptDefNamedPrivateField$Client extends sq.WorkerClient
+    with
+        _$TestOptDefNamedPrivateField$Invoker,
+        _$TestOptDefNamedPrivateField$Facade
+    implements TestOptDefNamedPrivateField {
+  $TestOptDefNamedPrivateField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptDefNamedPrivateField
+extension $TestOptDefNamedPrivateFieldLocalWorkerExt
+    on TestOptDefNamedPrivateField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptDefNamedPrivateField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestOptDefNamedPrivateField
 class _$TestOptDefNamedPrivateField$WorkerService
     extends TestOptDefNamedPrivateField
@@ -10966,6 +11364,25 @@ mixin _$TestOptNullDefNamedPrivateField$Facade
   @override
   // ignore: unused_element
   int? get _arg1 => throw UnimplementedError();
+}
+
+/// WorkerClient for TestOptNullDefNamedPrivateField
+final class $TestOptNullDefNamedPrivateField$Client extends sq.WorkerClient
+    with
+        _$TestOptNullDefNamedPrivateField$Invoker,
+        _$TestOptNullDefNamedPrivateField$Facade
+    implements TestOptNullDefNamedPrivateField {
+  $TestOptNullDefNamedPrivateField$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptNullDefNamedPrivateField
+extension $TestOptNullDefNamedPrivateFieldLocalWorkerExt
+    on TestOptNullDefNamedPrivateField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullDefNamedPrivateField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
 }
 
 /// WorkerService class for TestOptNullDefNamedPrivateField
@@ -11482,6 +11899,25 @@ mixin _$TestPrefixedImportType$Invoker on sq.Invoker
 /// Facade for TestPrefixedImportType, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$TestPrefixedImportType$Facade implements TestPrefixedImportType {}
+
+/// WorkerClient for TestPrefixedImportType
+final class $TestPrefixedImportType$Client extends sq.WorkerClient
+    with _$TestPrefixedImportType$Invoker, _$TestPrefixedImportType$Facade
+    implements TestPrefixedImportType {
+  $TestPrefixedImportType$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+
+  @override
+  late final typed_data.Int8List typedData;
+}
+
+/// Local worker extension for TestPrefixedImportType
+extension $TestPrefixedImportTypeLocalWorkerExt on TestPrefixedImportType {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestPrefixedImportType> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for TestPrefixedImportType
 class _$TestPrefixedImportType$WorkerService extends TestPrefixedImportType
@@ -12037,6 +12473,27 @@ mixin _$TestOptNullDefNamedPrivateNonFinalField$Facade
   set _state(void $value) => throw UnimplementedError();
 }
 
+/// WorkerClient for TestOptNullDefNamedPrivateNonFinalField
+final class $TestOptNullDefNamedPrivateNonFinalField$Client
+    extends sq.WorkerClient
+    with
+        _$TestOptNullDefNamedPrivateNonFinalField$Invoker,
+        _$TestOptNullDefNamedPrivateNonFinalField$Facade
+    implements TestOptNullDefNamedPrivateNonFinalField {
+  $TestOptNullDefNamedPrivateNonFinalField$Client(
+    sq.PlatformChannel channelInfo,
+  ) : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestOptNullDefNamedPrivateNonFinalField
+extension $TestOptNullDefNamedPrivateNonFinalFieldLocalWorkerExt
+    on TestOptNullDefNamedPrivateNonFinalField {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestOptNullDefNamedPrivateNonFinalField> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestOptNullDefNamedPrivateNonFinalField
 class _$TestOptNullDefNamedPrivateNonFinalField$WorkerService
     extends TestOptNullDefNamedPrivateNonFinalField
@@ -12314,6 +12771,22 @@ mixin _$TestInstallable$Facade implements TestInstallable {
   @override
   // ignore: unused_element
   int get _delay => throw UnimplementedError();
+}
+
+/// WorkerClient for TestInstallable
+final class $TestInstallable$Client extends sq.WorkerClient
+    with _$TestInstallable$Invoker, _$TestInstallable$Facade
+    implements TestInstallable {
+  $TestInstallable$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestInstallable
+extension $TestInstallableLocalWorkerExt on TestInstallable {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestInstallable> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
 }
 
 /// WorkerService class for TestInstallable
@@ -12902,6 +13375,22 @@ mixin _$TestRecordTypes$Invoker on sq.Invoker implements TestRecordTypes {
 /// invoking the remote service.
 mixin _$TestRecordTypes$Facade implements TestRecordTypes {}
 
+/// WorkerClient for TestRecordTypes
+final class $TestRecordTypes$Client extends sq.WorkerClient
+    with _$TestRecordTypes$Invoker, _$TestRecordTypes$Facade
+    implements TestRecordTypes {
+  $TestRecordTypes$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestRecordTypes
+extension $TestRecordTypesLocalWorkerExt on TestRecordTypes {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestRecordTypes> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestRecordTypes
 class _$TestRecordTypes$WorkerService extends TestRecordTypes
     implements sq.WorkerService {
@@ -13400,6 +13889,25 @@ mixin _$TestRequiredSuperParam$Invoker on sq.Invoker
 /// Facade for TestRequiredSuperParam, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$TestRequiredSuperParam$Facade implements TestRequiredSuperParam {}
+
+/// WorkerClient for TestRequiredSuperParam
+final class $TestRequiredSuperParam$Client extends sq.WorkerClient
+    with _$TestRequiredSuperParam$Invoker, _$TestRequiredSuperParam$Facade
+    implements TestRequiredSuperParam {
+  $TestRequiredSuperParam$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+
+  @override
+  late final String path;
+}
+
+/// Local worker extension for TestRequiredSuperParam
+extension $TestRequiredSuperParamLocalWorkerExt on TestRequiredSuperParam {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestRequiredSuperParam> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for TestRequiredSuperParam
 class _$TestRequiredSuperParam$WorkerService extends TestRequiredSuperParam
@@ -13927,6 +14435,22 @@ mixin _$TestBigInt$Invoker on sq.Invoker implements TestBigInt {
 /// invoking the remote service.
 mixin _$TestBigInt$Facade implements TestBigInt {}
 
+/// WorkerClient for TestBigInt
+final class $TestBigInt$Client extends sq.WorkerClient
+    with _$TestBigInt$Invoker, _$TestBigInt$Facade
+    implements TestBigInt {
+  $TestBigInt$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestBigInt
+extension $TestBigIntLocalWorkerExt on TestBigInt {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestBigInt> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
+
 /// WorkerService class for TestBigInt
 class _$TestBigInt$WorkerService extends TestBigInt
     implements sq.WorkerService {
@@ -14427,6 +14951,22 @@ mixin _$TestCustomData$Invoker on sq.Invoker implements TestCustomData {
 /// Facade for TestCustomData, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$TestCustomData$Facade implements TestCustomData {}
+
+/// WorkerClient for TestCustomData
+final class $TestCustomData$Client extends sq.WorkerClient
+    with _$TestCustomData$Invoker, _$TestCustomData$Facade
+    implements TestCustomData {
+  $TestCustomData$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for TestCustomData
+extension $TestCustomDataLocalWorkerExt on TestCustomData {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<TestCustomData> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for TestCustomData
 class _$TestCustomData$WorkerService extends TestCustomData

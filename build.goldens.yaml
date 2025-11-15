@@ -1,0 +1,22 @@
+targets:
+  $default:
+    builders:
+      squadron_builder:worker_builder:
+        generate_for:
+          - test/**
+        enabled: true
+        options:
+          build_extensions:
+            {
+              "test/code/{{dir}}/{{file}}.dart":
+                [
+                  "test/code/{{dir}}/goldens/{{file}}.worker.g.dart",
+                  "test/code/{{dir}}/goldens/{{file}}.vm.g.dart",
+                  "test/code/{{dir}}/goldens/{{file}}.web.g.dart",
+                  "test/code/{{dir}}/goldens/{{file}}.stub.g.dart",
+                  "test/code/{{dir}}/goldens/{{file}}.activator.g.dart",
+                ],
+            }
+          with_finalizers: false # 'true' requires Dart SDK >= 2.17.0
+      freezed:
+        enabled: false

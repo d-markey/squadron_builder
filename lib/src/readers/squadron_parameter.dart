@@ -19,7 +19,7 @@ class SquadronParameter {
     this.defaultValue,
     this.marshaler,
     this.serIdx,
-    this.isLocalWorker,
+    this.isSharedService,
   ) : required = isRequired ? 'required ' : '';
 
   static SquadronParameter opt(String name, ManagedType type, bool named) =>
@@ -64,8 +64,7 @@ class SquadronParameter {
 
         if (name.isEmpty) {
           throw InvalidGenerationSourceError(
-            'Parameter name cannot be null '
-            'for ${fld.enclosingElement.name}.',
+            'Parameter name cannot be null for ${fld.enclosingElement.name}.',
           );
         }
 
@@ -75,8 +74,9 @@ class SquadronParameter {
       }
     }
 
-    final reader = AnnotationReader<squadron.LocalWorkerParam>.single(param);
-    final isLocalWorker = reader.isNotEmpty;
+    final sharedServiceReader =
+        AnnotationReader<squadron.SharedServiceParam>.single(param);
+    final isSharedService = sharedServiceReader.isNotEmpty;
 
     return SquadronParameter._(
       name,
@@ -89,7 +89,7 @@ class SquadronParameter {
       param.defaultValueCode,
       marshaler,
       serIdx,
-      isLocalWorker,
+      isSharedService,
     );
   }
 
@@ -103,7 +103,7 @@ class SquadronParameter {
   final String? defaultValue;
   final int serIdx;
   final Marshaler? marshaler;
-  final bool isLocalWorker;
+  final bool isSharedService;
 
   bool get mayBeNull =>
       (isOptional || (isNamed && required.isEmpty)) && defaultValue == null;

@@ -4,7 +4,7 @@ extension on WorkerAssets {
   /// Service extension to generate operations map
   String _generateServiceOperations(List<SquadronMethodReader> commands) {
     for (var cmd in commands) {
-      cmd.throwIfLocalWorkerParam();
+      cmd.throwIfSharedServiceParam();
     }
     return '''
       /// Command ids used in operations map
@@ -38,7 +38,7 @@ extension on WorkerAssets {
       }''';
 
   /// Worker Service
-  String _generateServiceClass(List<SquadronMethodReader> commands) {
+  String _generateServiceClass() {
     final params = _service.parameters;
     return '''/// WorkerService class for $_name
         ${_service.isBase ? 'base ' : ''}class $_workerService extends $_name implements $TWorkerService {
@@ -47,6 +47,24 @@ extension on WorkerAssets {
           $override_
           $TOperationsMap get operations => _\$getOperations();
         }''';
+  }
+
+  /// Worker Service Client
+  String _generateServiceClient() {
+    final workerClient = WorkerAssets.getWorkerClientFor(_name);
+    return '''
+        /// WorkerClient for $_name
+        final class $workerClient
+            extends $TWorkerClient
+            with $_serviceInvoker, $_serviceFacade
+            implements $_name {
+
+          $workerClient($TPlatformChannel channelInfo)
+            : super($TChannel.deserialize(channelInfo)!);
+
+          ${_service.fields.values.map((f) => f.override(this, forceLate: true)).join('\n')}
+        }
+      ''';
   }
 
   /// Service initializer

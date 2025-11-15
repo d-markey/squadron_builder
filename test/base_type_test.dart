@@ -20,6 +20,8 @@ void main() async {
 
         expectOutputContains(buildResult.worker, buildResult, {
           'WorkerService \$IntServiceInitializer(WorkerRequest \$req)',
+          'class \$IntService\$Client extends WorkerClient',
+          'extension \$IntServiceLocalWorkerExt on IntService',
           'class IntServiceWorker',
           'IntServiceWorker.vm',
           'class IntServiceWorkerPool',
@@ -59,6 +61,8 @@ void main() async {
 
         expectOutputContains(buildResult.worker, buildResult, {
           'WorkerService \$IntServiceInitializer(WorkerRequest \$req)',
+          'class \$IntService\$Client extends WorkerClient',
+          'extension \$IntServiceLocalWorkerExt on IntService',
           'class _\$IntServiceWorker',
           'class IntServiceWorker',
           'IntServiceWorker.vm',
@@ -103,6 +107,8 @@ void main() async {
 
         expectOutputContains(buildResult.worker, buildResult, {
           'WorkerService \$DateTimeServiceInitializer(WorkerRequest \$req)',
+          'class \$DateTimeService\$Client extends WorkerClient',
+          'extension \$DateTimeServiceLocalWorkerExt on DateTimeService',
           'class DateTimeServiceWorker',
           'DateTimeServiceWorker.vm',
           'DateTimeServiceWorker.wasm',

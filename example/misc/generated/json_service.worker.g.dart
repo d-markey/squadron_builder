@@ -4,7 +4,7 @@
 part of '../json_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.1.0 (Squadron 7.2.0)
+// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
 // **************************************************************************
 
 // dart format width=80
@@ -35,6 +35,22 @@ mixin _$JsonService$Invoker on sq.Invoker implements JsonService {
 /// Facade for JsonService, implements other details of the service unrelated to
 /// invoking the remote service.
 mixin _$JsonService$Facade implements JsonService {}
+
+/// WorkerClient for JsonService
+final class $JsonService$Client extends sq.WorkerClient
+    with _$JsonService$Invoker, _$JsonService$Facade
+    implements JsonService {
+  $JsonService$Client(sq.PlatformChannel channelInfo)
+    : super(sq.Channel.deserialize(channelInfo)!);
+}
+
+/// Local worker extension for JsonService
+extension $JsonServiceLocalWorkerExt on JsonService {
+  // Get a fresh local worker instance.
+  sq.LocalWorker<JsonService> getLocalWorker([
+    sq.ExceptionManager? exceptionManager,
+  ]) => sq.LocalWorker.create(this, _$getOperations(), exceptionManager);
+}
 
 /// WorkerService class for JsonService
 class _$JsonService$WorkerService extends JsonService
