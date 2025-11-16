@@ -20,6 +20,7 @@ class SquadronServiceReader {
     this.js,
     this.wasm,
     this.baseUrl,
+    this.version,
   ) : name = clazz.name ?? '',
       isBase = clazz.isBase,
       parameters = SquadronParameters(_typeManager) {
@@ -41,6 +42,7 @@ class SquadronServiceReader {
   final bool js;
   final bool wasm;
   final String baseUrl;
+  final int? version;
 
   bool get web => js | wasm;
 
@@ -119,6 +121,7 @@ class SquadronServiceReader {
     var wasm = false;
 
     var baseUrl = '';
+    int? version;
 
     for (var annotation in reader.annotations) {
       if (annotation.getBool('local')) {
@@ -132,6 +135,10 @@ class SquadronServiceReader {
         if (annotation.getBool('pool')) pool = true;
         if (baseUrl.isEmpty) {
           baseUrl = annotation.getString('baseUrl');
+        }
+        final v = annotation.getNullableInt('version');
+        if (v != null && (version == null || v > version)) {
+          version = v;
         }
       }
     }
@@ -149,6 +156,7 @@ class SquadronServiceReader {
       js,
       wasm,
       baseUrl,
+      version,
     );
   }
 }

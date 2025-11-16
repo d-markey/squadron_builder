@@ -1,6 +1,10 @@
+## 8.3.0
+
+- When provided in the `SquadronService` annotation, include the version number as a query parameter to the Worker's URL. See also https://github.com/d-markey/squadron_builder/issues/40.
+
 ## 8.2.0
 
-- Supports passing services to other services at construction time, enabling worker cooperation.
+- Support passing services to other services at construction time, enabling worker cooperation.
 
 ## 8.1.0
 

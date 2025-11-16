@@ -255,10 +255,12 @@ extension DartObjectExt on value_.DartObject? {
   String getString(String fieldName) =>
       this?.getField(fieldName)?.toStringValue()?.trim() ?? '';
 
-  int getInt(String fieldName) => this?.getField(fieldName)?.toIntValue() ?? 0;
+  int getInt(String fieldName) => getNullableInt(fieldName) ?? 0;
 
-  bool getBool(String fieldName) =>
-      this?.getField(fieldName)?.toBoolValue() ?? false;
+  int? getNullableInt(String fieldName) =>
+      this?.getField(fieldName)?.toIntValue();
+
+  bool getBool(String fieldName) => getNullableBool(fieldName) ?? false;
 
   bool? getNullableBool(String fieldName) =>
       this?.getField(fieldName)?.toBoolValue();

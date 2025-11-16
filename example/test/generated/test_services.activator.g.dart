@@ -2,7 +2,7 @@
 // dart format width=80
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.2.0 (Squadron 7.3.0)
+// Generator: WorkerGenerator 8.3.0 (Squadron 7.3.0)
 // **************************************************************************
 
 import 'test_services.stub.g.dart'

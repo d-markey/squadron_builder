@@ -54,14 +54,17 @@ extension ActivatorExt on WorkerAssets {
               ? output.path
               : '${_service.baseUrl}/${output.pathSegments.last}';
 
+      final version =
+          (_service.version == null) ? '' : '?v=${_service.version}';
+
       if (_service.js && _service.wasm) {
         codeEvent.add(
           output,
           '''$TEntryPoint \$get$_serviceActivator($TSquadronPlatformType platform) {
              if (platform.isJs) {
-               return $TSquadron.uri('$baseWorkerUrl.js');
+               return $TSquadron.uri('$baseWorkerUrl.js$version');
              } else if (platform.isWasm) {
-               return $TSquadron.uri('$baseWorkerUrl.wasm');
+               return $TSquadron.uri('$baseWorkerUrl.wasm$version');
              } else {
                throw $TUnsupportedError('\${platform.label} not supported.');
              }
@@ -74,7 +77,7 @@ extension ActivatorExt on WorkerAssets {
           output,
           '''$TEntryPoint \$get$_serviceActivator($TSquadronPlatformType platform) {
              if (platform.isWeb) {
-               return $TSquadron.uri('$baseWorkerUrl.$ext');
+               return $TSquadron.uri('$baseWorkerUrl.$ext$version');
              } else {
                throw $TUnsupportedError('\${platform.label} not supported.');
              }
