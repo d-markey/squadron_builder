@@ -2,7 +2,7 @@
 // dart format width=80
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.3.0 (Squadron 7.3.0)
+// Generator: WorkerGenerator 8.3.0 (Squadron 7.4.0)
 // **************************************************************************
 
 import 'package:squadron/squadron.dart';
@@ -17,11 +17,11 @@ void main() {
 EntryPoint $getDateTimeServiceActivator(SquadronPlatformType platform) {
   if (platform.isJs) {
     return Squadron.uri(
-      'test/code/base_types/goldens/datetime_service.web.g.dart.js',
+      'test/code/base_types/goldens/datetime_service.web.g.dart.js?v=1',
     );
   } else if (platform.isWasm) {
     return Squadron.uri(
-      'test/code/base_types/goldens/datetime_service.web.g.dart.wasm',
+      'test/code/base_types/goldens/datetime_service.web.g.dart.wasm?v=1',
     );
   } else {
     throw UnsupportedError('${platform.label} not supported.');

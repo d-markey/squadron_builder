@@ -39,7 +39,7 @@ dependency_overrides:
   source_gen_test:
     git:
       url: https://github.com/d-markey/source_gen_test
-      ref: generateForLibrary
+      ref: 119b2dcfef03fe7d76da12c14a4ff8f15f7ea70c
 
 topics:
   - concurrency

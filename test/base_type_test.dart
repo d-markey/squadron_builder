@@ -131,6 +131,7 @@ void main() async {
         expectOutputContains(buildResult.web, buildResult, {
           'void main()',
           'EntryPoint \$getDateTimeServiceActivator(SquadronPlatformType platform)',
+          'datetime_service.web.g.dart.js?v=1',
         });
 
         expectOutputContains(buildResult.activator, buildResult, {
