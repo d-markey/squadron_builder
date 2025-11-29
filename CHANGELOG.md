@@ -1,3 +1,7 @@
+## 9.0.0
+
+- Support `analyzer` version 9.0.0.
+
 ## 8.3.0
 
 - When provided in the `SquadronService` annotation, include the version number as a query parameter to the Worker's URL. See also https://github.com/d-markey/squadron_builder/issues/40.

@@ -4,7 +4,7 @@
 part of '../echo_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.3.0 (Squadron 7.3.0)
+// Generator: WorkerGenerator 8.3.0 (Squadron 7.4.0)
 // **************************************************************************
 
 // dart format width=80
@@ -233,11 +233,10 @@ base class _$EchoServiceWorker extends sq.Worker
     cfg.ServiceConfig<int>? workloadDelay,
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
-  ]) : _$startReq =
-           (() {
-             final $sr = _$Ser(contextAware: false);
-             return [trace, $sr.$10(workloadDelay)];
-           })(),
+  ]) : _$startReq = (() {
+         final $sr = _$Ser(contextAware: false);
+         return [trace, $sr.$10(workloadDelay)];
+       })(),
        super(
          $EchoServiceActivator(sq.Squadron.platformType),
          threadHook: threadHook,
@@ -249,11 +248,10 @@ base class _$EchoServiceWorker extends sq.Worker
     cfg.ServiceConfig<int>? workloadDelay,
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
-  ]) : _$startReq =
-           (() {
-             final $sr = _$Ser(contextAware: false);
-             return [trace, $sr.$10(workloadDelay)];
-           })(),
+  ]) : _$startReq = (() {
+         final $sr = _$Ser(contextAware: false);
+         return [trace, $sr.$10(workloadDelay)];
+       })(),
        super(
          $EchoServiceActivator(sq.SquadronPlatformType.vm),
          threadHook: threadHook,
@@ -694,24 +692,22 @@ base class EchoServiceWorkerPool
 final class _$Deser extends sq.MarshalingContext {
   _$Deser({super.contextAware});
   late final $0 = value<String>();
-  late final $1 =
-      (($) => ServiceRequestGenericToString.instance.unmarshal($0($), this));
-  late final $2 =
-      (($) => (const ServiceRequestToString()).unmarshal($0($), this));
+  late final $1 = (($) =>
+      ServiceRequestGenericToString.instance.unmarshal($0($), this));
+  late final $2 = (($) =>
+      (const ServiceRequestToString()).unmarshal($0($), this));
   late final $3 = (($) => srv.ServiceRequest.fromJson($));
-  late final $4 =
-      (($) => ServiceRequestToString.instance.unmarshal($0($), this));
+  late final $4 = (($) =>
+      ServiceRequestToString.instance.unmarshal($0($), this));
   late final $5 = value<ByteBuffer>();
-  late final $6 =
-      (($) =>
-          ServiceResponseOfStringToByteBuffer.instance.unmarshal($5($), this));
+  late final $6 = (($) =>
+      ServiceResponseOfStringToByteBuffer.instance.unmarshal($5($), this));
   late final $7 = (($) => srv.ServiceResponse<String>.fromJson($));
-  late final $8 =
-      (($) =>
-          (const ServiceResponseOfStringToByteBuffer()).unmarshal($5($), this));
+  late final $8 = (($) =>
+      (const ServiceResponseOfStringToByteBuffer()).unmarshal($5($), this));
   late final $9 = sq.Converter.allowNull($7);
-  late final $10 =
-      (($) => (const ServiceResponseToJson()).unmarshal($0($), this));
+  late final $10 = (($) =>
+      (const ServiceResponseToJson()).unmarshal($0($), this));
   late final $11 = value<bool>();
   late final $12 = (($) => cfg.ServiceConfig<int>.fromJson($));
   late final $13 = sq.Converter.allowNull($12);
@@ -719,15 +715,15 @@ final class _$Deser extends sq.MarshalingContext {
 
 final class _$Ser extends sq.MarshalingContext {
   _$Ser({super.contextAware});
-  late final $0 =
-      (($) => ServiceResponseOfStringToByteBuffer.instance.marshal($, this));
+  late final $0 = (($) =>
+      ServiceResponseOfStringToByteBuffer.instance.marshal($, this));
   late final $1 = (($) => ($ as srv.ServiceResponse<String>).toJson());
-  late final $2 =
-      (($) => (const ServiceResponseOfStringToByteBuffer()).marshal($, this));
+  late final $2 = (($) =>
+      (const ServiceResponseOfStringToByteBuffer()).marshal($, this));
   late final $3 = sq.Converter.allowNull($1);
   late final $4 = (($) => (const ServiceResponseToJson()).marshal($, this));
-  late final $5 =
-      (($) => ServiceRequestGenericToString.instance.marshal($, this));
+  late final $5 = (($) =>
+      ServiceRequestGenericToString.instance.marshal($, this));
   late final $6 = (($) => (const ServiceRequestToString()).marshal($, this));
   late final $7 = (($) => ($ as srv.ServiceRequest).toJson());
   late final $8 = (($) => ServiceRequestToString.instance.marshal($, this));

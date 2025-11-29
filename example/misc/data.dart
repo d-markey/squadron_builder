@@ -1,32 +1,20 @@
 import 'dart:core';
 
-import 'package:freezed_annotation/freezed_annotation.dart';
-
 export 'data_marshaler_ext.dart';
 
-part 'data.freezed.dart';
+class Data {
+  Data(this.a, this.b, this.c);
 
-@freezed
-abstract class Data with _$Data {
-  const Data._();
-
-  const factory Data(int a, bool b, String c) = _Data;
+  final int a;
+  final bool b;
+  final String c;
 
   @override
   String toString() => 'a=$a, b=$b, c=$c';
 }
 
 class Data2 extends Data {
-  Data2(this.a, this.b, this.c) : super._();
-
-  @override
-  final int a;
-
-  @override
-  final bool b;
-
-  @override
-  final String c;
+  Data2(super.a, super.b, super.c);
 }
 
 class Self {

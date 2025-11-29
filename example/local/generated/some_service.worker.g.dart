@@ -4,7 +4,7 @@
 part of '../some_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.3.0 (Squadron 7.3.0)
+// Generator: WorkerGenerator 8.3.0 (Squadron 7.4.0)
 // **************************************************************************
 
 // dart format width=80
@@ -77,10 +77,9 @@ class _$SomeService$WorkerService extends SomeService implements WorkerService {
 WorkerService $SomeServiceInitializer(WorkerRequest $req) {
   final $dsr = _$Deser(contextAware: false);
   return _$SomeService$WorkerService(
-    threadIdService:
-        ($req.args[0] == null)
-            ? null
-            : id.$ThreadIdentityService$Client($dsr.$1($req.args[0])),
+    threadIdService: ($req.args[0] == null)
+        ? null
+        : id.$ThreadIdentityService$Client($dsr.$1($req.args[0])),
   );
 }
 
@@ -119,8 +118,8 @@ base class _$SomeServiceWorker extends Worker
     if (p0 is Worker) {
       _$startReq[0] = (_$remote[0] ??= p0.getSharedChannel())?.serialize();
     } else if (p0 is id.ThreadIdentityService) {
-      _$startReq[0] =
-          (_$remote[0] ??= p0.getLocalWorker().channel)?.serialize();
+      _$startReq[0] = (_$remote[0] ??= p0.getLocalWorker().channel)
+          ?.serialize();
     }
     return _$startReq;
   }

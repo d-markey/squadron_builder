@@ -4,7 +4,7 @@
 part of '../service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.3.0 (Squadron 7.3.0)
+// Generator: WorkerGenerator 8.3.0 (Squadron 7.4.0)
 // **************************************************************************
 
 // dart format width=80
@@ -73,10 +73,9 @@ class _$Service$WorkerService extends Service implements sq.WorkerService {
 sq.WorkerService $ServiceInitializer(sq.WorkerRequest $req) {
   final $dsr = _$Deser(contextAware: false);
   return _$Service$WorkerService(
-    sharedService:
-        ($req.args[0] == null)
-            ? null
-            : $SharedService$Client($dsr.$2($req.args[0])),
+    sharedService: ($req.args[0] == null)
+        ? null
+        : $SharedService$Client($dsr.$2($req.args[0])),
   );
 }
 
@@ -115,8 +114,8 @@ base class _$ServiceWorker extends sq.Worker
     if (p0 is sq.Worker) {
       _$startReq[0] = (_$remote[0] ??= p0.getSharedChannel())?.serialize();
     } else if (p0 is SharedService) {
-      _$startReq[0] =
-          (_$remote[0] ??= p0.getLocalWorker().channel)?.serialize();
+      _$startReq[0] = (_$remote[0] ??= p0.getLocalWorker().channel)
+          ?.serialize();
     }
     return _$startReq;
   }

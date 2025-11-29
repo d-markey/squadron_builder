@@ -4,7 +4,7 @@
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 8.3.0 (Squadron 7.3.0)
+// Generator: WorkerGenerator 8.3.0 (Squadron 7.4.0)
 // **************************************************************************
 
 // dart format width=80
@@ -11942,11 +11942,10 @@ base class _$TestPrefixedImportTypeWorker extends sq.Worker
     this.typedData, {
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
-  }) : _$startReq =
-           (() {
-             final $sr = _$Ser(contextAware: false);
-             return [$sr.$0(typedData)];
-           })(),
+  }) : _$startReq = (() {
+         final $sr = _$Ser(contextAware: false);
+         return [$sr.$0(typedData)];
+       })(),
        super(
          $TestPrefixedImportTypeActivator(sq.Squadron.platformType),
          threadHook: threadHook,
@@ -11957,11 +11956,10 @@ base class _$TestPrefixedImportTypeWorker extends sq.Worker
     this.typedData, {
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
-  }) : _$startReq =
-           (() {
-             final $sr = _$Ser(contextAware: false);
-             return [$sr.$0(typedData)];
-           })(),
+  }) : _$startReq = (() {
+         final $sr = _$Ser(contextAware: false);
+         return [$sr.$0(typedData)];
+       })(),
        super(
          $TestPrefixedImportTypeActivator(sq.SquadronPlatformType.vm),
          threadHook: threadHook,
@@ -11972,11 +11970,10 @@ base class _$TestPrefixedImportTypeWorker extends sq.Worker
     this.typedData, {
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
-  }) : _$startReq =
-           (() {
-             final $sr = _$Ser(contextAware: false);
-             return [$sr.$0(typedData)];
-           })(),
+  }) : _$startReq = (() {
+         final $sr = _$Ser(contextAware: false);
+         return [$sr.$0(typedData)];
+       })(),
        super(
          $TestPrefixedImportTypeActivator(sq.SquadronPlatformType.js),
          threadHook: threadHook,
@@ -11987,11 +11984,10 @@ base class _$TestPrefixedImportTypeWorker extends sq.Worker
     this.typedData, {
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
-  }) : _$startReq =
-           (() {
-             final $sr = _$Ser(contextAware: false);
-             return [$sr.$0(typedData)];
-           })(),
+  }) : _$startReq = (() {
+         final $sr = _$Ser(contextAware: false);
+         return [$sr.$0(typedData)];
+       })(),
        super(
          $TestPrefixedImportTypeActivator(sq.SquadronPlatformType.wasm),
          threadHook: threadHook,
@@ -15462,8 +15458,10 @@ final class _$Ser extends sq.MarshalingContext {
   _$Ser({super.contextAware});
   late final $0 = value<typed_data.Int8List>();
   late final $1 = (((int, {List<int> items}) $) => [$.$1, $.items]);
-  late final $2 =
-      ((({int count, List<dynamic> items}) $) => [$.count, $.items]);
+  late final $2 = ((({int count, List<dynamic> items}) $) => [
+    $.count,
+    $.items,
+  ]);
   late final $3 = (((int, List<dynamic>) $) => [$.$1, $.$2]);
   late final $4 = (($) => ($ as CustomData).toJson());
   late final $5 = list($4);
