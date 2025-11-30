@@ -24,10 +24,9 @@ abstract class ManagedType with ManagedTypeMixin {
     DartType? dartType,
     this.typeManager,
     this.nullabilitySuffix,
-  ) : typeArguments =
-          (dartType is ParameterizedType)
-              ? dartType.typeArguments.map(typeManager.handleDartType).toList()
-              : const [];
+  ) : typeArguments = (dartType is ParameterizedType)
+          ? dartType.typeArguments.map(typeManager.handleDartType).toList()
+          : const [];
 
   final String prefix;
   DartType? get dartType;

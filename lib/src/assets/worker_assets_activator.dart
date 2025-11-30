@@ -49,13 +49,13 @@ extension ActivatorExt on WorkerAssets {
            $_run($_serviceInitializer);
         ''');
 
-      final baseWorkerUrl =
-          _service.baseUrl.isEmpty
-              ? output.path
-              : '${_service.baseUrl}/${output.pathSegments.last}';
+      final baseWorkerUrl = _service.baseUrl.isEmpty
+          ? output.path
+          : '${_service.baseUrl}/${output.pathSegments.last}';
 
-      final version =
-          (_service.version == null) ? '' : '?v=${_service.version}';
+      final version = (_service.version == null)
+          ? ''
+          : '?v=${_service.version}';
 
       if (_service.js && _service.wasm) {
         codeEvent.add(

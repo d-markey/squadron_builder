@@ -17,10 +17,9 @@ class _ExplicitMarshaler extends Marshaler {
         _ => name,
       };
     } else {
-      final typeName =
-          typeManager
-              .handleDartType(_marshaler.toTypeValue() ?? _marshaler.type!)
-              .getTypeName();
+      final typeName = typeManager
+          .handleDartType(_marshaler.toTypeValue() ?? _marshaler.type!)
+          .getTypeName();
       _instance = '(const $typeName())';
     }
   }

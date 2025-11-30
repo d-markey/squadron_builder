@@ -69,10 +69,9 @@ extension PropertyAccessorElementExt on element_.PropertyAccessorElement {
 
   bool get isOperationsMap => property == 'operations';
 
-  String forwardTo(String target, WorkerAssets assets) =>
-      isGetter
-          ? '${assets.override_} ${assets.typeManager.getTypeName(returnType)} get $property => $target.$property;'
-          : '${assets.override_} set $property(${assets.typeManager.getTypeName(returnType)} \$value) => $target.$property = \$value;';
+  String forwardTo(String target, WorkerAssets assets) => isGetter
+      ? '${assets.override_} ${assets.typeManager.getTypeName(returnType)} get $property => $target.$property;'
+      : '${assets.override_} set $property(${assets.typeManager.getTypeName(returnType)} \$value) => $target.$property = \$value;';
 
   String unimpl(WorkerAssets assets) => assets.unimpl(
     isGetter
@@ -97,25 +96,17 @@ extension LibraryElementExt on element_.LibraryElement {
     return p;
   }
 
-  Set<element_.LibraryImport> get allImports =>
-      fragments
-          .expand(
-            (f) => [
-              ...f.libraryImports,
-              ...?f.enclosingFragment?.libraryImports,
-            ],
-          )
-          .toSet();
+  Set<element_.LibraryImport> get allImports => fragments
+      .expand(
+        (f) => [...f.libraryImports, ...?f.enclosingFragment?.libraryImports],
+      )
+      .toSet();
 
-  Set<element_.LibraryExport> get allExports =>
-      fragments
-          .expand(
-            (f) => [
-              ...f.libraryExports,
-              ...?f.enclosingFragment?.libraryExports,
-            ],
-          )
-          .toSet();
+  Set<element_.LibraryExport> get allExports => fragments
+      .expand(
+        (f) => [...f.libraryExports, ...?f.enclosingFragment?.libraryExports],
+      )
+      .toSet();
 
   static Iterable<element_.ExtensionElement> _filterExtensionsFor(
     type_.DartType type,
@@ -237,11 +228,10 @@ extension LibraryElementExt on element_.LibraryElement {
     return map;
   }
 
-  String? getPrefixFor(String pckUri) =>
-      _allImportPrefixes.entries
-          .where((i) => i.key.uri._isFromPackage(pckUri))
-          .firstOrNull
-          ?.value;
+  String? getPrefixFor(String pckUri) => _allImportPrefixes.entries
+      .where((i) => i.key.uri._isFromPackage(pckUri))
+      .firstOrNull
+      ?.value;
 }
 
 @internal
@@ -343,13 +333,11 @@ extension on Uri {
 }
 
 extension on List<element_.NamespaceCombinator> {
-  List<String> get shownNames =>
-      whereType<element_.ShowElementCombinator>()
-          .expand((s) => s.shownNames)
-          .toList();
+  List<String> get shownNames => whereType<element_.ShowElementCombinator>()
+      .expand((s) => s.shownNames)
+      .toList();
 
-  List<String> get hiddenNames =>
-      whereType<element_.HideElementCombinator>()
-          .expand((s) => s.hiddenNames)
-          .toList();
+  List<String> get hiddenNames => whereType<element_.HideElementCombinator>()
+      .expand((s) => s.hiddenNames)
+      .toList();
 }

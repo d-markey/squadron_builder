@@ -9,8 +9,9 @@ mixin _ImportedTypesMixin {
   late final _run = _squadronAlias.isEmpty ? 'run' : '$_squadronAlias.run';
 
   late final _dartCoreAlias = typeManager.dartCoreAlias;
-  late final override_ =
-      _dartCoreAlias.isEmpty ? '@override' : '@$_dartCoreAlias.override';
+  late final override_ = _dartCoreAlias.isEmpty
+      ? '@override'
+      : '@$_dartCoreAlias.override';
 
   late final TChannel = typeManager.TChannel;
   late final TPlatformChannel = typeManager.TPlatformChannel;

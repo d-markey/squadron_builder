@@ -42,10 +42,9 @@ class SquadronMethodReader extends DartMethodReader {
   ManagedType get valueType => patchedReturnType.typeArguments.single;
 
   @override
-  String get declaration =>
-      typeParameters.isEmpty
-          ? '$patchedReturnType $name($parameters)'
-          : '$patchedReturnType $name<${typeParameters.join(', ')}>($parameters)';
+  String get declaration => typeParameters.isEmpty
+      ? '$patchedReturnType $name($parameters)'
+      : '$patchedReturnType $name<${typeParameters.join(', ')}>($parameters)';
 
   String get workerExecutor => isStream ? 'stream' : 'send';
   String get poolExecutor => isStream ? 'stream' : 'execute';
@@ -108,30 +107,28 @@ class SquadronMethodReader extends DartMethodReader {
       return '$commandDecl => $callService,';
     }
 
-    final resType =
-        (isFuture || isFutureOr) ? returnType.typeArguments.first : returnType;
+    final resType = (isFuture || isFutureOr)
+        ? returnType.typeArguments.first
+        : returnType;
     var res = Res, resDecl = 'final $resType $res';
     if (!isStream) {
       commandDecl = '$commandDecl async';
       callService = 'await $callService';
     }
 
-    callService =
-        unmarshalContext.isEmpty
-            ? '$resDecl = $callService;'
-            : '$resDecl; try { $unmarshalContext; $res = $callService; } finally {}';
+    callService = unmarshalContext.isEmpty
+        ? '$resDecl = $callService;'
+        : '$resDecl; try { $unmarshalContext; $res = $callService; } finally {}';
 
     if (convert != null) {
-      res =
-          isStream
-              ? '$res.map(${context.$sr}.${convert.code})'
-              : '${context.$sr}.${convert.code}($res)';
+      res = isStream
+          ? '$res.map(${context.$sr}.${convert.code})'
+          : '${context.$sr}.${convert.code}($res)';
     }
 
-    final returnResult =
-        marshalContext.isEmpty
-            ? 'return $res;'
-            : 'try { $marshalContext; return $res; } finally {}';
+    final returnResult = marshalContext.isEmpty
+        ? 'return $res;'
+        : 'try { $marshalContext; return $res; } finally {}';
 
     return '$commandDecl { $callService $returnResult },';
   }
@@ -181,22 +178,19 @@ class SquadronMethodReader extends DartMethodReader {
       resDecl = 'final ${typeManager.TStream} $res';
     }
 
-    callWorker =
-        marshalContext.isEmpty
-            ? '$resDecl = $callWorker;'
-            : '$resDecl; try { $marshalContext; $res = $callWorker; } finally {}';
+    callWorker = marshalContext.isEmpty
+        ? '$resDecl = $callWorker;'
+        : '$resDecl; try { $marshalContext; $res = $callWorker; } finally {}';
 
     if (convert != null) {
-      res =
-          isStream
-              ? '$res.map(${context.$dsr}.${convert.code})'
-              : '${context.$dsr}.${convert.code}($res)';
+      res = isStream
+          ? '$res.map(${context.$dsr}.${convert.code})'
+          : '${context.$dsr}.${convert.code}($res)';
     }
 
-    final returnResult =
-        unmarshalContext.isEmpty
-            ? 'return $res;'
-            : 'try { $unmarshalContext; return $res; } finally {}';
+    final returnResult = unmarshalContext.isEmpty
+        ? 'return $res;'
+        : 'try { $unmarshalContext; return $res; } finally {}';
 
     return '$methodDecl { $callWorker $returnResult }';
   }

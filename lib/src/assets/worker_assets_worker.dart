@@ -51,20 +51,17 @@ extension on WorkerAssets {
         }
       }
 
-      getStartArgs =
-          initChannels.isEmpty
-              ? ' => $startReq;'
-              : '{ $initChannels return $startReq; }';
+      getStartArgs = initChannels.isEmpty
+          ? ' => $startReq;'
+          : '{ $initChannels return $startReq; }';
 
-      declareChannels =
-          closeChannels.isEmpty
-              ? ''
-              : 'final $remotes = <$TChannel?>[${params.all.map((_) => 'null').join(', ')}];';
+      declareChannels = closeChannels.isEmpty
+          ? ''
+          : 'final $remotes = <$TChannel?>[${params.all.map((_) => 'null').join(', ')}];';
 
-      overrideStop =
-          closeChannels.isEmpty
-              ? ''
-              : '$override_ void stop() { $closeChannels super.stop(); }';
+      overrideStop = closeChannels.isEmpty
+          ? ''
+          : '$override_ void stop() { $closeChannels super.stop(); }';
     }
 
     final workerParams = _service.parameters.clone();

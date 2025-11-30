@@ -66,10 +66,9 @@ Computing with FibServiceWorkerPool (multi-threaded in $maxWorkers dedicated Iso
 Future computeWith(FibService service, int start, int count) async {
   final sw = Stopwatch()..start();
   // start all computations
-  final computations =
-      Iterable<int>.generate(
-        count,
-      ).map((i) => service.fibonacci(start + i)).toList();
+  final computations = Iterable<int>.generate(
+    count,
+  ).map((i) => service.fibonacci(start + i)).toList();
   // wait for results
   final results = await Future.wait(computations);
   // display results

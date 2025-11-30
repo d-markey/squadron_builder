@@ -14,14 +14,13 @@ part 'generated/fibonacci_service.worker.g.dart';
 @SquadronService(targetPlatform: TargetPlatform.vm)
 class FibonacciService {
   FibonacciService({bool trace = false})
-    : _logger =
-          trace
-              ? Logger(
-                filter: ProductionFilter(),
-                output: ConsoleOutput(),
-                printer: SimplePrinter(),
-              )
-              : null;
+    : _logger = trace
+          ? Logger(
+              filter: ProductionFilter(),
+              output: ConsoleOutput(),
+              printer: SimplePrinter(),
+            )
+          : null;
 
   final Logger? _logger;
 

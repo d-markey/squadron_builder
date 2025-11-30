@@ -19,14 +19,13 @@ part 'generated/echo_service.worker.g.dart';
 class EchoService {
   EchoService([bool trace = false, cfg.ServiceConfig<int>? workloadDelay])
     : _delay = Duration(microseconds: workloadDelay?.value ?? 50),
-      _logger =
-          trace
-              ? Logger(
-                filter: ProductionFilter(),
-                output: ConsoleOutput(),
-                printer: SimplePrinter(),
-              )
-              : null;
+      _logger = trace
+          ? Logger(
+              filter: ProductionFilter(),
+              output: ConsoleOutput(),
+              printer: SimplePrinter(),
+            )
+          : null;
 
   final Logger? _logger;
 

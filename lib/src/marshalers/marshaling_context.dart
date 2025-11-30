@@ -36,15 +36,13 @@ class MarshalingContext {
 
   int get count => serializerCount + deserializerCount;
 
-  String initDeserContext(bool needsContext, bool contextAware) =>
-      needsContext
-          ? 'final ${$dsr} = ${_$TDeser}(contextAware: $contextAware)'
-          : '';
+  String initDeserContext(bool needsContext, bool contextAware) => needsContext
+      ? 'final ${$dsr} = ${_$TDeser}(contextAware: $contextAware)'
+      : '';
 
-  String initSerContext(bool needsContext, bool contextAware) =>
-      needsContext
-          ? 'final ${$sr} = ${_$TSer}(contextAware: $contextAware)'
-          : '';
+  String initSerContext(bool needsContext, bool contextAware) => needsContext
+      ? 'final ${$sr} = ${_$TSer}(contextAware: $contextAware)'
+      : '';
 
   DeSer? _checkCache(Map<String, DeSer> cache, DeSer? convert) {
     if (convert == null || convert.code.isEmpty) return null;

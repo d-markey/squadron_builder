@@ -47,7 +47,8 @@ class WorkerGenerator extends GeneratorForAnnotation<squadron.SquadronService> {
 
   String get _generatedCode => '// GENERATED CODE - DO NOT MODIFY BY HAND';
 
-  String _getHeader() => '''
+  String _getHeader() =>
+      '''
       // **************************************************************************
       // Generator: $this
       // **************************************************************************

@@ -37,10 +37,9 @@ class DartMethodReader {
   bool get isFutureOr => returnType.dartType?.isDartAsyncFutureOr ?? false;
 
   bool get hasReturnValue {
-    final type =
-        (isFuture || isFutureOr || isStream)
-            ? returnType.typeArguments.single
-            : returnType;
+    final type = (isFuture || isFutureOr || isStream)
+        ? returnType.typeArguments.single
+        : returnType;
     return type.dartType is! VoidType &&
         type.dartType is! NeverType &&
         !(type.dartType?.isDartCoreNull ?? false);
@@ -84,10 +83,9 @@ class DartMethodReader {
     return m;
   }
 
-  String get declaration =>
-      typeParameters.isEmpty
-          ? '$returnType $name($parameters)'
-          : '$returnType $name<${typeParameters.join(', ')}>($parameters)';
+  String get declaration => typeParameters.isEmpty
+      ? '$returnType $name($parameters)'
+      : '$returnType $name<${typeParameters.join(', ')}>($parameters)';
 
   String forwardTo(String target, WorkerAssets assets) =>
       '${assets.override_} $declaration => $target.$name(${parameters.asArguments()});';

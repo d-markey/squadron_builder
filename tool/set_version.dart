@@ -19,7 +19,8 @@ void main() async {
 
   final versionPath = path.join(projectRoot, 'lib', 'version.dart');
   final curSrc = await File(versionPath).readAsString();
-  final src = '''
+  final src =
+      '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 /// Current `squadron_builder` version.
 const version = '$version';

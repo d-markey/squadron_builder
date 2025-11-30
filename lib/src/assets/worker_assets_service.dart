@@ -23,7 +23,8 @@ extension on WorkerAssets {
   String _generateServiceMixins(
     List<SquadronMethodReader> commands,
     List<DartMethodReader> unimplemented,
-  ) => '''/// Invoker for $_name, implements the public interface to invoke the
+  ) =>
+      '''/// Invoker for $_name, implements the public interface to invoke the
       /// remote service.
       ${_service.isBase ? 'base ' : ''}mixin $_serviceInvoker on $TInvoker implements $_name {
         ${commands.map((cmd) => cmd.workerMethod(this)).join('\n\n')}

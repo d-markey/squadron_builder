@@ -18,10 +18,9 @@ class TypeFilter {
 
   final ManagedType target;
 
-  late bool Function(DartType) isMatch =
-      (target is ImportedType)
-          ? _isImportMatch(target as ImportedType)
-          : _isMatch;
+  late bool Function(DartType) isMatch = (target is ImportedType)
+      ? _isImportMatch(target as ImportedType)
+      : _isMatch;
 
   bool _isMatch(DartType type) => (type == target.dartType);
 

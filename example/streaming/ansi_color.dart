@@ -4,8 +4,8 @@ class ConsoleColor {
 
   static ConsoleColor? orNull({int? red, int? green, int? blue}) =>
       (red == null || green == null || blue == null)
-          ? null
-          : ConsoleColor(red, green, blue);
+      ? null
+      : ConsoleColor(red, green, blue);
 
   final int red;
   final int green;

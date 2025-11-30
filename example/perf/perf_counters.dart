@@ -76,7 +76,6 @@ class PerfCounters {
 
 double trend(num reference, num value) => (value - reference) / reference;
 
-String percent(num value) =>
-    (value.isNaN | value.isInfinite)
-        ? '-'
-        : '${(100.0 * value).toStringAsFixed(2)} %';
+String percent(num value) => (value.isNaN | value.isInfinite)
+    ? '-'
+    : '${(100.0 * value).toStringAsFixed(2)} %';

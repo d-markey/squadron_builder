@@ -35,10 +35,10 @@ class TypeManager with _ImportedTypesMixin {
   }
 
   List<String> checkRequiredImports(List<ImportedType> requiredTypes) {
-    final missingImports =
-        requiredTypes.map((t) => t.pckUri).toSet()..removeWhere(
-          (pckUri) => library.allImports.any((l) => l.isFromPackage(pckUri)),
-        );
+    final missingImports = requiredTypes.map((t) => t.pckUri).toSet()
+      ..removeWhere(
+        (pckUri) => library.allImports.any((l) => l.isFromPackage(pckUri)),
+      );
     return missingImports
         .map((s) => s.endsWith('/') ? s.substring(0, s.length - 1) : s)
         .toList();

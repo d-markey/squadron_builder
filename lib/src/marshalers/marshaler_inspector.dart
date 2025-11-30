@@ -84,10 +84,9 @@ class _MarshalerInspector extends GeneralizingElementVisitor2
       final isJson = !isMarshaler && _hasJsonifier;
 
       // get hydrater name if static methods are implemented via extensions
-      final deserElt =
-          isMarshaler
-              ? _unmarshal!.enclosingElement!.baseElement
-              : (isJson ? _fromJson!.enclosingElement!.baseElement : null);
+      final deserElt = isMarshaler
+          ? _unmarshal!.enclosingElement!.baseElement
+          : (isJson ? _fromJson!.enclosingElement!.baseElement : null);
       String? deserExt;
       if (deserElt is ExtensionElement && (deserElt.name ?? '').isNotEmpty) {
         final prefix = _typeManager.getPrefixFor(deserElt);
@@ -98,10 +97,9 @@ class _MarshalerInspector extends GeneralizingElementVisitor2
       }
 
       // get serializer name if methods are implemented via extensions
-      final serElt =
-          isMarshaler
-              ? _marshal!.enclosingElement!.baseElement
-              : (isJson ? _toJson!.enclosingElement!.baseElement : null);
+      final serElt = isMarshaler
+          ? _marshal!.enclosingElement!.baseElement
+          : (isJson ? _toJson!.enclosingElement!.baseElement : null);
       String? serExt;
       if (serElt is ExtensionElement && (serElt.name ?? '').isNotEmpty) {
         final prefix = _typeManager.getPrefixFor(serElt);

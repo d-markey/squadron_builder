@@ -5,10 +5,9 @@ class _ManagedRecordType extends ManagedType {
     this.dartType,
     TypeManager typeManager,
     NullabilitySuffix nullabilitySuffix,
-  ) : positional =
-          dartType.positionalFields
-              .map((t) => typeManager.handleDartType(t.type))
-              .toList(),
+  ) : positional = dartType.positionalFields
+          .map((t) => typeManager.handleDartType(t.type))
+          .toList(),
       named = Map.fromEntries(
         dartType.namedFields.map(
           (t) => MapEntry(t.name, typeManager.handleDartType(t.type)),
@@ -53,10 +52,9 @@ class _ManagedRecordType extends ManagedType {
       final deserializer = context.deser(type);
       needsContext |= deserializer.needsContext;
       contextAware |= deserializer.contextAware;
-      final res =
-          (deserializer == null)
-              ? '\$[$idx]'
-              : '${deserializer.code}(\$[$idx])';
+      final res = (deserializer == null)
+          ? '\$[$idx]'
+          : '${deserializer.code}(\$[$idx])';
       return field.isEmpty ? res : '$field: $res';
     }
 

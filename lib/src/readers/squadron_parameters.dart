@@ -192,10 +192,9 @@ class SquadronParameters {
     var contextAware = false;
     final args = StringBuffer();
     for (var param in params) {
-      final ser =
-          param.isSharedService
-              ? null
-              : context.ser(param.type, true, param.marshaler);
+      final ser = param.isSharedService
+          ? null
+          : context.ser(param.type, true, param.marshaler);
       if (ser == null) {
         args.csv(param.name);
       } else {
@@ -227,8 +226,9 @@ class SquadronParameters {
         needsContext = true;
         final service = param.type;
         final ser = context.deser(typeManager.TPlatformChannel);
-        final platformChannel =
-            (ser == null) ? arg : '${context.$dsr}.${ser.code}($arg)';
+        final platformChannel = (ser == null)
+            ? arg
+            : '${context.$dsr}.${ser.code}($arg)';
         final remoteService = service.nonNullable.getTypeName(omitPrefix: true);
         final remoteServiceClient =
             '${service.prefix}${WorkerAssets.getWorkerClientFor(remoteService)}($platformChannel)';
