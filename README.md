@@ -15,6 +15,8 @@ Offload CPU-bound and long running tasks and give your mobile and Web apps some 
 
 Dart code generator for Squadron workers. Implement your worker service and let `squadron_builder` bridge the gap with Web Workers and Isolates!
 
+For in-depth documentation about Squadron, visit the **[Squadron wiki](https://github.com/d-markey/squadron/wiki)**!
+
 [![Pub Package](https://img.shields.io/pub/v/squadron_builder)](https://pub.dev/packages/squadron_builder)
 [![Dart Platforms](https://badgen.net/pub/dart-platform/squadron_builder)](https://pub.dev/packages/squadron_builder)
 [![Flutter Platforms](https://badgen.net/pub/flutter-platform/squadron_builder)](https://pub.dev/packages/squadron_builder)
@@ -47,7 +49,7 @@ part 'hello_world.worker.g.dart';
 // this annotation tells squadron_builder that this class contains code to be executed on dedicated threads
 @SquadronService(baseUrl: '~/workers', targetPlatform: TargetPlatform.vm | TargetPlatform.web)
 base class HelloWorld {
-  // this annotation tells squadron_builder that this method is exposed to clients running in the main thread for instance
+  // this annotation tells squadron_builder that this method is exposed to clients running in the main thread
   @squadronMethod
   FutureOr<String> hello([String? name]) {
     name = name?.trim() ?? 'World';
