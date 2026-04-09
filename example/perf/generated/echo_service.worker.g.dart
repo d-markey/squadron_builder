@@ -4,7 +4,7 @@
 part of '../echo_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.0.0+2 (Squadron 7.4.0)
+// Generator: WorkerGenerator 9.2.0 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -380,10 +380,6 @@ base class EchoServiceWorker with Releasable implements _$EchoServiceWorker {
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -638,7 +634,7 @@ base class EchoServiceWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  xxx.FutureOr<void> start() => _$pool.start();
+  xxx.Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(EchoServiceWorker worker)? predicate]) =>

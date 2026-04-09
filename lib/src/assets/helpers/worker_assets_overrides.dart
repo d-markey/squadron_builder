@@ -11,7 +11,6 @@ extension SquadronOverrides on WorkerAssets {
       'set channelLogger($TLogger? value)': ['channelLogger = value'],
       '$TBool get isConnected': ['isConnected'],
       '$TBool get isStopped': ['isStopped'],
-      '$TWorkerStat get stats': ['stats', '// ignore: deprecated_member_use'],
       '$TWorkerStat getStats()': ['getStats()'],
       // worker control
       '$TFuture<$TChannel> start()': ['start()'],
@@ -48,7 +47,7 @@ extension SquadronOverrides on WorkerAssets {
       'void cancel($TTask task, [$TString? message])': [
         'cancel(task, message)',
       ],
-      '$TFutureOr<void> start()': ['start()'],
+      '$TFuture<void> start()': ['start()'],
       '$TInt stop([$TBool Function(@TWorker@ worker)? predicate])': [
         'stop(predicate)',
       ],

@@ -4,7 +4,7 @@
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.0.0+2 (Squadron 7.4.0)
+// Generator: WorkerGenerator 9.2.0 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -185,10 +185,6 @@ base class TestParameterLessWorker
 
   @override
   bool get isStopped => _$worker.isStopped;
-
-  @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
 
   @override
   sq.WorkerStat getStats() => _$worker.getStats();
@@ -417,7 +413,7 @@ base class TestParameterLessWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestParameterLessWorker worker)? predicate]) =>
@@ -670,10 +666,6 @@ base class TestReqPositionalWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -916,7 +908,7 @@ base class TestReqPositionalWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestReqPositionalWorker worker)? predicate]) =>
@@ -1154,10 +1146,6 @@ base class TestOptNullPositionalWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -1392,7 +1380,7 @@ base class TestOptNullPositionalWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestOptNullPositionalWorker worker)? predicate]) =>
@@ -1626,10 +1614,6 @@ base class TestOptDefPositionalWorker
 
   @override
   bool get isStopped => _$worker.isStopped;
-
-  @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
 
   @override
   sq.WorkerStat getStats() => _$worker.getStats();
@@ -1866,7 +1850,7 @@ base class TestOptDefPositionalWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestOptDefPositionalWorker worker)? predicate]) =>
@@ -2116,10 +2100,6 @@ base class TestOptNullDefPositionalWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -2362,7 +2342,7 @@ base class TestOptNullDefPositionalWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestOptNullDefPositionalWorker worker)? predicate]) =>
@@ -2625,10 +2605,6 @@ base class TestReqPositionalFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -2880,7 +2856,7 @@ base class TestReqPositionalFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestReqPositionalFieldWorker worker)? predicate]) =>
@@ -3146,10 +3122,6 @@ base class TestOptNullPositionalFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -3402,7 +3374,7 @@ base class TestOptNullPositionalFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([
@@ -3664,10 +3636,6 @@ base class TestOptDefPositionalFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -3920,7 +3888,7 @@ base class TestOptDefPositionalFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([
@@ -4193,10 +4161,6 @@ base class TestOptNullDefPositionalFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -4449,7 +4413,7 @@ base class TestOptNullDefPositionalFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([
@@ -4720,10 +4684,6 @@ base class TestReqPositionalPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -4973,7 +4933,7 @@ base class TestReqPositionalPrivateFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([
@@ -5252,10 +5212,6 @@ base class TestOptNullPositionalPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -5505,7 +5461,7 @@ base class TestOptNullPositionalPrivateFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([
@@ -5780,10 +5736,6 @@ base class TestOptDefPositionalPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -6033,7 +5985,7 @@ base class TestOptDefPositionalPrivateFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([
@@ -6315,10 +6267,6 @@ base class TestOptNullDefPositionalPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -6568,7 +6516,7 @@ base class TestOptNullDefPositionalPrivateFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([
@@ -6826,10 +6774,6 @@ base class TestOptNullNamedWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -7072,7 +7016,7 @@ base class TestOptNullNamedWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestOptNullNamedWorker worker)? predicate]) =>
@@ -7325,10 +7269,6 @@ base class TestOptDefNamedWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -7571,7 +7511,7 @@ base class TestOptDefNamedWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestOptDefNamedWorker worker)? predicate]) =>
@@ -7825,10 +7765,6 @@ base class TestOptNullDefNamedWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -8072,7 +8008,7 @@ base class TestOptNullDefNamedWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestOptNullDefNamedWorker worker)? predicate]) =>
@@ -8335,10 +8271,6 @@ base class TestOptNullNamedFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -8590,7 +8522,7 @@ base class TestOptNullNamedFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestOptNullNamedFieldWorker worker)? predicate]) =>
@@ -8853,10 +8785,6 @@ base class TestOptDefNamedFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -9108,7 +9036,7 @@ base class TestOptDefNamedFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestOptDefNamedFieldWorker worker)? predicate]) =>
@@ -9371,10 +9299,6 @@ base class TestOptNullDefNamedFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -9627,7 +9551,7 @@ base class TestOptNullDefNamedFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestOptNullDefNamedFieldWorker worker)? predicate]) =>
@@ -9957,10 +9881,6 @@ base class TestTypedDataWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -10242,7 +10162,7 @@ base class TestTypedDataWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestTypedDataWorker worker)? predicate]) =>
@@ -10514,10 +10434,6 @@ base class TestOptNullNamedPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -10767,7 +10683,7 @@ base class TestOptNullNamedPrivateFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([
@@ -11040,10 +10956,6 @@ base class TestOptDefNamedPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -11293,7 +11205,7 @@ base class TestOptDefNamedPrivateFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([
@@ -11568,10 +11480,6 @@ base class TestOptNullDefNamedPrivateFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -11821,7 +11729,7 @@ base class TestOptNullDefNamedPrivateFieldWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([
@@ -12111,10 +12019,6 @@ base class TestPrefixedImportTypeWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -12373,7 +12277,7 @@ base class TestPrefixedImportTypeWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestPrefixedImportTypeWorker worker)? predicate]) =>
@@ -12689,10 +12593,6 @@ base class TestOptNullDefNamedPrivateNonFinalFieldWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -12965,10 +12865,6 @@ base class TestInstallableWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -13220,7 +13116,7 @@ base class TestInstallableWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestInstallableWorker worker)? predicate]) =>
@@ -13551,10 +13447,6 @@ base class TestRecordTypesWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -13814,7 +13706,7 @@ base class TestRecordTypesWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestRecordTypesWorker worker)? predicate]) =>
@@ -14085,10 +13977,6 @@ base class TestRequiredSuperParamWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -14346,7 +14234,7 @@ base class TestRequiredSuperParamWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestRequiredSuperParamWorker worker)? predicate]) =>
@@ -14596,10 +14484,6 @@ base class TestBigIntWorker with Releasable implements _$TestBigIntWorker {
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -14831,7 +14715,7 @@ base class TestBigIntWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestBigIntWorker worker)? predicate]) =>
@@ -15118,10 +15002,6 @@ base class TestCustomDataWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  sq.WorkerStat get stats => _$worker.stats;
-
-  @override
   sq.WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -15361,7 +15241,7 @@ base class TestCustomDataWorkerPool
   void cancel(sq.Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(TestCustomDataWorker worker)? predicate]) =>

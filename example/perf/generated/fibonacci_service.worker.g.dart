@@ -4,7 +4,7 @@
 part of '../fibonacci_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.0.0+2 (Squadron 7.4.0)
+// Generator: WorkerGenerator 9.2.0 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -304,10 +304,6 @@ base class FibonacciServiceWorker
   bool get isStopped => _$worker.isStopped;
 
   @override
-  // ignore: deprecated_member_use
-  WorkerStat get stats => _$worker.stats;
-
-  @override
   WorkerStat getStats() => _$worker.getStats();
 
   @override
@@ -531,7 +527,7 @@ base class FibonacciServiceWorkerPool
   void cancel(Task task, [String? message]) => _$pool.cancel(task, message);
 
   @override
-  FutureOr<void> start() => _$pool.start();
+  Future<void> start() => _$pool.start();
 
   @override
   int stop([bool Function(FibonacciServiceWorker worker)? predicate]) =>
