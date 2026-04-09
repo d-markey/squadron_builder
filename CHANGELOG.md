@@ -1,3 +1,9 @@
+## 9.2.0
+
+- Support `analyzer` versions >=9.0.0 <13.0.0.
+- Upgrade `squadron` to version >=7.4.3.
+- Remove generation of elements deleted in Squadron 7.4.3.
+
 ## 9.1.0
 
 - Support `analyzer` versions >=9.0.0 <11.0.0.
