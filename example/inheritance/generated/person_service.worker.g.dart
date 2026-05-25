@@ -4,7 +4,7 @@
 part of '../person_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.2.0 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.0 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
