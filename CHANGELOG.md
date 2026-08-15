@@ -1,3 +1,11 @@
+## 9.3.1
+
+- Support `analyzer` versions >=8.2.0.
+
+## 9.3.0
+
+- Support `analyzer` versions >=8.0.0.
+
 ## 9.2.0
 
 - Support `analyzer` versions >=9.0.0 <13.0.0.
