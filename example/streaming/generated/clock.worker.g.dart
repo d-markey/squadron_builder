@@ -4,7 +4,7 @@
 part of '../clock.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -75,6 +75,7 @@ WorkerService $ClockInitializer(WorkerRequest $req) => _$Clock$WorkerService();
 base class _$ClockWorker extends Worker
     with _$Clock$Invoker, _$Clock$Facade
     implements Clock {
+  // ignore: use_super_parameters
   _$ClockWorker({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -84,6 +85,7 @@ base class _$ClockWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ClockWorker.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -93,6 +95,7 @@ base class _$ClockWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ClockWorker.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -102,6 +105,7 @@ base class _$ClockWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ClockWorker.wasm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -264,6 +268,7 @@ base class ClockWorker with Releasable implements _$ClockWorker {
 base class _$ClockWorkerPool extends WorkerPool<ClockWorker>
     with _$Clock$Facade
     implements Clock {
+  // ignore: use_super_parameters
   _$ClockWorkerPool({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -277,6 +282,7 @@ base class _$ClockWorkerPool extends WorkerPool<ClockWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ClockWorkerPool.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -290,6 +296,7 @@ base class _$ClockWorkerPool extends WorkerPool<ClockWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ClockWorkerPool.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -303,6 +310,7 @@ base class _$ClockWorkerPool extends WorkerPool<ClockWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ClockWorkerPool.wasm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,

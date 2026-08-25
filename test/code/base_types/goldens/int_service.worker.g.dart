@@ -4,7 +4,7 @@
 part of '../int_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -113,6 +113,7 @@ WorkerService $IntServiceInitializer(WorkerRequest $req) =>
 base class IntServiceWorker extends Worker
     with _$IntService$Invoker, _$IntService$Facade
     implements IntService {
+  // ignore: use_super_parameters
   IntServiceWorker({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -122,6 +123,7 @@ base class IntServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   IntServiceWorker.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -139,6 +141,7 @@ base class IntServiceWorker extends Worker
 base class IntServiceWorkerPool extends WorkerPool<IntServiceWorker>
     with _$IntService$Facade
     implements IntService {
+  // ignore: use_super_parameters
   IntServiceWorkerPool({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -152,6 +155,7 @@ base class IntServiceWorkerPool extends WorkerPool<IntServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   IntServiceWorkerPool.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,

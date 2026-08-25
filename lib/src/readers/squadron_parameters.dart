@@ -111,8 +111,8 @@ class SquadronParameters {
 
   String asArguments() => _params.map((p) => p.argument()).join(', ');
 
-  String asNonSuperArguments() =>
-      _params.where((p) => !p.isSuperParam).map((p) => p.argument()).join(', ');
+  String asNonSuperArguments() => '';
+  // => _params.where((p) => !p.isSuperParam).map((p) => p.argument()).join(', ');
 
   @override
   String toString() {

@@ -4,7 +4,7 @@
 part of '../json_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -69,6 +69,7 @@ sq.WorkerService $JsonServiceInitializer(sq.WorkerRequest $req) =>
 base class _$JsonServiceWorker extends sq.Worker
     with _$JsonService$Invoker, _$JsonService$Facade
     implements JsonService {
+  // ignore: use_super_parameters
   _$JsonServiceWorker({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -78,6 +79,7 @@ base class _$JsonServiceWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$JsonServiceWorker.vm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -87,6 +89,7 @@ base class _$JsonServiceWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$JsonServiceWorker.js({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -96,6 +99,7 @@ base class _$JsonServiceWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$JsonServiceWorker.wasm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -256,6 +260,7 @@ base class JsonServiceWorker with Releasable implements _$JsonServiceWorker {
 base class _$JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
     with _$JsonService$Facade
     implements JsonService {
+  // ignore: use_super_parameters
   _$JsonServiceWorkerPool({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -269,6 +274,7 @@ base class _$JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$JsonServiceWorkerPool.vm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -282,6 +288,7 @@ base class _$JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$JsonServiceWorkerPool.js({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -295,6 +302,7 @@ base class _$JsonServiceWorkerPool extends sq.WorkerPool<JsonServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$JsonServiceWorkerPool.wasm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,

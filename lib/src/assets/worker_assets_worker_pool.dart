@@ -27,13 +27,14 @@ extension on WorkerAssets {
     final code = StringBuffer();
     code.writeln('''/// Worker pool for $_name
         base class $workerPool extends $TWorkerPool<$_worker> with $_serviceFacade implements $_name {
+          // ignore: use_super_parameters
           $workerPool($poolParams) : super(($exceptionManager) => $_worker($workerArgs), $additionalArgs);
 
-          ${_service.vm ? '$workerPool.vm($poolParams) : super(($exceptionManager) => $_worker.vm($workerArgs), $additionalArgs);' : ''}
+          ${_service.vm ? '// ignore: use_super_parameters\n$workerPool.vm($poolParams) : super(($exceptionManager) => $_worker.vm($workerArgs), $additionalArgs);' : ''}
 
-          ${_service.js ? '$workerPool.js($poolParams) : super(($exceptionManager) => $_worker.js($workerArgs), $additionalArgs);' : ''}
+          ${_service.js ? '// ignore: use_super_parameters\n$workerPool.js($poolParams) : super(($exceptionManager) => $_worker.js($workerArgs), $additionalArgs);' : ''}
 
-          ${_service.wasm ? '$workerPool.wasm($poolParams) : super(($exceptionManager) => $_worker.wasm($workerArgs), $additionalArgs);' : ''}
+          ${_service.wasm ? '// ignore: use_super_parameters\n$workerPool.wasm($poolParams) : super(($exceptionManager) => $_worker.wasm($workerArgs), $additionalArgs);' : ''}
 
           ${_service.fields.values.map((f) => f.override(this)).join('\n\n')}
 

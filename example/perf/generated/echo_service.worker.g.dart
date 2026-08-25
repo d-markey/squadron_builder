@@ -4,7 +4,7 @@
 part of '../echo_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -228,6 +228,7 @@ sq.WorkerService $EchoServiceInitializer(sq.WorkerRequest $req) {
 base class _$EchoServiceWorker extends sq.Worker
     with _$EchoService$Invoker, _$EchoService$Facade
     implements EchoService {
+  // ignore: use_super_parameters
   _$EchoServiceWorker([
     bool trace = false,
     cfg.ServiceConfig<int>? workloadDelay,
@@ -243,6 +244,7 @@ base class _$EchoServiceWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$EchoServiceWorker.vm([
     bool trace = false,
     cfg.ServiceConfig<int>? workloadDelay,
@@ -435,6 +437,7 @@ base class EchoServiceWorker with Releasable implements _$EchoServiceWorker {
 base class _$EchoServiceWorkerPool extends sq.WorkerPool<EchoServiceWorker>
     with _$EchoService$Facade
     implements EchoService {
+  // ignore: use_super_parameters
   _$EchoServiceWorkerPool([
     bool trace = false,
     cfg.ServiceConfig<int>? workloadDelay,
@@ -452,6 +455,7 @@ base class _$EchoServiceWorkerPool extends sq.WorkerPool<EchoServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$EchoServiceWorkerPool.vm([
     bool trace = false,
     cfg.ServiceConfig<int>? workloadDelay,

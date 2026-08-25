@@ -4,7 +4,7 @@
 part of '../datetime_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -114,6 +114,7 @@ WorkerService $DateTimeServiceInitializer(WorkerRequest $req) =>
 base class DateTimeServiceWorker extends Worker
     with _$DateTimeService$Invoker, _$DateTimeService$Facade
     implements DateTimeService {
+  // ignore: use_super_parameters
   DateTimeServiceWorker({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -123,6 +124,7 @@ base class DateTimeServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   DateTimeServiceWorker.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -132,6 +134,7 @@ base class DateTimeServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   DateTimeServiceWorker.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -141,6 +144,7 @@ base class DateTimeServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   DateTimeServiceWorker.wasm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -158,6 +162,7 @@ base class DateTimeServiceWorker extends Worker
 base class DateTimeServiceWorkerPool extends WorkerPool<DateTimeServiceWorker>
     with _$DateTimeService$Facade
     implements DateTimeService {
+  // ignore: use_super_parameters
   DateTimeServiceWorkerPool({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -171,6 +176,7 @@ base class DateTimeServiceWorkerPool extends WorkerPool<DateTimeServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   DateTimeServiceWorkerPool.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -184,6 +190,7 @@ base class DateTimeServiceWorkerPool extends WorkerPool<DateTimeServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   DateTimeServiceWorkerPool.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -197,6 +204,7 @@ base class DateTimeServiceWorkerPool extends WorkerPool<DateTimeServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   DateTimeServiceWorkerPool.wasm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,

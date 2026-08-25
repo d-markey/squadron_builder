@@ -92,13 +92,14 @@ extension on WorkerAssets {
         /// Worker for $_name
         base class $worker extends $TWorker with $_serviceInvoker, $_serviceFacade implements $_name {
           
+          // ignore: use_super_parameters
           $worker($workerParams) : $setStartArgs super(\$$args);
 
-          ${_service.vm ? '$worker.vm($workerParams) : $setStartArgs super(\$$vmArgs);' : ''}
+          ${_service.vm ? '// ignore: use_super_parameters\n$worker.vm($workerParams) : $setStartArgs super(\$$vmArgs);' : ''}
 
-          ${_service.js ? '$worker.js($workerParams) : $setStartArgs super(\$$jsArgs);' : ''}
+          ${_service.js ? '// ignore: use_super_parameters\n$worker.js($workerParams) : $setStartArgs super(\$$jsArgs);' : ''}
 
-          ${_service.wasm ? '$worker.wasm($workerParams) : $setStartArgs super(\$$wasmArgs);' : ''}
+          ${_service.wasm ? '// ignore: use_super_parameters\n$worker.wasm($workerParams) : $setStartArgs super(\$$wasmArgs);' : ''}
 
           $declareChannels
           $declareStartArgs

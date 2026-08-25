@@ -4,7 +4,7 @@
 part of '../service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -83,6 +83,7 @@ sq.WorkerService $ServiceInitializer(sq.WorkerRequest $req) {
 base class _$ServiceWorker extends sq.Worker
     with _$Service$Invoker, _$Service$Facade
     implements Service {
+  // ignore: use_super_parameters
   _$ServiceWorker({
     this.sharedService,
     sq.PlatformThreadHook? threadHook,
@@ -94,6 +95,7 @@ base class _$ServiceWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ServiceWorker.vm({
     this.sharedService,
     sq.PlatformThreadHook? threadHook,
@@ -272,6 +274,7 @@ base class ServiceWorker with Releasable implements _$ServiceWorker {
 base class _$ServiceWorkerPool extends sq.WorkerPool<ServiceWorker>
     with _$Service$Facade
     implements Service {
+  // ignore: use_super_parameters
   _$ServiceWorkerPool({
     this.sharedService,
     sq.PlatformThreadHook? threadHook,
@@ -287,6 +290,7 @@ base class _$ServiceWorkerPool extends sq.WorkerPool<ServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ServiceWorkerPool.vm({
     this.sharedService,
     sq.PlatformThreadHook? threadHook,

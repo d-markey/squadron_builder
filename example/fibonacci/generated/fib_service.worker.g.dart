@@ -4,7 +4,7 @@
 part of '../fib_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -78,6 +78,7 @@ WorkerService $FibServiceInitializer(WorkerRequest $req) =>
 base class _$FibServiceWorker extends Worker
     with _$FibService$Invoker, _$FibService$Facade
     implements FibService {
+  // ignore: use_super_parameters
   _$FibServiceWorker({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -87,6 +88,7 @@ base class _$FibServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$FibServiceWorker.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -96,6 +98,7 @@ base class _$FibServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$FibServiceWorker.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -249,6 +252,7 @@ base class FibServiceWorker with Releasable implements _$FibServiceWorker {
 base class _$FibServiceWorkerPool extends WorkerPool<FibServiceWorker>
     with _$FibService$Facade
     implements FibService {
+  // ignore: use_super_parameters
   _$FibServiceWorkerPool({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -262,6 +266,7 @@ base class _$FibServiceWorkerPool extends WorkerPool<FibServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$FibServiceWorkerPool.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -275,6 +280,7 @@ base class _$FibServiceWorkerPool extends WorkerPool<FibServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$FibServiceWorkerPool.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,

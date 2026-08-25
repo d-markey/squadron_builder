@@ -1,3 +1,7 @@
+## 9.3.2
+
+- Ignore `use_super_parameters` for worker / worker pool constructors. Fixes https://github.com/d-markey/squadron_builder/issues/43.
+
 ## 9.3.1
 
 - Support `analyzer` versions >=8.2.0.

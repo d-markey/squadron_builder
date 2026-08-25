@@ -4,7 +4,7 @@
 part of '../shared_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -73,6 +73,7 @@ WorkerService $SharedServiceInitializer(WorkerRequest $req) {
 base class _$SharedServiceWorker extends Worker
     with _$SharedService$Invoker, _$SharedService$Facade
     implements SharedService {
+  // ignore: use_super_parameters
   _$SharedServiceWorker(
     String name, {
     PlatformThreadHook? threadHook,
@@ -84,6 +85,7 @@ base class _$SharedServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$SharedServiceWorker.vm(
     String name, {
     PlatformThreadHook? threadHook,
@@ -240,6 +242,7 @@ base class SharedServiceWorker
 base class _$SharedServiceWorkerPool extends WorkerPool<SharedServiceWorker>
     with _$SharedService$Facade
     implements SharedService {
+  // ignore: use_super_parameters
   _$SharedServiceWorkerPool(
     String name, {
     PlatformThreadHook? threadHook,
@@ -255,6 +258,7 @@ base class _$SharedServiceWorkerPool extends WorkerPool<SharedServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$SharedServiceWorkerPool.vm(
     String name, {
     PlatformThreadHook? threadHook,

@@ -4,7 +4,7 @@
 part of '../person_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -132,6 +132,7 @@ WorkerService $PersonServiceInitializer(WorkerRequest $req) =>
 base class _$PersonServiceWorker extends Worker
     with _$PersonService$Invoker, _$PersonService$Facade
     implements PersonService {
+  // ignore: use_super_parameters
   _$PersonServiceWorker({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -141,6 +142,7 @@ base class _$PersonServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$PersonServiceWorker.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -150,6 +152,7 @@ base class _$PersonServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$PersonServiceWorker.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -159,6 +162,7 @@ base class _$PersonServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$PersonServiceWorker.wasm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -327,6 +331,7 @@ base class PersonServiceWorker
 base class _$PersonServiceWorkerPool extends WorkerPool<PersonServiceWorker>
     with _$PersonService$Facade
     implements PersonService {
+  // ignore: use_super_parameters
   _$PersonServiceWorkerPool({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -340,6 +345,7 @@ base class _$PersonServiceWorkerPool extends WorkerPool<PersonServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$PersonServiceWorkerPool.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -353,6 +359,7 @@ base class _$PersonServiceWorkerPool extends WorkerPool<PersonServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$PersonServiceWorkerPool.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -366,6 +373,7 @@ base class _$PersonServiceWorkerPool extends WorkerPool<PersonServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$PersonServiceWorkerPool.wasm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,

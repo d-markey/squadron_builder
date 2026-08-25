@@ -4,7 +4,7 @@
 part of '../service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -109,6 +109,7 @@ WorkerService $ServiceInitializer(WorkerRequest $req) =>
 base class _$ServiceWorker extends Worker
     with _$Service$Invoker, _$Service$Facade
     implements Service {
+  // ignore: use_super_parameters
   _$ServiceWorker({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -118,6 +119,7 @@ base class _$ServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ServiceWorker.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -127,6 +129,7 @@ base class _$ServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ServiceWorker.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -136,6 +139,7 @@ base class _$ServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ServiceWorker.wasm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -305,6 +309,7 @@ base class ServiceWorker with Releasable implements _$ServiceWorker {
 base class _$ServiceWorkerPool extends WorkerPool<ServiceWorker>
     with _$Service$Facade
     implements Service {
+  // ignore: use_super_parameters
   _$ServiceWorkerPool({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -318,6 +323,7 @@ base class _$ServiceWorkerPool extends WorkerPool<ServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ServiceWorkerPool.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -331,6 +337,7 @@ base class _$ServiceWorkerPool extends WorkerPool<ServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ServiceWorkerPool.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -344,6 +351,7 @@ base class _$ServiceWorkerPool extends WorkerPool<ServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$ServiceWorkerPool.wasm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,

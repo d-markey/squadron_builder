@@ -4,7 +4,7 @@
 part of '../data_service_marshaler.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -106,6 +106,7 @@ WorkerService $DataServiceInitializer(WorkerRequest $req) =>
 base class _$DataServiceWorker extends Worker
     with _$DataService$Invoker, _$DataService$Facade
     implements DataService {
+  // ignore: use_super_parameters
   _$DataServiceWorker({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -115,6 +116,7 @@ base class _$DataServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$DataServiceWorker.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -124,6 +126,7 @@ base class _$DataServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$DataServiceWorker.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -133,6 +136,7 @@ base class _$DataServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$DataServiceWorker.wasm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -296,6 +300,7 @@ base class DataServiceWorker with Releasable implements _$DataServiceWorker {
 base class _$DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
     with _$DataService$Facade
     implements DataService {
+  // ignore: use_super_parameters
   _$DataServiceWorkerPool({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -309,6 +314,7 @@ base class _$DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$DataServiceWorkerPool.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -322,6 +328,7 @@ base class _$DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$DataServiceWorkerPool.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -335,6 +342,7 @@ base class _$DataServiceWorkerPool extends WorkerPool<DataServiceWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$DataServiceWorkerPool.wasm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,

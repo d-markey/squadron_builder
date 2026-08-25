@@ -4,7 +4,7 @@
 part of '../fibonacci_service.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -176,6 +176,7 @@ WorkerService $FibonacciServiceInitializer(WorkerRequest $req) {
 base class _$FibonacciServiceWorker extends Worker
     with _$FibonacciService$Invoker, _$FibonacciService$Facade
     implements FibonacciService {
+  // ignore: use_super_parameters
   _$FibonacciServiceWorker({
     bool trace = false,
     PlatformThreadHook? threadHook,
@@ -187,6 +188,7 @@ base class _$FibonacciServiceWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$FibonacciServiceWorker.vm({
     bool trace = false,
     PlatformThreadHook? threadHook,
@@ -360,6 +362,7 @@ base class _$FibonacciServiceWorkerPool
     extends WorkerPool<FibonacciServiceWorker>
     with _$FibonacciService$Facade
     implements FibonacciService {
+  // ignore: use_super_parameters
   _$FibonacciServiceWorkerPool({
     bool trace = false,
     PlatformThreadHook? threadHook,
@@ -375,6 +378,7 @@ base class _$FibonacciServiceWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$FibonacciServiceWorkerPool.vm({
     bool trace = false,
     PlatformThreadHook? threadHook,

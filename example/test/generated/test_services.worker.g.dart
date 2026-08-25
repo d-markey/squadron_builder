@@ -4,7 +4,7 @@
 part of '../test_services.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -56,6 +56,7 @@ sq.WorkerService $TestParameterLessInitializer(sq.WorkerRequest $req) =>
 base class _$TestParameterLessWorker extends sq.Worker
     with _$TestParameterLess$Invoker, _$TestParameterLess$Facade
     implements TestParameterLess {
+  // ignore: use_super_parameters
   _$TestParameterLessWorker({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -65,6 +66,7 @@ base class _$TestParameterLessWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestParameterLessWorker.vm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -74,6 +76,7 @@ base class _$TestParameterLessWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestParameterLessWorker.js({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -83,6 +86,7 @@ base class _$TestParameterLessWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestParameterLessWorker.wasm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -243,6 +247,7 @@ base class _$TestParameterLessWorkerPool
     extends sq.WorkerPool<TestParameterLessWorker>
     with _$TestParameterLess$Facade
     implements TestParameterLess {
+  // ignore: use_super_parameters
   _$TestParameterLessWorkerPool({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -256,6 +261,7 @@ base class _$TestParameterLessWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestParameterLessWorkerPool.vm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -269,6 +275,7 @@ base class _$TestParameterLessWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestParameterLessWorkerPool.js({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -282,6 +289,7 @@ base class _$TestParameterLessWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestParameterLessWorkerPool.wasm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -514,6 +522,7 @@ sq.WorkerService $TestReqPositionalInitializer(sq.WorkerRequest $req) {
 base class _$TestReqPositionalWorker extends sq.Worker
     with _$TestReqPositional$Invoker, _$TestReqPositional$Facade
     implements TestReqPositional {
+  // ignore: use_super_parameters
   _$TestReqPositionalWorker(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -525,6 +534,7 @@ base class _$TestReqPositionalWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalWorker.vm(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -536,6 +546,7 @@ base class _$TestReqPositionalWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalWorker.js(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -547,6 +558,7 @@ base class _$TestReqPositionalWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalWorker.wasm(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -722,6 +734,7 @@ base class _$TestReqPositionalWorkerPool
     extends sq.WorkerPool<TestReqPositionalWorker>
     with _$TestReqPositional$Facade
     implements TestReqPositional {
+  // ignore: use_super_parameters
   _$TestReqPositionalWorkerPool(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -737,6 +750,7 @@ base class _$TestReqPositionalWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalWorkerPool.vm(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -752,6 +766,7 @@ base class _$TestReqPositionalWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalWorkerPool.js(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -767,6 +782,7 @@ base class _$TestReqPositionalWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalWorkerPool.wasm(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -1010,6 +1026,7 @@ sq.WorkerService $TestOptNullPositionalInitializer(sq.WorkerRequest $req) {
 base class _$TestOptNullPositionalWorker extends sq.Worker
     with _$TestOptNullPositional$Invoker, _$TestOptNullPositional$Facade
     implements TestOptNullPositional {
+  // ignore: use_super_parameters
   _$TestOptNullPositionalWorker([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -1021,6 +1038,7 @@ base class _$TestOptNullPositionalWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalWorker.vm([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -1032,6 +1050,7 @@ base class _$TestOptNullPositionalWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalWorker.js([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -1043,6 +1062,7 @@ base class _$TestOptNullPositionalWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalWorker.wasm([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -1202,6 +1222,7 @@ base class _$TestOptNullPositionalWorkerPool
     extends sq.WorkerPool<TestOptNullPositionalWorker>
     with _$TestOptNullPositional$Facade
     implements TestOptNullPositional {
+  // ignore: use_super_parameters
   _$TestOptNullPositionalWorkerPool([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -1214,6 +1235,7 @@ base class _$TestOptNullPositionalWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalWorkerPool.vm([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -1226,6 +1248,7 @@ base class _$TestOptNullPositionalWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalWorkerPool.js([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -1238,6 +1261,7 @@ base class _$TestOptNullPositionalWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalWorkerPool.wasm([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -1482,6 +1506,7 @@ sq.WorkerService $TestOptDefPositionalInitializer(sq.WorkerRequest $req) {
 base class _$TestOptDefPositionalWorker extends sq.Worker
     with _$TestOptDefPositional$Invoker, _$TestOptDefPositional$Facade
     implements TestOptDefPositional {
+  // ignore: use_super_parameters
   _$TestOptDefPositionalWorker([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -1493,6 +1518,7 @@ base class _$TestOptDefPositionalWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalWorker.vm([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -1504,6 +1530,7 @@ base class _$TestOptDefPositionalWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalWorker.js([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -1515,6 +1542,7 @@ base class _$TestOptDefPositionalWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalWorker.wasm([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -1672,6 +1700,7 @@ base class _$TestOptDefPositionalWorkerPool
     extends sq.WorkerPool<TestOptDefPositionalWorker>
     with _$TestOptDefPositional$Facade
     implements TestOptDefPositional {
+  // ignore: use_super_parameters
   _$TestOptDefPositionalWorkerPool([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -1684,6 +1713,7 @@ base class _$TestOptDefPositionalWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalWorkerPool.vm([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -1696,6 +1726,7 @@ base class _$TestOptDefPositionalWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalWorkerPool.js([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -1708,6 +1739,7 @@ base class _$TestOptDefPositionalWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalWorkerPool.wasm([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -1952,6 +1984,7 @@ sq.WorkerService $TestOptNullDefPositionalInitializer(sq.WorkerRequest $req) {
 base class _$TestOptNullDefPositionalWorker extends sq.Worker
     with _$TestOptNullDefPositional$Invoker, _$TestOptNullDefPositional$Facade
     implements TestOptNullDefPositional {
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalWorker([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -1963,6 +1996,7 @@ base class _$TestOptNullDefPositionalWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalWorker.vm([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -1974,6 +2008,7 @@ base class _$TestOptNullDefPositionalWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalWorker.js([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -1985,6 +2020,7 @@ base class _$TestOptNullDefPositionalWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalWorker.wasm([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -2156,6 +2192,7 @@ base class _$TestOptNullDefPositionalWorkerPool
     extends sq.WorkerPool<TestOptNullDefPositionalWorker>
     with _$TestOptNullDefPositional$Facade
     implements TestOptNullDefPositional {
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalWorkerPool([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -2168,6 +2205,7 @@ base class _$TestOptNullDefPositionalWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalWorkerPool.vm([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -2184,6 +2222,7 @@ base class _$TestOptNullDefPositionalWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalWorkerPool.js([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -2200,6 +2239,7 @@ base class _$TestOptNullDefPositionalWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalWorkerPool.wasm([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -2447,6 +2487,7 @@ sq.WorkerService $TestReqPositionalFieldInitializer(sq.WorkerRequest $req) {
 base class _$TestReqPositionalFieldWorker extends sq.Worker
     with _$TestReqPositionalField$Invoker, _$TestReqPositionalField$Facade
     implements TestReqPositionalField {
+  // ignore: use_super_parameters
   _$TestReqPositionalFieldWorker(
     this.arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -2458,6 +2499,7 @@ base class _$TestReqPositionalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalFieldWorker.vm(
     this.arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -2469,6 +2511,7 @@ base class _$TestReqPositionalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalFieldWorker.js(
     this.arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -2480,6 +2523,7 @@ base class _$TestReqPositionalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalFieldWorker.wasm(
     this.arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -2661,6 +2705,7 @@ base class _$TestReqPositionalFieldWorkerPool
     extends sq.WorkerPool<TestReqPositionalFieldWorker>
     with _$TestReqPositionalField$Facade
     implements TestReqPositionalField {
+  // ignore: use_super_parameters
   _$TestReqPositionalFieldWorkerPool(
     this.arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -2676,6 +2721,7 @@ base class _$TestReqPositionalFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalFieldWorkerPool.vm(
     this.arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -2692,6 +2738,7 @@ base class _$TestReqPositionalFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalFieldWorkerPool.js(
     this.arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -2708,6 +2755,7 @@ base class _$TestReqPositionalFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalFieldWorkerPool.wasm(
     this.arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -2968,6 +3016,7 @@ base class _$TestOptNullPositionalFieldWorker extends sq.Worker
         _$TestOptNullPositionalField$Invoker,
         _$TestOptNullPositionalField$Facade
     implements TestOptNullPositionalField {
+  // ignore: use_super_parameters
   _$TestOptNullPositionalFieldWorker([
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -2979,6 +3028,7 @@ base class _$TestOptNullPositionalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalFieldWorker.vm([
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -2990,6 +3040,7 @@ base class _$TestOptNullPositionalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalFieldWorker.js([
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -3001,6 +3052,7 @@ base class _$TestOptNullPositionalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalFieldWorker.wasm([
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -3178,6 +3230,7 @@ base class _$TestOptNullPositionalFieldWorkerPool
     extends sq.WorkerPool<TestOptNullPositionalFieldWorker>
     with _$TestOptNullPositionalField$Facade
     implements TestOptNullPositionalField {
+  // ignore: use_super_parameters
   _$TestOptNullPositionalFieldWorkerPool([
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -3194,6 +3247,7 @@ base class _$TestOptNullPositionalFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalFieldWorkerPool.vm([
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -3210,6 +3264,7 @@ base class _$TestOptNullPositionalFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalFieldWorkerPool.js([
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -3226,6 +3281,7 @@ base class _$TestOptNullPositionalFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalFieldWorkerPool.wasm([
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -3482,6 +3538,7 @@ sq.WorkerService $TestOptDefPositionalFieldInitializer(sq.WorkerRequest $req) {
 base class _$TestOptDefPositionalFieldWorker extends sq.Worker
     with _$TestOptDefPositionalField$Invoker, _$TestOptDefPositionalField$Facade
     implements TestOptDefPositionalField {
+  // ignore: use_super_parameters
   _$TestOptDefPositionalFieldWorker([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -3493,6 +3550,7 @@ base class _$TestOptDefPositionalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalFieldWorker.vm([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -3504,6 +3562,7 @@ base class _$TestOptDefPositionalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalFieldWorker.js([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -3515,6 +3574,7 @@ base class _$TestOptDefPositionalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalFieldWorker.wasm([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -3692,6 +3752,7 @@ base class _$TestOptDefPositionalFieldWorkerPool
     extends sq.WorkerPool<TestOptDefPositionalFieldWorker>
     with _$TestOptDefPositionalField$Facade
     implements TestOptDefPositionalField {
+  // ignore: use_super_parameters
   _$TestOptDefPositionalFieldWorkerPool([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -3708,6 +3769,7 @@ base class _$TestOptDefPositionalFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalFieldWorkerPool.vm([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -3724,6 +3786,7 @@ base class _$TestOptDefPositionalFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalFieldWorkerPool.js([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -3740,6 +3803,7 @@ base class _$TestOptDefPositionalFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalFieldWorkerPool.wasm([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -4003,6 +4067,7 @@ base class _$TestOptNullDefPositionalFieldWorker extends sq.Worker
         _$TestOptNullDefPositionalField$Invoker,
         _$TestOptNullDefPositionalField$Facade
     implements TestOptNullDefPositionalField {
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalFieldWorker([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -4014,6 +4079,7 @@ base class _$TestOptNullDefPositionalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalFieldWorker.vm([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -4025,6 +4091,7 @@ base class _$TestOptNullDefPositionalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalFieldWorker.js([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -4036,6 +4103,7 @@ base class _$TestOptNullDefPositionalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalFieldWorker.wasm([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -4217,6 +4285,7 @@ base class _$TestOptNullDefPositionalFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefPositionalFieldWorker>
     with _$TestOptNullDefPositionalField$Facade
     implements TestOptNullDefPositionalField {
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalFieldWorkerPool([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -4233,6 +4302,7 @@ base class _$TestOptNullDefPositionalFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalFieldWorkerPool.vm([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -4249,6 +4319,7 @@ base class _$TestOptNullDefPositionalFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalFieldWorkerPool.js([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -4265,6 +4336,7 @@ base class _$TestOptNullDefPositionalFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalFieldWorkerPool.wasm([
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -4529,6 +4601,7 @@ base class _$TestReqPositionalPrivateFieldWorker extends sq.Worker
         _$TestReqPositionalPrivateField$Invoker,
         _$TestReqPositionalPrivateField$Facade
     implements TestReqPositionalPrivateField {
+  // ignore: use_super_parameters
   _$TestReqPositionalPrivateFieldWorker(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -4540,6 +4613,7 @@ base class _$TestReqPositionalPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalPrivateFieldWorker.vm(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -4551,6 +4625,7 @@ base class _$TestReqPositionalPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalPrivateFieldWorker.js(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -4562,6 +4637,7 @@ base class _$TestReqPositionalPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalPrivateFieldWorker.wasm(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -4740,6 +4816,7 @@ base class _$TestReqPositionalPrivateFieldWorkerPool
     extends sq.WorkerPool<TestReqPositionalPrivateFieldWorker>
     with _$TestReqPositionalPrivateField$Facade
     implements TestReqPositionalPrivateField {
+  // ignore: use_super_parameters
   _$TestReqPositionalPrivateFieldWorkerPool(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -4756,6 +4833,7 @@ base class _$TestReqPositionalPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalPrivateFieldWorkerPool.vm(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -4772,6 +4850,7 @@ base class _$TestReqPositionalPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalPrivateFieldWorkerPool.js(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -4788,6 +4867,7 @@ base class _$TestReqPositionalPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestReqPositionalPrivateFieldWorkerPool.wasm(
     int arg1, {
     sq.PlatformThreadHook? threadHook,
@@ -5051,6 +5131,7 @@ base class _$TestOptNullPositionalPrivateFieldWorker extends sq.Worker
         _$TestOptNullPositionalPrivateField$Invoker,
         _$TestOptNullPositionalPrivateField$Facade
     implements TestOptNullPositionalPrivateField {
+  // ignore: use_super_parameters
   _$TestOptNullPositionalPrivateFieldWorker([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -5062,6 +5143,7 @@ base class _$TestOptNullPositionalPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalPrivateFieldWorker.vm([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -5075,6 +5157,7 @@ base class _$TestOptNullPositionalPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalPrivateFieldWorker.js([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -5088,6 +5171,7 @@ base class _$TestOptNullPositionalPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalPrivateFieldWorker.wasm([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -5268,6 +5352,7 @@ base class _$TestOptNullPositionalPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptNullPositionalPrivateFieldWorker>
     with _$TestOptNullPositionalPrivateField$Facade
     implements TestOptNullPositionalPrivateField {
+  // ignore: use_super_parameters
   _$TestOptNullPositionalPrivateFieldWorkerPool([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -5284,6 +5369,7 @@ base class _$TestOptNullPositionalPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalPrivateFieldWorkerPool.vm([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -5300,6 +5386,7 @@ base class _$TestOptNullPositionalPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalPrivateFieldWorkerPool.js([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -5316,6 +5403,7 @@ base class _$TestOptNullPositionalPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullPositionalPrivateFieldWorkerPool.wasm([
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -5579,6 +5667,7 @@ base class _$TestOptDefPositionalPrivateFieldWorker extends sq.Worker
         _$TestOptDefPositionalPrivateField$Invoker,
         _$TestOptDefPositionalPrivateField$Facade
     implements TestOptDefPositionalPrivateField {
+  // ignore: use_super_parameters
   _$TestOptDefPositionalPrivateFieldWorker([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -5590,6 +5679,7 @@ base class _$TestOptDefPositionalPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalPrivateFieldWorker.vm([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -5601,6 +5691,7 @@ base class _$TestOptDefPositionalPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalPrivateFieldWorker.js([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -5612,6 +5703,7 @@ base class _$TestOptDefPositionalPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalPrivateFieldWorker.wasm([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -5792,6 +5884,7 @@ base class _$TestOptDefPositionalPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptDefPositionalPrivateFieldWorker>
     with _$TestOptDefPositionalPrivateField$Facade
     implements TestOptDefPositionalPrivateField {
+  // ignore: use_super_parameters
   _$TestOptDefPositionalPrivateFieldWorkerPool([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -5808,6 +5901,7 @@ base class _$TestOptDefPositionalPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalPrivateFieldWorkerPool.vm([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -5824,6 +5918,7 @@ base class _$TestOptDefPositionalPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalPrivateFieldWorkerPool.js([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -5840,6 +5935,7 @@ base class _$TestOptDefPositionalPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefPositionalPrivateFieldWorkerPool.wasm([
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -6104,6 +6200,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
         _$TestOptNullDefPositionalPrivateField$Invoker,
         _$TestOptNullDefPositionalPrivateField$Facade
     implements TestOptNullDefPositionalPrivateField {
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalPrivateFieldWorker([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -6117,6 +6214,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalPrivateFieldWorker.vm([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -6130,6 +6228,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalPrivateFieldWorker.js([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -6143,6 +6242,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalPrivateFieldWorker.wasm([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -6323,6 +6423,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefPositionalPrivateFieldWorker>
     with _$TestOptNullDefPositionalPrivateField$Facade
     implements TestOptNullDefPositionalPrivateField {
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalPrivateFieldWorkerPool([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -6339,6 +6440,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalPrivateFieldWorkerPool.vm([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -6355,6 +6457,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalPrivateFieldWorkerPool.js([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -6371,6 +6474,7 @@ base class _$TestOptNullDefPositionalPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefPositionalPrivateFieldWorkerPool.wasm([
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -6622,6 +6726,7 @@ sq.WorkerService $TestOptNullNamedInitializer(sq.WorkerRequest $req) {
 base class _$TestOptNullNamedWorker extends sq.Worker
     with _$TestOptNullNamed$Invoker, _$TestOptNullNamed$Facade
     implements TestOptNullNamed {
+  // ignore: use_super_parameters
   _$TestOptNullNamedWorker({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -6633,6 +6738,7 @@ base class _$TestOptNullNamedWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedWorker.vm({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -6644,6 +6750,7 @@ base class _$TestOptNullNamedWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedWorker.js({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -6655,6 +6762,7 @@ base class _$TestOptNullNamedWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedWorker.wasm({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -6830,6 +6938,7 @@ base class _$TestOptNullNamedWorkerPool
     extends sq.WorkerPool<TestOptNullNamedWorker>
     with _$TestOptNullNamed$Facade
     implements TestOptNullNamed {
+  // ignore: use_super_parameters
   _$TestOptNullNamedWorkerPool({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -6845,6 +6954,7 @@ base class _$TestOptNullNamedWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedWorkerPool.vm({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -6860,6 +6970,7 @@ base class _$TestOptNullNamedWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedWorkerPool.js({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -6875,6 +6986,7 @@ base class _$TestOptNullNamedWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedWorkerPool.wasm({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -7117,6 +7229,7 @@ sq.WorkerService $TestOptDefNamedInitializer(sq.WorkerRequest $req) {
 base class _$TestOptDefNamedWorker extends sq.Worker
     with _$TestOptDefNamed$Invoker, _$TestOptDefNamed$Facade
     implements TestOptDefNamed {
+  // ignore: use_super_parameters
   _$TestOptDefNamedWorker({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7128,6 +7241,7 @@ base class _$TestOptDefNamedWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedWorker.vm({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7139,6 +7253,7 @@ base class _$TestOptDefNamedWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedWorker.js({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7150,6 +7265,7 @@ base class _$TestOptDefNamedWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedWorker.wasm({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7325,6 +7441,7 @@ base class _$TestOptDefNamedWorkerPool
     extends sq.WorkerPool<TestOptDefNamedWorker>
     with _$TestOptDefNamed$Facade
     implements TestOptDefNamed {
+  // ignore: use_super_parameters
   _$TestOptDefNamedWorkerPool({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7340,6 +7457,7 @@ base class _$TestOptDefNamedWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedWorkerPool.vm({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7355,6 +7473,7 @@ base class _$TestOptDefNamedWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedWorkerPool.js({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7370,6 +7489,7 @@ base class _$TestOptDefNamedWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedWorkerPool.wasm({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7613,6 +7733,7 @@ sq.WorkerService $TestOptNullDefNamedInitializer(sq.WorkerRequest $req) {
 base class _$TestOptNullDefNamedWorker extends sq.Worker
     with _$TestOptNullDefNamed$Invoker, _$TestOptNullDefNamed$Facade
     implements TestOptNullDefNamed {
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedWorker({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7624,6 +7745,7 @@ base class _$TestOptNullDefNamedWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedWorker.vm({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7635,6 +7757,7 @@ base class _$TestOptNullDefNamedWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedWorker.js({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7646,6 +7769,7 @@ base class _$TestOptNullDefNamedWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedWorker.wasm({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7821,6 +7945,7 @@ base class _$TestOptNullDefNamedWorkerPool
     extends sq.WorkerPool<TestOptNullDefNamedWorker>
     with _$TestOptNullDefNamed$Facade
     implements TestOptNullDefNamed {
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedWorkerPool({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7836,6 +7961,7 @@ base class _$TestOptNullDefNamedWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedWorkerPool.vm({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7851,6 +7977,7 @@ base class _$TestOptNullDefNamedWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedWorkerPool.js({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -7866,6 +7993,7 @@ base class _$TestOptNullDefNamedWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedWorkerPool.wasm({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -8113,6 +8241,7 @@ sq.WorkerService $TestOptNullNamedFieldInitializer(sq.WorkerRequest $req) {
 base class _$TestOptNullNamedFieldWorker extends sq.Worker
     with _$TestOptNullNamedField$Invoker, _$TestOptNullNamedField$Facade
     implements TestOptNullNamedField {
+  // ignore: use_super_parameters
   _$TestOptNullNamedFieldWorker({
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -8124,6 +8253,7 @@ base class _$TestOptNullNamedFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedFieldWorker.vm({
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -8135,6 +8265,7 @@ base class _$TestOptNullNamedFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedFieldWorker.js({
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -8146,6 +8277,7 @@ base class _$TestOptNullNamedFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedFieldWorker.wasm({
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -8327,6 +8459,7 @@ base class _$TestOptNullNamedFieldWorkerPool
     extends sq.WorkerPool<TestOptNullNamedFieldWorker>
     with _$TestOptNullNamedField$Facade
     implements TestOptNullNamedField {
+  // ignore: use_super_parameters
   _$TestOptNullNamedFieldWorkerPool({
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -8342,6 +8475,7 @@ base class _$TestOptNullNamedFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedFieldWorkerPool.vm({
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -8358,6 +8492,7 @@ base class _$TestOptNullNamedFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedFieldWorkerPool.js({
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -8374,6 +8509,7 @@ base class _$TestOptNullNamedFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedFieldWorkerPool.wasm({
     this.arg1,
     sq.PlatformThreadHook? threadHook,
@@ -8627,6 +8763,7 @@ sq.WorkerService $TestOptDefNamedFieldInitializer(sq.WorkerRequest $req) {
 base class _$TestOptDefNamedFieldWorker extends sq.Worker
     with _$TestOptDefNamedField$Invoker, _$TestOptDefNamedField$Facade
     implements TestOptDefNamedField {
+  // ignore: use_super_parameters
   _$TestOptDefNamedFieldWorker({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -8638,6 +8775,7 @@ base class _$TestOptDefNamedFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedFieldWorker.vm({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -8649,6 +8787,7 @@ base class _$TestOptDefNamedFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedFieldWorker.js({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -8660,6 +8799,7 @@ base class _$TestOptDefNamedFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedFieldWorker.wasm({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -8841,6 +8981,7 @@ base class _$TestOptDefNamedFieldWorkerPool
     extends sq.WorkerPool<TestOptDefNamedFieldWorker>
     with _$TestOptDefNamedField$Facade
     implements TestOptDefNamedField {
+  // ignore: use_super_parameters
   _$TestOptDefNamedFieldWorkerPool({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -8856,6 +8997,7 @@ base class _$TestOptDefNamedFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedFieldWorkerPool.vm({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -8872,6 +9014,7 @@ base class _$TestOptDefNamedFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedFieldWorkerPool.js({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -8888,6 +9031,7 @@ base class _$TestOptDefNamedFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedFieldWorkerPool.wasm({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -9141,6 +9285,7 @@ sq.WorkerService $TestOptNullDefNamedFieldInitializer(sq.WorkerRequest $req) {
 base class _$TestOptNullDefNamedFieldWorker extends sq.Worker
     with _$TestOptNullDefNamedField$Invoker, _$TestOptNullDefNamedField$Facade
     implements TestOptNullDefNamedField {
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedFieldWorker({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -9152,6 +9297,7 @@ base class _$TestOptNullDefNamedFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedFieldWorker.vm({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -9163,6 +9309,7 @@ base class _$TestOptNullDefNamedFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedFieldWorker.js({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -9174,6 +9321,7 @@ base class _$TestOptNullDefNamedFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedFieldWorker.wasm({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -9355,6 +9503,7 @@ base class _$TestOptNullDefNamedFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefNamedFieldWorker>
     with _$TestOptNullDefNamedField$Facade
     implements TestOptNullDefNamedField {
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedFieldWorkerPool({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -9371,6 +9520,7 @@ base class _$TestOptNullDefNamedFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedFieldWorkerPool.vm({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -9387,6 +9537,7 @@ base class _$TestOptNullDefNamedFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedFieldWorkerPool.js({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -9403,6 +9554,7 @@ base class _$TestOptNullDefNamedFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedFieldWorkerPool.wasm({
     this.arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -9723,6 +9875,7 @@ sq.WorkerService $TestTypedDataInitializer(sq.WorkerRequest $req) =>
 base class _$TestTypedDataWorker extends sq.Worker
     with _$TestTypedData$Invoker, _$TestTypedData$Facade
     implements TestTypedData {
+  // ignore: use_super_parameters
   _$TestTypedDataWorker({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -9732,6 +9885,7 @@ base class _$TestTypedDataWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestTypedDataWorker.vm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -9741,6 +9895,7 @@ base class _$TestTypedDataWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestTypedDataWorker.js({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -9750,6 +9905,7 @@ base class _$TestTypedDataWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestTypedDataWorker.wasm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -9936,6 +10092,7 @@ base class TestTypedDataWorker
 base class _$TestTypedDataWorkerPool extends sq.WorkerPool<TestTypedDataWorker>
     with _$TestTypedData$Facade
     implements TestTypedData {
+  // ignore: use_super_parameters
   _$TestTypedDataWorkerPool({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -9949,6 +10106,7 @@ base class _$TestTypedDataWorkerPool extends sq.WorkerPool<TestTypedDataWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestTypedDataWorkerPool.vm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -9962,6 +10120,7 @@ base class _$TestTypedDataWorkerPool extends sq.WorkerPool<TestTypedDataWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestTypedDataWorkerPool.js({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -9975,6 +10134,7 @@ base class _$TestTypedDataWorkerPool extends sq.WorkerPool<TestTypedDataWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestTypedDataWorkerPool.wasm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -10279,6 +10439,7 @@ base class _$TestOptNullNamedPrivateFieldWorker extends sq.Worker
         _$TestOptNullNamedPrivateField$Invoker,
         _$TestOptNullNamedPrivateField$Facade
     implements TestOptNullNamedPrivateField {
+  // ignore: use_super_parameters
   _$TestOptNullNamedPrivateFieldWorker({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -10290,6 +10451,7 @@ base class _$TestOptNullNamedPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedPrivateFieldWorker.vm({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -10301,6 +10463,7 @@ base class _$TestOptNullNamedPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedPrivateFieldWorker.js({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -10312,6 +10475,7 @@ base class _$TestOptNullNamedPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedPrivateFieldWorker.wasm({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -10490,6 +10654,7 @@ base class _$TestOptNullNamedPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptNullNamedPrivateFieldWorker>
     with _$TestOptNullNamedPrivateField$Facade
     implements TestOptNullNamedPrivateField {
+  // ignore: use_super_parameters
   _$TestOptNullNamedPrivateFieldWorkerPool({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -10506,6 +10671,7 @@ base class _$TestOptNullNamedPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedPrivateFieldWorkerPool.vm({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -10522,6 +10688,7 @@ base class _$TestOptNullNamedPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedPrivateFieldWorkerPool.js({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -10538,6 +10705,7 @@ base class _$TestOptNullNamedPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullNamedPrivateFieldWorkerPool.wasm({
     int? arg1,
     sq.PlatformThreadHook? threadHook,
@@ -10801,6 +10969,7 @@ base class _$TestOptDefNamedPrivateFieldWorker extends sq.Worker
         _$TestOptDefNamedPrivateField$Invoker,
         _$TestOptDefNamedPrivateField$Facade
     implements TestOptDefNamedPrivateField {
+  // ignore: use_super_parameters
   _$TestOptDefNamedPrivateFieldWorker({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -10812,6 +10981,7 @@ base class _$TestOptDefNamedPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedPrivateFieldWorker.vm({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -10823,6 +10993,7 @@ base class _$TestOptDefNamedPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedPrivateFieldWorker.js({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -10834,6 +11005,7 @@ base class _$TestOptDefNamedPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedPrivateFieldWorker.wasm({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11012,6 +11184,7 @@ base class _$TestOptDefNamedPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptDefNamedPrivateFieldWorker>
     with _$TestOptDefNamedPrivateField$Facade
     implements TestOptDefNamedPrivateField {
+  // ignore: use_super_parameters
   _$TestOptDefNamedPrivateFieldWorkerPool({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11028,6 +11201,7 @@ base class _$TestOptDefNamedPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedPrivateFieldWorkerPool.vm({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11044,6 +11218,7 @@ base class _$TestOptDefNamedPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedPrivateFieldWorkerPool.js({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11060,6 +11235,7 @@ base class _$TestOptDefNamedPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptDefNamedPrivateFieldWorkerPool.wasm({
     int arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11323,6 +11499,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
         _$TestOptNullDefNamedPrivateField$Invoker,
         _$TestOptNullDefNamedPrivateField$Facade
     implements TestOptNullDefNamedPrivateField {
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedPrivateFieldWorker({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11334,6 +11511,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedPrivateFieldWorker.vm({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11345,6 +11523,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedPrivateFieldWorker.js({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11356,6 +11535,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedPrivateFieldWorker.wasm({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11536,6 +11716,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorkerPool
     extends sq.WorkerPool<TestOptNullDefNamedPrivateFieldWorker>
     with _$TestOptNullDefNamedPrivateField$Facade
     implements TestOptNullDefNamedPrivateField {
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedPrivateFieldWorkerPool({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11552,6 +11733,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedPrivateFieldWorkerPool.vm({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11568,6 +11750,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedPrivateFieldWorkerPool.js({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11584,6 +11767,7 @@ base class _$TestOptNullDefNamedPrivateFieldWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedPrivateFieldWorkerPool.wasm({
     int? arg1 = 0,
     sq.PlatformThreadHook? threadHook,
@@ -11846,6 +12030,7 @@ sq.WorkerService $TestPrefixedImportTypeInitializer(sq.WorkerRequest $req) {
 base class _$TestPrefixedImportTypeWorker extends sq.Worker
     with _$TestPrefixedImportType$Invoker, _$TestPrefixedImportType$Facade
     implements TestPrefixedImportType {
+  // ignore: use_super_parameters
   _$TestPrefixedImportTypeWorker(
     this.typedData, {
     sq.PlatformThreadHook? threadHook,
@@ -11860,6 +12045,7 @@ base class _$TestPrefixedImportTypeWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestPrefixedImportTypeWorker.vm(
     this.typedData, {
     sq.PlatformThreadHook? threadHook,
@@ -11874,6 +12060,7 @@ base class _$TestPrefixedImportTypeWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestPrefixedImportTypeWorker.js(
     this.typedData, {
     sq.PlatformThreadHook? threadHook,
@@ -11888,6 +12075,7 @@ base class _$TestPrefixedImportTypeWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestPrefixedImportTypeWorker.wasm(
     this.typedData, {
     sq.PlatformThreadHook? threadHook,
@@ -12075,6 +12263,7 @@ base class _$TestPrefixedImportTypeWorkerPool
     extends sq.WorkerPool<TestPrefixedImportTypeWorker>
     with _$TestPrefixedImportType$Facade
     implements TestPrefixedImportType {
+  // ignore: use_super_parameters
   _$TestPrefixedImportTypeWorkerPool(
     this.typedData, {
     sq.PlatformThreadHook? threadHook,
@@ -12090,6 +12279,7 @@ base class _$TestPrefixedImportTypeWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestPrefixedImportTypeWorkerPool.vm(
     this.typedData, {
     sq.PlatformThreadHook? threadHook,
@@ -12106,6 +12296,7 @@ base class _$TestPrefixedImportTypeWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestPrefixedImportTypeWorkerPool.js(
     this.typedData, {
     sq.PlatformThreadHook? threadHook,
@@ -12122,6 +12313,7 @@ base class _$TestPrefixedImportTypeWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestPrefixedImportTypeWorkerPool.wasm(
     this.typedData, {
     sq.PlatformThreadHook? threadHook,
@@ -12421,6 +12613,7 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
         _$TestOptNullDefNamedPrivateNonFinalField$Invoker,
         _$TestOptNullDefNamedPrivateNonFinalField$Facade
     implements TestOptNullDefNamedPrivateNonFinalField {
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedPrivateNonFinalFieldWorker({
     int? state = 0,
     sq.PlatformThreadHook? threadHook,
@@ -12434,6 +12627,7 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedPrivateNonFinalFieldWorker.vm({
     int? state = 0,
     sq.PlatformThreadHook? threadHook,
@@ -12447,6 +12641,7 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedPrivateNonFinalFieldWorker.js({
     int? state = 0,
     sq.PlatformThreadHook? threadHook,
@@ -12460,6 +12655,7 @@ base class _$TestOptNullDefNamedPrivateNonFinalFieldWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestOptNullDefNamedPrivateNonFinalFieldWorker.wasm({
     int? state = 0,
     sq.PlatformThreadHook? threadHook,
@@ -12704,6 +12900,7 @@ sq.WorkerService $TestInstallableInitializer(sq.WorkerRequest $req) {
 base class _$TestInstallableWorker extends sq.Worker
     with _$TestInstallable$Invoker, _$TestInstallable$Facade
     implements TestInstallable {
+  // ignore: use_super_parameters
   _$TestInstallableWorker(
     int delay, {
     sq.PlatformThreadHook? threadHook,
@@ -12715,6 +12912,7 @@ base class _$TestInstallableWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestInstallableWorker.vm(
     int delay, {
     sq.PlatformThreadHook? threadHook,
@@ -12726,6 +12924,7 @@ base class _$TestInstallableWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestInstallableWorker.js(
     int delay, {
     sq.PlatformThreadHook? threadHook,
@@ -12737,6 +12936,7 @@ base class _$TestInstallableWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestInstallableWorker.wasm(
     int delay, {
     sq.PlatformThreadHook? threadHook,
@@ -12921,6 +13121,7 @@ base class _$TestInstallableWorkerPool
     extends sq.WorkerPool<TestInstallableWorker>
     with _$TestInstallable$Facade
     implements TestInstallable {
+  // ignore: use_super_parameters
   _$TestInstallableWorkerPool(
     int delay, {
     sq.PlatformThreadHook? threadHook,
@@ -12936,6 +13137,7 @@ base class _$TestInstallableWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestInstallableWorkerPool.vm(
     int delay, {
     sq.PlatformThreadHook? threadHook,
@@ -12951,6 +13153,7 @@ base class _$TestInstallableWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestInstallableWorkerPool.js(
     int delay, {
     sq.PlatformThreadHook? threadHook,
@@ -12966,6 +13169,7 @@ base class _$TestInstallableWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestInstallableWorkerPool.wasm(
     int delay, {
     sq.PlatformThreadHook? threadHook,
@@ -13300,6 +13504,7 @@ sq.WorkerService $TestRecordTypesInitializer(sq.WorkerRequest $req) =>
 base class _$TestRecordTypesWorker extends sq.Worker
     with _$TestRecordTypes$Invoker, _$TestRecordTypes$Facade
     implements TestRecordTypes {
+  // ignore: use_super_parameters
   _$TestRecordTypesWorker({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -13309,6 +13514,7 @@ base class _$TestRecordTypesWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestRecordTypesWorker.vm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -13318,6 +13524,7 @@ base class _$TestRecordTypesWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestRecordTypesWorker.js({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -13327,6 +13534,7 @@ base class _$TestRecordTypesWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestRecordTypesWorker.wasm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -13503,6 +13711,7 @@ base class _$TestRecordTypesWorkerPool
     extends sq.WorkerPool<TestRecordTypesWorker>
     with _$TestRecordTypes$Facade
     implements TestRecordTypes {
+  // ignore: use_super_parameters
   _$TestRecordTypesWorkerPool({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -13516,6 +13725,7 @@ base class _$TestRecordTypesWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestRecordTypesWorkerPool.vm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -13529,6 +13739,7 @@ base class _$TestRecordTypesWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestRecordTypesWorkerPool.js({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -13542,6 +13753,7 @@ base class _$TestRecordTypesWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestRecordTypesWorkerPool.wasm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -13816,6 +14028,7 @@ sq.WorkerService $TestRequiredSuperParamInitializer(sq.WorkerRequest $req) {
 base class _$TestRequiredSuperParamWorker extends sq.Worker
     with _$TestRequiredSuperParam$Invoker, _$TestRequiredSuperParam$Facade
     implements TestRequiredSuperParam {
+  // ignore: use_super_parameters
   _$TestRequiredSuperParamWorker({
     required this.path,
     sq.PlatformThreadHook? threadHook,
@@ -13827,6 +14040,7 @@ base class _$TestRequiredSuperParamWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestRequiredSuperParamWorker.vm({
     required this.path,
     sq.PlatformThreadHook? threadHook,
@@ -13838,6 +14052,7 @@ base class _$TestRequiredSuperParamWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestRequiredSuperParamWorker.js({
     required this.path,
     sq.PlatformThreadHook? threadHook,
@@ -13849,6 +14064,7 @@ base class _$TestRequiredSuperParamWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestRequiredSuperParamWorker.wasm({
     required this.path,
     sq.PlatformThreadHook? threadHook,
@@ -14033,6 +14249,7 @@ base class _$TestRequiredSuperParamWorkerPool
     extends sq.WorkerPool<TestRequiredSuperParamWorker>
     with _$TestRequiredSuperParam$Facade
     implements TestRequiredSuperParam {
+  // ignore: use_super_parameters
   _$TestRequiredSuperParamWorkerPool({
     required this.path,
     sq.PlatformThreadHook? threadHook,
@@ -14048,6 +14265,7 @@ base class _$TestRequiredSuperParamWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestRequiredSuperParamWorkerPool.vm({
     required this.path,
     sq.PlatformThreadHook? threadHook,
@@ -14064,6 +14282,7 @@ base class _$TestRequiredSuperParamWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestRequiredSuperParamWorkerPool.js({
     required this.path,
     sq.PlatformThreadHook? threadHook,
@@ -14080,6 +14299,7 @@ base class _$TestRequiredSuperParamWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestRequiredSuperParamWorkerPool.wasm({
     required this.path,
     sq.PlatformThreadHook? threadHook,
@@ -14352,6 +14572,7 @@ sq.WorkerService $TestBigIntInitializer(sq.WorkerRequest $req) =>
 base class _$TestBigIntWorker extends sq.Worker
     with _$TestBigInt$Invoker, _$TestBigInt$Facade
     implements TestBigInt {
+  // ignore: use_super_parameters
   _$TestBigIntWorker({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -14361,6 +14582,7 @@ base class _$TestBigIntWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestBigIntWorker.vm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -14370,6 +14592,7 @@ base class _$TestBigIntWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestBigIntWorker.js({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -14379,6 +14602,7 @@ base class _$TestBigIntWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestBigIntWorker.wasm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -14539,6 +14763,7 @@ base class TestBigIntWorker with Releasable implements _$TestBigIntWorker {
 base class _$TestBigIntWorkerPool extends sq.WorkerPool<TestBigIntWorker>
     with _$TestBigInt$Facade
     implements TestBigInt {
+  // ignore: use_super_parameters
   _$TestBigIntWorkerPool({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -14552,6 +14777,7 @@ base class _$TestBigIntWorkerPool extends sq.WorkerPool<TestBigIntWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestBigIntWorkerPool.vm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -14565,6 +14791,7 @@ base class _$TestBigIntWorkerPool extends sq.WorkerPool<TestBigIntWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestBigIntWorkerPool.js({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -14578,6 +14805,7 @@ base class _$TestBigIntWorkerPool extends sq.WorkerPool<TestBigIntWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestBigIntWorkerPool.wasm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -14865,6 +15093,7 @@ sq.WorkerService $TestCustomDataInitializer(sq.WorkerRequest $req) =>
 base class _$TestCustomDataWorker extends sq.Worker
     with _$TestCustomData$Invoker, _$TestCustomData$Facade
     implements TestCustomData {
+  // ignore: use_super_parameters
   _$TestCustomDataWorker({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -14874,6 +15103,7 @@ base class _$TestCustomDataWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestCustomDataWorker.vm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -14883,6 +15113,7 @@ base class _$TestCustomDataWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestCustomDataWorker.js({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -14892,6 +15123,7 @@ base class _$TestCustomDataWorker extends sq.Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestCustomDataWorker.wasm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -15058,6 +15290,7 @@ base class _$TestCustomDataWorkerPool
     extends sq.WorkerPool<TestCustomDataWorker>
     with _$TestCustomData$Facade
     implements TestCustomData {
+  // ignore: use_super_parameters
   _$TestCustomDataWorkerPool({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -15071,6 +15304,7 @@ base class _$TestCustomDataWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestCustomDataWorkerPool.vm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -15084,6 +15318,7 @@ base class _$TestCustomDataWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestCustomDataWorkerPool.js({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,
@@ -15097,6 +15332,7 @@ base class _$TestCustomDataWorkerPool
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$TestCustomDataWorkerPool.wasm({
     sq.PlatformThreadHook? threadHook,
     sq.ExceptionManager? exceptionManager,

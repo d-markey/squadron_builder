@@ -4,7 +4,7 @@
 part of '../hello_world.dart';
 
 // **************************************************************************
-// Generator: WorkerGenerator 9.3.1 (Squadron 7.4.3)
+// Generator: WorkerGenerator 9.3.2 (Squadron 7.4.3)
 // **************************************************************************
 
 // dart format width=80
@@ -75,6 +75,7 @@ WorkerService $HelloWorldInitializer(WorkerRequest $req) =>
 base class _$HelloWorldWorker extends Worker
     with _$HelloWorld$Invoker, _$HelloWorld$Facade
     implements HelloWorld {
+  // ignore: use_super_parameters
   _$HelloWorldWorker({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -84,6 +85,7 @@ base class _$HelloWorldWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$HelloWorldWorker.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -93,6 +95,7 @@ base class _$HelloWorldWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$HelloWorldWorker.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -102,6 +105,7 @@ base class _$HelloWorldWorker extends Worker
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$HelloWorldWorker.wasm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -262,6 +266,7 @@ base class HelloWorldWorker with Releasable implements _$HelloWorldWorker {
 base class _$HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
     with _$HelloWorld$Facade
     implements HelloWorld {
+  // ignore: use_super_parameters
   _$HelloWorldWorkerPool({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -275,6 +280,7 @@ base class _$HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$HelloWorldWorkerPool.vm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -288,6 +294,7 @@ base class _$HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$HelloWorldWorkerPool.js({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
@@ -301,6 +308,7 @@ base class _$HelloWorldWorkerPool extends WorkerPool<HelloWorldWorker>
          exceptionManager: exceptionManager,
        );
 
+  // ignore: use_super_parameters
   _$HelloWorldWorkerPool.wasm({
     PlatformThreadHook? threadHook,
     ExceptionManager? exceptionManager,
